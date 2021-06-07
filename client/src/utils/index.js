@@ -1,0 +1,1 @@
+// Cargar funciones que sean reutilizables en varios lugares de tu código
