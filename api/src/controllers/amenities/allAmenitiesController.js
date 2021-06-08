@@ -1,7 +1,6 @@
 const { Amenities } = require('../../db');
 
 module.exports = async (req, res, next) => {
-
 	try{
 		let data = await Amenities.findAll();
 		return res.json(data)
@@ -10,5 +9,4 @@ module.exports = async (req, res, next) => {
 		res.json(err)
 		return console.log(err)
 	}
-
 }
