@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     .then(() => res.json(building).status(200))
     .catch(err => {
         console.log(err);
-        res.json({error: "Error creating the building"}).status(400)
+        res.status(400).json(new Error("Error creating the building"))
     })
 
 };

@@ -2,17 +2,21 @@ const router = require('express').Router();
 const express = require('express');
 
 
-const allBuildings = require("../controllers/buildings/allBuildings");     // import the controller to show all buildings
-const addBuilding = require("../controllers/buildings/addBuilding");     // import the controller to show all buildings
+const allBuildings = require("../controllers/buildings/allBuildings");     // import the controllers
+const addBuilding = require("../controllers/buildings/addBuilding");
+const delBuilding = require("../controllers/buildings/delBuilding");
+const putBuilding = require("../controllers/buildings/putBuilding");  
 
 router.use(express.json());
 
 router.get("/all", allBuildings);       //      get -> localhost3001/buildings/all
 router.post("/", addBuilding);       //      post -> localhost3001/buildings
+router.delete("/", delBuilding);       //      DELETE -> localhost3001/buildings
+router.put("/", putBuilding);       //      DELETE -> localhost3001/buildings
 
 
 router.get('/', async function(req,res,next){ // endPoint
-    res.send("Estoy en la ruta /buildings")
+    res.send("I'm in the route /buildings")
 })
 
 module.exports = router;
