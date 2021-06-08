@@ -1,4 +1,4 @@
-const {Amenity} = require('../../db.js');
+const {Apartment} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
 	var name = req.params.name;
