@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 
-function BuildingUpdate() {
+function BuildingUpdate(props) {
 
     const Building = {
         id:1,
@@ -12,6 +15,11 @@ function BuildingUpdate() {
         createdAt:"2021-06-08T18:42:58.276Z",
         updatedAt:"2021-06-08T18:42:58.276Z"
     }
+
+    useEffect(async () => {
+        let prueba = await props.getBuildingDetail(1);
+        console.log(prueba)
+    }, [])
 
 
     return (
@@ -33,4 +41,20 @@ function BuildingUpdate() {
     );
 }
 
-export default BuildingUpdate;
+
+function mapStateToProps(state) {
+    return {
+        pokemons: state.pokemons
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getBuildingDetail: (id) => dispatch(getBuildingDetail(id)),
+        putBuilding: (body) => dispatch(putBuilding(body)),
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)(BuildingUpdate);
