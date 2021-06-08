@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
         floor: building.floor,
         apartments: building.apartments,
         name: building.name,
-        adress: building.adress
+        address: building.address
     })
     .then(() => res.json(building).status(200))
     .catch(err => {

@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
             floor: req.body.floor,
             apartments: req.body.apartments,
             name: req.body.name,
-            adress: req.body.adress
+            address: req.body.address
         },
         { where: { id: putId } }
     )
