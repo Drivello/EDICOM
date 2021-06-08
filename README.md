@@ -4,3 +4,4 @@ Integrantes:
 Marcelo Fernandez
 Mauricio Cuello
 Mariano Guillon
+A. Brian Lopez
