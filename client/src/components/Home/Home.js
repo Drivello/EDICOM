@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
+import ApartmentList from '../Apartment/ApartmentList';
+import CreateApartmentForm from '../Apartment/CreateApartmentForm';
 
 const Home = () => {
-    return (
-        <div>
-            Soy el componente de prueba
-        </div>
-    )
-}
-export default Home
+	return (
+		<div>
+			<ApartmentList />
+			<CreateApartmentForm />
+		</div>
+	);
+};
+export default Home;

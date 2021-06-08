@@ -9,6 +9,9 @@ module.exports = sequelize => {
 			primaryKey: true,
 			autoIncrement: true,
 		},
+		building: {
+			type: DataTypes.STRING(20),
+		},
 		cata_apartment: {
 			type: DataTypes.STRING(20),
 			unique: true,
