@@ -4,7 +4,7 @@ const express = require('express');
 
 
 router.get('/', async function(req,res,next){ // endPoint
-    console.log("Estoy en la ruta /amenities")
+    console.log("Estoy en la ruta /services")
 })
 
 module.exports = router;
