@@ -3,7 +3,7 @@ const express = require('express');
 
 
 const allBuildings = require("../controllers/buildings/allBuildings");     // import the controller to show all buildings
-const addBuilding = require("../controllers/buildings/allBuildings");     // import the controller to show all buildings
+const addBuilding = require("../controllers/buildings/addBuilding");     // import the controller to show all buildings
 
 router.use(express.json());
 
