@@ -7,7 +7,9 @@ module.exports = async (req, res, next) => {
         { 
             cata: req.body.cata,
             floor: req.body.floor,
-            apartments: req.body.apartments
+            apartments: req.body.apartments,
+            name: req.body.name,
+            adress: req.body.adress
         },
         { where: { id: putId } }
     )

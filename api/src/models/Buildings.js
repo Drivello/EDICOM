@@ -17,6 +17,15 @@ module.exports = (sequelize) => {
         apartments: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique:true
+        },
     });
 };

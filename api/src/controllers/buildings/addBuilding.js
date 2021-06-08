@@ -6,7 +6,9 @@ module.exports = async (req, res, next) => {
     var building = await Buildings.create({
         cata: building.cata,
         floor: building.floor,
-        apartments: building.apartments
+        apartments: building.apartments,
+        name: building.name,
+        adress: building.adress
     })
     .then(() => res.json(building).status(200))
     .catch(err => {
