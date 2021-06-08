@@ -1,17 +1,17 @@
 const {Apartment} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-	var name = req.params.name;
-	var amenity = await Amenity.findOne({
+	var id = req.params.id;
+	var apartment = await Apartment.findOne({
 		where: {
-			name: name, //ver si van estos nombres
+			id, //ver si van estos nombres
 		},
 	});
 
-	if (amenity) {
+	if (apartment) {
 		res.status(200);
-		return res.json(amenity);
+		return res.json(apartment);
 	} else {
-		return res.json({error: 'The amenity does not exist'}).status(404);
+		return res.json({error: 'The apartment does not exist'}).status(404);
 	}
 };

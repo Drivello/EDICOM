@@ -10,7 +10,7 @@ router.use(express.json());
 
 router.get('/', allApartments);
 router.get('/:id', getApartmentById);
-router.post('/add', createApartment);
+router.post('/', createApartment);
 router.delete('/delete/:id', deleteApartment);
 
 module.exports = router;
