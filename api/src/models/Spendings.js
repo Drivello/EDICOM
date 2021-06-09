@@ -7,11 +7,11 @@ module.exports = (sequelize) => {
     sequelize.define('Spendings', {
         date: {
             type: DataTypes.DATE,
-            allowNull: false,
+            // allowNull: false,
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
+            // allowNull: false,
             unique: true
         },
         details: {

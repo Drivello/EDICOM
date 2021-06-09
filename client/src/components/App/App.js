@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Route path="/" component = {Home}/>
-        <Route path="/newExpenses" component = {Form}/>
+        <Route path="/newSpending" component = {Form}/>
       </BrowserRouter>
     </div>
   );

@@ -1,17 +1,16 @@
-import { POST_ACTIVITY } from '../Actions/Index';
+import { POST_SPENDING } from '../Actions/Index';
 
 const initialState = {
-
-    addExpenses: null,
+    addSpending: null,
 };
 
-const expensesReducer = (state = initialState, action) => {
+const SpendingReducer = (state = initialState, action) => {
     switch (action.type) {
-        case POST_EXPENSES:
-            return { ...state, addExpenses: null};
+        case POST_SPENDING:
+            return { ...state, addSpending: null};
         default:
             return state
     }
 };
 
-export default expensesReducer;
+export default SpendingReducer;
