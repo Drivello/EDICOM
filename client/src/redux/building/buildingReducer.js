@@ -11,6 +11,7 @@ const initialState = {
 export default function buildingReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_BUILDINGS:
+            console.log(action.payload.data)
             return {
                 ...state,
                 allBuildings: action.payload.data

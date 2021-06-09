@@ -11,7 +11,7 @@ export function getBuildings() {
         return axios.get(`${GET_ALL_BUILDINGS_URL}`)
         .then(data => {
             dispatch({
-                type: GET_ALL_BUILDINGS_URL,
+                type: GET_ALL_BUILDINGS,
                 payload: data
             })
         })
@@ -20,7 +20,7 @@ export function getBuildings() {
 
 export function getBuildingDetail(id) {
     return function(dispatch) {
-        return axios.get(`${GET_DETAIL_BUILDING_URL}/${id}`)
+        return axios.get(`${GET_DETAIL_BUILDING_URL}${id}`)
         .then(data => {
             dispatch({
                 type: GET_BUILDING,
@@ -54,9 +54,9 @@ export function putBuilding(body) {
     }
 }
 
-export function deleteBuilding(id) {
+export function deleteBuilding(body) {
     return function(dispatch) {
-        return axios.get(`${DELETE_BUILDING_URL}/${id}`)
+        return axios.delete(`${DELETE_BUILDING_URL}`,body)
         .then(data => {
             dispatch({
                 type: DELETE_BUILDING,
