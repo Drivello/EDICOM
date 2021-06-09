@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             // allowNull: false,
         },
-        name: {
+        concept: {
             type: DataTypes.STRING,
             // allowNull: false,
             unique: true
