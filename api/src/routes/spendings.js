@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const express = require('express');
 
-const allSpendings = require("../controllers/amenities/addAmenityController");     // importando todos los amenities
+const allSpendings = require("../controllers/spendings/allSpendingsControllers");     
+const addSpendings = require("../controllers/spendings/addSpendingsController");     
 
 router.use(express.json());
 router.get("/all", allSpendings);                   //      http://localhost:3001/spendings/all
-
+router.post("/add", addSpendings);                  //      http://localhost:3001/spendings/add
 
 router.get('/', async function(req,res,next){       //      endPoint
     console.log("Estoy en la ruta /spendings")
