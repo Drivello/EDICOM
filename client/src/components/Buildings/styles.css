@@ -1,0 +1,11 @@
+.componentHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.componentHeading {
+    font-size: 1.8rem;
+    margin-right: 16px;
+    font-weight: 700;
+}
