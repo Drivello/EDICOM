@@ -10,14 +10,15 @@ conn.sync({ force: true }).then(() => {
     console.log('DB edicom is listening at 3001'); // eslint-disable-line no-console
   });
 
+
+
+
+  
   // --------- Si es necesario precarga automática de datos de prueba si es necesario hacer acá ----------
   // -----------------------de hacer esto, traer el modelo necsario-----------------------
 
-
-
-
   let spending1 = Spendings.create({
-    date: "March 13, 2016 1:00 PM",
+    date: "March 13, 2021 1:00 PM",
     name: "Desinfección",
     details: "Desinfección de patios y vereda",
     supplier: "Desfincecciones ATR",
@@ -26,7 +27,7 @@ conn.sync({ force: true }).then(() => {
   });
 
   let spending2 = Spendings.create({
-    date: "March 13, 2016 1:00 PM",
+    date: "March 14, 2021 2:00 PM",
     name: "Pintura",
     details: "Pintado de paredes exteriores",
     supplier: "Pintaman",
@@ -35,7 +36,7 @@ conn.sync({ force: true }).then(() => {
   });
 
   let spending3 = Spendings.create({
-    date: "March 13, 2016 1:00 PM",
+    date: "March 15, 2021 3:00 PM",
     name: "Mantenimiento bombas",
     details: "Reparación de bomba de agua del patio principal",
     supplier: "MacGyver",
