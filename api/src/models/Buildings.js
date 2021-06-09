@@ -7,8 +7,7 @@ module.exports = (sequelize) => {
     sequelize.define('buildings', {
         cata: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         floor: {
             type: DataTypes.STRING,
@@ -24,8 +23,7 @@ module.exports = (sequelize) => {
         },
         address: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique:true
+            allowNull: false
         },
     });
 };
