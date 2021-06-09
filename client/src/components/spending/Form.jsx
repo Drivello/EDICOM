@@ -22,47 +22,57 @@ const Form = () => {
     }, []);
 
     const newSpending = {
-        date: "2021-03-13T16:00:00.000Z",
-        building: 1,
+        date: "",
+        building: 0,
         concept: "",
         supplier: "",
         details: "",
-        amount: ""
+        amount: 0
     }
     //con este estado tomo el valor seleccionado
     const [spending, setSpending] = useState(newSpending);
-    const [selectedBuild, setSelectedBuild] = useState({ buildName: [] })
+    const [selectedBuild, setSelectedBuild] = useState({ id: [] })
 
-    const handleSelect = () => {
+    const handleSelect = (e) => {
         let select = document.getElementById("building");
 
         if (select) {
             let selectValue = select.options[select.selectedIndex].value;
             let selectedBuildName = select.options[select.selectedIndex].innerText;
-
+            console.log(selectedBuildName);
             setSelectedBuild({
                 ...selectedBuild,
-                buildName: selectedBuild.buildName.concat(selectedBuildName)
+                name: selectedBuild.id.concat(selectedBuildName)
+
             });
-            let selectBuild = spending.bulding.concat(selectValue);
-            setSpending({ ...spending, building: buildingArray })
+            /*  let selectBuild = spending.bulding.push(selectValue); */
+            setSpending({ ...spending, building: parseInt(selectValue) })
 
         }
     }
+    console.log("guardo", spending)
 
 
 
 
     const handleInputChange = (e) => {
-        setSpending({
-            ...spending,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.name === "amount") {
+            setSpending({
+                ...spending,
+                [e.target.name]: parseInt(e.target.value),
+            });
+        } else {
+
+            setSpending({
+                ...spending,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        console.log("handelsubmit", spending)
         if (spending.supplier === '') return alert("supplier Field Cannot Be Empty")
         if (spending.amount === '') return alert("Concept Field Cannot Be Empty")
         dispatch(postSpending(spending));
@@ -76,9 +86,13 @@ const Form = () => {
 
                 <form onSubmit={handleSubmit}>
                     <h2>Add spending</h2>
-                    <h2>"2021-03-13T16:00:00.000Z"</h2>
+                    <input type="date" id="date" name="date"
+                        onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })}
+
+                    />
+
                     <p>Building <select onChange={handleSelect} name="building" id="building">
-                        <option value=""></option>
+                        <option>Select Building</option>
 
                         {buildingArray && buildingArray.length > 0 ? buildingArray.map((c, id) => {
                             return (
@@ -88,7 +102,7 @@ const Form = () => {
                                 </option>
                             );
                         })
-                        :""}
+                            : ""}
 
 
 

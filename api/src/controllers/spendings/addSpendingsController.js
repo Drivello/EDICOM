@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
         return res.json(spending).status(200);
     }
     catch(err){
-        console.error(err);
-        res.json(error);
+       /*  console.error(err); */
+        res.json(err);
     }
 };

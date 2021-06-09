@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { GET_ALL_BUILDINGS_URL, GET_DETAIL_BUILDING_URL, POST_BUILDING_URL, PUT_BUILDING_URL, DELETE_BUILDING_URL } from './utils';
-export const GET_ALL_BUILDINGS = 'GET_ALL_BUILDINGS';
+import { GET_ALL_BUILDINGS, GET_DETAIL_BUILDING_URL, POST_BUILDING_URL, PUT_BUILDING_URL, DELETE_BUILDING_URL } from './utils';
+export const GET_ALL_BUILDINGS_URL = 'GET_ALL_BUILDINGS_URL';
 export const GET_BUILDING = 'GET_BUILDING';
 export const POST_BUILDING = 'GET_BUILDING';
 export const PUT_BUILDING = 'PUT_BUILDING';
@@ -10,6 +10,7 @@ export function getBuildings() {
     return function(dispatch) {
         return axios.get('http://localhost:3001/buildings/all')
         .then(data => {
+            
             dispatch({
                 type: GET_ALL_BUILDINGS_URL,
                 payload: data
