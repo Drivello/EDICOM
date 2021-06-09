@@ -1,11 +1,13 @@
 import {combineReducers} from 'redux';
-import amenitiesReducer from './amenities/reducerAmenities';
+import reducerAmenities from './amenities/reducerAmenities';
 import servicesReducer from './services/servicesReducer';
+import reducerExpensesTable from './expenses/reducerExpensesTable';
 
 
 export  const reducers = combineReducers({
-	amenitiesReducer: amenitiesReducer, 
-	servicesReducer: servicesReducer
+	reducerAmenities: reducerAmenities, 
+	servicesReducer: servicesReducer,
+	reducerExpensesTable: reducerExpensesTable // ???????????????????
 });
 
 export default reducers
