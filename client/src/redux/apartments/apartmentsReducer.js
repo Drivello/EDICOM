@@ -2,6 +2,7 @@ import {Actions} from './apartmentsActions';
 
 const initialState = {
 	apartmentCreated: [],
+	apartmentDetail: [],
 	allApartments: [],
 };
 
@@ -17,7 +18,11 @@ const reducer = (state = initialState, action) => {
 				...state,
 				allApartments: action.payload,
 			};
-
+		case Actions.GET_APARTMENT:
+			return {
+				...state,
+				apartmentDetail: action.payload,
+			}
 		default:
 			return state;
 	}
