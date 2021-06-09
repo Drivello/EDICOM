@@ -7,7 +7,7 @@ const Home = () => {
 	return (
 		<div>
 			<ApartmentList />
-			<CreateApartmentForm />
+{/* 			<CreateApartmentForm /> */}
 			<Sidebar></Sidebar>
 		</div>
 	);

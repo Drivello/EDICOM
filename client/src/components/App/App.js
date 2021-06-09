@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <Route path="/" component = {Home}/>
         <Route path="/buildings" component = {Buildings}/>
-        <Route path="/BuildingUpdate" component = {BuildingUpdate}/>
+        <Route path="/BuildingUpdate/:id" component = {BuildingUpdate}/>
       </BrowserRouter>
     </Container>
   );

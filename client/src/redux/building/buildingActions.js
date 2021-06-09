@@ -20,7 +20,7 @@ export function getBuildings() {
 
 export function getBuildingDetail(id) {
     return function(dispatch) {
-        return axios.get(`${GET_DETAIL_BUILDING_URL}/${id}`)
+        return axios.get(`${GET_DETAIL_BUILDING_URL}${id}`)
         .then(data => {
             dispatch({
                 type: GET_BUILDING,
