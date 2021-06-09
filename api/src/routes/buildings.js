@@ -1,20 +1,21 @@
 const router = require('express').Router();
 const express = require('express');
 
-const allAmenities = require('../controllers/amenities/addAmenityController'); // importando todos los amenities
-const findAmenity = require('../controllers/amenities/findAmenityController'); // importando buscar un amenity
-const addAmenity = require('../controllers/amenities/addAmenityController'); // agregar un amenity
-const allBuildings = require('../controllers/buildings/allBuildingsController');
+const allBuildings = require('../controllers/buildings/allBuildings'); // import the controllers
+const addBuilding = require('../controllers/buildings/addBuilding');
+const delBuilding = require('../controllers/buildings/delBuilding');
+const putBuilding = require('../controllers/buildings/putBuilding');
 
 router.use(express.json());
 
-router.get('/all', allBuildings); //      localhost3001/amenities/all
-router.get('/?name', findAmenity); //      ej: localhost3001/amenities?name=parrilla
-router.post('/add', addAmenity); //      localhost3001/amenities/add
+router.get('/all', allBuildings); //      get -> localhost3001/buildings/all
+router.post('/', addBuilding); //      post -> localhost3001/buildings
+router.delete('/', delBuilding); //      DELETE -> localhost3001/buildings
+router.put('/', putBuilding); //      PUT -> localhost3001/buildings
 
 router.get('/', async function (req, res, next) {
 	// endPoint
-	console.log('Estoy en la ruta /amenities');
+	res.send("I'm in the route /buildings");
 });
 
 module.exports = router;
