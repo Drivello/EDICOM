@@ -24,7 +24,15 @@ export function getAllApartments() {
 		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
 	};
 }
-/*   export function getVideogames(name) {
+
+export function editApartment(apartment) {
+	return async function (dispatch) {
+		const {data} = await axios.put(`http://localhost:3001/apartments/`);
+		console.log('All Apartments', data);
+		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
+	};
+
+	/*   export function getVideogames(name) {
     return async function(dispatch) {
         const  { data }  = await axios.get(`${GAMES_URL}?key=${API_KEY}&search=${name}`)
         console.log("is this even happening?",data.dataSet)
@@ -42,6 +50,5 @@ export function getAllApartments() {
     return async function(dispatch) {
         const  { data }  = await axios.get(`${GAMES_URL}/${id}`)
         console.log("getVideogamesByID",data)
-        dispatch({ type: Actions.GET_VIDEOGAMES_BY_ID, payload: data })
-    };
-  } */
+    dispatch({ type: Actions.GET_VIDEOGAMES_BY_ID, payload: data })*/
+}

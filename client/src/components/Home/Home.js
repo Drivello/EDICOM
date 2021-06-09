@@ -6,8 +6,6 @@ import Sidebar from '../Sidebar/Sidebar';
 const Home = () => {
 	return (
 		<div>
-			<ApartmentList />
-			<CreateApartmentForm />
 			<Sidebar></Sidebar>
 		</div>
 	);
