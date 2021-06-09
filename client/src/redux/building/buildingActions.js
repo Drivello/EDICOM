@@ -8,7 +8,7 @@ export const DELETE_BUILDING = 'DELETE_BUILDING';
 
 export function getBuildings() {
     return function(dispatch) {
-        return axios.get(`${GET_ALL_BUILDINGS_URL}`)
+        return axios.get('http://localhost:3001/buildings/all')
         .then(data => {
             dispatch({
                 type: GET_ALL_BUILDINGS_URL,
