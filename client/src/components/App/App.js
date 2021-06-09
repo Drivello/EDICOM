@@ -3,7 +3,8 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
 import  Home  from '../home/Home.js';
-import Form from '../expensas/Form';
+import Form from '../spending/Form';
+import Board from '../spending/Board';
 
 
 
@@ -12,8 +13,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Route path="/" component = {Home}/>
         <Route path="/newSpending" component = {Form}/>
+        <Route path="/board" component = {Board}/>
       </BrowserRouter>
     </div>
   );
