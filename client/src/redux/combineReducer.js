@@ -1,14 +1,15 @@
 import {combineReducers} from 'redux';
-import reducerAmenities from './amenities/reducerAmenities';
-import servicesReducer from './services/servicesReducer';
+
 import reducerSpending from './spending/reducerSpending';
+import apartmentReducer from './apartments/apartmentsReducer';
+import buildingReducer from './building/buildingReducer';
 
 
-export  const reducers = combineReducers({
-	reducerAmenities: reducerAmenities, 
-	servicesReducer: servicesReducer,
-	reducerSpending: reducerSpending
-});
+export  const reducers = combineReducers({ 
+	reducerSpending: reducerSpending,
+	apartmentReducer: apartmentReducer,
+	buildingReducer: buildingReducer,
+})
 
-export default reducers
 
+export default reducers;

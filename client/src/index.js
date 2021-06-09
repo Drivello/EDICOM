@@ -1,22 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import App from './components/app/App.js';
-import Board from './components/spending/Board';
-
+import {Provider} from 'react-redux';
+import App from './components/App/App.js';
 import reportWebVitals from './reportWebVitals'; // ¿de que sirve? ¿Es necesario?
 import {store} from './redux/indexStore';
 
 import './index.css';
 
 ReactDOM.render(
-  <Provider store={store}>
-    {/* <React.StrictMode> */}
-      <App />
-    {/* </React.StrictMode> */}
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<React.StrictMode>
+			<App />
+		</React.StrictMode>
+	</Provider>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -6,19 +6,21 @@ import  Home  from '../home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/container';
 
 
 
 function App() {
   return (
-    <div className="App">
+    <Container className="App">
+      <CssBaseline />
       <BrowserRouter>
         <Route path="/newSpending" component = {Form}/>
         <Route path="/board" component = {Board}/>
       </BrowserRouter>
-    </div>
+    </Container>
   );
 }
 
 export default App;
-
