@@ -190,7 +190,7 @@ export default function Sidebar() {
           <ListItemText className ='fontColor' primary={'Amenities'} />
           </ListItem>
           </Link>
-          <Link to="" className='link'></Link>
+          <Link to="/apartments" className='link'></Link>
           <ListItem button key={'Departamentos'}>
           <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
           <ListItemText primary={'Departamentos'} />
