@@ -32,17 +32,12 @@ export function getApartmentById(id) {
     dispatch({ type: Actions.GET_APARTMENT, payload: data});
   }
 }
-export function updateApartment(id,data){
-  return function (dispatch) {
-    return axios({
-      method: 'post',
-      url: `http://localhost:3001/apartments/${id}`,
-      data,
-    })
-    .then(response => {
-      dispatch({type: Actions.GET_APARTMENT, payload: data})
-    })
-    .catch(error => alert(error))
+export function updateApartment(data){
+  console.log("ID", data.id , "DATA", data);
+  return async function (dispatch) {
+    const response = await axios.put(`http://localhost:3001/apartments/${data.id}`, data);
+    console.log("pinchila")
+    dispatch({ type: Actions.GET_APARTMENT, payload: response});
   }
 }
 /*   export function getVideogames(name) {
