@@ -3,7 +3,7 @@ import React from 'react'
 const Home = () => {
     return (
         <div>
-            Soy el componente de prueba
+            Soy el componente de HOME
         </div>
     )
 }
