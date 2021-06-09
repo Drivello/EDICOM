@@ -1,8 +1,8 @@
-const {Amenity} = require('../../db');
+const {Apartment} = require('../../db');
 
 module.exports = async (req, res, next) => {
 	try {
-		let data = await Amenity.findAll();
+		let data = await Apartment.findAll();
 		return res.json(data);
 	} catch (err) {
 		res.json(err);

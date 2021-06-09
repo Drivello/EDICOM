@@ -17,8 +17,9 @@ router.put("/", putBuilding);       //      PUT -> localhost3001/buildings
 router.get('/findBuilding', findBuilding);       //      GET -> localhost3001/buildings/findBuilding?id=... to find a Building data
 
 
-router.get('/', async function(req,res,next){ // endPoint
-    res.send("I'm in the route /buildings")
-})
+router.get('/', async function (req, res, next) {
+	// endPoint
+	res.send("I'm in the route /buildings");
+});
 
 module.exports = router;
