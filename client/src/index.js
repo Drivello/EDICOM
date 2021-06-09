@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './components/app/App.js';
-import Board from './components/expenses/Board';
+import Board from './components/spending/Board';
 
 import reportWebVitals from './reportWebVitals'; // ¿de que sirve? ¿Es necesario?
 import {store} from './redux/indexStore';
@@ -14,7 +14,6 @@ ReactDOM.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
       <App />
-      <Board /> 
     {/* </React.StrictMode> */}
   </Provider>,
   document.getElementById('root')
