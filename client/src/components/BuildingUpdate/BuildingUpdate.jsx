@@ -1,47 +1,92 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
+import { useParams } from "react-router-dom";
 
 function BuildingUpdate(props) {
-    const initialState = {
-        Name: false,
-        Address: false,
-        Catastral: false,
-        Floors:  false,
-        Apartments: false
-    }
+    const { id } = useParams();
+    const Build = useSelector(state => state.buildingReducer);
+    const dispatch = useDispatch();
 
-    const [editMode, setEditMode] = useState(initialState);
+    useEffect(() => {
+        dispatch(getBuildingDetail(id))
+        .then(console.log(Build.detailBuilding))
+    }, [])
 
+    const [editMode, setEditMode] = useState({
+        name: false,
+        address: false,
+        cata: false,
+        floor:  false,
+        apartments: false
+    });
+    
     const Building = {
-        id:1,
-        cata:"12453",
-        floor:"2",
-        apartments:"3",
-        name:"Building1",
-        address:"Street 123",
-        createdAt:"2021-06-08T18:42:58.276Z",
-        updatedAt:"2021-06-08T18:42:58.276Z"
+        cata:"",
+        floor:"",
+        apartments:"",
+        name:"",
+        address:""
     }
-/* 
-    useEffect(async () => {
-        let prueba = await props.getBuildingDetail(1);
-        console.log(prueba)
-    }, []) */
+    
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
+    
+    const [input, setInput] = useState({
+        name: Building.name,
+        cata: Building.cata,
+        floor: Building.floor,
+        apartments: Building.apartments,
+        address: Building.address,
+    });
+
+    const inputHandler = (change, text) =>{
+        setInput({
+            ...input,
+            [change]: text
+        })
+    }
 
     const editModestatus = (change) => {
         if(!editMode[change]){
-            return <h5>{change}: {Building[change.toLowerCase()]}</h5>
+            if(Building && input[change] === Building[change]){
+                return <h5>{capitalize(change)}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h5>
+            }else{
+                return <h5>{capitalize(change)}: {input[change]}</h5>
+            }
         }else{
-            return <input value={Building[change.toLowerCase()]}></input>
+            return <input placeholder={capitalize(change)} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]}></input>
         }
     }
 
     const changeModeStatus = (e) => {
-        const toChange = e.target.id;
-        console.log(Object.assign(editMode, editMode[toChange] = !editMode[toChange]))
-        setEditMode(Object.assign(editMode, editMode[toChange] = editMode[toChange]))
+        const toChange = e.target.name;
+        setEditMode({
+            ...editMode,
+            [toChange]: !editMode[toChange],
+        });
+    }
+
+    const saveHandler = () => {
+        dispatch(getBuildingDetail(id))
+        setInput({
+            name: Building.name,
+            cata: Building.cata,
+            floor: Building.floor,
+            apartments: Building.apartments,
+            address: Building.address,
+        })
+        console.log({
+                id: id,
+                cata: input.cata || Build.detailBuilding[0].cata,
+                floor: input.floor || Build.detailBuilding[0].floor,
+                apartments: input.apartments || Build.detailBuilding[0].apartments,
+                name: input.name || Build.detailBuilding[0].name,
+                address: input.address || Build.detailBuilding[0].address
+        })
     }
 
     return (
@@ -49,48 +94,32 @@ function BuildingUpdate(props) {
             <h2 id="header">Update your building info:</h2>
             <div id="DarkGrey">
                 <div>
-                    {editModestatus("Name")}
-                    <h3>Resultado: {"" + editMode.Name}</h3>
-                <button id="Name" onClick={changeModeStatus}>EDIT</button>
+                    {editModestatus("name")}
+                <button name="name" onClick={changeModeStatus}>EDIT</button>
                 </div>
                 <div id="DetailsBox">
                     <div>
-                    <h5>Address: {Building.address}</h5>
-                    <button>EDIT</button>
+                    {editModestatus("address")}
+                    <button name="address" onClick={changeModeStatus}>EDIT</button>
                     </div>
                     <div>
-                    <h5>Catastral: {Building.cata}</h5>
-                    <button>EDIT</button>
+                    {editModestatus("cata")}
+                    <button name="cata" onClick={changeModeStatus}>EDIT</button>
                     </div>
                     <div>
-                    <h5>Floors: {Building.floor}</h5>
-                    <button>EDIT</button>
+                    {editModestatus("floor")}
+                    <button name="floor" onClick={changeModeStatus}>EDIT</button>
                     </div>
                     <div>
-                    <h5>Apartments: {Building.apartments}</h5>
-                    <button>EDIT</button>
+                    {editModestatus("apartments")}
+                    <button name="apartments" onClick={changeModeStatus}>EDIT</button>
                     </div>
                 </div>
-                <button>SAVE CHANGES</button>
+                <button onClick={saveHandler} >SAVE CHANGES</button>
             </div>
         </div>
     );
 }
 
 
-function mapStateToProps(state) {
-    return {
-        detailBuilding: state.detailBuilding
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        getBuildingDetail: (id) => dispatch(getBuildingDetail(id)),
-        putBuilding: (body) => dispatch(putBuilding(body)),
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps)(BuildingUpdate);
+export default BuildingUpdate
