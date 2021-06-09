@@ -2,7 +2,10 @@ import './App.css';
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import  Home  from '../Home/Home.js';
+import  Home  from '../home/Home.js';
+import Form from '../spending/Form';
+import Board from '../spending/Board';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/container';
 
@@ -13,7 +16,8 @@ function App() {
     <Container className="App">
       <CssBaseline />
       <BrowserRouter>
-        <Route path="/" component = {Home}/>
+        <Route path="/newSpending" component = {Form}/>
+        <Route path="/board" component = {Board}/>
       </BrowserRouter>
     </Container>
   );
