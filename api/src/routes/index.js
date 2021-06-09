@@ -1,7 +1,7 @@
 const {Router} = require('express');
 
-const services = require('./services');
-const amenities = require('./amenities');
+const spendings = require("./spendings")
+const expenses = require("./expenses")
 const apartments = require('./apartments');
 const buildings = require('./buildings');
 
@@ -11,8 +11,8 @@ const buildings = require('./buildings');
 const router = Router();
 
 // Configurar los routers
-router.use('/amenities', amenities);
-router.use('/services', services);
+router.use('/spendings', spendings)
+router.use('/expenses', expenses)
 router.use('/apartments', apartments);
 router.use('/buildings', buildings);
 

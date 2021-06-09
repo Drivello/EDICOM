@@ -1,15 +1,18 @@
 import React from 'react';
+import BuildingAddForm from '../BuildingAddForm/BuildingAddForm'
+import Container from '@material-ui/core/container';
+import Typography from '@material-ui/core/Typography';
 
 function BuildingsAdd() {
     return (
-        <div>
-            Here you can add a building.
-            Nombre.
-            Dirección.
-            Número catastral.
-            Cantidad de pisos.
-            Cantidad de departamentos.
-        </div>
+        <Container>
+            <div className="componentHeader">
+                <Typography variant="h2" className="componentHeading1">
+                    Crear edificio
+                </Typography>
+            </div>
+            <BuildingAddForm />
+        </Container>
     );
 }
 
