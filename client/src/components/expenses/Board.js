@@ -1,7 +1,7 @@
 import './board.css'
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { totalSpending } from '../../redux/expenses/actionExpensesTable'
+import { totalSpending, filterSpending } from '../../redux/spending/actionSpendingTable'
 
 
 const Board = (props) => {
@@ -12,46 +12,25 @@ const Board = (props) => {
   },[])
   //-------------------------- fin trae del state global los gastos----------
 
-  
 
   //----------------------- inicio estado interno con los 3 filtros -----------
 
   const [input, setInput] = React.useState({
     since: '',
     upTo: '',
-    concept: '', //dddddd
+    concept: '',
   })
+  
   function handleSelect(e) { 
     setInput({...input, [e.target.name]: e.target.value})
   }
-   //----------------------- fin estado interno con los 3 filtros -----------
   
-
-
-
-  //--------------------------------------------------------------------
-  if(input.concept === 'All'){
-    props.filterSpend = props.totalSpend
+  function handleSubmit(e) { 
+    props.filterSpending(input)
   }
-
-  else if(input.concept !== 'All'){
-    props.filterSpend = props.totalSpend.filter(s => (s.concept === input.concept))
-  }
-  //--------------------------------------------------------------------
-  if(input.since === ''){}
-
-  else if(input.concept !== ''){
-    props.filterSpend = props.filterSpend.filter(s => s.date >= input.since)
-  }
-  //--------------------------------------------------------------------
-  if(input.upTo === ''){}
   
-  else if(input.upTo !== 'All'){
-    props.filterSpend = props.filterSpend.filter(s => s.date <= input.upTo) 
-  }   
-
-   //----------------------- fin estado interno con los 3 filtros -----------
- 
+  const date = new Date()
+  
 
     return (
         <div className="totalBoard">
@@ -59,16 +38,16 @@ const Board = (props) => {
             
             since
             <select name="since" seiz="4" onChange={handleSelect}>  
-              <option> </option>  
-              {props.filterSpend.map(e => 
+              <option> 1/1/1950 </option>  
+              {props.totalSpend.map(e => 
                 <option>{e.date}</option>
               )}
             </select>
             
             Up to
             <select name="upTo" seiz="4" onChange={handleSelect}>  
-              <option> </option>
-              {props.filterSpend.map(e => 
+              <option>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</option>                
+              {props.totalSpend.map(e => 
                 <option>{e.date}</option>
               )}
             </select>
@@ -76,10 +55,12 @@ const Board = (props) => {
             Concept
             <select name="concept" seiz="4" onChange={handleSelect}>
               <option> All </option>
-              {props.filterSpend.map(e => 
+              {props.totalSpend.map(e => 
                 <option>{e.concept}</option>
               )}
             </select>
+
+            <p><input type="submit" value="Find" onClick={handleSubmit} /></p>
           
           </div>
 
@@ -124,6 +105,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     totalSpending: total => dispatch(totalSpending(total)), // me asocio a la action
+    filterSpending: filter => dispatch(filterSpending(filter)),
   };
 }
 

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import reducerAmenities from './amenities/reducerAmenities';
 import servicesReducer from './services/servicesReducer';
-import reducerExpensesTable from './expenses/reducerExpensesTable';
+import reducerExpensesTable from './spending/reducerSpendingTable';
 
 
 export  const reducers = combineReducers({
