@@ -14,6 +14,5 @@ module.exports = async (req, res, next) => {
 		{where: {id: id}}
 	);
 	const apartment = await Apartment.findOne({where: {id: id}});
-	console.log(apartment);
 	res.send(apartment);
 };
