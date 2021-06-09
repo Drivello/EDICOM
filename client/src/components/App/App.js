@@ -7,6 +7,7 @@ import Buildings from '../Buildings/Buildings';
 import  BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Sidebar from '../Sidebar/Sidebar';
 
 
 
@@ -15,7 +16,8 @@ function App() {
     <Container className="App">
       <CssBaseline />
       <BrowserRouter>
-        <Route path="/" component = {Home}/>
+        <Route path="/" component = {Sidebar}/>
+        <Route exact path="/" component = {Home}/>
         <Route path="/buildings" component = {Buildings}/>
         <Route path="/BuildingUpdate/:id" component = {BuildingUpdate}/>
       </BrowserRouter>
