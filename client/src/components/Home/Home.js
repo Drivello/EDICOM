@@ -16,6 +16,7 @@ const Home = (props) => {
 
 	return (
 		<div>
+
 			<Carousel 
 			NextIcon={<NavigateNextIcon/>}
     		PrevIcon={<NavigateBeforeIcon/>}
@@ -24,6 +25,7 @@ const Home = (props) => {
 				buildings && buildings.map( (item, i) => <BuildingsList key={i} item={item} /> )
 			}
 			</Carousel>
+
 		</div>
 	);
 };
