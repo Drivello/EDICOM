@@ -8,6 +8,7 @@ import Board from '../spending/Board';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/container';
+import EditApartmentForm from '../Apartment/EditApartmentForm'
 
 
 
@@ -16,8 +17,9 @@ function App() {
     <Container className="App">
       <CssBaseline />
       <BrowserRouter>
-        <Route path="/newSpending" component = {Form}/>
-        <Route path="/board" component = {Board}/>
+
+        <Route exact path="/" component = {Home}/>
+
       </BrowserRouter>
     </Container>
   );
