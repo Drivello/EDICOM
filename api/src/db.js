@@ -43,6 +43,7 @@ const {Amenity, Service, Apartment, Buildings} = sequelize.models; //ir agregand
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+Apartment.belongsTo(Buildings);
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
