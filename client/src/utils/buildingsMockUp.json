@@ -1,0 +1,7 @@
+[
+    {"id":1,"name":"It","address":"Pennsylvania","city":"CABA","cata":9686,"floor":17,"apartments":17,"createdAt":"4/3/2021","updatedAt":"12/7/2020"},
+    {"id":2,"name":"Konklux","address":"Merchant","city":"CABA","cata":68,"floor":13,"apartments":37,"createdAt":"4/8/2021","updatedAt":"12/14/2020"},
+    {"id":3,"name":"Konklux","address":"Fallview","city":"CABA","cata":2483,"floor":7,"apartments":45,"createdAt":"11/11/2020","updatedAt":"7/7/2020"},
+    {"id":4,"name":"Fintone","address":"American","city":"CABA","cata":4132,"floor":4,"apartments":33,"createdAt":"4/9/2021","updatedAt":"3/15/2021"},
+    {"id":5,"name":"Y-find","address":"Prentice","city":"CABA","cata":8130,"floor":10,"apartments":14,"createdAt":"6/17/2020","updatedAt":"11/26/2020"}
+]
