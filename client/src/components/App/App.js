@@ -2,8 +2,8 @@ import './App.css';
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import  Home  from '../Home/Home.js';
-
+import  Home  from '../home/Home.js';
+import Form from '../expensas/Form';
 
 
 
@@ -13,6 +13,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Route path="/" component = {Home}/>
+        <Route path="/newExpenses" component = {Form}/>
       </BrowserRouter>
     </div>
   );
