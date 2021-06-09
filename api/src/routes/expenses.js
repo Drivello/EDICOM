@@ -3,8 +3,9 @@ const express = require('express');
 
 
 
+
 router.get('/', async function(req,res,next){ // endPoint
-    console.log("Estoy en la ruta /services")
+    console.log("Estoy en la ruta /expenses")
 })
 
 module.exports = router;
