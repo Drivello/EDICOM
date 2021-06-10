@@ -1,10 +1,10 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+import { TextField, Grid, Button } from '@material-ui/core';
 import { Domain, Room, LocationCity, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
+
+// Agregar un input para poder agregar la foto.
 
 function BuildingAddForm() {
     return (
