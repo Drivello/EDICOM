@@ -1,19 +1,21 @@
 import React from 'react';
-import BuildingAddForm from '../BuildingAddForm/BuildingAddForm'
+import BuildingsTable from '../BuildingsTable/BuildingsTable';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-function BuildingsAdd() {
+function Buildings() {
     return (
         <Container>
             <div className="componentHeader">
                 <Typography variant="h2" className="componentHeading1">
-                    Crear edificio
+                    Todos los edificios
                 </Typography>
+                <Button variant="contained" color="primary">Crear nuevo</Button>
             </div>
-            <BuildingAddForm />
+            <BuildingsTable />
         </Container>
     );
 }
 
-export default BuildingsAdd;
+export default Buildings;

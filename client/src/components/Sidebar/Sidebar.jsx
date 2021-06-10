@@ -19,6 +19,13 @@ import ApartmentIcon from '@material-ui/icons/Apartment';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Link } from 'react-router-dom';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
+import './Sidebar.css';
 
 const drawerWidth = 240;
 
@@ -27,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
+    display: 'flex',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -82,12 +90,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  a : {
+    textDecoration: 'none',
+    listStyle: 'none'
+  }
 }));
 
 export default function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,6 +108,14 @@ export default function Sidebar() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -122,6 +143,21 @@ export default function Sidebar() {
             Panel Administrador
           </Typography>
         </Toolbar>
+        <div className='login'>
+          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+            <AccountCircleIcon style={{ fontSize: 35 , color: "white"}}/>
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Login</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
       </AppBar>
       <Drawer
         variant="permanent"
@@ -143,22 +179,36 @@ export default function Sidebar() {
         </div>
         <Divider />
         <List>
+          <Link to="/buildings" className='link'>
           <ListItem button key={'Edificios'}>
           <ListItemIcon><ApartmentIcon/></ListItemIcon>
-          <ListItemText primary={'Edificios'} />
+          <ListItemText className ='fontColor' primary={'Edificios'} />
           </ListItem>
+          </Link>
+          <Link to="" className='link'>
           <ListItem button key={'Amenities'}>
           <ListItemIcon><OutdoorGrillIcon/></ListItemIcon>
-          <ListItemText primary={'Amenities'} />
+          <ListItemText className ='fontColor' primary={'Amenities'} />
           </ListItem>
+          </Link>
+          <Link to="/apartments" className='link'>
           <ListItem button key={'Departamentos'}>
           <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
-          <ListItemText primary={'Departamentos'} />
+          <ListItemText className ='fontColor'  primary={'Departamentos'} />
           </ListItem>
+          </Link>
+          <Link to=''>
           <ListItem button key={'Gastos'}>
           <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
-          <ListItemText primary={'Gastos'} />
+          <ListItemText className ='fontColor'  primary={'Gastos'} />
           </ListItem>
+          </Link>
+          <Link to=''>
+          <ListItem button key={'Alertas'}>
+          <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+          <ListItemText className ='fontColor'  primary={'Alertas'} />
+          </ListItem>
+          </Link>
         </List>
       </Drawer>
       <main className={classes.content}>

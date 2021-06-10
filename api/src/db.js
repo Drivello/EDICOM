@@ -45,6 +45,7 @@ const { Spendings, Expenses, Apartment, Buildings } = sequelize.models; //ir agr
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
+Apartment.belongsTo(Buildings);
 
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS

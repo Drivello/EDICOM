@@ -5,5 +5,5 @@ module.exports = async (req, res, next) => {
 
 	apartment = await Apartment.destroy({where: req.params});
 
-	return res.json(apartment).status(200);
+	res.json(apartment).status(200);
 };
