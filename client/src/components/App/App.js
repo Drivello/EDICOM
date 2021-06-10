@@ -7,11 +7,9 @@ import Buildings from '../Buildings/Buildings';
 import BuildingAdd from '../BuildingAdd/BuildingAdd';
 import  BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Sidebar from '../Sidebar/Sidebar';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/container';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
 

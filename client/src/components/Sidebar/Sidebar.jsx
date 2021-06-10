@@ -24,6 +24,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AnnouncementIcon from '@material-ui/icons/Announcement';
 import './Sidebar.css';
 
 const drawerWidth = 240;
@@ -190,15 +191,24 @@ export default function Sidebar() {
           <ListItemText className ='fontColor' primary={'Amenities'} />
           </ListItem>
           </Link>
-          <Link to="/apartments" className='link'></Link>
+          <Link to="/apartments" className='link'>
           <ListItem button key={'Departamentos'}>
           <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
-          <ListItemText primary={'Departamentos'} />
+          <ListItemText className ='fontColor'  primary={'Departamentos'} />
           </ListItem>
+          </Link>
+          <Link to=''>
           <ListItem button key={'Gastos'}>
           <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
-          <ListItemText primary={'Gastos'} />
+          <ListItemText className ='fontColor'  primary={'Gastos'} />
           </ListItem>
+          </Link>
+          <Link to=''>
+          <ListItem button key={'Alertas'}>
+          <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+          <ListItemText className ='fontColor'  primary={'Alertas'} />
+          </ListItem>
+          </Link>
         </List>
       </Drawer>
       <main className={classes.content}>
