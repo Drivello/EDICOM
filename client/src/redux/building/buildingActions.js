@@ -12,7 +12,7 @@ export function getBuildings() {
         .then(data => {
             
             dispatch({
-                type: GET_ALL_BUILDINGS,
+                type: GET_ALL_BUILDINGS_URL,
                 payload: data
             })
         })
