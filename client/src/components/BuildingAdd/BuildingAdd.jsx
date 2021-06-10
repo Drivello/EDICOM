@@ -1,6 +1,6 @@
 import React from 'react';
 import BuildingAddForm from '../BuildingAddForm/BuildingAddForm'
-import Container from '@material-ui/core/container';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 function BuildingsAdd() {

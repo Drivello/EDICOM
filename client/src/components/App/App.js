@@ -10,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Sidebar from '../Sidebar/Sidebar';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
-import Container from '@material-ui/core/container';
+import Container from '@material-ui/core/Container';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
 
 
