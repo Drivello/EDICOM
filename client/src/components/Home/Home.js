@@ -32,8 +32,8 @@ const Home = (props) => {
 	},[])
 
 	return (
-		<div>
-			<div>
+		<div className='homeCont'>
+			<div className='caruselCont'>
 			<Carousel 
 			NextIcon={<NavigateNextIcon/>}
     		PrevIcon={<NavigateBeforeIcon/>}
