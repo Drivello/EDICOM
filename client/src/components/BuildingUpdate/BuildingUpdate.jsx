@@ -3,16 +3,20 @@ import { useEffect, useState , React} from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 import { useParams } from "react-router-dom";
 import { Button , TextField, Container, Box} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import  BusinessIcon  from '@material-ui/icons/Business';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
+import FormatAlignJustifyOutlinedIcon from '@material-ui/icons/FormatAlignJustifyOutlined';
+import { translate } from "./Translate";
 
-function BuildingUpdate(props) {
+function BuildingUpdate() {
     const { id } = useParams();
     const Build = useSelector(state => state.buildingReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getBuildingDetail(id))
-        .then(console.log(Build.detailBuilding))
     }, [])
 
     const [editMode, setEditMode] = useState({
@@ -31,10 +35,6 @@ function BuildingUpdate(props) {
         address:""
     }
     
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
     
     const [input, setInput] = useState({
         name: Building.name,
@@ -51,20 +51,20 @@ function BuildingUpdate(props) {
         })
     }
 
+
     const editModestatus = (change) => {
         if(!editMode[change]){
             if(input[change] === Building[change]){
-                return <h3>{capitalize(change)}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h3>
+                return <h2>{translate[change]}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h2>
             }else{
-                return <h3>{capitalize(change)}: {input[change]}</h3>
+                return <h2>{translate[change]}: {input[change]}</h2>
             }
         }else{
-            return <TextField label={capitalize(change)} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]} />
+            return <TextField label={translate[change]} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]} />
         }
     }
 
     const changeModeStatus = (e) => {
-        console.log(e.target.offsetParent, e.target.name, e.target)
         const toChange = (e.target.offsetParent && e.target.offsetParent.name) || e.target.name;
         setEditMode({
             ...editMode,
@@ -103,31 +103,36 @@ function BuildingUpdate(props) {
     return (
         <Container maxWidth="sm">
         <form noValidate autoComplete="off" onSubmit={saveHandler} >
-            <h2 id="header">Update your building info:</h2>
+            <h1 id="header">Modificar edificio:</h1>
             <div id="DarkGrey">
             <Box display="flex">
-                    {editModestatus("name")}
-                <Button variant="contained" name="name" onClick={changeModeStatus}><EditIcon name="name"/></Button>
+                <BusinessIcon />
+            {editModestatus("name")}
+                <Button variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
                 </Box>
                 <div id="DetailsBox">
                 <Box display="flex">
+                    <LocationOnIcon/>
                     {editModestatus("address")}
-                    <Button variant="contained" name="address" onClick={changeModeStatus}><EditIcon /></Button>
+                    <Button variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
                     </Box>
                     <Box display="flex">
+                        <FormatAlignJustifyOutlinedIcon/>
                     {editModestatus("cata")}
-                    <Button variant="contained" name="cata" onClick={changeModeStatus}><EditIcon /></Button>
+                    <Button variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
                     </Box>
                     <Box display="flex">
+                    <ListAltOutlinedIcon/>
                     {editModestatus("floor")}
-                    <Button variant="contained" name="floor" onClick={changeModeStatus}><EditIcon /></Button>
+                    <Button variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
                     </Box>
                     <Box display="flex">
+                    <MeetingRoomIcon/>
                     {editModestatus("apartments")}
-                    <Button variant="contained" name="apartments" onClick={changeModeStatus}><EditIcon /></Button>
+                    <Button variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
                     </Box>
                 </div>
-                <Button variant="contained" color="primary" onClick={saveHandler} >SAVE CHANGES</Button>
+                <Button variant="contained" color="primary" onClick={saveHandler} >Guardar Cambios</Button>
             </div>
         </form>
         </Container>
