@@ -11,15 +11,15 @@ import FormatAlignJustifyOutlinedIcon from '@material-ui/icons/FormatAlignJustif
 import { translate } from "./Translate";
 
 function BuildingUpdate() {
-    const { id } = useParams();
-    const Build = useSelector(state => state.buildingReducer);
-    const dispatch = useDispatch();
+    const { id } = useParams();//Building id from query params
+    const Build = useSelector(state => state.buildingReducer);//Use selector setup
+    const dispatch = useDispatch();//dispatch setup
 
-    useEffect(() => {
+    useEffect(() => {//useEffect to get the current bulding info 
         dispatch(getBuildingDetail(id))
     }, [])
 
-    const [editMode, setEditMode] = useState({
+    const [editMode, setEditMode] = useState({//Control the read mode or edit mode for every input
         name: false,
         address: false,
         cata: false,
@@ -27,7 +27,7 @@ function BuildingUpdate() {
         apartments: false
     });
     
-    const Building = {
+    const Building = {//Initial state for the inputs
         cata:"",
         floor:"",
         apartments:"",
@@ -36,7 +36,7 @@ function BuildingUpdate() {
     }
     
     
-    const [input, setInput] = useState({
+    const [input, setInput] = useState({//Control the user inputs for every input
         name: Building.name,
         cata: Building.cata,
         floor: Building.floor,
@@ -44,7 +44,7 @@ function BuildingUpdate() {
         address: Building.address,
     });
 
-    const inputHandler = (change, text) =>{
+    const inputHandler = (change, text) =>{//input handler to change the state when the user write
         setInput({
             ...input,
             [change]: text
@@ -52,36 +52,36 @@ function BuildingUpdate() {
     }
 
 
-    const editModestatus = (change) => {
-        if(!editMode[change]){
-            if(input[change] === Building[change]){
+    const editModestatus = (change) => {//shows the data according to the status mode (read, write or preview )
+        if(!editMode[change]){//if is set to read mode
+            if(input[change] === Building[change]){//shows the current value if the user didn't write anything yet
                 return <h2>{translate[change]}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h2>
-            }else{
+            }else{//shows the preview of the changes if the user did write something
                 return <h2>{translate[change]}: {input[change]}</h2>
             }
-        }else{
+        }else{//if is set to write mode
             return <TextField label={translate[change]} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]} />
         }
     }
 
-    const changeModeStatus = (e) => {
-        const toChange = (e.target.offsetParent && e.target.offsetParent.name) || e.target.name;
-        setEditMode({
+    const changeModeStatus = (e) => {//change the status between read only or write
+        const toChange = (e.target.offsetParent && e.target.offsetParent.name) || e.target.name;//save the item name 
+        setEditMode({//change the status of the item to the opposite
             ...editMode,
             [toChange]: !editMode[toChange],
         });
     }
 
-    const saveHandler = (e) => {
+    const saveHandler = (e) => {//send the data to change in the data base
         e.preventDefault();
-        setInput({
+        setInput({//set all the inputs to the initial state
             name: Building.name,
             cata: Building.cata,
             floor: Building.floor,
             apartments: Building.apartments,
             address: Building.address,
         })
-        setEditMode({
+        setEditMode({//set all the items in read mode again.
             name: false,
             address: false,
             cata: false,
@@ -89,7 +89,7 @@ function BuildingUpdate() {
             apartments: false
         })
 
-        dispatch(putBuilding({
+        dispatch(putBuilding({//make the put to the back and save all changes
             id: id,
             cata: input.cata || Build.detailBuilding[0].cata,
             floor: input.floor || Build.detailBuilding[0].floor,
@@ -97,7 +97,7 @@ function BuildingUpdate() {
             name: input.name || Build.detailBuilding[0].name,
             address: input.address || Build.detailBuilding[0].address
     }))
-    .then(() => dispatch(getBuildingDetail(id)))
+    .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
     }
 
     return (
