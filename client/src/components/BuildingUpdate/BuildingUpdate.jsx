@@ -153,35 +153,35 @@ function BuildingUpdate() {
                 <form noValidate autoComplete="off" onSubmit={saveHandler} >
                     <div id="DarkGrey">
                         <Grid item xs={12}>
-                            <Grid container justify="space-between" item xs={12} spacing={30}>
+                            <Grid container justify="space-between" item xs={12}>
                                 <BusinessIcon fontSize="large" />
                                 {editModestatus("name")}
                                 <Button variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" spacing={30}>
+                            <Grid container item justify="space-between" >
                                 <LocationOnIcon fontSize="large" />
                                 {editModestatus("address")}
                                 <Button variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" spacing={30}>
+                            <Grid container item justify="space-between" >
                                 <FormatAlignJustifyOutlinedIcon fontSize="large" />
                                 {editModestatus("cata")}
                                 <Button variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" spacing={30}>
+                            <Grid container item justify="space-between" >
                                 <ListAltOutlinedIcon fontSize="large" />
                                 {editModestatus("floor")}
                                 <Button variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" spacing={400}>
+                            <Grid container item justify="space-between">
                                 <MeetingRoomIcon fontSize="large" />
                                 {editModestatus("apartments")}
                                 <Button variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
