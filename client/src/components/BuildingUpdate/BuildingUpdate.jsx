@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, React } from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 import { useParams } from "react-router-dom";
-import { Button, TextField, Container, Box, Grid } from '@material-ui/core';
+import { Button, TextField, Grid } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
