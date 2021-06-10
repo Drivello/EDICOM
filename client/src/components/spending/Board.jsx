@@ -1,5 +1,6 @@
 import './board.css'
 import React, { useEffect } from "react";
+import { Link } from 'react-router-dom' 
 import { connect } from "react-redux";
 import { totalSpending, filterSpending } from '../../redux/spending/actionSpending'
 
@@ -28,7 +29,7 @@ const Board = (props) => {
   function handleSubmit(e) { 
     props.filterSpending(input)
   }
-  
+
 
 
   const date = new Date()
@@ -80,11 +81,17 @@ const Board = (props) => {
 
                 {props.filterSpend.map(e => 
                   <tr>
-                    <th>{e.date}</th>
-                    <th>{e.concept}</th>
-                    <th>{e.details}</th>
-                    <th>{e.amount}</th>
-                    <th>Editar/Eliminar</th>
+                    <th>{e.date}/></th>
+                    <th>{e.concept}/></th>
+                    <th>{e.details}/></th>
+                    <th>{e.amount}/></th>
+                    <th>
+                      <Link to={__dirname + `board/1/edit` }>
+                        <button type="button">
+                          Editar/Eliminar 
+                        </button>
+                      </Link>
+                    </th>
                   </tr>
                )}
               </tbody>
