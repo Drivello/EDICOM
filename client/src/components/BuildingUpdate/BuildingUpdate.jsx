@@ -27,7 +27,7 @@ function BuildingUpdate() {
         apartments: false
     });
 
-    const [error, setError] = useState({
+    const [error, setError] = useState({//Control the error red border of the inputs
         floor: false,
         apartments: false,
         name: false,
@@ -35,7 +35,7 @@ function BuildingUpdate() {
         cata: false
     })
 
-    const [warning, setWarning] = useState({
+    const [warning, setWarning] = useState({//Control the warning message
         floor: "",
         apartments: "",
         name: "",
@@ -62,12 +62,12 @@ function BuildingUpdate() {
     const reg = new RegExp('^[0-9]+$')
 
     const inputHandler = (change, text) => {//input handler to change the state when the user write
-        if ((change === "floor" || change === "apartments") && !reg.test(text)) {
-            setWarning({
+        if ((change === "floor" || change === "apartments") && !reg.test(text)) {//if somone try to enter not a number in floor and aparments
+            setWarning({//set warning msg
                 ...warning,
                 [change]: "Solo puedes ingresar numeros!"
             })
-            setError({
+            setError({//set the error of that input in true
                 ...error,
                 [change]: true
             })
