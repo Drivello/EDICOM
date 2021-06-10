@@ -27,19 +27,6 @@ export function getApartmentById(id) {
 	};
 }
 
-export function updateApartment(id, data) {
-	return function (dispatch) {
-		return axios({
-			method: 'post',
-			url: `http://localhost:3001/apartments/${id}`,
-			data,
-		})
-			.then(response => {
-				dispatch({type: Actions.GET_APARTMENT, payload: data});
-			})
-			.catch(error => alert(error));
-	};
-}
 
 export function getAllApartments() {
 	return async function (dispatch) {
@@ -48,13 +35,7 @@ export function getAllApartments() {
 		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
 	};
 }
-export function getApartmentById(id) {
-  return async function (dispatch) {
-    const {data} = await axios.get(`http://localhost:3001/apartments/${id}`)
-    console.log("Get Apartment ", id);
-    dispatch({ type: Actions.GET_APARTMENT, payload: data});
-  }
-}
+
 export function updateApartment(data){
   console.log("ID", data.id , "DATA", data);
   return async function (dispatch) {
@@ -62,6 +43,7 @@ export function updateApartment(data){
     console.log("pinchila")
     dispatch({ type: Actions.GET_APARTMENT, payload: response});
   }
+}
 
 export function editApartment(apartment) {
 	return async function (dispatch) {
@@ -70,4 +52,4 @@ export function editApartment(apartment) {
 		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
 	}
 }
-}
+
