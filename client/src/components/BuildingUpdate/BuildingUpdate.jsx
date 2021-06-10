@@ -14,6 +14,7 @@ function BuildingUpdate() {
     const { id } = useParams();//Building id from query params
     const Build = useSelector(state => state.buildingReducer);//Use selector setup
     const dispatch = useDispatch();//dispatch setup
+    const reg = new RegExp('^[0-9]+$')//just numbers test
 
     useEffect(() => {//useEffect to get the current bulding info 
         dispatch(getBuildingDetail(id))
@@ -59,7 +60,6 @@ function BuildingUpdate() {
         apartments: Building.apartments,
         address: Building.address,
     });
-    const reg = new RegExp('^[0-9]+$')
 
     const inputHandler = (change, text) => {//input handler to change the state when the user write
         if ((change === "floor" || change === "apartments") && !reg.test(text)) {//if somone try to enter not a number in floor and aparments
@@ -149,7 +149,7 @@ function BuildingUpdate() {
     return (
         <div>
             <Grid container spacing={1}>
-            <h1 id="header">Modificar edificio:</h1>
+                <h1 id="header">Modificar edificio:</h1>
                 <form noValidate autoComplete="off" onSubmit={saveHandler} >
                     <div id="DarkGrey">
                         <Grid item xs={12}>
