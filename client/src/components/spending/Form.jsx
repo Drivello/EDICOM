@@ -1,34 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postSpending } from '../../redux/spending/actionSpending';
+import { postSpending, putSpending } from '../../redux/spending/actionSpending';
 import { getBuildings } from '../../redux/building/buildingActions';
+import { Link } from 'react-router-dom';
 import "./form.css"
 import Sidebar from "../Sidebar/Sidebar";
 
-const Form = () => {
+
+const Form = (props) => {
 
     const dispatch = useDispatch();
     //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
     const buildingArray = useSelector(
-        (state) => state.buildingReducer.allBuildings// revisar cuando haga pull el nombre del reducer
+        (state) => state.buildingReducer.allBuildings,// revisar cuando haga pull el nombre del reducer
     );
 
+    const totalSpending = useSelector(
+        (state) => state.reducerSpending.totalSpending
+    )
 
-    console.log("Building Array", buildingArray)
+    // console.log("Building Array", buildingArray)
 
     useEffect(() => {
         dispatch(getBuildings());
     }, []);
 
-    const newSpending = {
-        date: "",
-        building: 0,
-        concept: "",
-        supplier: "",
-        details: "",
-        amount: 0
+    let newSpending = {};
+
+    if(props.match.path === '/newSpending'){
+        newSpending = {
+            date: "",
+            building: 0,
+            concept: "",
+            supplier: "",
+            details: "",
+            amount: 0
+        }
     }
+    else{
+        newSpending = {
+            date: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].date,
+            building: 0,
+            concept: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].concept,
+            supplier: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].supplier,
+            details: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].details,
+            amount: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].amount,
+        }
+    }
+
     //con este estado tomo el valor seleccionado
     const [spending, setSpending] = useState(newSpending);
     const [selectedBuild, setSelectedBuild] = useState({ id: [] })
@@ -50,10 +70,7 @@ const Form = () => {
 
         }
     }
-    console.log("guardo", spending)
-
-
-
+    // console.log("guardo", spending)
 
     const handleInputChange = (e) => {
         if (e.target.name === "amount") {
@@ -68,7 +85,13 @@ const Form = () => {
                 [e.target.name]: e.target.value,
             });
         }
+
     };
+
+    const handleUpdate = (e) => {
+        dispatch(putSpending([parseInt(props.match.params.id), spending]));
+        alert("Anduvoooo");
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -105,14 +128,24 @@ const Form = () => {
                             : ""}
 
 
-
                     </select></p>
-                    <p>Concept <input type="text" value={spending.concept} onChange={handleInputChange} name="concept" placeholder="Concept" /></p>
+                    <p>Concept <input id="inpConcept" type="text" value={spending.concept} onChange={handleInputChange} name="concept" placeholder="concept"/></p>
                     <p>Supplier <input type="text" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" /></p>
-                    <p>Details <input type="text" value={spending.detail} onChange={handleInputChange} name="details" placeholder="details" /></p>
+                    <p>Details <input type="text" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" /></p>
                     <p>Amount <input type="number" value={spending.amount} min="1" onChange={handleInputChange} name="amount" placeholder="Amount" /></p>
 
-                    <button type="submit" >Add spending</button>
+                    {
+                        props.match.path === '/newSpending'
+                        ?
+                        <button type="submit" >Add spending</button>
+                        :
+                        <>
+                            <Link to={'../'}>
+                                <button type="button" onClick={handleUpdate} >Update</button>
+                                <button type="button" >Cancel</button>
+                            </Link>
+                        </>
+                    }    
                 </form>
 
             </div>
