@@ -1,7 +1,8 @@
 import './board.css'
 import React, { useEffect } from "react";
+import { Link } from 'react-router-dom' 
 import { connect } from "react-redux";
-import { totalSpending, filterSpending } from '../../redux/spending/actionSpending'
+import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
 
 
 const Board = (props) => {
@@ -28,7 +29,6 @@ const Board = (props) => {
   function handleSubmit(e) { 
     props.filterSpending(input)
   }
-  
 
 
   const date = new Date()
@@ -71,11 +71,11 @@ const Board = (props) => {
               <caption>Spendings</caption>
               <tbody>
                 <tr>
-                  <th>Date</th>
-                  <th>Concept</th>
-                  <th>Details</th>
-                  <th>Amount</th>
-                  <th>Edit</th>
+                  <th>Fecha</th>
+                  <th>Concepto</th>
+                  <th>Detalle</th>
+                  <th>Monto</th>
+                  <th>Editar</th>
                 </tr>
 
                 {props.filterSpend.map(e => 
@@ -84,7 +84,13 @@ const Board = (props) => {
                     <th>{e.concept}</th>
                     <th>{e.details}</th>
                     <th>{e.amount}</th>
-                    <th>Editar/Eliminar</th>
+                    <th>
+                      <Link to={__dirname + `board/1/edit` }>
+                        <button type="button">
+                          Editar/Eliminar 
+                        </button>
+                      </Link>
+                    </th>
                   </tr>
                )}
               </tbody>
@@ -108,6 +114,7 @@ function mapDispatchToProps(dispatch) {
   return {
     totalSpending: total => dispatch(totalSpending(total)), // me asocio a la action
     filterSpending: filter => dispatch(filterSpending(filter)),
+    deleteSpending: del => dispatch(deleteSpending(del)),
   };
 }
 

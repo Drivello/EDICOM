@@ -1,4 +1,4 @@
-import {GET_ALL_BUILDINGS, GET_BUILDING, POST_BUILDING, PUT_BUILDING, DELETE_BUILDING} from './buildingActions';
+import {GET_ALL_BUILDINGS_URL, GET_BUILDING, POST_BUILDING, PUT_BUILDING, DELETE_BUILDING} from './buildingActions';
 
 const initialState = {
     allBuildings: [],
@@ -10,8 +10,7 @@ const initialState = {
 
 export default function buildingReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_ALL_BUILDINGS:
-            console.log(action.payload.data)
+        case GET_ALL_BUILDINGS_URL:
             return {
                 ...state,
                 allBuildings: action.payload.data
