@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import App from './components/app/App.js';
+import App from './components/App/App.js';
 import reportWebVitals from './reportWebVitals'; // ¿de que sirve? ¿Es necesario?
 import {store} from './redux/indexStore';
 
