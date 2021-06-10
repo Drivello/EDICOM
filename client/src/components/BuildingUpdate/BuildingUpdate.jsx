@@ -123,17 +123,20 @@ function BuildingUpdate() {
             floor: false,
             apartments: false
         })
-
-        dispatch(putBuilding({//make the put to the back and save all changes
-            id: id,
-            cata: input.cata || Build.detailBuilding[0].cata,
-            floor: input.floor || Build.detailBuilding[0].floor,
-            apartments: input.apartments || Build.detailBuilding[0].apartments,
-            name: input.name || Build.detailBuilding[0].name,
-            address: input.address || Build.detailBuilding[0].address
-        }))
-            .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
-            alert("Se guardaron los cambios")
+        if(/\S/.test(input.name ) || /\S/.test(input.floor) || /\S/.test(input.apartments) ||  /\S/.test(input.cata) || /\S/.test(input.address)){ //cannot be just white space
+            dispatch(putBuilding({//make the put to the back and save all changes
+                id: id,
+                cata: input.cata || Build.detailBuilding[0].cata,//if there is nothing writed in an input just re save the current data
+                floor: input.floor || Build.detailBuilding[0].floor,
+                apartments: input.apartments || Build.detailBuilding[0].apartments,
+                name: input.name || Build.detailBuilding[0].name,
+                address: input.address || Build.detailBuilding[0].address
+            }))
+                .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
+                alert("Se guardaron los cambios")
+        }else{
+            alert("Debe completar todos los campos")
+        }
     }
 
     return (
