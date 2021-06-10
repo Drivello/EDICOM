@@ -116,6 +116,13 @@ function BuildingUpdate() {
             apartments: Building.apartments,
             address: Building.address,
         })
+        setWarning({//set all the warnings in nothing
+            floor: "",
+            apartments: "",
+            name: "",
+            address: "",
+            cata: ""
+        })
         setEditMode({//set all the items in read mode again.
             name: false,
             address: false,
