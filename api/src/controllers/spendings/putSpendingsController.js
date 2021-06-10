@@ -2,17 +2,23 @@ const { Spendings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let {date, concept, details, supplier, amount, building} = req.body;
+    console.log(req)
+    
+    let [id, {date, name, details, supplier, amount, building}] = req.body;
     
     try
     {
-        let spending = await Spendings.create({
+        await Spendings.update({
             date: date,
-            concept: concept,
+            name: name,
             details: details,
             supplier: supplier,
             amount: amount,
             building: building
+        }, {
+            where: {
+                id: id,
+            }
         });
 
         return res.json(spending).status(200);
