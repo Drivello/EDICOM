@@ -1,8 +1,9 @@
-import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState , React} from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 import { useParams } from "react-router-dom";
+import { Button , TextField, Container, Box} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 function BuildingUpdate(props) {
     const { id } = useParams();
@@ -52,26 +53,27 @@ function BuildingUpdate(props) {
 
     const editModestatus = (change) => {
         if(!editMode[change]){
-            if(Building && input[change] === Building[change]){
-                return <h5>{capitalize(change)}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h5>
+            if(input[change] === Building[change]){
+                return <h3>{capitalize(change)}: {Build.detailBuilding[0] && Build.detailBuilding[0][change.toLowerCase()]}</h3>
             }else{
-                return <h5>{capitalize(change)}: {input[change]}</h5>
+                return <h3>{capitalize(change)}: {input[change]}</h3>
             }
         }else{
-            return <input placeholder={capitalize(change)} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]}></input>
+            return <TextField label={capitalize(change)} onChange={(e) => inputHandler(change, e.target.value)} value={input[change]} />
         }
     }
 
     const changeModeStatus = (e) => {
-        const toChange = e.target.name;
+        console.log(e.target.offsetParent, e.target.name, e.target)
+        const toChange = (e.target.offsetParent && e.target.offsetParent.name) || e.target.name;
         setEditMode({
             ...editMode,
             [toChange]: !editMode[toChange],
         });
     }
 
-    const saveHandler = () => {
-        dispatch(getBuildingDetail(id))
+    const saveHandler = (e) => {
+        e.preventDefault();
         setInput({
             name: Building.name,
             cata: Building.cata,
@@ -79,45 +81,56 @@ function BuildingUpdate(props) {
             apartments: Building.apartments,
             address: Building.address,
         })
-        console.log({
-                id: id,
-                cata: input.cata || Build.detailBuilding[0].cata,
-                floor: input.floor || Build.detailBuilding[0].floor,
-                apartments: input.apartments || Build.detailBuilding[0].apartments,
-                name: input.name || Build.detailBuilding[0].name,
-                address: input.address || Build.detailBuilding[0].address
+        setEditMode({
+            name: false,
+            address: false,
+            cata: false,
+            floor:  false,
+            apartments: false
         })
+
+        dispatch(putBuilding({
+            id: id,
+            cata: input.cata || Build.detailBuilding[0].cata,
+            floor: input.floor || Build.detailBuilding[0].floor,
+            apartments: input.apartments || Build.detailBuilding[0].apartments,
+            name: input.name || Build.detailBuilding[0].name,
+            address: input.address || Build.detailBuilding[0].address
+    }))
+    .then(() => dispatch(getBuildingDetail(id)))
     }
 
     return (
-        <div>
+        <Container maxWidth="sm">
+        <form noValidate autoComplete="off" onSubmit={saveHandler} >
             <h2 id="header">Update your building info:</h2>
             <div id="DarkGrey">
-                <div>
+            <Box display="flex">
                     {editModestatus("name")}
-                <button name="name" onClick={changeModeStatus}>EDIT</button>
-                </div>
+                <Button variant="contained" name="name" onClick={changeModeStatus}><EditIcon name="name"/></Button>
+                </Box>
                 <div id="DetailsBox">
-                    <div>
+                <Box display="flex">
                     {editModestatus("address")}
-                    <button name="address" onClick={changeModeStatus}>EDIT</button>
-                    </div>
-                    <div>
+                    <Button variant="contained" name="address" onClick={changeModeStatus}><EditIcon /></Button>
+                    </Box>
+                    <Box display="flex">
                     {editModestatus("cata")}
-                    <button name="cata" onClick={changeModeStatus}>EDIT</button>
-                    </div>
-                    <div>
+                    <Button variant="contained" name="cata" onClick={changeModeStatus}><EditIcon /></Button>
+                    </Box>
+                    <Box display="flex">
                     {editModestatus("floor")}
-                    <button name="floor" onClick={changeModeStatus}>EDIT</button>
-                    </div>
-                    <div>
+                    <Button variant="contained" name="floor" onClick={changeModeStatus}><EditIcon /></Button>
+                    </Box>
+                    <Box display="flex">
                     {editModestatus("apartments")}
-                    <button name="apartments" onClick={changeModeStatus}>EDIT</button>
-                    </div>
+                    <Button variant="contained" name="apartments" onClick={changeModeStatus}><EditIcon /></Button>
+                    </Box>
                 </div>
-                <button onClick={saveHandler} >SAVE CHANGES</button>
+                <Button variant="contained" color="primary" onClick={saveHandler} >SAVE CHANGES</Button>
             </div>
-        </div>
+        </form>
+        </Container>
     );
 }
 
