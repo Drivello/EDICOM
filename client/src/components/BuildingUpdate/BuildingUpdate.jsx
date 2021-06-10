@@ -80,9 +80,6 @@ function BuildingUpdate() {
         }
     }
 
-
-
-
     const editModestatus = (change) => {//shows the data according to the status mode (read, write or preview )
         if (!editMode[change]) {//if is set to read mode
             if (input[change] === Building[change]) {//shows the current value if the user didn't write anything yet
@@ -136,6 +133,7 @@ function BuildingUpdate() {
             address: input.address || Build.detailBuilding[0].address
         }))
             .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
+            alert("Se guardaron los cambios")
     }
 
     return (
