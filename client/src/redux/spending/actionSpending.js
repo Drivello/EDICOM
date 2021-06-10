@@ -14,6 +14,16 @@ export function postSpending(data) {
     }
 }
 
+export function putSpending(data) {
+   
+  return function (dispatch) {
+      return axios.put(' http://localhost:3001/spendings/add ', data)
+          .then(res => {
+              dispatch({ type: POST_SPENDING, payload: res });
+          })
+  }
+}
+
 
 // -------------------------- el posta es este-------------------------
 export const totalSpending = function(){
