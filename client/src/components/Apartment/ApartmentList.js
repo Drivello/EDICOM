@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllApartments} from '../../redux/apartments/apartmentsActions';
 import {DataGrid} from '@material-ui/data-grid';
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
 import './ApartmentList.css';
 import {Link} from 'react-router-dom';
 
@@ -42,9 +45,17 @@ const ApartmentList = () => {
 	];
 
 	return (
+
+		<div>
+			<Link to="/apartmentadd" className='link'>
+				<Button variant="contained" color="primary">Crear nuevo</Button>
+			</Link>
+			
+
 		<div style={{height: 400, width: '100%'}}>
 			<div style={{display: 'flex', height: '100%'}}>
 				<DataGrid rows={apartments} columns={columns} pageSize={5} />
+
 			</div>
 		</div>
 	);

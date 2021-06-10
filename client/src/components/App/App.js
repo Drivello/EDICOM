@@ -12,6 +12,8 @@ import Form from '../spending/Form';
 import Board from '../spending/Board';
 import Container from '@material-ui/core/Container';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
+import CreateApartment from '../ApartmentAdd/CreateApartment';
+import ApartmentList from '../Apartment/ApartmentList';
 
 
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/buildings" component = {Buildings}/>
         <Route path="/buildingadd" component = {BuildingAdd}/>
         <Route path="/BuildingUpdate/:id" component = {BuildingUpdate}/>
+        <Route path='/apartments' component={ApartmentList}/>
+        <Route path='/apartmentadd' component={CreateApartment}/> 
       </BrowserRouter>
     </Container>
   );
