@@ -27,20 +27,6 @@ export function getApartmentById(id) {
 	};
 }
 
-export function updateApartment(id, data) {
-	return function (dispatch) {
-		return axios({
-			method: 'post',
-			url: `http://localhost:3001/apartments/${id}`,
-			data,
-		})
-			.then(response => {
-				dispatch({type: Actions.GET_APARTMENT, payload: data});
-			})
-			.catch(error => alert(error));
-	};
-}
-
 export function getAllApartments() {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/apartments/`);
