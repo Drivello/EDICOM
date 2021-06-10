@@ -2,20 +2,13 @@ const { Spendings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    console.log(req)
-    
-    let [id, {date, name, details, supplier, amount, building}] = req.body;
+    console.log(req.params)
+
+    let id = req.params.id;
     
     try
     {
-        await Spendings.update({
-            date: date,
-            name: name,
-            details: details,
-            supplier: supplier,
-            amount: amount,
-            building: building
-        }, {
+        await Spendings.destroy( {
             where: {
                 id: id,
             }

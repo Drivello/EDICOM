@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postSpending, putSpending } from '../../redux/spending/actionSpending';
+import { postSpending, putSpending, deleteSpending } from '../../redux/spending/actionSpending';
 import { getBuildings } from '../../redux/building/buildingActions';
 import { Link } from 'react-router-dom';
 import "./form.css"
@@ -20,7 +20,6 @@ const Form = (props) => {
         (state) => state.reducerSpending.totalSpending
     )
 
-    // console.log("Building Array", buildingArray)
 
     useEffect(() => {
         dispatch(getBuildings());
@@ -90,7 +89,10 @@ const Form = (props) => {
 
     const handleUpdate = (e) => {
         dispatch(putSpending([parseInt(props.match.params.id), spending]));
-        alert("Anduvoooo");
+    }
+
+    const handleDelete = (e) => { //
+        dispatch(deleteSpending(parseInt(props.match.params.id)));
     }
 
     const handleSubmit = (e) => {
@@ -100,7 +102,6 @@ const Form = (props) => {
         if (spending.amount === '') return alert("Concept Field Cannot Be Empty")
         dispatch(postSpending(spending));
         alert("Anduvo")
-
     }
 
     return (
@@ -108,14 +109,14 @@ const Form = (props) => {
             <div className="divContenedor">
 
                 <form onSubmit={handleSubmit}>
-                    <h2>Add spending</h2>
+                    <h2>Agregar Gasto</h2>
                     <input type="date" id="date" name="date"
                         onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })}
 
                     />
 
-                    <p>Building <select onChange={handleSelect} name="building" id="building">
-                        <option>Select Building</option>
+                    <p>Edificio <select onChange={handleSelect} name="building" id="building">
+                        <option>Elegir Edificio</option>
 
                         {buildingArray && buildingArray.length > 0 ? buildingArray.map((c, id) => {
                             return (
@@ -129,20 +130,21 @@ const Form = (props) => {
 
 
                     </select></p>
-                    <p>Concept <input id="inpConcept" type="text" value={spending.concept} onChange={handleInputChange} name="concept" placeholder="concept"/></p>
-                    <p>Supplier <input type="text" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" /></p>
-                    <p>Details <input type="text" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" /></p>
-                    <p>Amount <input type="number" value={spending.amount} min="1" onChange={handleInputChange} name="amount" placeholder="Amount" /></p>
+                    <p>Concepto <input type="text" value={spending.concept} onChange={handleInputChange} name="concept" placeholder="concept"/></p>
+                    <p>Proveedor <input type="text" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" /></p>
+                    <p>Detalle <input type="text" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" /></p>
+                    <p>Monto <input type="number" value={spending.amount} min="1" onChange={handleInputChange} name="amount" placeholder="Amount" /></p>
 
                     {
                         props.match.path === '/newSpending'
                         ?
-                        <button type="submit" >Add spending</button>
+                        <button type="submit" >Agregar Gasto</button>
                         :
                         <>
                             <Link to={'../'}>
-                                <button type="button" onClick={handleUpdate} >Update</button>
+                                <button type="button" onClick={handleUpdate} >Actualizar</button>
                                 <button type="button" >Cancel</button>
+                                <button type="button" onClick={handleDelete}>Eliminar</button>
                             </Link>
                         </>
                     }    

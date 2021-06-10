@@ -1,4 +1,4 @@
-import { POST_SPENDING, GET_SPENDINGS, FILTER_SPENDING } from '../spending/actionSpending';
+import { POST_SPENDING, GET_SPENDINGS, FILTER_SPENDING, DELETE_SPENDING } from '../spending/actionSpending';
 
 const initialState = {
     addSpending: null,
@@ -9,6 +9,10 @@ const initialState = {
 const SpendingReducer = (state = initialState, action) => {
     switch (action.type) {
         case POST_SPENDING:
+          console.log("reducer", action.payload.data)
+            return { ...state, addSpending: null};
+        case DELETE_SPENDING: //
+            console.log("reducer", action.payload.data)
             return { ...state, addSpending: null};
         case GET_SPENDINGS:
           // console.log(action.payload)

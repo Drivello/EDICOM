@@ -2,13 +2,13 @@ const { Spendings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let {date, name, details, supplier, amount, building} = req.body;
+    let {date, concept, details, supplier, amount, building} = req.body;
     
     try
     {
         let spending = await Spendings.create({
             date: date,
-            name: name,
+            concept: concept,
             details: details,
             supplier: supplier,
             amount: amount,
