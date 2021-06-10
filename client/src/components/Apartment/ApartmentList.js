@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import './ApartmentList.css';
+import {Link} from 'react-router-dom';
 
 const ApartmentList = () => {
 	const allApartments = useSelector(state => state.apartmentReducer);
@@ -16,56 +17,45 @@ const ApartmentList = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const apartments = allApartments.allApartments.map(apartment => {
+		return {
+			id: apartment.id,
+			owner: apartment.owner,
+			contact: apartment.contact,
+			state: apartment.state ? 'Activo' : 'Desocupado',
+			edit: 'editar',
+		};
+	});
+	// const editButton = (
+	// 	<Link to={`/editApartment/${id}`}>
+	// 		<span>Edit</span>
+	// 	</Link>
+	// );
+
 	const columns = [
 		{field: 'id', headerName: '#', width: 90},
-		{field: 'firstName', headerName: 'Locatario', width: 150},
-		{field: 'lastName', headerName: 'Contacto', width: 150},
-		{field: 'estado', headerName: 'Estado', width: 150},
+		{field: 'owner', headerName: 'Locatario', width: 150},
+		{field: 'contact', headerName: 'Contacto', width: 150},
+		{field: 'state', headerName: 'Estado', width: 150},
 		{
-			field: '',
-			headerName: '',
+			field: 'edit',
+			headerName: 'Editar',
 			width: 110,
 		},
 	];
 
-	const rows = [
-		{id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, estado: 232323},
-		{id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42},
-		{id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45},
-		{id: 4, lastName: 'Stark', firstName: 'Arya', age: 16},
-		{id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null},
-		{id: 6, lastName: 'Melisandre', firstName: null, age: 150},
-		{id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44},
-		{id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36},
-		{id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65},
-	];
-	{
-		/* <Link to={`/editApartment/${id}`}>
-                <span>Edit</span>
-    </Link> */
-	}
-	console.log('CONSOLE LOGGGGGG', allApartments);
 	return (
+
 		<div>
 			<Link to="/apartmentadd" className='link'>
 				<Button variant="contained" color="primary">Crear nuevo</Button>
 			</Link>
-			<div className="container">
-				<div style={{height: 400, width: '100%'}}>
-					<DataGrid
-						rows={rows}
-						columns={columns}
-						pageSize={5}
-						checkboxSelection
-					/>
-				</div>
-			</div>
-			<div>
-				<ul className="genresList">
-					{allApartments.allApartments?.map(apartment => (
-						<li key={apartment.id}>{apartment.cata_apartment}</li>
-					))}
-				</ul>
+			
+
+		<div style={{height: 400, width: '100%'}}>
+			<div style={{display: 'flex', height: '100%'}}>
+				<DataGrid rows={apartments} columns={columns} pageSize={5} />
+
 			</div>
 		</div>
 	);
