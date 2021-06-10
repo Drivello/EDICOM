@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, React } from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 import { useParams } from "react-router-dom";
-import { Button, TextField, Container, Box } from '@material-ui/core';
+import { Button, TextField, Container, Box, Grid } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
@@ -130,7 +130,7 @@ function BuildingUpdate() {
             floor: false,
             apartments: false
         })
-        if(/\S/.test(input.name ) || /\S/.test(input.floor) || /\S/.test(input.apartments) ||  /\S/.test(input.cata) || /\S/.test(input.address)){ //cannot be just white space
+        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address)) { //cannot be just white space
             dispatch(putBuilding({//make the put to the back and save all changes
                 id: id,
                 cata: input.cata || Build.detailBuilding[0].cata,//if there is nothing writed in an input just re save the current data
@@ -140,48 +140,58 @@ function BuildingUpdate() {
                 address: input.address || Build.detailBuilding[0].address
             }))
                 .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
-                alert("Se guardaron los cambios")
-        }else{
+            alert("Se guardaron los cambios")
+        } else {
             alert("Debe completar todos los campos")
         }
     }
 
     return (
-        <Container maxWidth="sm">
-            <form noValidate autoComplete="off" onSubmit={saveHandler} >
-                <h1 id="header">Modificar edificio:</h1>
-                <div id="DarkGrey">
-                    <Box display="flex">
-                        <BusinessIcon fontSize="large" />
-                        {editModestatus("name")}
-                        <Button variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
-                    </Box>
-                    <div id="DetailsBox">
-                        <Box display="flex">
-                            <LocationOnIcon fontSize="large" />
-                            {editModestatus("address")}
-                            <Button variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
-                        </Box>
-                        <Box display="flex">
-                            <FormatAlignJustifyOutlinedIcon fontSize="large" />
-                            {editModestatus("cata")}
-                            <Button variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
-                        </Box>
-                        <Box display="flex">
-                            <ListAltOutlinedIcon fontSize="large"/>
-                            {editModestatus("floor")}
-                            <Button variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
-                        </Box>
-                        <Box display="flex">
-                            <MeetingRoomIcon fontSize="large"/>
-                            {editModestatus("apartments")}
-                            <Button variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
-                        </Box>
+        <div>
+            <Grid container spacing={1}>
+            <h1 id="header">Modificar edificio:</h1>
+                <form noValidate autoComplete="off" onSubmit={saveHandler} >
+                    <div id="DarkGrey">
+                        <Grid item xs={12}>
+                            <Grid container justify="space-between" item xs={12} spacing={30}>
+                                <BusinessIcon fontSize="large" />
+                                {editModestatus("name")}
+                                <Button variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container item justify="space-between" spacing={30}>
+                                <LocationOnIcon fontSize="large" />
+                                {editModestatus("address")}
+                                <Button variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container item justify="space-between" spacing={30}>
+                                <FormatAlignJustifyOutlinedIcon fontSize="large" />
+                                {editModestatus("cata")}
+                                <Button variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container item justify="space-between" spacing={30}>
+                                <ListAltOutlinedIcon fontSize="large" />
+                                {editModestatus("floor")}
+                                <Button variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container item justify="space-between" spacing={400}>
+                                <MeetingRoomIcon fontSize="large" />
+                                {editModestatus("apartments")}
+                                <Button variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
+                            </Grid>
+                        </Grid>
                     </div>
                     <Button variant="contained" color="primary" onClick={saveHandler} >Guardar Cambios</Button>
-                </div>
-            </form>
-        </Container>
+                </form>
+            </Grid>
+        </div>
     );
 }
 
