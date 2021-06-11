@@ -5,7 +5,7 @@ import {Route} from 'react-router';
 import Home from '../Home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
-import CreateApartmentForm from '../Apartment/CreateApartmentForm';
+import CreateApartmentForm from '../ApartmentAdd/CreateApartmentForm';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/container';
 import Buildings from '../Buildings/Buildings';
