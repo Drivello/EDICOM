@@ -17,7 +17,7 @@ function BuildingUpdate() {
     const reg = new RegExp('^[0-9]+$')//just numbers test
 
     useEffect(() => {//useEffect to get the current bulding info 
-        dispatch(getBuildingDetail(id))
+        dispatch(getBuildingDetail(id)).then(console.log(Build))
     }, [])
 
     const [editMode, setEditMode] = useState({//Control the read mode or edit mode for every input
@@ -33,7 +33,8 @@ function BuildingUpdate() {
         apartments: false,
         name: false,
         address: false,
-        cata: false
+        cata: false,
+        image: false
     })
 
     const [warning, setWarning] = useState({//Control the warning message
@@ -41,7 +42,8 @@ function BuildingUpdate() {
         apartments: "",
         name: "",
         address: "",
-        cata: ""
+        cata: "",
+        image: ""
     })
 
     const Building = {//Initial state for the inputs
@@ -49,7 +51,8 @@ function BuildingUpdate() {
         floor: "",
         apartments: "",
         name: "",
-        address: ""
+        address: "",
+        image: ""
     }
 
 
@@ -59,6 +62,7 @@ function BuildingUpdate() {
         floor: Building.floor,
         apartments: Building.apartments,
         address: Building.address,
+        image: Building.image
     });
 
     const inputHandler = (change, text) => {//input handler to change the state when the user write
@@ -107,7 +111,8 @@ function BuildingUpdate() {
             apartments: false,
             name: false,
             address: false,
-            cata: false
+            cata: false,
+            image: false
         })
         setInput({//set all the inputs to the initial state
             name: Building.name,
@@ -115,23 +120,27 @@ function BuildingUpdate() {
             floor: Building.floor,
             apartments: Building.apartments,
             address: Building.address,
+            image: Building.image
         })
         setWarning({//set all the warnings in nothing
             floor: "",
             apartments: "",
             name: "",
             address: "",
-            cata: ""
+            cata: "",
+            image: ""
         })
         setEditMode({//set all the items in read mode again.
             name: false,
             address: false,
             cata: false,
             floor: false,
-            apartments: false
+            apartments: false,
         })
-        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address)) { //cannot be just white space
-            dispatch(putBuilding({//make the put to the back and save all changes
+        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address) || input.image !== "") { //cannot be just white space
+            const formData = new FormData();
+            formData.append('image', input.image);
+            formData.append('body', JSON.stringify({
                 id: id,
                 cata: input.cata || Build.detailBuilding[0].cata,//if there is nothing writed in an input just re save the current data
                 floor: input.floor || Build.detailBuilding[0].floor,
@@ -139,10 +148,27 @@ function BuildingUpdate() {
                 name: input.name || Build.detailBuilding[0].name,
                 address: input.address || Build.detailBuilding[0].address
             }))
+            dispatch(putBuilding(formData))
                 .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
             alert("Se guardaron los cambios")
         } else {
             alert("Debe completar todos los campos")
+        }
+    }
+
+    const imgHandler = (e) => {
+        let img = e.target.files[0];
+        setInput({ ...input, image: img })
+    }
+
+    const renderIMG = () => {
+        if (Build.detailBuilding[0]) {
+            if (input.image === "") return Build.detailBuilding[0].image;
+            else {
+                return URL.createObjectURL(input.image)
+            }
+        } else {
+            return "false"
         }
     }
 
@@ -188,6 +214,15 @@ function BuildingUpdate() {
                             </Grid>
                         </Grid>
                     </div>
+                    <Grid item xs={12}>
+                        <Grid container item justify="space-between">
+                            <img style={{maxHeight: 200, maxWidth: 250}} src={renderIMG()} />
+                            <Button variant="contained" component="label">
+                                Editar foto
+                                <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />
+                            </Button>
+                        </Grid>
+                    </Grid>
                     <Button variant="contained" color="primary" onClick={saveHandler} >Guardar Cambios</Button>
                 </form>
             </Grid>
