@@ -5,6 +5,16 @@ import { getBuildings } from '../../redux/building/buildingActions';
 import { Link } from 'react-router-dom';
 import "./form.css"
 import Sidebar from "../Sidebar/Sidebar";
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { Domain, Room, LocationCity, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
 
 
 const Form = (props) => {
@@ -105,53 +115,101 @@ const Form = (props) => {
     }
 
     return (
-        <div className="GeneralForm">
-            <div className="divContenedor">
+        <form onSubmit={handleSubmit}>
+            <Container>
+                <Typography variant="h2" className="componentHeading1">
+                    Todos los edificios
+                </Typography>
+            </Container>
+            <Grid container direction="row" justify="flex-start" alignItems="flex-start" className="componentDataBox" spacing={1}>
+                <Grid item xs={6}>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <Domain />
+                        </Grid>
+                        <Grid item>
+                            <InputLabel htmlFor="select">Edificio</InputLabel>
+                            <NativeSelect onChange={handleSelect} name="building" id="building">
+                                <option> Elegir Edificio </option>
+                                
+                                {buildingArray && buildingArray.length > 0 ? buildingArray.map((c, id) => {
+                                        return (
+                                            //tengo duda con el id
+                                            <option key={c.id} value={c.id}>
+                                                {c.name}
+                                            </option>
+                                        );
+                                    })
+                                        : ""}
 
-                <form onSubmit={handleSubmit}>
-                    <h2>Agregar Gasto</h2>
-                    <input type="date" id="date" name="date"
-                        onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })}
+                            </NativeSelect>
+                            {/* <TextField id="building-name" label="Nombre" defaultValue="Nombre del edificio" /> */}
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <Domain />
+                        </Grid>
+                        <Grid item>
+                            <TextField input type="date" id="date" name="date"
+                        onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })} />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <Room />
+                        </Grid>
+                        <Grid item>
+                            <TextField id="concepto" name="concept" label="Concepto" defaultValue="Concepto" value={spending.concept} onChange={handleInputChange} />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <LocationCity />
+                        </Grid>
+                        <Grid item>
+                            <TextField id="proveedor" label="Proveedor" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" defaultValue="Proveedor" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <Receipt />
+                        </Grid>
+                        <Grid item>
+                            <TextField id="detalles" label="Detalles" defaultValue="Detalles" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={1} alignItems="flex-end">
+                        <Grid item>
+                            <ListAlt />
+                        </Grid>
+                        <Grid item>
+                            <TextField id="monto" type="number" label="Monto" defaultValue="1" value={spending.amount} min="1" onChange={handleInputChange} name="amount" />
+                        </Grid>
+                    </Grid>
 
-                    />
-
-                    <p>Edificio <select onChange={handleSelect} name="building" id="building">
-                        <option>Elegir Edificio</option>
-
-                        {buildingArray && buildingArray.length > 0 ? buildingArray.map((c, id) => {
-                            return (
-                                //tengo duda con el id
-                                <option key={c.id} value={c.id}>
-                                    {c.name}
-                                </option>
-                            );
-                        })
-                            : ""}
-
-
-                    </select></p>
-                    <p>Concepto <input type="text" value={spending.concept} onChange={handleInputChange} name="concept" placeholder="concept"/></p>
-                    <p>Proveedor <input type="text" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" /></p>
-                    <p>Detalle <input type="text" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" /></p>
-                    <p>Monto <input type="number" value={spending.amount} min="1" onChange={handleInputChange} name="amount" placeholder="Amount" /></p>
-
-                    {
-                        props.match.path === '/newSpending'
-                        ?
-                        <button type="submit" >Agregar Gasto</button>
-                        :
-                        <>
-                            <Link to={'../'}>
-                                <button type="button" onClick={handleUpdate} >Actualizar</button>
-                                <button type="button" >Cancel</button>
-                                <button type="button" onClick={handleDelete}>Eliminar</button>
-                            </Link>
-                        </>
-                    }    
-                </form>
-
-            </div>
-        </div>
+                </Grid>
+                <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                    <Grid item>
+                        {
+                            props.match.path === '/newSpending'
+                                ?
+                                <Button variant="contained" color="primary" type="submit" >Agregar Gasto</Button>
+                                :
+                                <>
+                                    <Link to={'../'}>
+                                        <Button variant="contained" color="primary" type="button" onClick={handleUpdate} >Actualizar</Button>
+                                        <Button variant="contained" color="primary" type="button" >Cancel</Button>
+                                        <Button variant="contained" color="primary" type="button" onClick={handleDelete}>Eliminar</Button>
+                                    </Link>
+                                </>
+                        }
+                    </Grid>
+                </Grid>
+            </Grid>
+        </form>
     )
 }
 

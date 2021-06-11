@@ -3,9 +3,40 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom' 
 import { connect } from "react-redux";
 import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
+import { Container, Typography } from '@material-ui/core';
+import { DataGrid } from '@material-ui/data-grid';
+
+
+
+//--------------------------- Creando estructura de la tabla ------------------------
+
+const columns = [
+  {field: 'id', headerName: 'ID', flex: 1.5},
+  {field: 'date', headerName: 'Fecha', flex: 3},
+  {field: 'concept', headerName: 'Concepto', flex: 3},
+  {field: 'details', headerName: 'Detalle', flex: 5},
+  {field: 'amount', headerName: 'Importe', flex: 3},
+  {field: 'edit', headerName: 'Editar - Eliminar', flex: 3},
+]
+
 
 
 const Board = (props) => {
+  
+  
+  const spendings = props.filterSpend.map((spending, index)=> {
+    return {
+      id: index,
+      date: spending.date,
+      concept: spending.concept,
+      details: spending.details,
+      amount: spending.amount,
+      edit: <Link to={__dirname + `board/1/edit` }>
+                Editar/Eliminar 
+            </Link>,
+    }
+  })
+
 
   //-------------------------- inicio trae del state global los gastos----------
   useEffect(() => {
@@ -31,10 +62,12 @@ const Board = (props) => {
   }
 
 
+  
   const date = new Date()
   
 
     return (
+      <Container>
         <div className="totalBoard">
           <div className="filtersBoard">
             
@@ -67,8 +100,16 @@ const Board = (props) => {
           </div>
 
           <div className="table">
-            <table border="1" width="500px">
-              <caption>Spendings</caption>
+            <Typography variant="h2" className="componentHeading1">Spendings</Typography>
+
+            
+            <div style={{height: 400, width: '100%'}}>
+              <div style={{display: 'flex', height: '100%'}}>
+                  <DataGrid rows={spendings} columns={columns} pageSize={5} />
+              </div>
+            </div>
+
+            {/* <table border="1" width="500px">
               <tbody>
                 <tr>
                   <th>Fecha</th>
@@ -94,10 +135,11 @@ const Board = (props) => {
                   </tr>
                )}
               </tbody>
-            </table>          
+            </table>           */}
           </div>  
         
         </div>
+        </Container>
     )
 }
 
