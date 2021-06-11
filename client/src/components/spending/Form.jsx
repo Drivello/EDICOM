@@ -4,21 +4,22 @@ import { postSpending, putSpending, deleteSpending } from '../../redux/spending/
 import { getBuildings } from '../../redux/building/buildingActions';
 import { Link } from 'react-router-dom';
 import "./form.css"
-import Sidebar from "../Sidebar/Sidebar";
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import { Domain, Room, LocationCity, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import { Domain, Room, LocationCity, Receipt, ListAlt } from '@material-ui/icons';
+import {Typography,InputLabel,NativeSelect,Grid,Button,Container,TextField,makeStyles } from '@material-ui/core';
+
 
 
 
 const Form = (props) => {
 
+    
+    const useStyles = makeStyles((theme) => ({
+        margin: {
+            margin: theme.spacing(1),
+        },
+    }))
+    const classes = useStyles();
+    
     const dispatch = useDispatch();
     //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
@@ -33,7 +34,7 @@ const Form = (props) => {
 
     useEffect(() => {
         dispatch(getBuildings());
-    }, []);
+    }, [dispatch]);
 
     let newSpending = {};
 
@@ -68,7 +69,6 @@ const Form = (props) => {
         if (select) {
             let selectValue = select.options[select.selectedIndex].value;
             let selectedBuildName = select.options[select.selectedIndex].innerText;
-            console.log(selectedBuildName);
             setSelectedBuild({
                 ...selectedBuild,
                 name: selectedBuild.id.concat(selectedBuildName)
@@ -79,7 +79,7 @@ const Form = (props) => {
 
         }
     }
-    // console.log("guardo", spending)
+ 
 
     const handleInputChange = (e) => {
         if (e.target.name === "amount") {
@@ -107,7 +107,6 @@ const Form = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("handelsubmit", spending)
         if (spending.supplier === '') return alert("supplier Field Cannot Be Empty")
         if (spending.amount === '') return alert("Concept Field Cannot Be Empty")
         dispatch(postSpending(spending));
@@ -132,11 +131,10 @@ const Form = (props) => {
                             <NativeSelect onChange={handleSelect} name="building" id="building">
                                 <option> Elegir Edificio </option>
                                 
-                                {buildingArray && buildingArray.length > 0 ? buildingArray.map((c, id) => {
+                                {buildingArray && buildingArray.length > 0 ? buildingArray.map((building) => {
                                         return (
-                                            //tengo duda con el id
-                                            <option key={c.id} value={c.id}>
-                                                {c.name}
+                                            <option key={building.id} value={building.id}>
+                                                {building.name}
                                             </option>
                                         );
                                     })
@@ -200,9 +198,9 @@ const Form = (props) => {
                                 :
                                 <>
                                     <Link to={'../'}>
-                                        <Button variant="contained" color="primary" type="button" onClick={handleUpdate} >Actualizar</Button>
-                                        <Button variant="contained" color="primary" type="button" >Cancel</Button>
-                                        <Button variant="contained" color="primary" type="button" onClick={handleDelete}>Eliminar</Button>
+                                        <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleUpdate} >Actualizar</Button>
+                                        <Button className={classes.margin} variant="contained" color="primary" type="button" >Cancel</Button>
+                                        <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleDelete}>Eliminar</Button>
                                     </Link>
                                 </>
                         }

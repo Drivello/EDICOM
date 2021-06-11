@@ -1,42 +1,57 @@
 import './board.css'
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Link } from 'react-router-dom' 
 import { connect } from "react-redux";
 import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
-import { Container, Typography } from '@material-ui/core';
+import { Container, Typography, Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
-
 
 
 //--------------------------- Creando estructura de la tabla ------------------------
 
 const columns = [
-  {field: 'id', headerName: 'ID', flex: 1.5},
+  {field: 'id', headerName: 'ID', flex: 1.5, hide: true},
   {field: 'date', headerName: 'Fecha', flex: 3},
   {field: 'concept', headerName: 'Concepto', flex: 3},
   {field: 'details', headerName: 'Detalle', flex: 5},
   {field: 'amount', headerName: 'Importe', flex: 3},
-  {field: 'edit', headerName: 'Editar - Eliminar', flex: 3},
+  {
+    field: 'edit',
+    headerName: 'Editar - Eliminar', 
+    type: '', 
+    flex: 3, 
+  
+    renderCell: (params) => (
+      <Link to={__dirname + `board/${params.id}/edit` }>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16 }}
+          >
+            Editar
+          </Button>
+      </Link>
+    )
+  },
 ]
-
-
 
 const Board = (props) => {
   
   
-  const spendings = props.filterSpend.map((spending, index)=> {
+  const spendings = props.filterSpend.map((spending)=> {
     return {
-      id: index,
+      id: spending.id,
       date: spending.date,
       concept: spending.concept,
       details: spending.details,
       amount: spending.amount,
-      edit: <Link to={__dirname + `board/1/edit` }>
-                Editar/Eliminar 
-            </Link>,
     }
   })
 
+  console.log((<Link to={__dirname + `board/1/edit` }>
+  Editar/Eliminar 
+  </Link>).props.children);
 
   //-------------------------- inicio trae del state global los gastos----------
   useEffect(() => {
@@ -47,7 +62,7 @@ const Board = (props) => {
 
   //----------------------- inicio estado interno con los 3 filtros -----------
 
-  const [input, setInput] = React.useState({
+  const [input, setInput] = useState({
     since: '',
     upTo: '',
     concept: '',
@@ -74,24 +89,24 @@ const Board = (props) => {
             since
             <select name="since" seiz="4" onChange={handleSelect}>  
               <option> 1/1/1950 </option>
-              {props.totalSpend && props.totalSpend.map(e => 
-                <option>{e.date}</option>
+              {props.totalSpend && props.totalSpend.map((e, index) => 
+                <option key={index}>{e.date}</option>
               )}
             </select>
             
             Up to
             <select name="upTo" seiz="4" onChange={handleSelect}>  
               <option>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</option>                
-              {props.totalSpend.map(e => 
-                <option>{e.date}</option>
+              {props.totalSpend.map((e, index) => 
+                <option key={index}>{e.date}</option>
               )}
             </select>
             
             Concept
             <select name="concept" seiz="4" onChange={handleSelect}>
               <option> All </option>
-              {props.totalSpend.map(e => 
-                <option>{e.concept}</option>
+              {props.totalSpend.map((e, index) => 
+                <option key={index}>{e.concept}</option>
               )}
             </select>
 
@@ -109,33 +124,6 @@ const Board = (props) => {
               </div>
             </div>
 
-            {/* <table border="1" width="500px">
-              <tbody>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Concepto</th>
-                  <th>Detalle</th>
-                  <th>Monto</th>
-                  <th>Editar</th>
-                </tr>
-
-                {props.filterSpend.map(e => 
-                  <tr>
-                    <th>{e.date}</th>
-                    <th>{e.concept}</th>
-                    <th>{e.details}</th>
-                    <th>{e.amount}</th>
-                    <th>
-                      <Link to={__dirname + `board/1/edit` }>
-                        <button type="button">
-                          Editar/Eliminar 
-                        </button>
-                      </Link>
-                    </th>
-                  </tr>
-               )}
-              </tbody>
-            </table>           */}
           </div>  
         
         </div>

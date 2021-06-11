@@ -4,13 +4,13 @@ module.exports = async (req, res, next) => {
 
     console.log(req.params)
 
-    let id = req.params.id;
+    let {id} = req.params;
     
     try
     {
         await Spendings.destroy( {
             where: {
-                id: id,
+                id,
             }
         });
 
@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
     }
     catch(err){
        /*  console.error(err); */
-        res.json(err);
+        // res.json(err);
+        next(err);
     }
 };
