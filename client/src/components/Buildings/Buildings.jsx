@@ -20,7 +20,9 @@ function Buildings() {
                 <Typography variant="h2" className="componentHeading1">
                     Todos los edificios
                 </Typography>
-                <Button variant="contained" color="primary">Crear nuevo</Button>
+                <Button variant="contained" color="primary" href="/buildingadd">
+                    Crear nuevo
+                </Button>
             </div>
             <BuildingsTable data={buildings} />
         </Container>
