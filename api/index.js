@@ -54,7 +54,8 @@ conn.sync({ force: true }).then(() => {
       floor: building.floor,
       apartments: building.apartments,
       name: building.name,
-      address: building.address
+      address: building.address,
+      image: building.image
     });
   });
   
