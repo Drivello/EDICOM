@@ -7,10 +7,10 @@ import {getBuildings} from '../../redux/building/buildingActions';
 const allBuildings = [
 	{
 		id: 1,
-		cata: 'A23FKJ238',
+		cata: 'PA35PU238ZA',
 		floor: 'Gabi',
 		apartments: '60',
-		name: '10',
+		name: 'ElDiego10',
 		address: '3000',
 	},
 	{
@@ -21,6 +21,14 @@ const allBuildings = [
 		name: 'ASDASD',
 		address: '300',
 	},
+	{
+		id: 7,
+		cata: '25FK33',
+		floor: '90',
+		apartments: '360',
+		name: 'Costa du pau',
+		address: '300',
+	},
 ];
 
 const CreateApartment = () => {
@@ -29,6 +37,8 @@ const CreateApartment = () => {
 		owner: '',
 		mt2: '',
 		commons: '',
+		number_apartment:'',
+		contact_apartment:'',
 		expense: '',
 		state: '',
 		building: '',

@@ -5,9 +5,9 @@ import {Route} from 'react-router';
 import Home from '../Home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
-import CreateApartmentForm from '../Apartment/CreateApartmentForm';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/container';
+import Container from '@material-ui/core/Container';
 import Buildings from '../Buildings/Buildings';
 import BuildingAdd from '../BuildingAdd/BuildingAdd';
 import BuildingUpdate from '../BuildingUpdate/BuildingUpdate.jsx';
@@ -28,7 +28,7 @@ function App() {
 				<Route path="/BuildingUpdate/:id" component={BuildingUpdate} />
 				<Route path="/apartments" component={ApartmentList} />
 				<Route path="/apartmentadd" component={CreateApartment} />
-				<Route path="/create" component={CreateApartmentForm} />
+				
 				<Route path="/newSpending" component={Form} />
 				<Route exact path="/board" component={Board} />
 				<Route
