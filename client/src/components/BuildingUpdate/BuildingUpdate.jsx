@@ -177,7 +177,9 @@ function BuildingUpdate() {
     return (
         <div>
             <Grid container spacing={1}>
+            <Grid item xs={3}>
                 <h1 id="header">Modificar edificio:</h1>
+                </Grid>
                 <form noValidate autoComplete="off" onSubmit={saveHandler} >
                     <div id="DarkGrey">
                         <Grid item xs={12}>

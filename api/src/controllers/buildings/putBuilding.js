@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = async (req, res, next) => {
     
-    const file = req.files && req.files.image
+    let file = req.files && req.files.image;
+    if(file === null) file = undefined
     file && file.mv(path.resolve(`../client/public/uploads/${file.name}`))
     
     var building = JSON.parse(req.body.body);
