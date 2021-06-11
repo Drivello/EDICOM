@@ -3,8 +3,16 @@ import React, { useEffect,useState } from "react";
 import { Link } from 'react-router-dom' 
 import { connect } from "react-redux";
 import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
-import { Container, Typography, Button } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
+import { Container, Typography, Button, Grid } from '@material-ui/core';
+import { DataGrid} from '@material-ui/data-grid';
+import {MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 
 //--------------------------- Creando estructura de la tabla ------------------------
@@ -36,9 +44,21 @@ const columns = [
   },
 ]
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
+
 const Board = (props) => {
   
-  
+  const classes = useStyles();
+
   const spendings = props.filterSpend.map((spending)=> {
     return {
       id: spending.id,
@@ -82,51 +102,83 @@ const Board = (props) => {
   
 
     return (
-      <Container>
-        <div className="totalBoard">
-          <div className="filtersBoard">
-            
-            since
-            <select name="since" seiz="4" onChange={handleSelect}>  
-              <option> 1/1/1950 </option>
-              {props.totalSpend && props.totalSpend.map((e, index) => 
-                <option key={index}>{e.date}</option>
-              )}
-            </select>
-            
-            Up to
-            <select name="upTo" seiz="4" onChange={handleSelect}>  
-              <option>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</option>                
-              {props.totalSpend.map((e, index) => 
-                <option key={index}>{e.date}</option>
-              )}
-            </select>
-            
-            Concept
-            <select name="concept" seiz="4" onChange={handleSelect}>
-              <option> All </option>
-              {props.totalSpend.map((e, index) => 
-                <option key={index}>{e.concept}</option>
-              )}
-            </select>
+        <Container className={classes.root}>
+          <Container className="filtersBoard">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-            <p><input type="submit" value="Find" onClick={handleSubmit} /></p>
-          
-          </div>
+                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="From"
+                    format="MM/dd/yyyy"
+                    // value={selectedDate}
+                    onChange={handleSelect}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}/>
+                </Grid>
 
-          <div className="table">
+                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="To"
+                    format="MM/dd/yyyy"
+                    // value={selectedDate}
+                    onChange={handleSelect}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}/>
+                </Grid>
+
+                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                  <FormControl>
+                    <InputLabel id="demo-controlled-open-select-label">Concept</InputLabel>
+                      <Select
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        // open={open}
+                        // onClose={handleClose}
+                        // onOpen={handleOpen}
+                        // value={age}
+                        // onChange={handleChange}
+                        onChange={handleSelect}
+                      >
+                      <MenuItem value="">
+                        <em>All</em>
+                      </MenuItem>
+                      {props.totalSpend.map((e, index) => 
+                      <MenuItem key={index}>{e.concept}</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+              </MuiPickersUtilsProvider>
+          </Container>
+
+          <Container>
+            <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+              <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleSubmit}>
+                Find
+              </Button>        
+            </Grid>
+          </Container>
+
+          <Container className="table">
             <Typography variant="h2" className="componentHeading1">Spendings</Typography>
-
-            
-            <div style={{height: 400, width: '100%'}}>
-              <div style={{display: 'flex', height: '100%'}}>
+          
+            <Container style={{height: 400, width: '100%'}}>
+              
+              <Container style={{display: 'flex', height: '100%'}}>
                   <DataGrid rows={spendings} columns={columns} pageSize={5} />
-              </div>
-            </div>
+              </Container>
 
-          </div>  
-        
-        </div>
+            </Container>
+          
+          </Container>
+
         </Container>
     )
 }
@@ -151,3 +203,20 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps,mapDispatchToProps)(Board);
 
 
+
+
+// Up to
+// <select name="upTo" seiz="4" onChange={handleSelect}>  
+//   <option>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</option>                
+//   {props.totalSpend.map((e, index) => 
+//     <option key={index}>{e.date}</option>
+//   )}
+// </select>
+
+// Concept
+// <select name="concept" seiz="4" onChange={handleSelect}>
+//   <option> All </option>
+//   {props.totalSpend.map((e, index) => 
+//     <option key={index}>{e.concept}</option>
+//   )}
+// </select>
