@@ -158,7 +158,9 @@ function BuildingUpdate() {
 
     const imgHandler = (e) => {
         let img = e.target.files[0];
-        setInput({ ...input, image: img })
+        if(img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/png"){
+            setInput({ ...input, image: img })
+        }else alert("Tipo de archivo no soportado")
     }
 
     const renderIMG = () => {
