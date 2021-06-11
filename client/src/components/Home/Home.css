@@ -4,3 +4,25 @@
     justify-content: center;
     margin-top: 100px;
 }
+.imgCarusel{
+    width: 400px;
+    height: 300px;
+}
+.caruselCont{
+    width: 800px;
+}
+.homeCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.carusel{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoBuilding{
+    margin-right: 150px;
+}
