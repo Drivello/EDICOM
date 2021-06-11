@@ -224,7 +224,7 @@ function BuildingUpdate() {
                         <Grid container className={styles.item} item justify="space-between">
                             <img className={styles.img} src={renderIMG()} />
                             <IconButton color="primary" variant="contained" component="label">
-                                <PhotoCamera className={styles.camera}/>
+                                <PhotoCamera className={styles.camera} />
                                 <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />
                             </IconButton>
                         </Grid>
