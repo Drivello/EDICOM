@@ -156,7 +156,7 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
-                    {buildingData.image ? <img alt="Profile pic" src={renderImg()} /> : ""}
+                    {buildingData.image ? <img width="270" height="220" alt="Building pic" src={renderImg()} /> : ""}
                     <IconButton color="primary" variant="contained" component="label">
                         <PhotoCamera />
                         <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
