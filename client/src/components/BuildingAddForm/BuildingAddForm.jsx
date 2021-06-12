@@ -8,7 +8,7 @@ function BuildingAddForm() {
     const [buildingData, setBuildingData] = useState({
         cata: '',
         floor: '',
-        apartments: '',
+        cant_apartments: '',
         name: '',
         address: '',
         image: ``
@@ -37,7 +37,7 @@ function BuildingAddForm() {
         formData.append('body', JSON.stringify({
             cata: buildingData.cata,
             floor: buildingData.floor,
-            apartments: buildingData.apartments,
+            cant_apartments: buildingData.cant_apartments,
             name: buildingData.name,
             address: buildingData.address
         }))
@@ -84,7 +84,7 @@ function BuildingAddForm() {
                     <MeetingRoom />
                 </Grid>
                 <Grid item>
-                    <TextField name="apartments" type="number" label="Departamentos" onChange={handleChange} />
+                    <TextField name="cant_apartments" type="number" label="Departamentos" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
