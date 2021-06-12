@@ -1,12 +1,50 @@
-import React from 'react'
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import { FormControl, Input, TextField, Grid, Button } from '@material-ui/core';
-import { Domain, Room, LocationCity, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
-
-// Agregar un input para poder agregar la foto.
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { postBuilding } from "../../redux/building/buildingActions";
+import { TextField, Grid, Button } from '@material-ui/core';
+import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
 
 function BuildingAddForm() {
+    const [buildingData, setBuildingData] = useState({
+        cata: '',
+        floor: '',
+        apartments: '',
+        name: '',
+        address: '',
+        image: ``
+    });
+
+    const dispatch = useDispatch();
+
+    function handleChange(e) {
+        setBuildingData({
+            ...buildingData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function imgHandler(e) {
+        let img = e.target.files[0];
+        if (img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/png") {
+            setBuildingData({ ...buildingData, image: img })
+        } else alert("Tipo de archivo no soportado")
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', buildingData.image);
+        formData.append('body', JSON.stringify({
+            cata: buildingData.cata,
+            floor: buildingData.floor,
+            apartments: buildingData.apartments,
+            name: buildingData.name,
+            address: buildingData.address
+        }))
+        console.log(formData);
+        dispatch(postBuilding(formData));
+    }
+
     return (
         <form action="">
             <Grid container spacing={1} alignItems="flex-end">
@@ -14,7 +52,7 @@ function BuildingAddForm() {
                     <Domain />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-name" label="Nombre" defaultValue="Nombre del edificio" />
+                    <TextField name="name" label="Nombre del edificio" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -22,15 +60,7 @@ function BuildingAddForm() {
                     <Room />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-address" label="Dirección" defaultValue="Calle y número" />
-                </Grid>
-            </Grid>
-            <Grid container spacing={1} alignItems="flex-end">
-                <Grid item>
-                    <LocationCity />
-                </Grid>
-                <Grid item>
-                    <TextField id="building-city" label="Ciudad" defaultValue="Ciudad" />
+                    <TextField name="address" label="Dirección" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -38,7 +68,7 @@ function BuildingAddForm() {
                     <Receipt />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-cata" label="Nº Catastral" defaultValue="Número catastral" />
+                    <TextField name="cata" label="Nº Catastral" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -46,7 +76,7 @@ function BuildingAddForm() {
                     <ListAlt />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-floors" type="number" label="Pisos" defaultValue="1" />
+                    <TextField name="floor" type="number" label="Pisos" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -54,20 +84,20 @@ function BuildingAddForm() {
                     <MeetingRoom />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-apartments" type="number" label="Departamentos" defaultValue="1" />
+                    <TextField name="apartments" type="number" label="Departamentos" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
                 <Grid item>
-                    <MeetingRoom />
+                    <Image />
                 </Grid>
                 <Grid item>
-                    <TextField id="building-images" type="file" label="Subir foto" />
+                    <TextField name="image" label="Foto" type="file" onChange={imgHandler} accept="image/png, image/jpeg" />
                 </Grid>
             </Grid>
             <Grid container direction="row" justify="flex-start" alignItems="flex-start">
                 <Grid item>
-                    <Button variant="contained" color="primary">Confirmar</Button>
+                    <Button variant="contained" color="primary" onClick={handleSubmit}>Confirmar</Button>
                 </Grid>
             </Grid>
         </form>

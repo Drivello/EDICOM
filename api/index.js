@@ -19,6 +19,7 @@ conn.sync({ force: true }).then(() => {
   // --------- Si es necesario precarga automática de datos de prueba si es necesario hacer acá ----------
   // -----------------------de hacer esto, traer el modelo necsario-----------------------
 
+  
   let spending1 = Spendings.create({
     date: "April 13, 2021 1:00 PM",
     concept: "Desinfección",

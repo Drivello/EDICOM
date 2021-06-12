@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
 
 function BuildingsTable(props) {
@@ -6,10 +8,21 @@ function BuildingsTable(props) {
 
     const columns = [
         {field: 'id', headerName: 'Nº Catastral', flex: 2},
-        {field: 'name', headerName: 'Nombre', flex: 3},
-        {field: 'address', headerName: 'Dirección', flex: 3},
-        {field: 'floor', headerName: 'Pisos', flex: 2},
-        {field: 'apartments', headerName: 'Dtos.', flex: 2}
+        {field: 'name', headerName: 'Nombre', flex: 3.5},
+        {field: 'address', headerName: 'Dirección', flex: 2},
+        {field: 'floor', headerName: 'Pisos', flex: 1.5},
+        {field: 'apartments', headerName: 'Dtos.', flex: 1.5},
+        {
+            field: 'edit', 
+            headerName: 'Edit', 
+            flex: 1.5,
+            renderCell: (params) => (
+                <Link to={`${params.value}`}>                    
+                    <Button variant="contained" size="small" >
+                        Editar
+                    </Button>
+                </Link>
+        )}
     ]
     
     const buildings = buildingsData.map(building => {
@@ -18,7 +31,8 @@ function BuildingsTable(props) {
             name: building.name,
             address: building.address,
             floor: building.floor,
-            apartments: building.apartments
+            apartments: building.apartments,
+            edit: `/buildingupdate/${building.id}`
         }
     })
 

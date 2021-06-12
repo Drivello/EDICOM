@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { getBuildings } from '../../redux/building/buildingActions';
 import BuildingsTable from '../BuildingsTable/BuildingsTable';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Container, Typography, Button } from '@material-ui/core';
 
 function Buildings() {
     const buildings = useSelector(state => state.buildingReducer.allBuildings); 
@@ -20,9 +19,11 @@ function Buildings() {
                 <Typography variant="h2" className="componentHeading1">
                     Todos los edificios
                 </Typography>
-                <Button variant="contained" color="primary" href="/buildingadd">
-                    Crear nuevo
-                </Button>
+                <Link to="/buildingadd">
+                    <Button variant="contained" color="primary">
+                        Crear nuevo
+                    </Button>
+                </Link>
             </div>
             <BuildingsTable data={buildings} />
         </Container>

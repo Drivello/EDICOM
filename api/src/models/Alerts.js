@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
         },
         importance: {
             type: DataTypes.ENUM({
-              values: ["alta", "media", "baja"]
+                values: ["alta", "media", "baja"]
             }),
             allowNull: false,
         },

@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
-    
     sequelize.define('Spendings', {
         date: {
             type: DataTypes.DATE,
@@ -22,10 +21,6 @@ module.exports = (sequelize) => {
         },
         amount: {
             type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        building: {                         //Este campo se tiene que sacar cuando se generen edificios de prueba para poder
-            type: DataTypes.INTEGER,        //asignarle el id según la lista de edificios en el form de crear nuevo spending
             allowNull: false,
         },
     });
