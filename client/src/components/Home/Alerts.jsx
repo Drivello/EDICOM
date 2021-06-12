@@ -9,8 +9,11 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
     root: {
       width: 300,
-      height: 200,
-      margin: 10
+      margin: 10,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      alignItems: 'center'
     },
     bullet: {
       display: 'inline-block',
@@ -48,7 +51,7 @@ const useStyles = makeStyles({
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Detail</Button>
+          <Button variant="contained" color="primary" size="small">Detail</Button>
         </CardActions>
       </Card>
     );

@@ -11,8 +11,10 @@ import Container from '@material-ui/core/container';
 import Buildings from '../Buildings/Buildings';
 import BuildingAdd from '../BuildingAdd/BuildingAdd';
 import BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
+import BuildindDetail from '../BuildingDetail/BuildingDetail';
 import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
+import BuildingDetail from '../BuildingDetail/BuildingDetail';
 
 
 
@@ -23,13 +25,14 @@ function App() {
       <BrowserRouter>
         <Route path="/" component = {Sidebar}/>
         <Route exact path="/" component = {Home}/>
-        <Route path="/buildings" component = {Buildings}/>
-        <Route path="/buildingadd" component = {BuildingAdd}/>
-        <Route path="/BuildingUpdate/:id" component = {BuildingUpdate}/>
-        <Route path="/create" component={CreateApartmentForm} />
-        <Route path="/newSpending" component = {Form}/>
+        <Route exact path="/buildings" component = {Buildings}/>
+        <Route exact path="/buildingadd" component = {BuildingAdd}/>
+        <Route exact path="/buildingDetail/:id" component = {BuildingDetail}/>
+        <Route exact path="/BuildingUpdate/:id" component = {BuildingUpdate}/>
+        <Route exact path="/create" component={CreateApartmentForm} />
+        <Route exact path="/newSpending" component = {Form}/>
         <Route exact path="/board" component = {Board}/>
-        <Route path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
+        <Route exact path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
       </BrowserRouter>
     </Container>
   );

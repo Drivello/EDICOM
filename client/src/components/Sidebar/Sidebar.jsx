@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
@@ -20,8 +20,8 @@ import useStyles from './useStyles';
 export default function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);

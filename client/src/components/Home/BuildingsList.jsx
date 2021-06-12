@@ -1,19 +1,23 @@
 import React from 'react';
-import { Paper, Button } from '@material-ui/core';
+import { Paper, Button, Grid } from '@material-ui/core';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 export default function BuildingsList(props) {
   return (
-    <Paper className='carusel'>
-        <img className='imgCarusel'src={props.item.image} alt="not found" />
-        <div className='infoBuilding'>
+    <Grid className='carusel'>
+    <img className='imgCarusel'src={props.item.image} alt="not found" />
+    <Paper className='paperCarusel'>
+        <Grid className='infoBuilding'>
         <h2>{props.item.name}</h2>
         <h5>{props.item.address}</h5>
-
-        <Button className="CheckButton">
-            Check it out!
+        <Link to={`/buildingDetail/${props.item.id}`}>
+        <Button variant="contained" color="primary" className="CheckButton">
+            Detalle
         </Button>
-        </div>
+        </Link>
+        </Grid>
     </Paper>
+    </Grid>
   );
 }
