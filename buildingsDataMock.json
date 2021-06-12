@@ -1,3 +1,4 @@
+
 [{"id":1,"name":"Donnelly Group","cata":"930921777-4","floor":9,"apartments":16,"address":"3 Utah Way","latitude":-31.416780,"longitude":-64.190910,"image": "https://i.pinimg.com/originals/a4/c3/3d/a4c33dfb967cb044c8377b7983dd089f.jpg"},
 {"id":2,"name":"Renner Group","cata":"175281666-8","floor":2,"apartments":10,"address":"2944 Norway Maple Street","latitude":-31.426360,"longitude":-64.201470,"image": "https://image.shutterstock.com/image-photo/modern-business-office-buildings-empty-260nw-1358833193.jpg"},
 {"id":3,"name":"Jakubowski, Bauch and McDermott","cata":"807289837-X","floor":7,"apartments":3,"address":"94486 Kipling Lane","latitude":-31.427360,"longitude":-64.211570, "image": "https://i.pinimg.com/originals/4a/af/02/4aaf02dc92a72b4309908c5ec1a67ddf.jpg"},
@@ -10,3 +11,4 @@
 {"id":10,"name":"Bogan, Schaefer and Johnson","cata":"211676482-3","floor":2,"apartments":36,"address":"77 Pawling Junction","latitude":-31.487123,"longitude":-64.281123, "image": "https://www.publicdomainpictures.net/pictures/210000/velka/building-entrance-doors.jpg"},
 {"id":11,"name":"Jakubowski-Williamson","cata":"490550912-2","floor":5,"apartments":33,"address":"017 Calypso Center","latitude":-31.496555,"longitude":-64.291544, "image": "https://i.pinimg.com/originals/9e/ef/48/9eef482c418a10bf63cce7676fd0688c.png"},
 {"id":12,"name":"Lindgren, Feeney and Schaden","cata":"623667849-9","floor":17,"apartments":12,"address":"198 International Point","latitude":-31.426999,"longitude":-64.181999, "image": "https://jooinn.com/images/building-entrance-2.jpg"}]
+
