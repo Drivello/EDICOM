@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { postBuilding } from "../../redux/building/buildingActions";
-import { TextField, Grid, Button } from '@material-ui/core';
-import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
+import { TextField, Grid, Button, IconButton } from '@material-ui/core';
+import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom, PhotoCamera } from '@material-ui/icons';
 
 function BuildingAddForm() {
     const [buildingData, setBuildingData] = useState({
@@ -92,7 +92,10 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
-                    <TextField name="image" label="Foto" type="file" onChange={imgHandler} accept="image/png, image/jpeg" />
+                    <IconButton color="primary" variant="contained" component="label">
+                        <PhotoCamera />
+                        <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
+                    </IconButton>
                 </Grid>
             </Grid>
             <Grid container direction="row" justify="flex-start" alignItems="flex-start">
