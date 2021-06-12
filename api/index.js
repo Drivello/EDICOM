@@ -54,7 +54,6 @@ conn.sync({ force: true }).then(() => {
     owner: "Fulano",
     contact: "Fulan@gmail.com",
     mt2: 300,
-    commons: 3213,
     state:242342
   });
 
@@ -64,7 +63,6 @@ conn.sync({ force: true }).then(() => {
     owner: "Pepe",
     contact: "pepe@gmail.com",
     mt2: 3010,
-    commons: 3213,
     state:342
   });
 
@@ -73,7 +71,6 @@ conn.sync({ force: true }).then(() => {
     owner: "Pepe123",
     contact: "pepe123@gmail.com",
     mt2: 10010,
-    commons:2713,
     state:323
   });
 

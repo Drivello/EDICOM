@@ -27,12 +27,12 @@ function BuildingUpdate() {
         address: false,
         cata: false,
         floor: false,
-        apartments: false
+        cant_apartments: false
     });
 
     const [error, setError] = useState({//Control the error red border of the inputs
         floor: false,
-        apartments: false,
+        cant_apartments: false,
         name: false,
         address: false,
         cata: false,
@@ -41,7 +41,7 @@ function BuildingUpdate() {
 
     const [warning, setWarning] = useState({//Control the warning message
         floor: "",
-        apartments: "",
+        cant_apartments: "",
         name: "",
         address: "",
         cata: "",
@@ -51,7 +51,7 @@ function BuildingUpdate() {
     const Building = {//Initial state for the inputs
         cata: "",
         floor: "",
-        apartments: "",
+        cant_apartments: "",
         name: "",
         address: "",
         image: ""
@@ -62,13 +62,13 @@ function BuildingUpdate() {
         name: Building.name,
         cata: Building.cata,
         floor: Building.floor,
-        apartments: Building.apartments,
+        cant_apartments: Building.cant_apartments,
         address: Building.address,
         image: Building.image
     });
 
     const inputHandler = (change, text) => {//input handler to change the state when the user write
-        if ((change === "floor" || change === "apartments") && !reg.test(text)) {//if somone try to enter not a number in floor and aparments
+        if ((change === "floor" || change === "cant_apartments") && !reg.test(text)) {//if somone try to enter not a number in floor and aparments
             setWarning({//set warning msg
                 ...warning,
                 [change]: "Solo puedes ingresar numeros!"
@@ -78,7 +78,7 @@ function BuildingUpdate() {
                 [change]: true
             })
         }
-        if ((change !== "floor" && change !== "apartments") || reg.test(text) || text === "") {//just numbers in floor and apartments
+        if ((change !== "floor" && change !== "cant_apartments") || reg.test(text) || text === "") {//just numbers in floor and cant_apartments
             setInput({
                 ...input,
                 [change]: text
@@ -110,7 +110,7 @@ function BuildingUpdate() {
         e.preventDefault();
         setError({
             floor: false,
-            apartments: false,
+            cant_apartments: false,
             name: false,
             address: false,
             cata: false,
@@ -120,13 +120,13 @@ function BuildingUpdate() {
             name: Building.name,
             cata: Building.cata,
             floor: Building.floor,
-            apartments: Building.apartments,
+            cant_apartments: Building.cant_apartments,
             address: Building.address,
             image: Building.image
         })
         setWarning({//set all the warnings in nothing
             floor: "",
-            apartments: "",
+            cant_apartments: "",
             name: "",
             address: "",
             cata: "",
@@ -137,16 +137,16 @@ function BuildingUpdate() {
             address: false,
             cata: false,
             floor: false,
-            apartments: false,
+            cant_apartments: false,
         })
-        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address) || input.image !== "") { //cannot be just white space
+        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.cant_apartments) || /\S/.test(input.cata) || /\S/.test(input.address) || input.image !== "") { //cannot be just white space
             const formData = new FormData();
             formData.append('image', input.image);
             formData.append('body', JSON.stringify({
                 id: id,
                 cata: input.cata || Build.detailBuilding[0].cata,//if there is nothing writed in an input just re save the current data
                 floor: input.floor || Build.detailBuilding[0].floor,
-                apartments: input.apartments || Build.detailBuilding[0].apartments,
+                cant_apartments: input.cant_apartments || Build.detailBuilding[0].cant_apartments,
                 name: input.name || Build.detailBuilding[0].name,
                 address: input.address || Build.detailBuilding[0].address
             }))
@@ -178,7 +178,7 @@ function BuildingUpdate() {
 
     return (
         <div>
-            <Grid container xs={12}>
+            <Grid container >
                 <Grid item xs={3}>
                     <h1 id="header">Modificar edificio:</h1>
                 </Grid>
@@ -215,14 +215,14 @@ function BuildingUpdate() {
                         <Grid item xs={12}>
                             <Grid container className={styles.item} item justify="space-between">
                                 <MeetingRoomIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("apartments")}
-                                <Button className={styles.button} variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
+                                {editModestatus("cant_apartments")}
+                                <Button className={styles.button} variant="contained" name="cant_apartments" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                     </div>
                     <Grid item xs={12}>
                         <Grid container className={styles.item} item justify="space-between">
-                            <img className={styles.img} src={renderIMG()} />
+                            <img alt="Profile pic" className={styles.img} src={renderIMG()} />
                             <IconButton color="primary" variant="contained" component="label">
                                 <PhotoCamera className={styles.camera} />
                                 <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />

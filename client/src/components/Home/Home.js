@@ -42,7 +42,8 @@ const Home = (props) => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			```{
-					buildings && buildings.map((building, i) => <Marker onClick={() => {SetactiveBuilding(building)}} key={i} position={[building.latitude, building.longitude]}/> )
+					buildings && buildings.map((building, i) => {
+						(building.latitude && building.longitude) && <Marker onClick={() => {SetactiveBuilding(building)}} key={i} position={[building.latitude, building.longitude]}/> })
 				}
 				{
 					activeBuilding && <Popup/>
