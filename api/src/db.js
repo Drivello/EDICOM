@@ -49,6 +49,14 @@ Apartment.belongsTo(Buildings);
 Buildings.hasMany(Alerts);
 Alerts.belongsTo(Buildings);
 
+Apartment.hasMany(Expenses);				//{ through: 'apartmentId' }
+Expenses.belongsTo(Apartment , 
+	{
+		foreignKey: {
+			unique: 'complexUnique'
+		}
+	});
+
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS
 // Buildings.hasMany(Spendings);

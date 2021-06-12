@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
             building: building
         }, {
             where: {
-                id: id,
+                id
             }
         });
 

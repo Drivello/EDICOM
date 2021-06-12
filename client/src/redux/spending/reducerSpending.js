@@ -9,13 +9,10 @@ const initialState = {
 const SpendingReducer = (state = initialState, action) => {
     switch (action.type) {
         case POST_SPENDING:
-          console.log("reducer", action.payload.data)
             return { ...state, addSpending: null};
         case DELETE_SPENDING: //
-            console.log("reducer", action.payload.data)
             return { ...state, addSpending: null};
         case GET_SPENDINGS:
-          // console.log(action.payload)
             return {totalSpending: action.payload, filterSpending: action.payload};
         case  FILTER_SPENDING:
             if(action.payload.concept==="All"){
@@ -34,6 +31,7 @@ const SpendingReducer = (state = initialState, action) => {
                   // .filter(s => s.date <= action.payload.upTo)
                 };
               }
+              break;
         default:
             return state
     }

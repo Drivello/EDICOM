@@ -24,8 +24,8 @@ module.exports = (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        building: {                         //id de la tabla de buildings
-            type: DataTypes.INTEGER,
+        building: {                         //Este campo se tiene que sacar cuando se generen edificios de prueba para poder
+            type: DataTypes.INTEGER,        //asignarle el id según la lista de edificios en el form de crear nuevo spending
             allowNull: false,
         },
     });

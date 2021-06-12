@@ -5,22 +5,21 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
     
   sequelize.define('Expenses', {
-    issueDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false
+    month: {
+      type: DataTypes.ENUM({
+          values: ['ene', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
+        }),
+      allowNull: false,
+      unique: 'complexUnique',
     },
-    assignedMonth: {
-        type: DataTypes.ENUM({
-            values: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
-          }),
-        allowNull: false,
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: 'complexUnique',  
     },
+
     amount: {                                   //al momento de crearla se calcula según los gastos cargados
         type: DataTypes.FLOAT,
-        allowNull: false,
-    },
-    apartment: {                                //id de la tabla de buildings
-        type: DataTypes.INTEGER,
         allowNull: false,
     },
   });

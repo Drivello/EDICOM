@@ -13,6 +13,7 @@ import BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
 import BuildindDetail from '../BuildingDetail/BuildingDetail';
 import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
+import Expenses from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
 
 
@@ -32,7 +33,8 @@ function App() {
 				<Route path="/apartment/:id" component={EditApartmentForm} />
         <Route exact path="/newSpending" component = {Form}/>
         <Route exact path="/board" component = {Board}/>
-        <Route exact path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
+        <Route exact path="/ExpensesTable" component = {Expenses}/>
+        <Route path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
       </BrowserRouter>
     </Container>
   );
