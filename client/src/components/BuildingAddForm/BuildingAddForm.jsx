@@ -19,11 +19,11 @@ function BuildingAddForm() {
 
     function handleChange(e) {
         const change = e.target.name;
-        console.log(reg.test(e.target.value))
-        if((change !== "cant_apartments" && change !== "floor") || reg.test(e.target.value)){
+        const text = e.target.value;
+        if((change !== "cant_apartments" && change !== "floor") || reg.test(text) || text === ""){
             setBuildingData({
                 ...buildingData,
-                [change]: e.target.value
+                [change]: text
             })
         }
     }
