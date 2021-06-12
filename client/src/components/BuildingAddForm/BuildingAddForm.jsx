@@ -11,7 +11,7 @@ function BuildingAddForm() {
         cant_apartments: '',
         name: '',
         address: '',
-        image: ``
+        image: ''
     });
 
     const dispatch = useDispatch();
@@ -43,6 +43,10 @@ function BuildingAddForm() {
         }))
         console.log(formData);
         dispatch(postBuilding(formData));
+    }
+
+    function renderImg(){
+        return URL.createObjectURL(buildingData.image)
     }
 
     return (
@@ -92,6 +96,7 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
+                {buildingData.image? <img alt="Profile pic" src={renderImg()} /> : ""}
                     <IconButton color="primary" variant="contained" component="label">
                         <PhotoCamera />
                         <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
