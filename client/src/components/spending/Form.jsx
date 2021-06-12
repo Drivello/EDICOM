@@ -150,7 +150,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item>
                             <TextField input type="date" id="date" name="date"
-                        onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })} />
+                                onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })} />
                         </Grid>
                     </Grid>
                     <Grid container spacing={1} alignItems="flex-end">

@@ -7,13 +7,15 @@ module.exports = (sequelize) => {
   sequelize.define('Expenses', {
     month: {
       type: DataTypes.ENUM({
-          values: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+          values: ['ene', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
         }),
       allowNull: false,
+      unique: 'complexUnique',
     },
     year: {
       type: DataTypes.INTEGER,
-      allowNull: false,  
+      allowNull: false,
+      unique: 'complexUnique',  
     },
 
     amount: {                                   //al momento de crearla se calcula según los gastos cargados

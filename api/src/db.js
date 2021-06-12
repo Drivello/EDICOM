@@ -47,8 +47,13 @@ const { Spendings, Expenses, Apartment, Buildings } = sequelize.models; //ir agr
 // Product.hasMany(Reviews);
 Apartment.belongsTo(Buildings);
 
-Apartment.hasMany(Expenses);
-Expenses.belongsTo(Apartment);
+Apartment.hasMany(Expenses);				//{ through: 'apartmentId' }
+Expenses.belongsTo(Apartment , 
+	{
+		foreignKey: {
+			unique: 'complexUnique'
+		}
+	});
 
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS

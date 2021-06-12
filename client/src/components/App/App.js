@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import  Home  from '../home/Home.js';
+import  Home  from '../Home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
 import CreateApartmentForm from '../Apartment/CreateApartmentForm';

@@ -18,7 +18,7 @@ conn.sync({ force: true }).then(() => {
   // -----------------------de hacer esto, traer el modelo necsario-----------------------
 
   let spending1 = Spendings.create({
-    date: "March 13, 2021 1:00 PM",
+    date: "April 13, 2021 1:00 PM",
     concept: "Desinfección",
     details: "Desinfección de patios y vereda",
     supplier: "Desfincecciones ATR",
@@ -27,7 +27,7 @@ conn.sync({ force: true }).then(() => {
   });
 
   let spending2 = Spendings.create({
-    date: "March 14, 2021 2:00 PM",
+    date: "April 14, 2021 2:00 PM",
     concept: "Pintura",
     details: "Pintado de paredes exteriores",
     supplier: "Pintaman",
@@ -36,7 +36,7 @@ conn.sync({ force: true }).then(() => {
   });
 
   let spending3 = Spendings.create({
-    date: "March 15, 2021 3:00 PM",
+    date: "April 15, 2021 3:00 PM",
     concept: "Mantenimiento bombas",
     details: "Reparación de bomba de agua del patio principal",
     supplier: "MacGyver",
@@ -103,7 +103,7 @@ conn.sync({ force: true }).then(() => {
       res[3].addExpense(res[8]);
       console.log("datos de prueba cargados");
       },
-      console.log("no se cargaron los gastos de prueba")
+      () => console.log("no se cargaron los gastos de prueba")
     );
 });
  
