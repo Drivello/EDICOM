@@ -7,14 +7,13 @@ module.exports = (sequelize) => {
     sequelize.define('buildings', {
         cata: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         floor: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        apartments: {
+        cant_apartments: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -24,8 +23,19 @@ module.exports = (sequelize) => {
         },
         address: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique:true
+            allowNull: false
         },
+        latitude: {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        longitude: {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        image: {
+            type: DataTypes.STRING,
+        },
+        
     });
 };

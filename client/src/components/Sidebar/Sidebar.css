@@ -1,0 +1,17 @@
+.link{
+    text-decoration: none;
+    list-style: none;
+}
+.link a{
+    text-decoration: none;
+    list-style: none;
+}
+.fontColor{
+    color: black;
+}
+
+.login {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+}

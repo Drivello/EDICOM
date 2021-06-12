@@ -1,15 +1,61 @@
-import React from 'react';
-import ApartmentList from '../Apartment/ApartmentList';
-import CreateApartmentForm from '../Apartment/CreateApartmentForm';
-import Sidebar from '../Sidebar/Sidebar';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBuildings } from '../../redux/building/buildingActions';
+import { getAlerts } from '../../redux/alerts/alertActions';
+import { Grid } from '@material-ui/core';
+import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
+import Carousel from 'react-material-ui-carousel';
+import BuildingsList from './BuildingsList';
+import Alerts from './Alerts';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import './Home.css';
 
-const Home = () => {
+const Home = (props) => {
+	const buildings = useSelector(state => state.buildingReducer.allBuildings);
+	const alerts = useSelector(state => state.alertsReducer.allAlerts);
+	const [activeBuilding, SetactiveBuilding] = useState(null);
+	const dispatch = useDispatch();
+	const today = new Date();
+
+
+	useEffect(() => {
+		dispatch(getBuildings());
+		dispatch(getAlerts());
+	},[dispatch])
+
 	return (
-		<div>
-			<ApartmentList />
-			<CreateApartmentForm />
-			<Sidebar></Sidebar>
-		</div>
+		<Grid className='homeCont'>
+			<h1 className='title'>Mis Edificios</h1>
+			<Grid className='caruselCont'>
+			<Carousel 
+			NextIcon={<NavigateNextIcon/>}
+    		PrevIcon={<NavigateBeforeIcon/>}
+			>
+			{
+				buildings && buildings.map( (building, i) => <BuildingsList key={i} item={building} /> )
+			}
+			</Carousel>
+			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
+			<TileLayer
+				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			/>
+			```{
+					buildings && buildings.map((building, i) => <Marker onClick={() => {SetactiveBuilding(building)}} key={i} position={[building.latitude, building.longitude]}/> )
+				}
+				{
+					activeBuilding && <Popup/>
+				}
+			</MapContainer>
+			</Grid>
+			<h1 className='title'>Mis Alertas</h1>
+			<Grid className='alerts'>
+				{
+					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
+				}
+			</Grid>
+		</Grid>
 	);
 };
 export default Home;

@@ -1,12 +1,8 @@
 import axios from 'axios';
+export const CREATE_APARTMENT = 'CREATE_APARTMENT';
+export const ALL_APARTMENTS = 'ALL_APARTMENTS';
+export const GET_APARTMENT_BY_ID = 'GET_APARTMENT_BY_ID';
 
-export const Actions = {
-	CREATE_APARTMENT: 'createApartment',
-	ALL_APARTMENTS: 'allApartments',
-};
-//let todoId = 1
-//Importar constantes para evitar errores de tipeo
-//
 export function createApartment(apartment) {
 	return async function (dispatch) {
 		const {data} = await axios.post(
@@ -14,34 +10,29 @@ export function createApartment(apartment) {
 			apartment
 		);
 		console.log('createApartment', data);
-		dispatch({type: Actions.CREATE_APARTMENT, payload: data});
+		dispatch({type: CREATE_APARTMENT, payload: data});
 	};
 }
+
+export function getApartmentById(id) {
+	return async function (dispatch) {
+		const {data} = await axios.get(`http://localhost:3001/apartments/${id}`);
+		dispatch({type: GET_APARTMENT_BY_ID, payload: data});
+	};
+}
+
 export function getAllApartments() {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/apartments/`);
 		console.log('All Apartments', data);
-		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
+		dispatch({type: ALL_APARTMENTS, payload: data});
 	};
 }
-/*   export function getVideogames(name) {
-    return async function(dispatch) {
-        const  { data }  = await axios.get(`${GAMES_URL}?key=${API_KEY}&search=${name}`)
-        console.log("is this even happening?",data.dataSet)
-        dispatch({ type: Actions.GET_VIDEOGAMES, payload: data.dataSet })
-    };
-  }
-  export function getGenres() {
-    return async function(dispatch) {
-        const  { data }  = await axios.get(`${GENRES_URL}?key=${API_KEY}`)
-        console.log("is this even happening?",data.dataSet)
-        dispatch({ type: Actions.GET_GENRES, payload: data })
-    };
-  }
-  export function getVideogamesByID(id) {
-    return async function(dispatch) {
-        const  { data }  = await axios.get(`${GAMES_URL}/${id}`)
-        console.log("getVideogamesByID",data)
-        dispatch({ type: Actions.GET_VIDEOGAMES_BY_ID, payload: data })
-    };
-  } */
+
+export function editApartment(apartment) {
+	return async function (dispatch) {
+		const {data} = await axios.put(`http://localhost:3001/apartments/`);
+		console.log('All Apartments', data);
+		dispatch({type: ALL_APARTMENTS, payload: data});
+	};
+}

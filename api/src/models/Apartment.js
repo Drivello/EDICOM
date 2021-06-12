@@ -9,23 +9,17 @@ module.exports = sequelize => {
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		building: {
-			type: DataTypes.STRING(20),
-		},
 		cata_apartment: {
 			type: DataTypes.STRING(20),
 			unique: true,
 		},
-		owner: {
+		number_apartment: {
 			type: DataTypes.STRING(20),
 		},
 		mt2: {
 			type: DataTypes.INTEGER,
 		},
 		commons: {
-			type: DataTypes.INTEGER,
-		},
-		expense: {
 			type: DataTypes.INTEGER,
 		},
 		state: {
