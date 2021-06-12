@@ -1,6 +1,6 @@
 const express = require('express'); // libreria para crear serrvidor
 const cookieParser = require('cookie-parser'); //middleware cookie-parser
-
+const fileUpload = require('express-fileupload');
 const morgan = require('morgan'); // middleware
 const routes = require('./routes/index.js'); 
 
@@ -9,7 +9,7 @@ require('./db.js');
 const server = express();
 
 server.name = 'API';
-
+server.use(fileUpload());
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use(cookieParser());

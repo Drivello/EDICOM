@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getBuildings} from '../../redux/building/buildingActions';
+import { getBuildings } from '../../redux/building/buildingActions';
+import { getAlerts } from '../../redux/alerts/alertActions';
+import { Grid } from '@material-ui/core';
+import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import Carousel from 'react-material-ui-carousel';
 import BuildingsList from './BuildingsList';
 import Alerts from './Alerts';
@@ -10,46 +13,49 @@ import './Home.css';
 
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
+	const alerts = useSelector(state => state.alertsReducer.allAlerts);
+	const [activeBuilding, SetactiveBuilding] = useState(null);
 	const dispatch = useDispatch();
+	const today = new Date();
 
-	const tileData = [
-		{
-			building: "PatagoniaI",
-			concept: 'COMUNICADO RESTRICCIONES COVID19',
-		},
-		{   
-			building: "PatagoniaII",
-			concept: 'PROBLEMAS EN SERVICIO INTERNET',
-		},
-		{   
-			building: "PatagoniaIII",
-			concept: 'FILTRACIÓN DE AGUA SECTOR COCHERAS',
-		},
-	];
 
 	useEffect(() => {
 		dispatch(getBuildings());
-	},[])
+		dispatch(getAlerts());
+	},[dispatch])
 
 	return (
-		<div>
-			<div>
+		<Grid className='homeCont'>
+			<h1 className='title'>Mis Edificios</h1>
+			<Grid className='caruselCont'>
 			<Carousel 
 			NextIcon={<NavigateNextIcon/>}
     		PrevIcon={<NavigateBeforeIcon/>}
 			>
 			{
-				buildings && buildings.map( (item, i) => <BuildingsList key={i} item={item} /> )
+				buildings && buildings.map( (building, i) => <BuildingsList key={i} item={building} /> )
 			}
 			</Carousel>
-			</div>
-			<div className='alerts'>
-				{
-					tileData.map(e => <Alerts concept={e.concept} building={e.building}/>)
+			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
+			<TileLayer
+				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			/>
+			```{
+					buildings && buildings.map((building, i) => <Marker onClick={() => {SetactiveBuilding(building)}} key={i} position={[building.latitude, building.longitude]}/> )
 				}
-			</div>
-
-		</div>
+				{
+					activeBuilding && <Popup/>
+				}
+			</MapContainer>
+			</Grid>
+			<h1 className='title'>Mis Alertas</h1>
+			<Grid className='alerts'>
+				{
+					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
+				}
+			</Grid>
+		</Grid>
 	);
 };
 export default Home;

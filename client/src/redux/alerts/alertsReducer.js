@@ -1,36 +1,30 @@
-import {GET_ALL_BUILDINGS, GET_BUILDING, POST_BUILDING, PUT_BUILDING, DELETE_BUILDING} from './buildingActions';
+import {GET_ALL_ALERTS, POST_ALERT, PUT_ALERT, DELETE_ALERT } from './alertActions';
 
 const initialState = {
-    allBuildings: [],
-    detailBuilding: {},
+    allAlerts: [],
     postStatus: 0,
     putStatus: 0,
     deleteStatus: 0
 }
 
-export default function buildingReducer(state = initialState, action) {
+export default function alertsReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_ALL_BUILDINGS:
+        case GET_ALL_ALERTS:
             return {
                 ...state,
-                allBuildings: action.payload.data
+                allAlerts: action.payload.data
             }
-        case GET_BUILDING:
-            return {
-                ...state,
-                detailBuilding: action.payload.data
-            }
-        case POST_BUILDING:
+        case POST_ALERT:
             return {
                 ...state,
                 postStatus: action.payload.status
             }
-        case PUT_BUILDING:
+        case PUT_ALERT:
             return {
                 ...state,
                 putStatus: action.payload.status
             }
-        case DELETE_BUILDING:
+        case DELETE_ALERT:
             return {
                 ...state,
                 deleteStatus: action.payload.status
