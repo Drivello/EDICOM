@@ -48,7 +48,7 @@ function BuildingAddForm() {
                 [change]: true
             })
         }
-        if((change !== "cant_apartments" && change !== "floor") || reg.test(text) || text === ""){
+        if ((change !== "cant_apartments" && change !== "floor") || reg.test(text) || text === "") {
             setBuildingData({
                 ...buildingData,
                 [change]: text
@@ -81,7 +81,7 @@ function BuildingAddForm() {
             cata: "",
             image: ""
         })
-        if(buildingData.cata === "" || buildingData.floor === ""|| buildingData.cant_apartments === "" || buildingData.name === "" || buildingData.address === ""){
+        if (!/\S/.test(buildingData.name) || !/\S/.test(buildingData.floor) || !/\S/.test(buildingData.cant_apartments) || !/\S/.test(buildingData.cata) || !/\S/.test(buildingData.address)) {
             return alert("Por favor complete todos los datos")
         }
         const formData = new FormData();
@@ -94,10 +94,18 @@ function BuildingAddForm() {
             address: buildingData.address
         }))
         dispatch(postBuilding(formData));
+        setBuildingData({
+            cata: '',
+            floor: '',
+            cant_apartments: '',
+            name: '',
+            address: '',
+            image: ''
+        })
         alert("Edificio creado!")
     }
 
-    function renderImg(){
+    function renderImg() {
         return URL.createObjectURL(buildingData.image)
     }
 
@@ -140,7 +148,7 @@ function BuildingAddForm() {
                     <MeetingRoom />
                 </Grid>
                 <Grid item>
-                    <TextField error={error.cant_apartments} helperText={warning.cant_apartments} name="cant_apartments"  label="Departamentos" value={buildingData.cant_apartments} variant="outlined" onChange={handleChange} />
+                    <TextField error={error.cant_apartments} helperText={warning.cant_apartments} name="cant_apartments" label="Departamentos" value={buildingData.cant_apartments} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -148,7 +156,7 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
-                {buildingData.image? <img alt="Profile pic" src={renderImg()} /> : ""}
+                    {buildingData.image ? <img alt="Profile pic" src={renderImg()} /> : ""}
                     <IconButton color="primary" variant="contained" component="label">
                         <PhotoCamera />
                         <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
