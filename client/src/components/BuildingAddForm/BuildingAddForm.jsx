@@ -5,6 +5,7 @@ import { TextField, Grid, Button, IconButton } from '@material-ui/core';
 import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom, PhotoCamera } from '@material-ui/icons';
 
 function BuildingAddForm() {
+    const reg = new RegExp('^[0-9]+$')
     const [buildingData, setBuildingData] = useState({
         cata: '',
         floor: '',
@@ -17,10 +18,14 @@ function BuildingAddForm() {
     const dispatch = useDispatch();
 
     function handleChange(e) {
-        setBuildingData({
-            ...buildingData,
-            [e.target.name]: e.target.value
-        })
+        const change = e.target.name;
+        console.log(reg.test(e.target.value))
+        if((change !== "cant_apartments" && change !== "floor") || reg.test(e.target.value)){
+            setBuildingData({
+                ...buildingData,
+                [change]: e.target.value
+            })
+        }
     }
 
     function imgHandler(e) {
@@ -80,7 +85,7 @@ function BuildingAddForm() {
                     <ListAlt />
                 </Grid>
                 <Grid item>
-                    <TextField name="floor" type="number" label="Pisos" onChange={handleChange} />
+                    <TextField name="floor" label="Pisos" value={buildingData.floor} onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -88,7 +93,7 @@ function BuildingAddForm() {
                     <MeetingRoom />
                 </Grid>
                 <Grid item>
-                    <TextField name="cant_apartments" type="number" label="Departamentos" onChange={handleChange} />
+                    <TextField name="cant_apartments"  label="Departamentos" value={buildingData.cant_apartments} onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
