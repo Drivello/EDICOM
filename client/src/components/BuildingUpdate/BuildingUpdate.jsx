@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, React } from "react";
 import { getBuildingDetail, putBuilding } from "../../redux/building/buildingActions";
 import { useParams } from "react-router-dom";
-import { Button, TextField, Grid } from '@material-ui/core';
+import { Button, TextField, Grid, IconButton } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import FormatAlignJustifyOutlinedIcon from '@material-ui/icons/FormatAlignJustifyOutlined';
+import PhotoCamera from "@material-ui/icons/PhotoCamera"
 import { translate } from "./Translate";
+import styles from "./BuildingUpdate.module.css"
 
 function BuildingUpdate() {
     const { id } = useParams();//Building id from query params
@@ -33,7 +35,8 @@ function BuildingUpdate() {
         apartments: false,
         name: false,
         address: false,
-        cata: false
+        cata: false,
+        image: false
     })
 
     const [warning, setWarning] = useState({//Control the warning message
@@ -41,7 +44,8 @@ function BuildingUpdate() {
         apartments: "",
         name: "",
         address: "",
-        cata: ""
+        cata: "",
+        image: ""
     })
 
     const Building = {//Initial state for the inputs
@@ -49,7 +53,8 @@ function BuildingUpdate() {
         floor: "",
         apartments: "",
         name: "",
-        address: ""
+        address: "",
+        image: ""
     }
 
 
@@ -59,6 +64,7 @@ function BuildingUpdate() {
         floor: Building.floor,
         apartments: Building.apartments,
         address: Building.address,
+        image: Building.image
     });
 
     const inputHandler = (change, text) => {//input handler to change the state when the user write
@@ -107,7 +113,8 @@ function BuildingUpdate() {
             apartments: false,
             name: false,
             address: false,
-            cata: false
+            cata: false,
+            image: false
         })
         setInput({//set all the inputs to the initial state
             name: Building.name,
@@ -115,23 +122,27 @@ function BuildingUpdate() {
             floor: Building.floor,
             apartments: Building.apartments,
             address: Building.address,
+            image: Building.image
         })
         setWarning({//set all the warnings in nothing
             floor: "",
             apartments: "",
             name: "",
             address: "",
-            cata: ""
+            cata: "",
+            image: ""
         })
         setEditMode({//set all the items in read mode again.
             name: false,
             address: false,
             cata: false,
             floor: false,
-            apartments: false
+            apartments: false,
         })
-        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address)) { //cannot be just white space
-            dispatch(putBuilding({//make the put to the back and save all changes
+        if (/\S/.test(input.name) || /\S/.test(input.floor) || /\S/.test(input.apartments) || /\S/.test(input.cata) || /\S/.test(input.address) || input.image !== "") { //cannot be just white space
+            const formData = new FormData();
+            formData.append('image', input.image);
+            formData.append('body', JSON.stringify({
                 id: id,
                 cata: input.cata || Build.detailBuilding[0].cata,//if there is nothing writed in an input just re save the current data
                 floor: input.floor || Build.detailBuilding[0].floor,
@@ -139,6 +150,7 @@ function BuildingUpdate() {
                 name: input.name || Build.detailBuilding[0].name,
                 address: input.address || Build.detailBuilding[0].address
             }))
+            dispatch(putBuilding(formData))
                 .then(() => dispatch(getBuildingDetail(id)))//re render the info of the component and now the changes are the curren data
             alert("Se guardaron los cambios")
         } else {
@@ -146,48 +158,77 @@ function BuildingUpdate() {
         }
     }
 
+    const imgHandler = (e) => {
+        let img = e.target.files[0];
+        if (img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/png") {
+            setInput({ ...input, image: img })
+        } else alert("Tipo de archivo no soportado")
+    }
+
+    const renderIMG = () => {
+        if (Build.detailBuilding[0]) {
+            if (input.image === "") return Build.detailBuilding[0].image;
+            else {
+                return URL.createObjectURL(input.image)
+            }
+        } else {
+            return "false"
+        }
+    }
+
     return (
         <div>
-            <Grid container spacing={1}>
-                <h1 id="header">Modificar edificio:</h1>
+            <Grid container xs={12}>
+                <Grid item xs={3}>
+                    <h1 id="header">Modificar edificio:</h1>
+                </Grid>
                 <form noValidate autoComplete="off" onSubmit={saveHandler} >
-                    <div id="DarkGrey">
+                    <div className={styles.form}>
                         <Grid item xs={12}>
-                            <Grid container justify="space-between" item xs={12}>
-                                <BusinessIcon fontSize="large" />
+                            <Grid container className={styles.item} justify="space-between" item xs={12}>
+                                <BusinessIcon className={styles.icon} fontSize="large" />
                                 {editModestatus("name")}
-                                <Button variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
+                                <Button className={styles.button} variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" >
-                                <LocationOnIcon fontSize="large" />
+                            <Grid container className={styles.item} item justify="space-between" >
+                                <LocationOnIcon className={styles.icon} fontSize="large" />
                                 {editModestatus("address")}
-                                <Button variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
+                                <Button className={styles.button} variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" >
-                                <FormatAlignJustifyOutlinedIcon fontSize="large" />
+                            <Grid container className={styles.item} item justify="space-between" >
+                                <FormatAlignJustifyOutlinedIcon className={styles.icon} fontSize="large" />
                                 {editModestatus("cata")}
-                                <Button variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
+                                <Button className={styles.button} variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between" >
-                                <ListAltOutlinedIcon fontSize="large" />
+                            <Grid container className={styles.item} item justify="space-between" >
+                                <ListAltOutlinedIcon className={styles.icon} fontSize="large" />
                                 {editModestatus("floor")}
-                                <Button variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
+                                <Button className={styles.button} variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container item justify="space-between">
-                                <MeetingRoomIcon fontSize="large" />
+                            <Grid container className={styles.item} item justify="space-between">
+                                <MeetingRoomIcon className={styles.icon} fontSize="large" />
                                 {editModestatus("apartments")}
-                                <Button variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
+                                <Button className={styles.button} variant="contained" name="apartments" onClick={changeModeStatus}>EDITAR</Button>
                             </Grid>
                         </Grid>
                     </div>
+                    <Grid item xs={12}>
+                        <Grid container className={styles.item} item justify="space-between">
+                            <img className={styles.img} src={renderIMG()} />
+                            <IconButton color="primary" variant="contained" component="label">
+                                <PhotoCamera className={styles.camera} />
+                                <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
                     <Button variant="contained" color="primary" onClick={saveHandler} >Guardar Cambios</Button>
                 </form>
             </Grid>

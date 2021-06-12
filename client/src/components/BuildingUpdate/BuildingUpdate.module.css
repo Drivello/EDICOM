@@ -1,0 +1,32 @@
+.form{
+    margin-top: 100px;
+    min-height: 320px;
+    min-width: 400px;
+}
+.button{
+    max-height: 35px;
+    top: 10px;
+    margin-left: 7px;
+}
+.icon{
+    margin-top: 12px;
+    margin-left: 12px;
+}
+.img{
+    height: 150px;
+    width: 250px ;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+.camera{
+    margin-bottom: 20px;
+    margin-right: 50px;
+    width: 30px;
+    height: 30px;
+}
+
+.item{
+    min-height: 70px;
+}
