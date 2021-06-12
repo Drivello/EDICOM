@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { postBuilding } from "../../redux/building/buildingActions";
 import { TextField, Grid, Button, IconButton } from '@material-ui/core';
 import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom, PhotoCamera } from '@material-ui/icons';
+import uploadIcon from "../../upload-1118929_1280.png"
 
 function BuildingAddForm() {
     const reg = new RegExp('^[0-9]+$')
@@ -106,7 +107,8 @@ function BuildingAddForm() {
     }
 
     function renderImg() {
-        return URL.createObjectURL(buildingData.image)
+        if(!buildingData.image) return uploadIcon
+        else return URL.createObjectURL(buildingData.image)
     }
 
     return (
@@ -156,7 +158,7 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
-                    {buildingData.image ? <img width="270" height="220" alt="Building pic" src={renderImg()} /> : ""}
+                    <img width="270" height="220" alt="Building pic" src={renderImg()} />
                     <IconButton color="primary" variant="contained" component="label">
                         <PhotoCamera />
                         <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
