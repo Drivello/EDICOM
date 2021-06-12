@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        apartments: {
+        cant_apartments: {
             type: DataTypes.STRING,
             allowNull: false
         },

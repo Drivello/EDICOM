@@ -46,6 +46,7 @@ const { Spendings, Expenses, Apartment, Buildings, Alerts } = sequelize.models; 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Apartment.belongsTo(Buildings);
+Buildings.hasMany(Apartment);
 Buildings.hasMany(Alerts);
 Alerts.belongsTo(Buildings);
 

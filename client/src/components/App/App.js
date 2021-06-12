@@ -9,13 +9,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Buildings from '../Buildings/Buildings';
 import BuildingAdd from '../BuildingAdd/BuildingAdd';
+import BuildingDetail from '../BuildingDetail/BuildingDetail'
 import BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
-import BuildindDetail from '../BuildingDetail/BuildingDetail';
 import Sidebar from '../Sidebar/Sidebar';
-import EditApartmentForm from '../Apartment/EditApartmentForm'
+import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm'
 import Expenses from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
-
 
 
 function App() {

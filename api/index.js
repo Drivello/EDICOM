@@ -98,17 +98,7 @@ conn.sync({ force: true }).then(() => {
   });
 
 
-  Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3])
-    .then(res => {
-      res[3].addExpense(res[6]);
-      res[3].addExpense(res[7]);
-      res[3].addExpense(res[8]);
-      console.log("datos de prueba cargados");
-      },
-      () => console.log("no se cargaron los gastos de prueba")
-    );
-});
- 
+  
   // Mock Buildings Data
   let buildingsDataStr = JSON.stringify(buildingsData);
   let buildingsDataArray = JSON.parse(buildingsDataStr);
@@ -116,7 +106,7 @@ conn.sync({ force: true }).then(() => {
     Buildings.create({
       cata: building.cata,
       floor: building.floor,
-      apartments: building.apartments,
+      cant_apartments: building.apartments,
       name: building.name,
       address: building.address,
       latitude: building.latitude,
@@ -124,7 +114,7 @@ conn.sync({ force: true }).then(() => {
       image: building.image
     });
   });
-
+  
   let alertsDataStr = JSON.stringify(alertsData);
   let alertsDataArray = JSON.parse(alertsDataStr);
   let alertDataCreation = async (array,Buildings,Alerts) => {
@@ -135,18 +125,21 @@ conn.sync({ force: true }).then(() => {
         concept: array[i].concept,
         details: array[i].details || null,
         importance: array[i].importance
-    });
-    await Building.addAlert(Alert);
+      });
+      await Building.addAlert(Alert);
     }
   }
- 
   
-  Promise.all([spending1, spending2, spending3, buildingsDataCreation])
-  .then(res => {
-    alertDataCreation(alertsDataArray,Buildings,Alerts)
-    console.log("gastos de prueba cargados");
-    console.log("edificios de prueba cargados");
-    console.log("alertas de prueba cargadas");
-  },
-  console.log("no se cargaron los gastos de prueba")
-  );
+
+  Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3, buildingsDataCreation])
+    .then(res => {
+      res[3].addExpense(res[6]);
+      res[3].addExpense(res[7]);
+      res[3].addExpense(res[8]);
+      console.log("datos de prueba cargados");
+      alertDataCreation(alertsDataArray,Buildings,Alerts);
+      console.log("todo listo")
+    },
+      () => console.log("no se cargaron los gastos de prueba")
+    );
+});

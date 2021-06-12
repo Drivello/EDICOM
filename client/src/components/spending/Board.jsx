@@ -105,7 +105,7 @@ const Board = (props) => {
     concept: '',
   })
 
-  // const [sinceDate, setSinceDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [sinceDate, setSinceDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
   function handleSinceChange (date){
     setInput({...input, [input.since]: date});
