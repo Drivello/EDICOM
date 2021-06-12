@@ -5,16 +5,15 @@ import {Route} from 'react-router';
 import Home from '../Home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
-import CreateApartmentForm from '../ApartmentAdd/CreateApartmentForm';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/container';
+import Container from '@material-ui/core/Container';
 import Buildings from '../Buildings/Buildings';
 import BuildingAdd from '../BuildingAdd/BuildingAdd';
 import BuildingUpdate from '../BuildingUpdate/BuildingUpdate.jsx';
 import Sidebar from '../Sidebar/Sidebar';
-import EditApartmentForm from '../Apartment/EditApartmentForm';
+import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm';
 import CreateApartment from '../ApartmentAdd/CreateApartment';
-import ApartmentList from '../Apartment/ApartmentList';
+import ApartmentList from '../ApartmentList/ApartmentList';
 
 function App() {
 	return (
@@ -28,7 +27,7 @@ function App() {
 				<Route path="/BuildingUpdate/:id" component={BuildingUpdate} />
 				<Route path="/apartments" component={ApartmentList} />
 				<Route path="/apartmentadd" component={CreateApartment} />
-				<Route path="/create" component={CreateApartmentForm} />
+				<Route path="/apartment/:id" component={EditApartmentForm} />
 				<Route path="/newSpending" component={Form} />
 				<Route exact path="/board" component={Board} />
 				<Route
