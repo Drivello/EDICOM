@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router';
-import  Home  from '../Home/Home.js';
+import  Home  from '../home/Home.js';
 import Form from '../spending/Form';
 import Board from '../spending/Board';
 import CreateApartmentForm from '../Apartment/CreateApartmentForm';
@@ -13,7 +13,7 @@ import BuildingAdd from '../BuildingAdd/BuildingAdd';
 import BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
 import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../Apartment/EditApartmentForm'
-
+import Expenses from '../Expenses/Expenses'
 
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
         <Route path="/create" component={CreateApartmentForm} />
         <Route path="/newSpending" component = {Form}/>
         <Route exact path="/board" component = {Board}/>
+        <Route exact path="/ExpensesTable" component = {Expenses}/>
         <Route path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
       </BrowserRouter>
     </Container>

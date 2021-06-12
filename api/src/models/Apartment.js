@@ -25,9 +25,6 @@ module.exports = sequelize => {
 		commons: {
 			type: DataTypes.INTEGER,
 		},
-		expense: {
-			type: DataTypes.INTEGER,
-		},
 		state: {
 			type: DataTypes.INTEGER,
 		},

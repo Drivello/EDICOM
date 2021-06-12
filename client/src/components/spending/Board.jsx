@@ -1,65 +1,77 @@
 import './board.css'
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom' 
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
-import { Container, Typography, Button, Grid } from '@material-ui/core';
+import { Container, Typography, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { DataGrid} from '@material-ui/data-grid';
 import {MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 
 
 
-//--------------------------- Creando estructura de la tabla ------------------------
 
-const columns = [
-  {field: 'id', headerName: 'ID', flex: 1.5, hide: true},
-  {field: 'date', headerName: 'Fecha', flex: 3},
-  {field: 'concept', headerName: 'Concepto', flex: 3},
-  {field: 'details', headerName: 'Detalle', flex: 5},
-  {field: 'amount', headerName: 'Importe', flex: 3},
-  {
-    field: 'edit',
-    headerName: 'Editar - Eliminar', 
-    type: '', 
-    flex: 3, 
-  
-    renderCell: (params) => (
-      <Link to={__dirname + `board/${params.id}/edit` }>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16 }}
-          >
-            Editar
-          </Button>
-      </Link>
-    )
-  },
-]
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
 
 const Board = (props) => {
+
+  //--------------------------- Creando estructura de la tabla ------------------------
+
+  const columns = [
+    {field: 'id', headerName: 'ID', flex: 1.5, hide: true},
+    {field: 'date', headerName: 'Fecha', flex: 3},
+    {field: 'concept', headerName: 'Concepto', flex: 3},
+    {field: 'details', headerName: 'Detalle', flex: 5},
+    {field: 'amount', headerName: 'Importe', flex: 3},
+    {
+      field: 'edit',
+      headerName: 'Editar - Eliminar', 
+      type: '', 
+      flex: 3, 
+    
+      renderCell: (params) => (
+        <Link to={__dirname + `board/${params.id}/edit` }>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 16 }}
+            >
+              Editar
+            </Button>
+        </Link>
+      )
+    },
+  ]
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }));
+
   
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const spendings = props.filterSpend.map((spending)=> {
+
+   //-------------------------- Inicio cambio Mapdispatch x useSelcetor pa traer acciones----------
+   const filterSpend = useSelector(
+    (state) => state.reducerSpending.filterSpending,// revisar cuando haga pull el nombre del reducer
+  );
+
+  const totalSpend = useSelector(
+    (state) => state.reducerSpending.totalSpending
+  )
+  //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
+
+
+  const spendings = filterSpend.map((spending)=> {
     return {
       id: spending.id,
       date: spending.date,
@@ -75,45 +87,62 @@ const Board = (props) => {
 
   //-------------------------- inicio trae del state global los gastos----------
   useEffect(() => {
-    props.totalSpending()
-  },[])
+    dispatch(totalSpending());
+  }, [dispatch]);
   //-------------------------- fin trae del state global los gastos----------
 
 
+ 
+
   //----------------------- inicio estado interno con los 3 filtros -----------
 
+  const date1 = new Date('2014-08-18T21:11:54')
+  const date2 = new Date('2014-08-18T21:11:54')
+
   const [input, setInput] = useState({
-    since: '',
-    upTo: '',
+    since: date1,
+    upTo: date2,
     concept: '',
   })
+
+  // const [sinceDate, setSinceDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+  function handleSinceChange (date){
+    setInput({...input, [input.since]: date});
+  };
+
+  function handleUpToChange (date){
+    setInput({...input, [input.UpTo]: date});
+  };
+
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  function handleDateChange(e) { 
+    setInput({...input, [e.target.name]: e.target.value} );
+  };
   
   function handleSelect(e) { 
     setInput({...input, [e.target.name]: e.target.value})
   }
+  // console.log(input.since)
   
-  function handleSubmit(e) { 
-    props.filterSpending(input)
+  function handleSubmit(e) {
+    dispatch(filterSpending(input))
   }
-
-
-  
-  const date = new Date()
-  
 
     return (
         <Container className={classes.root}>
           <Container className="filtersBoard">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
                 <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
                   <KeyboardDatePicker
+                    name="since"
                     margin="normal"
                     id="date-picker-dialog"
                     label="From"
                     format="MM/dd/yyyy"
-                    // value={selectedDate}
-                    onChange={handleSelect}
+                    value={sinceDate}
+                    onChange={handleSinceChange}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}/>
@@ -121,35 +150,27 @@ const Board = (props) => {
 
                 <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
                   <KeyboardDatePicker
+                    name="upTo"
                     margin="normal"
                     id="date-picker-dialog"
                     label="To"
                     format="MM/dd/yyyy"
-                    // value={selectedDate}
-                    onChange={handleSelect}
+                    value={input.upTo}
+                    onChange={handleUpToChange}
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}/>
                 </Grid>
 
                 <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
-                  <FormControl>
+                  <FormControl >
                     <InputLabel id="demo-controlled-open-select-label">Concept</InputLabel>
-                      <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        // open={open}
-                        // onClose={handleClose}
-                        // onOpen={handleOpen}
-                        // value={age}
-                        // onChange={handleChange}
-                        onChange={handleSelect}
-                      >
-                      <MenuItem value="">
+                    <Select name="concept" onClick={handleSelect}>
+                      <MenuItem value="All" >
                         <em>All</em>
-                      </MenuItem>
-                      {props.totalSpend.map((e, index) => 
-                      <MenuItem key={index}>{e.concept}</MenuItem>
+                      </MenuItem >
+                      {totalSpend.map((sepndings, index) =>
+                      <MenuItem value={sepndings.concept} key={index}>{sepndings.concept}</MenuItem>
                       )}
                     </Select>
                   </FormControl>
@@ -183,40 +204,4 @@ const Board = (props) => {
     )
 }
 
-
-function mapStateToProps(state) {
-
-  return {
-    totalSpend: state.reducerSpending.totalSpending,
-    filterSpend: state.reducerSpending.filterSpending
-  }; 
-}
-  
-function mapDispatchToProps(dispatch) {
-  return {
-    totalSpending: total => dispatch(totalSpending(total)), // me asocio a la action
-    filterSpending: filter => dispatch(filterSpending(filter)),
-    deleteSpending: del => dispatch(deleteSpending(del)),
-  };
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Board);
-
-
-
-
-// Up to
-// <select name="upTo" seiz="4" onChange={handleSelect}>  
-//   <option>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</option>                
-//   {props.totalSpend.map((e, index) => 
-//     <option key={index}>{e.date}</option>
-//   )}
-// </select>
-
-// Concept
-// <select name="concept" seiz="4" onChange={handleSelect}>
-//   <option> All </option>
-//   {props.totalSpend.map((e, index) => 
-//     <option key={index}>{e.concept}</option>
-//   )}
-// </select>
+export default Board

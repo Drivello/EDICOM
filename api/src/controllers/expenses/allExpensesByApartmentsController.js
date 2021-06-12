@@ -1,9 +1,13 @@
-const { Apartment } = require("../../db.js");
+const { Apartment, Expenses } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
 	try{
-		let data = await Spendings.findAll();
+		let data = await Apartment.findAll({
+			include: [{
+				model: Expenses
+			}]
+		});
 		return res.json(data)
 	} 
 	catch(err){

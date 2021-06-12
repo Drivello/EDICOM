@@ -1,26 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getExpenses } from "./../../redux/expenses/actionExpenses";
 import { apartmentsActions } from "./../../redux/apartments/apartmentsActions";
-import { useSelector } from "react-redux";
-
-//------------------------ MATERIAL UI
-import PropTypes from "prop-types";
-import {
-   makeStyles,
-   Box,
-   Collapse,
-   IconButton,
-   Table,
-   TableBody,
-   TableCell,
-   TableContainer,
-   TableHead,
-   TableRow,
-   Typography,
-   Paper,
-} from "@material-ui/core";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { useSelector, useDispatch } from "react-redux";
 //------------------------ MATERIAL UI
 
 const Expenses = () => {
@@ -28,23 +9,46 @@ const Expenses = () => {
 
    // No se si anda
    /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
-   const expensesArray = useSelector((state) => state.reducerExpenses);
+   const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
+
 
    useEffect(() => {
-      dispatch(getExpenses);
-   }, [input]);
+      dispatch(getExpenses());
+   }, [dispatch]);
 
-   return;
-   <div>
-      {expensesArray && expensesArray.length > 1
-         ? expensesArray.map((expenses, id) => {
-              return;
-              <div>
-                 <p>{expenses.amount}</p>
-                 <p>{expenses.month}</p>
-                 <p>{expenses.year}</p>
-              </div>;
-           })
-         : ""}
-   </div>;
+
+
+   const [expensed, setExpensed] = useState([]);
+
+   if (expensed.length === 0) {
+      if (expensesArray && expensesArray.length > 0) {
+         expensesArray.map((expenses) => {
+            if (expenses.Expenses.length > 0) {
+               setExpensed(expenses.Expenses)
+            }
+         }
+         )
+
+      }
+   }
+
+   return (
+      <div>
+         {expensed && expensed?.length > 0
+            ? expensed?.map((e) => {
+           
+               return (
+                  <div>
+                  <div>{e.amount}</div>
+                  <div>{e.month}</div>
+                  <div>{e.year}</div>
+                  <br/>
+                  </div>
+                  
+               )
+            })
+            : ""}
+      </div>
+   )
 };
+export default Expenses;

@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const server = require('./src/app.js'); //app
 const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
-const { Spendings } = require('./src/db.js');
+const { Spendings, Apartment, Expenses } = require('./src/db.js');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -44,12 +44,67 @@ conn.sync({ force: true }).then(() => {
     building: 1
   });
 
-  Promise.all([spending1, spending2, spending3])
+  // --- Creamos unos departamentos de prueba
+
+  let apartment1 = Apartment.create({
+    cata_apartment: "1234567",
+    owner: "Fulano",
+    contact: "Fulan@gmail.com",
+    mt2: 300,
+    commons: 3213,
+    state:242342
+  });
+
+  
+  let apartment2 = Apartment.create({
+    cata_apartment: "12435322",
+    owner: "Pepe",
+    contact: "pepe@gmail.com",
+    mt2: 3010,
+    commons: 3213,
+    state:342
+  });
+
+  let apartment3 = Apartment.create({
+    cata_apartment: "12678765",
+    owner: "Pepe123",
+    contact: "pepe123@gmail.com",
+    mt2: 10010,
+    commons:2713,
+    state:323
+  });
+
+
+  // --- Creamos unas expensas de prueba
+
+  let expense1 = Expenses.create({
+    month: 'ene',
+    year: 2021,
+    amount: 5000,
+  });
+
+  let expense2 = Expenses.create({
+    month: 'feb',
+    year: 2021,
+    amount: 5200,
+  });
+
+  let expense3 = Expenses.create({
+    month: 'mar',
+    year: 2021,
+    amount: 3700,
+  });
+
+
+  Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3])
     .then(res => {
-      console.log("gastos de prueba cargados");
+      res[3].addExpense(res[6]);
+      res[3].addExpense(res[7]);
+      res[3].addExpense(res[8]);
+      console.log("datos de prueba cargados");
       },
       console.log("no se cargaron los gastos de prueba")
     );
 });
-
+ 
 

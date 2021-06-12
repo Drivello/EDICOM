@@ -3,10 +3,12 @@ const { Spendings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
+    const {month, year} = req.params;
 
     axios.get("http://localhost:3001/spendings/all")
-        .then((response) => {
-            
+        .then((response) => 
+        {
+
             const suma = response.data.map((data) => data.amount).reduce((a, b) => a + b);
             
             res.json(suma + ''); 
