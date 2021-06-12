@@ -13,10 +13,7 @@ module.exports = sequelize => {
 			type: DataTypes.STRING(20),
 			unique: true,
 		},
-		owner: {
-			type: DataTypes.STRING(20),
-		},
-		contact: {
+		number_apartment: {
 			type: DataTypes.STRING(20),
 		},
 		mt2: {

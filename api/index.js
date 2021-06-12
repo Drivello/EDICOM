@@ -2,7 +2,9 @@ const { DataTypes } = require('sequelize');
 
 const server = require('./src/app.js'); //app
 const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
-const { Spendings, Apartment, Expenses } = require('./src/db.js');
+const { Spendings, Apartment, Expenses, Buildings, Alerts } = require('./src/db.js');
+const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
+const alertsData = require('../alertsDataMock.json');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -107,4 +109,44 @@ conn.sync({ force: true }).then(() => {
     );
 });
  
+  // Mock Buildings Data
+  let buildingsDataStr = JSON.stringify(buildingsData);
+  let buildingsDataArray = JSON.parse(buildingsDataStr);
+  let buildingsDataCreation = buildingsDataArray.map(building => {
+    Buildings.create({
+      cata: building.cata,
+      floor: building.floor,
+      apartments: building.apartments,
+      name: building.name,
+      address: building.address,
+      latitude: building.latitude,
+      longitude: building.longitude,
+      image: building.image
+    });
+  });
 
+  let alertsDataStr = JSON.stringify(alertsData);
+  let alertsDataArray = JSON.parse(alertsDataStr);
+  let alertDataCreation = async (array,Buildings,Alerts) => {
+    for(var i=0; i< array.length; i++) {
+      var Building = await Buildings.findByPk(array[i].building);
+      var Alert = await Alerts.create({
+        date: array[i].date,
+        concept: array[i].concept,
+        details: array[i].details || null,
+        importance: array[i].importance
+    });
+    await Building.addAlert(Alert);
+    }
+  }
+ 
+  
+  Promise.all([spending1, spending2, spending3, buildingsDataCreation])
+  .then(res => {
+    alertDataCreation(alertsDataArray,Buildings,Alerts)
+    console.log("gastos de prueba cargados");
+    console.log("edificios de prueba cargados");
+    console.log("alertas de prueba cargadas");
+  },
+  console.log("no se cargaron los gastos de prueba")
+  );

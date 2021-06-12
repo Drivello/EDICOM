@@ -15,8 +15,10 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "date-fns": "^2.22.1",
+    "leaflet": "^1.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-leaflet": "^3.2.0",
     "react-material-ui-carousel": "^2.2.6",
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
@@ -33,17 +35,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
- 
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

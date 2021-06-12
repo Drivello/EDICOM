@@ -1,13 +1,8 @@
 import axios from 'axios';
+export const CREATE_APARTMENT = 'CREATE_APARTMENT';
+export const ALL_APARTMENTS = 'ALL_APARTMENTS';
+export const GET_APARTMENT_BY_ID = 'GET_APARTMENT_BY_ID';
 
-export const Actions = {
-	CREATE_APARTMENT: 'createApartment',
-	ALL_APARTMENTS: 'allApartments',
-	GET_APARTMENT: 'getApartment',
-};
-//let todoId = 1
-//Importar constantes para evitar errores de tipeo
-//
 export function createApartment(apartment) {
 	return async function (dispatch) {
 		const {data} = await axios.post(
@@ -15,29 +10,14 @@ export function createApartment(apartment) {
 			apartment
 		);
 		console.log('createApartment', data);
-		dispatch({type: Actions.CREATE_APARTMENT, payload: data});
+		dispatch({type: CREATE_APARTMENT, payload: data});
 	};
 }
 
 export function getApartmentById(id) {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/apartments/${id}`);
-		console.log('Get Apartment ', id);
-		dispatch({type: Actions.GET_APARTMENT, payload: data});
-	};
-}
-
-export function updateApartment(id, data) {
-	return function (dispatch) {
-		return axios({
-			method: 'post',
-			url: `http://localhost:3001/apartments/${id}`,
-			data,
-		})
-			.then(response => {
-				dispatch({type: Actions.GET_APARTMENT, payload: data});
-			})
-			.catch(error => alert(error));
+		dispatch({type: GET_APARTMENT_BY_ID, payload: data});
 	};
 }
 
@@ -45,7 +25,7 @@ export function getAllApartments() {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/apartments/`);
 		console.log('All Apartments', data);
-		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
+		dispatch({type: ALL_APARTMENTS, payload: data});
 	};
 }
 
@@ -53,6 +33,6 @@ export function editApartment(apartment) {
 	return async function (dispatch) {
 		const {data} = await axios.put(`http://localhost:3001/apartments/`);
 		console.log('All Apartments', data);
-		dispatch({type: Actions.ALL_APARTMENTS, payload: data});
+		dispatch({type: ALL_APARTMENTS, payload: data});
 	};
 }

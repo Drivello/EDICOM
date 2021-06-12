@@ -2,5 +2,44 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 20px;
+}
+.imgCarusel{
+    width: 500px;
+    height: 300px;
+}
+.paperCarusel{
+    width: 500px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -50px;
+}
+.caruselCont{
+    margin-top: 20px;
+}
+.title{
+    margin-top: 50px;
+}
+.carusel{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.infoBuilding{
+    text-align: center;
+}
+.map{
+    width: 1000px;
+    height: 500px;
+    margin-top: 50px;
 }

@@ -11,8 +11,8 @@ module.exports = async (req, res, next) => {
 			owner: owner,
 			state: state,
 		},
-		{where: {id: id}}
+		{where: {id}}
 	);
-	const apartment = await Apartment.findOne({where: {id: id}});
+	const apartment = await Apartment.findOne({where: {id}});
 	res.send(apartment);
 };
