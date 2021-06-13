@@ -180,7 +180,7 @@ function BuildingUpdate() {
         <div>
             <Grid container >
                 <Grid item xs={3}>
-                    <h1 id="header">Modificar edificio:</h1>
+                    <h1 className={styles.header} id="header" >Modificar edificio:</h1>
                 </Grid>
                 <form noValidate autoComplete="off" onSubmit={saveHandler} >
                     <div className={styles.form}>
