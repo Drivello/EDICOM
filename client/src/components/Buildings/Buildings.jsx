@@ -11,7 +11,7 @@ function Buildings() {
 
     useEffect(() => {
         dispatch(getBuildings());
-    }, [])
+    }, [dispatch])
 
     return (
         <Container>

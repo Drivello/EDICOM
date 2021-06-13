@@ -14,12 +14,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import './Sidebar.css';
 import useStyles from './useStyles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 
 export default function Sidebar() {
-  const classes = useStyles();
-  const theme = useTheme();
+  const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,6 +41,7 @@ export default function Sidebar() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -58,7 +60,7 @@ export default function Sidebar() {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+            <MenuIcon style={{color: "#00ff7f"}}/>
           </IconButton>
           <Typography variant="h6" noWrap>
             Panel Administrador
@@ -71,7 +73,7 @@ export default function Sidebar() {
           </Button>
 
           <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            <AccountCircleIcon style={{ fontSize: 35 , color: "white"}}/>
+            <AccountCircleIcon style={{ fontSize: 35 , color: "#00ff7f"}}/>
           </Button>
           <Menu
             id="simple-menu"
@@ -100,7 +102,7 @@ export default function Sidebar() {
         }}>
 
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton style={{color: "#00ff7f"}} onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
@@ -151,5 +153,6 @@ export default function Sidebar() {
       </main>
 
     </div>
+    </ThemeProvider>
   );
 }

@@ -2,7 +2,7 @@ const { Alerts, Buildings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let { date, concept, details, building, importance} = req.body;
+    let { date, concept, details, building, importance } = req.body;
     
     try
     {

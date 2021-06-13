@@ -11,6 +11,8 @@ import Alerts from './Alerts';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import './Home.css';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
@@ -30,6 +32,7 @@ const Home = (props) => {
 	console.log(spends) //prueba marian
 
 	return (
+		<ThemeProvider theme={theme}>
 		<Grid className='homeCont'>
 			<h1 className='title'>Mis Edificios</h1>
 			<Grid className='caruselCont'>
@@ -38,7 +41,7 @@ const Home = (props) => {
     		PrevIcon={<NavigateBeforeIcon/>}
 			>
 			{
-				buildings && buildings.map( (building, i) => <BuildingsList key={i} item={building} /> )
+				buildings && buildings.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
 			}
 			</Carousel>
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
@@ -47,10 +50,12 @@ const Home = (props) => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 			```{
-					buildings && buildings.map((building, i) => <Marker onClick={() => {SetactiveBuilding(building)}} key={i} position={[building.latitude, building.longitude]}/> )
-				}
-				{
-					activeBuilding && <Popup/>
+					buildings && buildings.map((building, i) => <Marker key={i} position={[(building.latitude || -31.426780), (building.longitude || -64.190910)]}>
+						<Popup>
+							<h3>{building.name}</h3>
+						</Popup>
+					</Marker>
+					)
 				}
 			</MapContainer>
 			</Grid>
@@ -61,6 +66,7 @@ const Home = (props) => {
 				}
 			</Grid>
 		</Grid>
+		</ThemeProvider>
 	);
 };
 export default Home;
