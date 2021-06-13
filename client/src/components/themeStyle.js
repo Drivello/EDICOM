@@ -12,7 +12,7 @@ const theme = createMuiTheme({
       contrastText: 'white',
     },
     background: {
-      default: "black"
+      default: "white"
     },
 
   },
