@@ -8,9 +8,11 @@ module.exports = async (req, res, next) => {
     var building = await Buildings.create({
         cata: building.cata,
         floor: building.floor,
-        apartments: building.apartments,
+        cant_apartments: building.cant_apartments,
         name: building.name,
         address: building.address,
+        latitude: building.latitude || null,
+        longitude: building.longitude || null,
         image: file && `../../../uploads/${file.name}`
     })
     .then(() => res.json(building).status(200))

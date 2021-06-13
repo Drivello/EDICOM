@@ -1,26 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { postBuilding } from "../../redux/building/buildingActions";
-import { TextField, Grid, Button } from '@material-ui/core';
-import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom } from '@material-ui/icons';
+import { TextField, Grid, Button, IconButton } from '@material-ui/core';
+import { Domain, Room, Image, Receipt, ListAlt, MeetingRoom, PhotoCamera } from '@material-ui/icons';
+import uploadIcon from "../../upload-1118929_1280.png"
 
 function BuildingAddForm() {
+    const reg = new RegExp('^[0-9]+$')
     const [buildingData, setBuildingData] = useState({
         cata: '',
         floor: '',
-        apartments: '',
+        cant_apartments: '',
         name: '',
         address: '',
-        image: ``
+        image: ''
     });
+
+    const [error, setError] = useState({//Control the error red border of the inputs
+        floor: false,
+        cant_apartments: false,
+        name: false,
+        address: false,
+        cata: false,
+        image: false
+    })
+
+    const [warning, setWarning] = useState({//Control the warning message
+        floor: "",
+        cant_apartments: "",
+        name: "",
+        address: "",
+        cata: "",
+        image: ""
+    })
 
     const dispatch = useDispatch();
 
     function handleChange(e) {
-        setBuildingData({
-            ...buildingData,
-            [e.target.name]: e.target.value
-        })
+        const change = e.target.name;
+        const text = e.target.value;
+        if ((change === "floor" || change === "cant_apartments") && !reg.test(text) && text !== "") {//if somone try to enter not a number in floor and aparments
+            setWarning({//set warning msg
+                ...warning,
+                [change]: "Solo puedes ingresar numeros!"
+            })
+            setError({//set the error of that input in true
+                ...error,
+                [change]: true
+            })
+        }
+        if ((change !== "cant_apartments" && change !== "floor") || reg.test(text) || text === "") {
+            setBuildingData({
+                ...buildingData,
+                [change]: text
+            })
+        }
     }
 
     function imgHandler(e) {
@@ -32,17 +66,49 @@ function BuildingAddForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setError({
+            floor: false,
+            cant_apartments: false,
+            name: false,
+            address: false,
+            cata: false,
+            image: false
+        })
+        setWarning({//set all the warnings in nothing
+            floor: "",
+            cant_apartments: "",
+            name: "",
+            address: "",
+            cata: "",
+            image: ""
+        })
+        if (!/\S/.test(buildingData.name) || !/\S/.test(buildingData.floor) || !/\S/.test(buildingData.cant_apartments) || !/\S/.test(buildingData.cata) || !/\S/.test(buildingData.address)) {
+            return alert("Por favor complete todos los datos")
+        }
         const formData = new FormData();
         formData.append('image', buildingData.image);
         formData.append('body', JSON.stringify({
             cata: buildingData.cata,
             floor: buildingData.floor,
-            apartments: buildingData.apartments,
+            cant_apartments: buildingData.cant_apartments,
             name: buildingData.name,
             address: buildingData.address
         }))
-        console.log(formData);
         dispatch(postBuilding(formData));
+        setBuildingData({
+            cata: '',
+            floor: '',
+            cant_apartments: '',
+            name: '',
+            address: '',
+            image: ''
+        })
+        alert("Edificio creado!")
+    }
+
+    function renderImg() {
+        if(!buildingData.image) return uploadIcon
+        else return URL.createObjectURL(buildingData.image)
     }
 
     return (
@@ -52,7 +118,7 @@ function BuildingAddForm() {
                     <Domain />
                 </Grid>
                 <Grid item>
-                    <TextField name="name" label="Nombre del edificio" onChange={handleChange} />
+                    <TextField name="name" label="Nombre del edificio" value={buildingData.name} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -60,7 +126,7 @@ function BuildingAddForm() {
                     <Room />
                 </Grid>
                 <Grid item>
-                    <TextField name="address" label="Dirección" onChange={handleChange} />
+                    <TextField name="address" label="Dirección" value={buildingData.address} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -68,7 +134,7 @@ function BuildingAddForm() {
                     <Receipt />
                 </Grid>
                 <Grid item>
-                    <TextField name="cata" label="Nº Catastral" onChange={handleChange} />
+                    <TextField name="cata" label="Nº Catastral" value={buildingData.cata} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -76,7 +142,7 @@ function BuildingAddForm() {
                     <ListAlt />
                 </Grid>
                 <Grid item>
-                    <TextField name="floor" type="number" label="Pisos" onChange={handleChange} />
+                    <TextField error={error.floor} helperText={warning.floor} name="floor" label="Pisos" value={buildingData.floor} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -84,7 +150,7 @@ function BuildingAddForm() {
                     <MeetingRoom />
                 </Grid>
                 <Grid item>
-                    <TextField name="apartments" type="number" label="Departamentos" onChange={handleChange} />
+                    <TextField error={error.cant_apartments} helperText={warning.cant_apartments} name="cant_apartments" label="Departamentos" value={buildingData.cant_apartments} variant="outlined" onChange={handleChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} alignItems="flex-end">
@@ -92,7 +158,11 @@ function BuildingAddForm() {
                     <Image />
                 </Grid>
                 <Grid item>
-                    <TextField name="image" label="Foto" type="file" onChange={imgHandler} accept="image/png, image/jpeg" />
+                    <img width="270" height="220" alt="Building pic" src={renderImg()} />
+                    <IconButton color="primary" variant="contained" component="label">
+                        <PhotoCamera />
+                        <input onChange={imgHandler} name="image" type="file" label="Foto" accept="image/png, image/jpeg" hidden />
+                    </IconButton>
                 </Grid>
             </Grid>
             <Grid container direction="row" justify="flex-start" alignItems="flex-start">

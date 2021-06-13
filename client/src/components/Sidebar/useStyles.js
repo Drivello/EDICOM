@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      backgroundColor: "#212121"
     },
     drawerClose: {
       transition: theme.transitions.create('width', {
@@ -50,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
+      backgroundColor: "#212121",
+      
     },
     toolbar: {
       display: 'flex',

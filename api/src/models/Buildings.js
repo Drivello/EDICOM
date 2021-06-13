@@ -27,11 +27,9 @@ module.exports = (sequelize) => {
         },
         latitude: {
             type: DataTypes.FLOAT,
-            allowNull: false
         },
         longitude: {
             type: DataTypes.FLOAT,
-            allowNull: false
         },
         image: {
             type: DataTypes.STRING,

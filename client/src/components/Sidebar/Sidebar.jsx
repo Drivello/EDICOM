@@ -14,12 +14,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import './Sidebar.css';
 import useStyles from './useStyles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 
 export default function Sidebar() {
-  const classes = useStyles();
-  const theme = useTheme();
+  const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,6 +41,7 @@ export default function Sidebar() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -58,7 +60,7 @@ export default function Sidebar() {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+            <MenuIcon style={{color: "#00ff7f"}}/>
           </IconButton>
           <Typography variant="h6" noWrap>
             Panel Administrador
@@ -66,7 +68,7 @@ export default function Sidebar() {
         </Toolbar>
         <div className='login'>
           <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-            <AccountCircleIcon style={{ fontSize: 35 , color: "white"}}/>
+            <AccountCircleIcon style={{ fontSize: 35 , color: "#00ff7f"}}/>
           </Button>
           <Menu
             id="simple-menu"
@@ -94,7 +96,7 @@ export default function Sidebar() {
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton style={{color: "#00ff7f"}} onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
@@ -102,39 +104,37 @@ export default function Sidebar() {
         <List>
           <Link to="/buildings" className='link'>
           <ListItem button key={'Edificios'}>
-          <ListItemIcon><ApartmentIcon/></ListItemIcon>
+          <ListItemIcon><ApartmentIcon style={{color: "#00ff7f"}}/></ListItemIcon>
           <ListItemText className ='fontColor' primary={'Edificios'} />
           </ListItem>
           </Link>
           <Link to="" className='link'>
           <ListItem button key={'Amenities'}>
-          <ListItemIcon><OutdoorGrillIcon/></ListItemIcon>
+          <ListItemIcon><OutdoorGrillIcon style={{color: "#00ff7f"}}/></ListItemIcon>
           <ListItemText className ='fontColor' primary={'Amenities'} />
           </ListItem>
           </Link>
           <Link to="/apartments" className='link'>
           <ListItem button key={'Departamentos'}>
-          <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
+          <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Departamentos'} />
           </ListItem>
           </Link>
           <Link to=''>
           <ListItem button key={'Gastos'}>
-          <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
+          <ListItemIcon><MonetizationOnIcon style={{color: "#00ff7f"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Gastos'} />
           </ListItem>
           </Link>
           <Link to=''>
           <ListItem button key={'Alertas'}>
-          <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+          <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Alertas'} />
           </ListItem>
           </Link>
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-      </main>
     </div>
+    </ThemeProvider>
   );
 }

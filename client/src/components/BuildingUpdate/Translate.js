@@ -3,5 +3,5 @@ export const translate = {
     cata: "Nº Catastral",
     address: "Direccion",
     floor: "Pisos",
-    apartments: "Departamentos"
+    cant_apartments: "Departamentos"
 }
