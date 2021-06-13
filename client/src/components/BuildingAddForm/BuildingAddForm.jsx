@@ -37,7 +37,7 @@ function BuildingAddForm() {
         formData.append('body', JSON.stringify({
             cata: buildingData.cata,
             floor: buildingData.floor,
-            apartments: buildingData.apartments,
+            cant_apartments: buildingData.apartments,
             name: buildingData.name,
             address: buildingData.address
         }))

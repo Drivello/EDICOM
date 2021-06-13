@@ -14,12 +14,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import './Sidebar.css';
 import useStyles from './useStyles';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 
 export default function Sidebar() {
-  const classes = useStyles();
-  const theme = useTheme();
+  const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,6 +41,7 @@ export default function Sidebar() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -102,31 +104,31 @@ export default function Sidebar() {
         <List>
           <Link to="/buildings" className='link'>
           <ListItem button key={'Edificios'}>
-          <ListItemIcon><ApartmentIcon/></ListItemIcon>
+          <ListItemIcon><ApartmentIcon style={{color: "#ff00c8"}}/></ListItemIcon>
           <ListItemText className ='fontColor' primary={'Edificios'} />
           </ListItem>
           </Link>
           <Link to="" className='link'>
           <ListItem button key={'Amenities'}>
-          <ListItemIcon><OutdoorGrillIcon/></ListItemIcon>
+          <ListItemIcon><OutdoorGrillIcon style={{color: "#ff00c8"}}/></ListItemIcon>
           <ListItemText className ='fontColor' primary={'Amenities'} />
           </ListItem>
           </Link>
           <Link to="/apartments" className='link'>
           <ListItem button key={'Departamentos'}>
-          <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
+          <ListItemIcon><MeetingRoomIcon style={{color: "#ff00c8"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Departamentos'} />
           </ListItem>
           </Link>
           <Link to=''>
           <ListItem button key={'Gastos'}>
-          <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
+          <ListItemIcon><MonetizationOnIcon style={{color: "#ff00c8"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Gastos'} />
           </ListItem>
           </Link>
           <Link to=''>
           <ListItem button key={'Alertas'}>
-          <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+          <ListItemIcon><AnnouncementIcon style={{color: "#ff00c8"}}/></ListItemIcon>
           <ListItemText className ='fontColor'  primary={'Alertas'} />
           </ListItem>
           </Link>
@@ -136,5 +138,6 @@ export default function Sidebar() {
         <div className={classes.toolbar} />
       </main>
     </div>
+    </ThemeProvider>
   );
 }

@@ -51,7 +51,7 @@ const useStyles = makeStyles({
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary" size="small">Detail</Button>
+          <Button variant="contained" color="secondary" size="small">Detail</Button>
         </CardActions>
       </Card>
     );

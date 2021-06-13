@@ -26,7 +26,6 @@ conn.sync({ force: true }).then(() => {
     details: "Desinfección de patios y vereda",
     supplier: "Desfincecciones ATR",
     amount: 15000.0,
-    building: 1
   });
 
   let spending2 = Spendings.create({
@@ -35,7 +34,6 @@ conn.sync({ force: true }).then(() => {
     details: "Pintado de paredes exteriores",
     supplier: "Pintaman",
     amount: 25000.0,
-    building: 1
   });
 
   let spending3 = Spendings.create({
@@ -44,7 +42,6 @@ conn.sync({ force: true }).then(() => {
     details: "Reparación de bomba de agua del patio principal",
     supplier: "MacGyver",
     amount: 8000.0,
-    building: 1
   });
 
   // --- Creamos unos departamentos de prueba
@@ -54,6 +51,7 @@ conn.sync({ force: true }).then(() => {
     owner: "Fulano",
     contact: "Fulan@gmail.com",
     mt2: 300,
+    commons: 3213,
     state:242342
   });
 
@@ -63,6 +61,7 @@ conn.sync({ force: true }).then(() => {
     owner: "Pepe",
     contact: "pepe@gmail.com",
     mt2: 3010,
+    commons: 3213,
     state:342
   });
 
@@ -71,6 +70,7 @@ conn.sync({ force: true }).then(() => {
     owner: "Pepe123",
     contact: "pepe123@gmail.com",
     mt2: 10010,
+    commons:2713,
     state:323
   });
 
@@ -78,7 +78,7 @@ conn.sync({ force: true }).then(() => {
   // --- Creamos unas expensas de prueba
 
   let expense1 = Expenses.create({
-    month: 'ene',
+    month: 'jan',
     year: 2021,
     amount: 5000,
   });
@@ -101,7 +101,7 @@ conn.sync({ force: true }).then(() => {
   let buildingsDataStr = JSON.stringify(buildingsData);
   let buildingsDataArray = JSON.parse(buildingsDataStr);
   let buildingsDataCreation = buildingsDataArray.map(building => {
-    Buildings.create({
+    return Buildings.create({
       cata: building.cata,
       floor: building.floor,
       cant_apartments: building.apartments,
@@ -127,17 +127,25 @@ conn.sync({ force: true }).then(() => {
       await Building.addAlert(Alert);
     }
   }
-  
 
-  Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3, buildingsDataCreation])
+  // console.log(buildingsDataCreation);
+  
+// ---              0         1           2         3           4           5           6       7           8             9.....21
+  Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3, ].concat(buildingsDataCreation))
     .then(res => {
-      res[3].addExpense(res[6]);
+
+      res[9].addSpendings([ res[0] , res[1], res[2] ])
+      res[9].addApartments([ res[3], res[4], res[5]  ])
+      res[3].addExpenses(res[6]);
       res[3].addExpense(res[7]);
       res[3].addExpense(res[8]);
       console.log("datos de prueba cargados");
       alertDataCreation(alertsDataArray,Buildings,Alerts);
       console.log("todo listo")
     },
-      () => console.log("no se cargaron los gastos de prueba")
+      (err) =>{
+        console.log("no se cargaron los gastos de prueba");
+        console.log(err)
+      }
     );
 });

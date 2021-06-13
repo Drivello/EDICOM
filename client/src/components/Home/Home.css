@@ -1,3 +1,6 @@
+body{
+    background-color: black;
+  }
 .alerts{
     display: flex;
     flex-wrap: wrap;

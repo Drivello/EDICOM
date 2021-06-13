@@ -12,7 +12,7 @@ export default function BuildingsList(props) {
         <h2>{props.item.name}</h2>
         <h5>{props.item.address}</h5>
         <Link to={`/buildingDetail/${props.item.id}`}>
-        <Button variant="contained" color="primary" className="CheckButton">
+        <Button variant="contained" color="secondary" className="CheckButton">
             Detalle
         </Button>
         </Link>
