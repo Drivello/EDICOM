@@ -9,8 +9,8 @@ export default function BuildingsList(props) {
     <img className='imgCarusel'src={props.item.image} alt="not found" />
     <Paper className='paperCarusel'>
         <Grid className='infoBuilding'>
-        <h2>{props.item.name}</h2>
-        <h4>{props.item.address}</h4>
+        <h2 style={{color:"white"}}>{props.item.name}</h2>
+        <h4 style={{color:"white"}}>{props.item.address}</h4>
         <Link to={`/buildingDetail/${props.item.id}`}>
         <Button variant="contained" color="secondary" className="CheckButton">
             Detalle

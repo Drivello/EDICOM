@@ -12,6 +12,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
+import HomeIcon from '@material-ui/icons/Home';
 import './Sidebar.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -67,12 +68,10 @@ export default function Sidebar() {
           </Typography>
         </Toolbar>
         <div className='login'>
-
-          <Button variant="contained" color="primary" href="../.." >
-            Home
-          </Button>
-
-          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          <Link className='btnNavbar' to='/'>
+            <HomeIcon style={{fontSize: 35 , color: "#00ff7f"}}/>
+          </Link>
+          <Button className='btnNavbar' aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
             <AccountCircleIcon style={{ fontSize: 35 , color: "#00ff7f"}}/>
           </Button>
           <Menu
@@ -112,45 +111,41 @@ export default function Sidebar() {
 
             <Link to="/buildings" className='link'>
             <ListItem button key={'Edificios'}>
-            <ListItemIcon><ApartmentIcon/></ListItemIcon>
+            <ListItemIcon><ApartmentIcon style={{color: "#00ff7f"}} /></ListItemIcon>
             <ListItemText className ='fontColor' primary={'Edificios'} />
             </ListItem>
             </Link>
 
             <Link to="" className='link'>
             <ListItem button key={'Amenities'}>
-            <ListItemIcon><OutdoorGrillIcon/></ListItemIcon>
+            <ListItemIcon><OutdoorGrillIcon style={{color: "#00ff7f"}} /></ListItemIcon>
             <ListItemText className ='fontColor' primary={'Amenities'} />
             </ListItem>
             </Link>
 
             <Link to="/apartments" className='link'>
             <ListItem button key={'Departamentos'}>
-            <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
+            <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}} /></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Departamentos'} />
             </ListItem>
             </Link>
 
             <Link to='/spendings/board'>
             <ListItem button key={'Gastos'}>
-            <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
+            <ListItemIcon><MonetizationOnIcon style={{color: "#00ff7f"}} /></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Gastos'} />
             </ListItem>
             </Link>
 
             <Link to=''>
             <ListItem button key={'Alertas'}>
-            <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+            <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Alertas'} />
             </ListItem>
             </Link>
 
           </List>
       </Drawer>
-
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-      </main>
 
     </div>
     </ThemeProvider>

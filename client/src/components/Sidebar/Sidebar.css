@@ -11,7 +11,13 @@
 }
 
 .login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
     top: 10px;
     right: 50px;
+}
+.btnNavbar{
+    margin-right: 10px;
 }
