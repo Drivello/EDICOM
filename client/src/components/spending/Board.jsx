@@ -15,6 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const Board = (props) => {
 
+  console.log("RENDERIZANDO EL BOARDDDDDDDDDDDDDDDDDDD")
+
   //--------------------------- Creando estructura de la tabla ------------------------
 
   const columns = [
@@ -61,13 +63,21 @@ const Board = (props) => {
 
 
    //-------------------------- Inicio cambio Mapdispatch x useSelcetor pa traer acciones----------
-   const filterSpend = useSelector(
-    (state) => state.reducerSpending.filterSpending,// revisar cuando haga pull el nombre del reducer
-  );
+  //  const filterSpend = useSelector(
+  //   (state) => state.reducerSpending.filterSpending,// revisar cuando haga pull el nombre del reducer
+  // );
 
-  const totalSpend = useSelector( //reducer
-    (state) => state.reducerSpending.totalSpending
-  )
+  // const totalSpend = useSelector( //reducer
+  //   (state) => state.reducerSpending.totalSpending
+  // )
+
+  const {filterSpend, totalSpend} = useSelector(state => 
+    {
+      return {
+        filterSpend: state.reducerSpending.filterSpending,
+        totalSpend: state.reducerSpending.totalSpending
+      };
+    });
   //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
 
@@ -81,9 +91,9 @@ const Board = (props) => {
     }
   })
 
-  console.log((<Link to={__dirname + `board/1/edit` }>
-  Editar/Eliminar 
-  </Link>).props.children);
+  // console.log((<Link to={__dirname + `board/1/edit` }>
+  // Editar/Eliminar 
+  // </Link>).props.children);
 
 //-------------------------- fin trae del state global los gastos----------
 
@@ -91,48 +101,48 @@ const Board = (props) => {
 
 
 //----------------------- inicio estado interno con los 3 filtros -----------
-const reducer = (candidato, currentValue) => {
-  return candidato < currentValue.date ? candidato : currentValue.date; 
-};
+
+
+//LLEVAR ESTA LÓGICA AL REDUCER
+// const reducer = (candidato, currentValue) => {
+//   return candidato < currentValue.date ? candidato : currentValue.date; 
+// };
 
 // const date1 = totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"));
 
 //-------------------------- inicio trae del state global los gastos----------
 useEffect(() => {
   dispatch(totalSpending())
-  .then(() => 
-  setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
-  )
-  console.log("useEffect", totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z")))
+
 }, [dispatch]);
 
 
-  // const date1 = new Date('2021-01-01T21:11:54')
-  const date2 = new Date(new Date)
-  console.log(input)
+// const date1 = new Date('2021-01-01T21:11:54')
+const date2 = new Date(new Date)
+// console.log(input);
 
-  const [input, setInput] = useState({
-    since: date2,
-    upTo: date2,
-    concept: 'All',
-  })
+const [input, setInput] = useState({
+  since: date2,
+  upTo: date2,
+  concept: 'All',
+})
+
+// setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
 
 
+function handleSinceChange (date){
+  setInput({...input, since: date});
+};
 
-  function handleSinceChange (date){
-    setInput({...input, since: date});
-  };
+function handleUpToChange (date){
+  setInput({...input, upTo: date});
+};
 
-  function handleUpToChange (date){
-    setInput({...input, upTo: date});
-  };
+function handleSelect(e) { 
+  setInput({...input, [e.target.name]: e.target.value})
+}
 
-  function handleSelect(e) { 
-    setInput({...input, [e.target.name]: e.target.value})
-  }
-
-  
-  function handleSubmit(e) {
+function handleSubmit(e) {
     dispatch(filterSpending(input))
   }
 

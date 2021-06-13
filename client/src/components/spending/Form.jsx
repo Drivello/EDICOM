@@ -99,6 +99,8 @@ const Form = (props) => {
     };
 
     const handleUpdate = (e) => {
+        console.log("despachando UPDATE")
+        console.log("spending enviado", spending)
         dispatch(putSpending([parseInt(props.match.params.id), spending]));
     }
 

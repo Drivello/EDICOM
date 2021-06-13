@@ -51,7 +51,7 @@ export default function Sidebar() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar className='navbar'>
           <IconButton
             color="inherit"
             aria-label="open drawer"

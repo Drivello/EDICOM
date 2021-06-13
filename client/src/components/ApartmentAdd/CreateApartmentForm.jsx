@@ -8,14 +8,12 @@ const useStyles = makeStyles((theme)=>({
     root: {
 		marginTop: 50,
 		marginBottom: 30,
+		border:5
 	},
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
 		width:500,
-	},
-	title:{
-		fontSize: 30,
 	},
 	last: {
 		padding: 8,

@@ -5,14 +5,14 @@ const theme = createMuiTheme({
 	palette: {
 		primary: {
 			main: '#212121',
-			contrastText: '#fff',
+			contrastText: '#ffffff',
 		},
 		secondary: {
 			main: '#00ff7f',
-			contrastText: 'white',
+			contrastText: '#ffffff',
 		},
 		background: {
-			default: 'white',
+			default: '#ffffff',
 		},
 	},
 	typography: {

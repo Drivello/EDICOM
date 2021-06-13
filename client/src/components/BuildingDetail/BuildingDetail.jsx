@@ -11,7 +11,7 @@ function BuildingDetail(props) {
             <Grid>
                 <ApartmentList buildingId={buildingId}/>
             </Grid>
-            <Grid>
+            {/* <Grid>
                 <Board />
             </Grid>
             <Grid>
@@ -19,7 +19,7 @@ function BuildingDetail(props) {
             </Grid>
             <Grid>
                 Aca se reutiliza el componente de listado de amenities
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 }

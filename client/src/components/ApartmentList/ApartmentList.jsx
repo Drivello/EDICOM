@@ -5,6 +5,8 @@ import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {DataGrid} from '@material-ui/data-grid';
 import {Button, Typography, Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 import './ApartmentList.css';
 
@@ -44,22 +46,25 @@ const ApartmentList = ({buildingId}) => {
 			disableClickEventBubbling: true,
 			renderCell: params => {
 				return (
-					<Link to={`/apartment/${params.id}`}>
-						<Button onClick={() => alert(params.id)}>Editar</Button>
+					<ThemeProvider theme={theme}>
+					<Link to={`/apartment/${params.id}`} >
+						<Button variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
 					</Link>
+					</ThemeProvider>
 				);
 			},
 		},
 	];
 
 	return (
+		<ThemeProvider theme={theme}>
 		<Container>
 			<Container className="componentHeader ">
 				<Typography variant="h2" className="componentHeading1">
 					Departamentos {detailBuilding[0]?.name || ""}
 				</Typography>
 				<Link to="/apartmentadd" className="link">
-					<Button variant="contained" color="primary">
+					<Button variant="contained" color="secondary">
 						Nuevo Departamento
 					</Button>
 				</Link>
@@ -71,6 +76,7 @@ const ApartmentList = ({buildingId}) => {
 				</Container>
 			</Container>
 		</Container>
+		</ThemeProvider>
 	);
 };
 
