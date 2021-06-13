@@ -16,6 +16,13 @@ const theme = createMuiTheme({
     },
 
   },
+  typography: {
+    "fontFamily": 'Baloo Tammudu 2',
+    "fontSize": 14,
+    "fontWeightLight": 300,
+    "fontWeightRegular": 400,
+    "fontWeightMedium": 500
+   }
 });
 
 export default theme;
