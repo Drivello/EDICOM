@@ -67,6 +67,11 @@ export default function Sidebar() {
           </Typography>
         </Toolbar>
         <div className='login'>
+
+          <Button variant="contained" color="primary" href="../.." >
+            Home
+          </Button>
+
           <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
             <AccountCircleIcon style={{ fontSize: 35 , color: "#00ff7f"}}/>
           </Button>
@@ -82,6 +87,7 @@ export default function Sidebar() {
           </Menu>
         </div>
       </AppBar>
+
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -93,47 +99,59 @@ export default function Sidebar() {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
           }),
-        }}
-      >
+        }}>
+
         <div className={classes.toolbar}>
           <IconButton style={{color: "#00ff7f"}} onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <Link to="/buildings" className='link'>
-          <ListItem button key={'Edificios'}>
-          <ListItemIcon><ApartmentIcon style={{color: "#00ff7f"}}/></ListItemIcon>
-          <ListItemText className ='fontColor' primary={'Edificios'} />
-          </ListItem>
-          </Link>
-          <Link to="" className='link'>
-          <ListItem button key={'Amenities'}>
-          <ListItemIcon><OutdoorGrillIcon style={{color: "#00ff7f"}}/></ListItemIcon>
-          <ListItemText className ='fontColor' primary={'Amenities'} />
-          </ListItem>
-          </Link>
-          <Link to="/apartments" className='link'>
-          <ListItem button key={'Departamentos'}>
-          <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}}/></ListItemIcon>
-          <ListItemText className ='fontColor'  primary={'Departamentos'} />
-          </ListItem>
-          </Link>
-          <Link to=''>
-          <ListItem button key={'Gastos'}>
-          <ListItemIcon><MonetizationOnIcon style={{color: "#00ff7f"}}/></ListItemIcon>
-          <ListItemText className ='fontColor'  primary={'Gastos'} />
-          </ListItem>
-          </Link>
-          <Link to=''>
-          <ListItem button key={'Alertas'}>
-          <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
-          <ListItemText className ='fontColor'  primary={'Alertas'} />
-          </ListItem>
-          </Link>
-        </List>
+
+          <List>
+
+            <Link to="/buildings" className='link'>
+            <ListItem button key={'Edificios'}>
+            <ListItemIcon><ApartmentIcon/></ListItemIcon>
+            <ListItemText className ='fontColor' primary={'Edificios'} />
+            </ListItem>
+            </Link>
+
+            <Link to="" className='link'>
+            <ListItem button key={'Amenities'}>
+            <ListItemIcon><OutdoorGrillIcon/></ListItemIcon>
+            <ListItemText className ='fontColor' primary={'Amenities'} />
+            </ListItem>
+            </Link>
+
+            <Link to="/apartments" className='link'>
+            <ListItem button key={'Departamentos'}>
+            <ListItemIcon><MeetingRoomIcon/></ListItemIcon>
+            <ListItemText className ='fontColor'  primary={'Departamentos'} />
+            </ListItem>
+            </Link>
+
+            <Link to='/spendings/board'>
+            <ListItem button key={'Gastos'}>
+            <ListItemIcon><MonetizationOnIcon/></ListItemIcon>
+            <ListItemText className ='fontColor'  primary={'Gastos'} />
+            </ListItem>
+            </Link>
+
+            <Link to=''>
+            <ListItem button key={'Alertas'}>
+            <ListItemIcon><AnnouncementIcon/></ListItemIcon>
+            <ListItemText className ='fontColor'  primary={'Alertas'} />
+            </ListItem>
+            </Link>
+
+          </List>
       </Drawer>
+
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+      </main>
+
     </div>
     </ThemeProvider>
   );

@@ -15,11 +15,13 @@ const SpendingReducer = (state = initialState, action) => {
         case GET_SPENDINGS:
             return {totalSpending: action.payload, filterSpending: action.payload};
         case  FILTER_SPENDING:
-            if(action.payload.concept==="All"){
+            if(action.payload.concept==="All" || action.payload.concept===""){
+
                 return {...state, 
-                  filterSpending: state.totalSpending
-                  // .filter(s => s.date >= action.payload.since)
-                  // .filter(s => s.date <= action.payload.upTo)
+                  // filterSpending: state.totalSpending,
+                  filterSpending:  state.totalSpending.filter(s => {
+                    return new Date(s.date) >= (action.payload.since)
+                  }).filter(s => ((new Date(s.date)) <= (action.payload.upTo))),
                 };
               }
           
@@ -27,8 +29,9 @@ const SpendingReducer = (state = initialState, action) => {
                 return {...state,
                   filterSpending: state.totalSpending
                   .filter(s => s.concept === action.payload.concept)
-                  // .filter(s => s.date >= action.payload.since)
-                  // .filter(s => s.date <= action.payload.upTo)
+                  .filter(s => {
+                    return new Date(s.date) >= (action.payload.since)
+                  }).filter(s => ((new Date(s.date)) <= (action.payload.upTo))),
                 };
               }
               break;
@@ -40,4 +43,3 @@ const SpendingReducer = (state = initialState, action) => {
 export default SpendingReducer;
 
 
-  
