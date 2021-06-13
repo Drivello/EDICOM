@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postSpending, putSpending, deleteSpending } from '../../redux/spending/actionSpending';
+import { postSpending, putSpending, deleteSpending, totalSpending } from '../../redux/spending/actionSpending';
 import { getBuildings } from '../../redux/building/buildingActions';
 import { Link } from 'react-router-dom';
 import "./form.css"
@@ -17,27 +17,29 @@ const Form = (props) => {
             margin: theme.spacing(1),
         },
     }))
+
     const classes = useStyles();
-    
     const dispatch = useDispatch();
     //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
-    const buildingArray = useSelector(
+    const buildingArray = useSelector( //trae del reducer
         (state) => state.buildingReducer.allBuildings,// revisar cuando haga pull el nombre del reducer
     );
 
-    const totalSpending = useSelector(
+    const totalSpend = useSelector(
         (state) => state.reducerSpending.totalSpending
     )
 
 
     useEffect(() => {
+        console.log("entra en useEffect")
         dispatch(getBuildings());
+        dispatch(totalSpending());
     }, [dispatch]);
 
     let newSpending = {};
 
-    if(props.match.path === '/newSpending'){
+    if(props.match.path === '/spendings/newSpending'){
         newSpending = {
             date: "",
             building: 0,
@@ -49,12 +51,12 @@ const Form = (props) => {
     }
     else{
         newSpending = {
-            date: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].date,
+            date: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].date,
             building: 0,
-            concept: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].concept,
-            supplier: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].supplier,
-            details: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].details,
-            amount: totalSpending.filter((elem) => elem.id === parseInt(props.match.params.id))[0].amount,
+            concept: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].concept,
+            supplier: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].supplier,
+            details: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].details,
+            amount: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].amount,
         }
     }
 
@@ -190,13 +192,16 @@ const Form = (props) => {
                 </Grid>
                 <Grid container direction="row" justify="flex-start" alignItems="flex-start">
                     <Grid item>
-                        {
-                            props.match.path === '/newSpending'
+                        {   
+                            props.match.path === '/spendings/newSpending'
                                 ?
-                                <Button variant="contained" color="primary" type="submit" >Agregar Gasto</Button>
+                                <Link to={'./board'}>
+                                    <Button className={classes.margin} variant="contained" color="primary" type="submit" >Agregar Gasto</Button>
+                                    <Button className={classes.margin} variant="contained" color="primary" type="button" >Cancel</Button>
+                                </Link>
                                 :
                                 <>
-                                    <Link to={'../'}>
+                                    <Link to={'../../board'}>
                                         <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleUpdate} >Actualizar</Button>
                                         <Button className={classes.margin} variant="contained" color="primary" type="button" >Cancel</Button>
                                         <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleDelete}>Eliminar</Button>

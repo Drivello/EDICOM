@@ -3,6 +3,8 @@ const { conn } = require('./../../db')
 const { MONTHS } = require('./../../utils/constants')
 const { Spendings, Expenses, Apartment } = require("../../db.js");
 
+
+// Path --> Post(http://localhost:3001/expenses/add/:month/:year)
 module.exports = async (req, res, next) => {
 
     const {month, year} = req.params;
@@ -11,16 +13,30 @@ module.exports = async (req, res, next) => {
 
     try{
 
-        let arrSpending = await Spendings.findAll();
-        let arrApartments = await Apartment.findAll();
+        const arrSpending = await Spendings.findAll();
+        const arrApartments = await Apartment.findAll(
+            {
+                where: {
+                    buildingId: 1               //Harcodeamos el edificio con el id = 1 
+                }                               //pero hay que agregar el filtro del edificio
+            }
+        );
 
         const spendingFiltered = arrSpending.filter( (spending) => 
         {
             if(spending.date.getMonth() === parseInt(month, 10) && spending.date.getFullYear() === parseInt(year, 10)) return true;
         })
 
+        const totalSurfaceQuery = await Apartment.findAll({
+            attributes: [
+              [conn.fn('SUM', conn.col('mt2')), 'totalMt2'],
+            ]
+          });
+
+        const totalSurface = totalSurfaceQuery[0].dataValues.totalMt2           //total m2 of the building
+
         const totalSpendingAmount = spendingFiltered.map((data) => data.amount).reduce((a, b) => a + b);
-        const expenseAmount = totalSpendingAmount / arrApartments.length;
+        // const expenseAmount = totalSpendingAmount / arrApartments.length;
     
 
         const arrExpensesPromises = [];                 //make an array with the promises of new Expenses
@@ -28,32 +44,32 @@ module.exports = async (req, res, next) => {
 
         for (const apartment of arrApartments) {
 
-            console.log("primer for")
+            // console.log("primer for")
             arrExpensesPromises.push(Expenses.create(
                 {
                     month: MONTHS[month],
                     year: year,
-                    amount: expenseAmount,
+                    amount: totalSpendingAmount / totalSurface * apartment.mt2,
                 }, { transaction: t }))
         }
 
 
         Promise.all(arrExpensesPromises)
-            .then(expenses => {                         //expenses es el arreglo con las nuevas expensas creadas
+            .then(expenses => {                         //expenses is an array with the new expenses created
                 
                 // console.log(expenses)
-                console.log('Primer PromiseAll')
+                // console.log('Primer PromiseAll')
                 let i = 0;
                 for (const apartment of arrApartments) {
 
-                    console.log(expenses[i])
-                    console.log("segundo for")
+                    // console.log(expenses[i])
+                    // console.log("segundo for")
                     arrAsignedExpenses.push(apartment.addExpense(expenses[i], { transaction: t }))
                     i++;                    
                 }
                 Promise.all(arrAsignedExpenses)
                     .then(() => {
-                        console.log('Segundo PromiseAll')
+                        // console.log('Segundo PromiseAll')
                         t.commit()
                     })
             })
