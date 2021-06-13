@@ -48,30 +48,24 @@ conn.sync({ force: true }).then(() => {
 
   let apartment1 = Apartment.create({
     cata_apartment: "1234567",
-    owner: "Fulano",
-    contact: "Fulan@gmail.com",
+    number_apartment: "Fulano",
     mt2: 300,
-    commons: 3213,
-    state:242342
+    state:1
   });
 
   
   let apartment2 = Apartment.create({
     cata_apartment: "12435322",
-    owner: "Pepe",
-    contact: "pepe@gmail.com",
+    number_apartment: "Pepe",
     mt2: 3010,
-    commons: 3213,
-    state:342
+    state: 1,
   });
 
   let apartment3 = Apartment.create({
     cata_apartment: "12678765",
-    owner: "Pepe123",
-    contact: "pepe123@gmail.com",
+    number_apartment:"234234",
     mt2: 10010,
-    commons:2713,
-    state:323
+    state:1
   });
 
 
@@ -104,7 +98,7 @@ conn.sync({ force: true }).then(() => {
     return Buildings.create({
       cata: building.cata,
       floor: building.floor,
-      cant_apartments: building.apartments,
+      cant_apartments: building.cant_apartments,
       name: building.name,
       address: building.address,
       latitude: building.latitude,
@@ -139,6 +133,9 @@ conn.sync({ force: true }).then(() => {
       res[3].addExpenses(res[6]);
       res[3].addExpense(res[7]);
       res[3].addExpense(res[8]);
+      res[3].setBuilding(res[9])
+      res[4].setBuilding(res[9])
+      res[5].setBuilding(res[9])
       console.log("datos de prueba cargados");
       alertDataCreation(alertsDataArray,Buildings,Alerts);
       console.log("todo listo")

@@ -1,35 +1,40 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllApartments} from '../../redux/apartments/apartmentsActions';
+import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {DataGrid} from '@material-ui/data-grid';
 import {Button, Typography, Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 
 import './ApartmentList.css';
 
-const ApartmentList = () => {
+const ApartmentList = ({buildingId}) => {
 	const allApartments = useSelector(state => state.apartmentReducer);
+	const {detailBuilding} = useSelector(state => state.buildingReducer)
 	const dispatch = useDispatch();
-
+	
 	useEffect(() => {
-		dispatch(getAllApartments());
+		dispatch(getAllApartments(buildingId));
+		dispatch(getBuildingDetail(buildingId))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch]);
-
-	const apartments = allApartments.allApartments.map(apartment => {
+	
+	const apartments = allApartments?.allApartments?.map(apartment => {
 		return {
-			id: apartment.id,
-			owner: apartment.owner,
-			contact: apartment.contact,
-			state: apartment.state ? 'Activo' : 'Desocupado',
-			edit: 'editar',
-		};
+      id: apartment.id,
+      cata_apartment: apartment.cata_apartment,
+	  number_apartment: apartment.number_apartment,
+	  mt2: apartment.mt2,
+      state: apartment.state ? "Activo" : "Desocupado",
+      edit: "editar",
+    };
 	});
 
 	const columns = [
 		{field: 'id', headerName: '#', width: 90},
-		{field: 'owner', headerName: 'Locatario', width: 150},
-		{field: 'contact', headerName: 'Contacto', width: 150},
+		{field: 'cata_apartment', headerName: 'Un Catastral', width: 150},
+		{field: 'number_apartment', headerName: 'N° Departamento', width: 150},
+		{field: 'mt2', headerName: 'Mts2', width: 150},
 		{field: 'state', headerName: 'Estado', width: 150},
 		{
 			field: 'Editar',
@@ -39,7 +44,7 @@ const ApartmentList = () => {
 			disableClickEventBubbling: true,
 			renderCell: params => {
 				return (
-					<Link to={`/editApartment/${params.id}}`}>
+					<Link to={`/apartment/${params.id}`}>
 						<Button onClick={() => alert(params.id)}>Editar</Button>
 					</Link>
 				);
@@ -49,9 +54,9 @@ const ApartmentList = () => {
 
 	return (
 		<Container>
-			<Container className="componentHeader">
+			<Container className="componentHeader ">
 				<Typography variant="h2" className="componentHeading1">
-					Detalle del departamento
+					Departamentos {detailBuilding[0]?.name || ""}
 				</Typography>
 				<Link to="/apartmentadd" className="link">
 					<Button variant="contained" color="primary">
@@ -60,7 +65,7 @@ const ApartmentList = () => {
 				</Link>
 			</Container>
 
-			<Container style={{height: 400, width: '60%'}}>
+			<Container style={{height: 400, width: '80%'}}>
 				<Container style={{display: 'flex', height: '100%'}}>
 					<DataGrid rows={apartments} columns={columns} />
 				</Container>
