@@ -2,13 +2,14 @@ const {Apartment} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
 	const {id} = req.params;
-	const {contact, owner, state} = req.body;
+	const {cata_apartment, mt2, number_apartment, state} = req.body;
 	//console.log(cata_apartment)
 
 	await Apartment.update(
 		{
-			contact: contact,
-			owner: owner,
+			cata_apartment: cata_apartment,
+			mt2: mt2,
+			number_apartment: number_apartment,
 			state: state,
 		},
 		{where: {id}}

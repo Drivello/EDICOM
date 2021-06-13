@@ -1,21 +1,44 @@
 import {useState, useEffect} from 'react';
 import {getApartmentById} from '../../redux/apartments/apartmentsActions'
 import axios from 'axios';
-import { FormControl, FormControlLabel, Button, RadioGroup, Radio, TextField } from '@material-ui/core';
+import { FormControl, FormControlLabel, Button, RadioGroup, Radio, TextField, makeStyles } from '@material-ui/core';
 import {useSelector, useDispatch} from 'react-redux';
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import BuildingDetail from '../BuildingDetail/BuildingDetail';
 
+const useStyles = makeStyles((theme)=>({
+    root: {
+		marginTop: 50,
+		marginBottom: 30,
+        marginLeft:500,
+	},
+	formControl: {
+		margin: theme.spacing(1),
+		minWidth: 120,
+		width:500,
+	},
+	title:{
+		fontSize: 30,
+	},
+	last: {
+		padding: 8,
+	}
+}));
 export function EditApartmentForm(props) {
-    
+    const history = useHistory();
+    const classes = useStyles();
+
     const { apartmentDetail } = useSelector( state => state.apartmentReducer);
 
     const { id } = useParams();
     
     const dispatch = useDispatch();
 
-    const [apartment,setApartment] = useState({
-        owner: "owner",
-        contact: "contact",
+    const [apartment, setApartment] = useState({
+        cata_apartment: "",
+        mt2: "",
+		number_apartment: "",
         state: 0
     })
 
@@ -24,26 +47,33 @@ export function EditApartmentForm(props) {
     },[dispatch, id])
 
     useEffect(() => {
-        let {owner,contact,state} = apartmentDetail;
+        let {cata_apartment, mt2, number_apartment, state} = apartmentDetail;
         setApartment({
-            owner: typeof owner === 'undefined' ? "owner" : owner,
-            contact: typeof contact === 'undefined' ? "contact" : contact,
-            state: typeof state === 'undefined' ? 0 : state
+            cata_apartment: cata_apartment, //typeof owner === 'undefined' ? "owner" : owner,
+            mt2: mt2,//typeof contact === 'undefined' ? "contact" : contact,
+            number_apartment: number_apartment,
+            state: state//typeof state === 'undefined' ? 0 : state
         })
     },[apartmentDetail])
 
     const handleInputChange = function (e) {
         switch (e.target.name) {
-            case "owner":
+            case "cata_apartment":
                 setApartment({
                     ...apartment,
-                    owner: e.target.value,
+                    cata_apartment: e.target.value,
                 })
                 break;
-            case "contact":
+            case "mt2":
                 setApartment({
                     ...apartment,
-                    contact: e.target.value,
+                    mt2: e.target.value,
+                })
+                break;
+            case "number_apartment":
+                setApartment({
+                    ...apartment,
+                    number_apartment: e.target.value,
                 })
                 break;
             default:
@@ -63,31 +93,47 @@ export function EditApartmentForm(props) {
             .put(`http://localhost:3001/apartments/${id}`, data, {
                 headers: {'Content-Type': 'application/json'},
             })
-            .then(r => console.log(r.status));
+            .then(r => {
+                alert('Departamento Modificado Exitosamente')
+                history.push(`/buildingDetail/${r.data.buildingId}`)
+             } )//console.log(r.status)
+             
+        
+            
     }
 
 	return (
 		<>
             <h1>Departamento #{id}</h1>
-			<FormControl>
+			<FormControl className={classes.root}>
                 <FormControl>
                     <TextField 
                         variant = "outlined" 
-                        label= "Locatario:" 
-                        name="owner" 
-                        value={apartment.owner} 
+                        label= "Un Catastral:" 
+                        name="cata_apartment" 
+                        value={apartment.cata_apartment} 
                         onChange={handleInputChange} 
-                        error={!/^[A-Za-z ,.'-]{3,20}$/.test(apartment.owner)} 
+                        error={!/^[A-Za-z ,.'-]{3,20}$/.test(apartment.cata_apartment)} 
                     />
                 </FormControl><br/>
                 <FormControl>
                     <TextField 
                         variant = "outlined" 
-                        label= "Contacto:" 
-                        name="contact" 
-                        value={apartment.contact} 
+                        label= "Mt2:" 
+                        name="mt2" 
+                        value={apartment.mt2} 
                         onChange={handleInputChange} 
-                        error={!/^[+]*[-\s/0-9]{6,20}$/.test(apartment.contact)} 
+                        error={!/^[+]*[-\s/0-9]{3,20}$/.test(apartment.mt2)} 
+                    />
+                </FormControl><br/>
+                <FormControl>
+                    <TextField 
+                        variant = "outlined" 
+                        label= "N° Departamento:" 
+                        name="number_apartment" 
+                        value={apartment.number_apartment} 
+                        onChange={handleInputChange} 
+                        error={!/^[A-Za-z0-9,.'-]{1,20}$/.test(apartment.number_apartment)} 
                     />
                 </FormControl><br/>
                 <FormControl>
@@ -95,8 +141,11 @@ export function EditApartmentForm(props) {
                         <FormControlLabel value="ACTIVE" control={<Radio/>} label="ACTIVO"/>
                         <FormControlLabel value="UNACTIVE" control={<Radio/>} label="INACTIVO"/>
                     </RadioGroup>
-                </FormControl><br/>
-                <Button variant="contained" color="primary" onClick={(e) => handleSubmit(e,id,apartment)}>Guardar Cambios</Button>
+                </FormControl><br />
+                <Link  >
+                    <Button variant="contained" color="primary" onClick={(e) => handleSubmit(e, id, apartment)}>Guardar Cambios</Button>
+                </Link>
+                
             </FormControl>
 		</>
 	);

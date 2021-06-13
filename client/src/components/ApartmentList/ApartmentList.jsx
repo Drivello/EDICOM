@@ -23,6 +23,7 @@ const ApartmentList = ({buildingId}) => {
 		return {
       id: apartment.id,
       cata_apartment: apartment.cata_apartment,
+	  number_apartment: apartment.number_apartment,
 	  mt2: apartment.mt2,
       state: apartment.state ? "Activo" : "Desocupado",
       edit: "editar",
@@ -32,6 +33,7 @@ const ApartmentList = ({buildingId}) => {
 	const columns = [
 		{field: 'id', headerName: '#', width: 90},
 		{field: 'cata_apartment', headerName: 'Un Catastral', width: 150},
+		{field: 'number_apartment', headerName: 'N° Departamento', width: 150},
 		{field: 'mt2', headerName: 'Mts2', width: 150},
 		{field: 'state', headerName: 'Estado', width: 150},
 		{

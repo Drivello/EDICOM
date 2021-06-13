@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme)=>({
 const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-	const [disableButton, setdisableButton] = useState(true)
+	const [disableButton, setdisableButton] = useState(false)
 	
 	const [error, setError] = useState({//Control the error red border of the inputs
 		building: false,
@@ -87,7 +87,7 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 				break;
 			case "number_apartment":
 				console.log("apartment", field.value, input.number_apartment)
-				if(!/^[A-Z0-9-]{2,5}$/.test(field.value)) {
+				if(!/^[A-Z0-9-]{1,5}$/.test(field.value)) {
 					setError({...error, number_apartment: true})
 					if(field.value.length < 2) {setHelperText({...helperText, number_apartment: "Es muy corto"})}
 					else if(field.value.length > 5) {setHelperText({...helperText, number_apartment: "Es muy largo"})}
@@ -98,9 +98,11 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 					setHelperText({...helperText, number_apartment: ""})
 				}
 				break;
+			default:
+				break;
 		}
 		// Object.values(error).every(x => x === false) && Object.values(helperText).every(x => x === "") ? setdisableButton(false) : setdisableButton(true) 
-		(error.building && error.cata_apartment && error.mt2 && error.number_apartment) ? setdisableButton(false) : setdisableButton(true)
+		//(error.building && error.cata_apartment && error.mt2 && error.number_apartment) ? setdisableButton(false) : setdisableButton(true)
 	}
 
 	const handleInputChange = function (e) {
