@@ -39,7 +39,7 @@ function BuildingAddForm() {
     function handleChange(e) {
         const change = e.target.name;
         const text = e.target.value;
-        if ((change === "floor" || change === "cant_apartments") && !reg.test(text)) {//if somone try to enter not a number in floor and aparments
+        if ((change === "floor" || change === "cant_apartments") && !reg.test(text) && text !== "") {//if somone try to enter not a number in floor and aparments
             setWarning({//set warning msg
                 ...warning,
                 [change]: "Solo puedes ingresar numeros!"
