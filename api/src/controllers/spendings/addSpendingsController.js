@@ -1,4 +1,6 @@
-const { Spendings } = require("../../db.js");
+const { Spendings, Buildings } = require("../../db.js");
+
+// Path of this controller -->  http://localhost:3001/spendings/add
 
 module.exports = async (req, res, next) => {
 
@@ -12,8 +14,15 @@ module.exports = async (req, res, next) => {
             details: details,
             supplier: supplier,
             amount: amount,
-            building: building
         });
+
+        let buildingSearched = await Buildings.findOne({
+            where: {
+                id: building
+            }
+        })
+
+        await buildingSearched.addSpending(spending);
 
         return res.json(spending).status(200);
     }

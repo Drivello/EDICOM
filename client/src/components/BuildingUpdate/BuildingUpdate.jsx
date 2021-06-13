@@ -10,7 +10,9 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import FormatAlignJustifyOutlinedIcon from '@material-ui/icons/FormatAlignJustifyOutlined';
 import PhotoCamera from "@material-ui/icons/PhotoCamera"
 import { translate } from "./Translate";
-import styles from "./BuildingUpdate.module.css"
+import styles from "./BuildingUpdate.module.css";
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 function BuildingUpdate() {
     const { id } = useParams();//Building id from query params
@@ -177,62 +179,60 @@ function BuildingUpdate() {
     }
 
     return (
-        <div>
-            <Grid container >
-                <Grid item xs={3}>
-                    <h1 id="header">Modificar edificio:</h1>
-                </Grid>
-                <form noValidate autoComplete="off" onSubmit={saveHandler} >
-                    <div className={styles.form}>
-                        <Grid item xs={12}>
-                            <Grid container className={styles.item} justify="space-between" item xs={12}>
-                                <BusinessIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("name")}
-                                <Button className={styles.button} variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container className={styles.item} item justify="space-between" >
-                                <LocationOnIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("address")}
-                                <Button className={styles.button} variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container className={styles.item} item justify="space-between" >
-                                <FormatAlignJustifyOutlinedIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("cata")}
-                                <Button className={styles.button} variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container className={styles.item} item justify="space-between" >
-                                <ListAltOutlinedIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("floor")}
-                                <Button className={styles.button} variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container className={styles.item} item justify="space-between">
-                                <MeetingRoomIcon className={styles.icon} fontSize="large" />
-                                {editModestatus("cant_apartments")}
-                                <Button className={styles.button} variant="contained" name="cant_apartments" onClick={changeModeStatus}>EDITAR</Button>
-                            </Grid>
-                        </Grid>
-                    </div>
+        <ThemeProvider theme={theme}>
+        <div className={styles.contUpdateB}>
+            <h1 className= {styles.header} >Modificar edificio:</h1>
+            <form noValidate autoComplete="off" onSubmit={saveHandler} >
+                <div className={styles.form}>
                     <Grid item xs={12}>
-                        <Grid container className={styles.item} item justify="space-between">
-                            <img alt="Profile pic" className={styles.img} src={renderIMG()} />
-                            <IconButton color="primary" variant="contained" component="label">
-                                <PhotoCamera className={styles.camera} />
-                                <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />
-                            </IconButton>
+                        <Grid container className={styles.item} justify="space-between" item xs={12}>
+                            <BusinessIcon className={styles.icon} fontSize="large" />
+                            {editModestatus("name")}
+                            <Button color="secondary" className={styles.button} variant="contained" name="name" onClick={changeModeStatus}>EDITAR</Button>
                         </Grid>
                     </Grid>
-                    <Button variant="contained" color="primary" onClick={saveHandler} >Guardar Cambios</Button>
-                </form>
-            </Grid>
+                    <Grid item xs={12}>
+                        <Grid container className={styles.item} item justify="space-between" >
+                            <LocationOnIcon className={styles.icon} fontSize="large" />
+                            {editModestatus("address")}
+                            <Button color="secondary" className={styles.button} variant="contained" name="address" onClick={changeModeStatus}>EDITAR</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container className={styles.item} item justify="space-between" >
+                            <FormatAlignJustifyOutlinedIcon className={styles.icon} fontSize="large" />
+                            {editModestatus("cata")}
+                            <Button color="secondary" className={styles.button} variant="contained" name="cata" onClick={changeModeStatus}>EDITAR</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container className={styles.item} item justify="space-between" >
+                            <ListAltOutlinedIcon className={styles.icon} fontSize="large" />
+                            {editModestatus("floor")}
+                            <Button color="secondary" className={styles.button} variant="contained" name="floor" onClick={changeModeStatus}>EDITAR</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container className={styles.item} item justify="space-between">
+                            <MeetingRoomIcon className={styles.icon} fontSize="large" />
+                            {editModestatus("cant_apartments")}
+                            <Button color="secondary" className={styles.button} variant="contained" name="cant_apartments" onClick={changeModeStatus}>EDITAR</Button>
+                        </Grid>
+                    </Grid>
+                </div>
+                <Grid item xs={12}>
+                    <Grid container className={styles.item} item justify="space-between">
+                        <img alt="Profile pic" className={styles.img} src={renderIMG()} />
+                        <IconButton color="primary" variant="contained" component="label">
+                            <PhotoCamera className={styles.camera} />
+                            <input onChange={imgHandler} name="image" type="file" accept="image/png, image/jpeg" hidden />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </form>
+            <Button color="secondary" className={styles.guardarCambios} variant="contained" onClick={saveHandler} >Guardar Cambios</Button>
         </div>
+        </ThemeProvider>
     );
 }
 

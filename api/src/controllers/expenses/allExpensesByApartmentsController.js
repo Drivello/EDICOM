@@ -1,5 +1,7 @@
 const { Apartment, Expenses } = require("../../db.js");
 
+
+// Path --> get(http://localhost:3001/expenses/allByApartments)
 module.exports = async (req, res, next) => {
 
 	try{

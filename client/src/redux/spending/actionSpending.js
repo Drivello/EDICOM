@@ -47,14 +47,14 @@ export function totalSpending() {
     return axios.get("http://localhost:3001/spendings/all")
       // .then(response => response.json())
       .then((res, req) => {
-        dispatch({ type: 'GET_SPENDINGS', payload: res.data });
+        dispatch({ type: GET_SPENDINGS, payload: res.data });
       });
   }
 };
 
 
 export function filterSpending(payload) {
-
+  console.log("action filterSpending")
   return { type: 'FILTER_SPENDINGS', payload };
 };
 

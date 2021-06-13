@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBuildings } from '../../redux/building/buildingActions';
 import { getAlerts } from '../../redux/alerts/alertActions';
+import { totalSpending } from '../../redux/spending/actionSpending'; //prueba Marian
 import { Grid } from '@material-ui/core';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import Carousel from 'react-material-ui-carousel';
@@ -16,6 +17,8 @@ import theme from '../themeStyle';
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
 	const alerts = useSelector(state => state.alertsReducer.allAlerts);
+	const spends = useSelector(state => state.reducerSpending.totalSpending); //prueba marian
+	const [activeBuilding, SetactiveBuilding] = useState(null);
 	const dispatch = useDispatch();
 	const today = new Date();
 
@@ -24,6 +27,9 @@ const Home = (props) => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
 	},[dispatch])
+
+	console.log("state.reducerSpending.totalSpending") //prueba marian
+	console.log(spends) //prueba marian
 
 	return (
 		<ThemeProvider theme={theme}>

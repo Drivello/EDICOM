@@ -11,10 +11,10 @@ import Typography from '@material-ui/core/Typography';
     return (
       <div className='alert'>
         <CardContent className ='contentCard'>
-          <h5  gutterBottom>
+          <h5 className="hs" gutterBottom>
             {props.building}
           </h5>
-          <h3>
+          <h3 className="hs">
             {props.concept}
           </h3>
         </CardContent>
