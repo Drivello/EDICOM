@@ -1,20 +1,23 @@
 const { Spendings } = require("../../db.js");
 
-module.exports = async (req, res, next) => {
 
-    console.log(req)
+// Path of this controller --> Put(http://localhost:3001/spendings/add)
+module.exports = async (req, res, next) => {
     
+    console.log(req.body);
+
     let [id, {date, name, details, supplier, amount, building}] = req.body;
-    
+
+    console.log("update"); 
     try
     {
-        await Spendings.update({
+        const spending = await Spendings.update({
             date: date,
             name: name,
             details: details,
             supplier: supplier,
             amount: amount,
-            building: building
+            buildingId: building
         }, {
             where: {
                 id

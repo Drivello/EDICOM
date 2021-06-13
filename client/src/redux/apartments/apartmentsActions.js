@@ -9,7 +9,6 @@ export function createApartment(apartment) {
 			`http://localhost:3001/apartments/`,
 			apartment
 		);
-		console.log('createApartment', data);
 		dispatch({type: CREATE_APARTMENT, payload: data});
 	};
 }
@@ -21,18 +20,9 @@ export function getApartmentById(id) {
 	};
 }
 
-export function getAllApartments() {
+export function getAllApartments(buildingId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/apartments/`);
-		console.log('All Apartments', data);
-		dispatch({type: ALL_APARTMENTS, payload: data});
-	};
-}
-
-export function editApartment(apartment) {
-	return async function (dispatch) {
-		const {data} = await axios.put(`http://localhost:3001/apartments/`);
-		console.log('All Apartments', data);
+		const {data} = await axios.get(`http://localhost:3001/apartments/all/${buildingId}`);
 		dispatch({type: ALL_APARTMENTS, payload: data});
 	};
 }

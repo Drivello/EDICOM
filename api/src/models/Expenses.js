@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
   sequelize.define('Expenses', {
     month: {
       type: DataTypes.ENUM({
-          values: ['ene', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec']
+          values: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
         }),
       allowNull: false,
       unique: 'complexUnique',

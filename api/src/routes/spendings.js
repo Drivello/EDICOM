@@ -9,7 +9,7 @@ const deleteSpendings = require("../controllers/spendings/deleteSpendingsControl
 router.use(express.json());
 router.get("/all", allSpendings);                   //      http://localhost:3001/spendings/all
 router.post("/add", addSpendings);                  //      http://localhost:3001/spendings/add
-router.put("/add", putSpendings);                  //      http://localhost:3001/spendings/add
+router.put("/add", putSpendings);                   //      http://localhost:3001/spendings/add
 router.delete("/del/:id", deleteSpendings);                  //      http://localhost:3001/spendings/delete
 
 

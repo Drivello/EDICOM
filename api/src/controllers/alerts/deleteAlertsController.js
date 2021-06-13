@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     {   
         await Alerts.destroy( {
             where: {
-                id: id,
+                id: delId,
             }
         });
 

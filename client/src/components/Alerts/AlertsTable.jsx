@@ -31,7 +31,7 @@ function BuildingsTable(props) {
             name: building.name,
             address: building.address,
             floor: building.floor,
-            apartments: building.cant_apartments,
+            apartments: building.apartments,
             edit: `/buildingupdate/${building.id}`
         }
     })

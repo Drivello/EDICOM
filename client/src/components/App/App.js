@@ -3,8 +3,8 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route} from 'react-router';
 import Home from '../Home/Home.js';
-import Form from '../spending/Form';
-import Board from '../spending/Board';
+import SpendingForm from '../spending/Form';
+import SpendingBoard from '../spending/Board';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Buildings from '../Buildings/Buildings';
@@ -30,10 +30,11 @@ function App() {
         <Route exact path="/BuildingUpdate/:id" component = {BuildingUpdate}/> 
         <Route path="/apartmentadd" component={CreateApartment} />
 				<Route path="/apartment/:id" component={EditApartmentForm} />
-        <Route exact path="/newSpending" component = {Form}/>
-        <Route exact path="/board" component = {Board}/>
+
+        <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
+        <Route exact path="/spendings/board" component = {SpendingBoard}/>
         <Route exact path="/ExpensesTable" component = {Expenses}/>
-        <Route path="/board/:id/edit" render = {({match}) => <Form match={match}/>}/>
+        <Route path="/spendings/board/:id/edit" render = {({match}) => <SpendingForm match={match}/>}/>
       </BrowserRouter>
     </Container>
   );
