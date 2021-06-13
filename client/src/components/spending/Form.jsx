@@ -42,7 +42,7 @@ const Form = (props) => {
     if(props.match.path === '/spendings/newSpending'){
         newSpending = {
             date: "",
-            building: 0,
+            building: 1,
             concept: "",
             supplier: "",
             details: "",
@@ -52,7 +52,7 @@ const Form = (props) => {
     else{
         newSpending = {
             date: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].date,
-            building: 0,
+            building: 1,
             concept: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].concept,
             supplier: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].supplier,
             details: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].details,
