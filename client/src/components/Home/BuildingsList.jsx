@@ -10,7 +10,7 @@ export default function BuildingsList(props) {
     <Paper className='paperCarusel'>
         <Grid className='infoBuilding'>
         <h2>{props.item.name}</h2>
-        <h5>{props.item.address}</h5>
+        <h4>{props.item.address}</h4>
         <Link to={`/buildingDetail/${props.item.id}`}>
         <Button variant="contained" color="secondary" className="CheckButton">
             Detalle

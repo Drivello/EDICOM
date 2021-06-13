@@ -4,16 +4,17 @@ import { createTheme } from '@material-ui/data-grid';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#000000',
+      main: '#212121',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#ff00c8',
-      contrastText: '#fff',
+      main: '#00ff7f',
+      contrastText: 'white',
     },
     background: {
-        default: "white"
-      }
+      default: "black"
+    },
+
   },
 });
 

@@ -35,7 +35,7 @@ const Home = (props) => {
     		PrevIcon={<NavigateBeforeIcon/>}
 			>
 			{
-				buildings && buildings.map( (building, i) => <BuildingsList key={i} item={building} /> )
+				buildings && buildings.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
 			}
 			</Carousel>
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
