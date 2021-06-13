@@ -10,11 +10,11 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         floor: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         cant_apartments: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         name: {
