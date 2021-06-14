@@ -9,6 +9,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
 import './ApartmentList.css';
+import { BorderAll } from '@material-ui/icons';
 
 const ApartmentList = ({buildingId}) => {
 	const allApartments = useSelector(state => state.apartmentReducer);
@@ -48,7 +49,7 @@ const ApartmentList = ({buildingId}) => {
 				return (
 					<ThemeProvider theme={theme}>
 					<Link to={`/apartment/${params.id}`} >
-						<Button variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
+						<Button style={{fontWeight: 1000}} variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
 					</Link>
 					</ThemeProvider>
 				);
@@ -58,24 +59,23 @@ const ApartmentList = ({buildingId}) => {
 
 	return (
 		<ThemeProvider theme={theme}>
-		<Container>
-			<Container className="componentHeader ">
-				<Typography variant="h2" className="componentHeading1">
+		<div className='extContAL'>
+			<div className="componentHeader">
+				<h1>
 					Departamentos {detailBuilding[0]?.name || ""}
-				</Typography>
+				</h1>
 				<Link to="/apartmentadd" className="link">
-					<Button variant="contained" color="secondary">
+					<Button variant="contained" color="secondary" style={{fontWeight: 1000}}>
 						Nuevo Departamento
 					</Button>
 				</Link>
-			</Container>
-
+			</div>
 			<Container style={{height: 400, width: '80%'}}>
 				<Container style={{display: 'flex', height: '100%'}}>
-					<DataGrid rows={apartments} columns={columns} />
+					<DataGrid style={{border: " 4px solid black"}}rows={apartments} columns={columns} />
 				</Container>
 			</Container>
-		</Container>
+		</div>
 		</ThemeProvider>
 	);
 };

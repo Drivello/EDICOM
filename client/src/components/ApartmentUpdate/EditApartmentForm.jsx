@@ -1,28 +1,31 @@
 import {useState, useEffect} from 'react';
 import {getApartmentById} from '../../redux/apartments/apartmentsActions'
 import axios from 'axios';
-import { FormControl, FormControlLabel, Button, RadioGroup, Radio, TextField, makeStyles } from '@material-ui/core';
+import { FormControl, FormControlLabel, Button, RadioGroup, Radio, TextField, makeStyles,Grid } from '@material-ui/core';
 import {useSelector, useDispatch} from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Link, useHistory } from 'react-router-dom'
 import BuildingDetail from '../BuildingDetail/BuildingDetail';
-
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
+import '../ApartmentAdd/CreateApartment.css';
+import { Domain, Home, MeetingRoom } from '@material-ui/icons';
 const useStyles = makeStyles((theme)=>({
     root: {
 		marginTop: 50,
 		marginBottom: 30,
-        marginLeft:500,
 	},
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
 		width:500,
+        
 	},
 	title:{
 		fontSize: 30,
 	},
 	last: {
-		padding: 8,
+		padding: 30,
 	}
 }));
 export function EditApartmentForm(props) {
@@ -49,10 +52,10 @@ export function EditApartmentForm(props) {
     useEffect(() => {
         let {cata_apartment, mt2, number_apartment, state} = apartmentDetail;
         setApartment({
-            cata_apartment: cata_apartment, //typeof owner === 'undefined' ? "owner" : owner,
-            mt2: mt2,//typeof contact === 'undefined' ? "contact" : contact,
+            cata_apartment: cata_apartment, 
+            mt2: mt2,
             number_apartment: number_apartment,
-            state: state//typeof state === 'undefined' ? 0 : state
+            state: state
         })
     },[apartmentDetail])
 
@@ -84,7 +87,7 @@ export function EditApartmentForm(props) {
     const handleRadio = function (e) {
         setApartment({
             ...apartment,
-            state: e.target.value === "ACTIVE" ? 1 : 0,
+            state: e.target.value === "OCUPADO" ? 1 : 0,
         })
     }
 
@@ -103,12 +106,15 @@ export function EditApartmentForm(props) {
     }
 
 	return (
-		<>
-            <h1>Departamento #{id}</h1>
+        <ThemeProvider theme={theme}>
+		<div className= 'extContCAF'>
+            <h1>Departamento Nº {apartmentDetail.number_apartment || ""}</h1>
 			<FormControl className={classes.root}>
+            <Grid container direction="row" justify="space-between" alignItems="center">
+                <Grid style={{marginRigth:'50px'}}>
                 <FormControl>
-                    <TextField 
-                        variant = "outlined" 
+                    <TextField style={{marginTop: '20px'}} 
+                        variant="outlined"
                         label= "Un Catastral:" 
                         name="cata_apartment" 
                         value={apartment.cata_apartment} 
@@ -117,8 +123,8 @@ export function EditApartmentForm(props) {
                     />
                 </FormControl><br/>
                 <FormControl>
-                    <TextField 
-                        variant = "outlined" 
+                    <TextField style={{marginTop: '20px'}} 
+                        variant="outlined" 
                         label= "Mt2:" 
                         name="mt2" 
                         value={apartment.mt2} 
@@ -127,8 +133,8 @@ export function EditApartmentForm(props) {
                     />
                 </FormControl><br/>
                 <FormControl>
-                    <TextField 
-                        variant = "outlined" 
+                    <TextField style={{marginTop: '20px'}} 
+                        variant="outlined"
                         label= "N° Departamento:" 
                         name="number_apartment" 
                         value={apartment.number_apartment} 
@@ -136,18 +142,25 @@ export function EditApartmentForm(props) {
                         error={!/^[A-Za-z0-9,.'-]{1,20}$/.test(apartment.number_apartment)} 
                     />
                 </FormControl><br/>
+                </Grid>
+                <Grid>
                 <FormControl>
-                    <RadioGroup value={apartment.state === 1 ? "ACTIVE" : "UNACTIVE"} onChange={handleRadio}>
-                        <FormControlLabel value="ACTIVE" control={<Radio/>} label="ACTIVO"/>
-                        <FormControlLabel value="UNACTIVE" control={<Radio/>} label="INACTIVO"/>
+                    <RadioGroup value={apartment.state === 1 ? "OCUPADO" : "DESOCUPADO"} onChange={handleRadio} style={{marginLeft: '70px'}} >
+                        <FormControlLabel value="OCUPADO" control={<Radio/>} label="OCUPADO"/>
+                        <FormControlLabel value="DESOCUPADO" control={<Radio/>} label="DESOCUPADO"/>
                     </RadioGroup>
                 </FormControl><br />
-                <Link  >
-                    <Button variant="contained" color="primary" onClick={(e) => handleSubmit(e, id, apartment)}>Guardar Cambios</Button>
-                </Link>
-                
+                </Grid>
+                </Grid>
+                <Link className={classes.last}>
+                    <Button
+                            style={{fontWeight: 1000}} variant="contained" color="secondary" 
+                            onClick={(e) => handleSubmit(e, id, apartment)}
+                            style={{marginTop: '20px'}} >Guardar Cambios</Button>
+                </Link> 
             </FormControl>
-		</>
+		</div>
+        </ThemeProvider>
 	);
 };
 

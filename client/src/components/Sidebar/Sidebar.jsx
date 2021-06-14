@@ -123,7 +123,7 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to="/apartments" className='link'>
+            <Link to="//apartmentadd" className='link'>
             <ListItem button key={'Departamentos'}>
             <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}} /></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Departamentos'} />

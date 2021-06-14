@@ -5,14 +5,20 @@ import { getBuildings } from '../../redux/building/buildingActions';
 import { Link } from 'react-router-dom';
 import "./form.css"
 import { Domain, Room, LocationCity, Receipt, ListAlt } from '@material-ui/icons';
-import {Typography,InputLabel,NativeSelect,Grid,Button,Container,TextField,makeStyles } from '@material-ui/core';
+import { Typography, InputLabel, NativeSelect, Grid, Button, Container, TextField, makeStyles } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 
 const Form = (props) => {
 
-    
+
     const useStyles = makeStyles((theme) => ({
+        root: {
+            marginTop: 50,
+            marginBottom: 30,
+        },
         margin: {
             margin: theme.spacing(1),
         },
@@ -39,7 +45,7 @@ const Form = (props) => {
 
     let newSpending = {};
 
-    if(props.match.path === '/spendings/newSpending'){
+    if (props.match.path === '/spendings/newSpending') {
         newSpending = {
             date: "",
             building: 1,
@@ -49,7 +55,7 @@ const Form = (props) => {
             amount: 0
         }
     }
-    else{
+    else {
         newSpending = {
             date: totalSpend.filter((elem) => elem.id === parseInt(props.match.params.id))[0].date,
             building: 1,
@@ -80,7 +86,7 @@ const Form = (props) => {
 
         }
     }
- 
+
 
     const handleInputChange = (e) => {
         if (e.target.name === "amount") {
@@ -117,103 +123,109 @@ const Form = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Container>
-                <Typography variant="h2" className="componentHeading1">
-                    Todos los edificios
-                </Typography>
-            </Container>
-            <Grid container direction="row" justify="flex-start" alignItems="flex-start" className="componentDataBox" spacing={1}>
-                <Grid item xs={6}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <Domain />
-                        </Grid>
-                        <Grid item>
-                            <InputLabel htmlFor="select">Edificio</InputLabel>
-                            <NativeSelect onChange={handleSelect} name="building" id="building">
-                                <option> Elegir Edificio </option>
-                                
-                                {buildingArray && buildingArray.length > 0 ? buildingArray.map((building) => {
-                                        return (
-                                            <option key={building.id} value={building.id}>
-                                                {building.name}
-                                            </option>
-                                        );
-                                    })
-                                        : ""}
+        <ThemeProvider theme={theme}>
+            <div className="mainContainer">
+                <form onSubmit={handleSubmit}>
+                    <Container>
+                        <div className="componentHeading1">
+                            <Typography variant="h2" className="componentHeading1">
+                                Modificar gastos:
+                            </Typography>
+                        </div>
+                    </Container>
+                    <Grid container direction="row" justify="flex-start" alignItems="flex-start" margin="auto" className="componentDataBox" spacing={1}>
+                        <Grid item xs={6}>
+                            <Grid container spacing={1} alignItems="flex-end" className="element">
+                                <Grid item>
+                                    <Domain />
+                                </Grid>
+                                <Grid item>
+                                    <InputLabel htmlFor="select">Edificio</InputLabel>
+                                    <NativeSelect onChange={handleSelect} name="building" id="building">
+                                        <option> Elegir Edificio </option>
 
-                            </NativeSelect>
-                            {/* <TextField id="building-name" label="Nombre" defaultValue="Nombre del edificio" /> */}
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <Domain />
-                        </Grid>
-                        <Grid item>
-                            <TextField input type="date" id="date" name="date"
-                                onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })} />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <Room />
-                        </Grid>
-                        <Grid item>
-                            <TextField id="concepto" name="concept" label="Concepto" defaultValue="Concepto" value={spending.concept} onChange={handleInputChange} />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <LocationCity />
-                        </Grid>
-                        <Grid item>
-                            <TextField id="proveedor" label="Proveedor" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" defaultValue="Proveedor" />
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={6}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <Receipt />
-                        </Grid>
-                        <Grid item>
-                            <TextField id="detalles" label="Detalles" defaultValue="Detalles" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <ListAlt />
-                        </Grid>
-                        <Grid item>
-                            <TextField id="monto" type="number" label="Monto" defaultValue="1" value={spending.amount} min="1" onChange={handleInputChange} name="amount" />
-                        </Grid>
-                    </Grid>
+                                        {buildingArray && buildingArray.length > 0 ? buildingArray.map((building) => {
+                                            return (
+                                                <option key={building.id} value={building.id}>
+                                                    {building.name}
+                                                </option>
+                                            );
+                                        })
+                                            : ""}
 
-                </Grid>
-                <Grid container direction="row" justify="flex-start" alignItems="flex-start">
-                    <Grid item>
-                        {   
-                            props.match.path === '/spendings/newSpending'
-                                ?
-                                <Link to={'./board'}>
-                                    <Button className={classes.margin} variant="contained" color="primary" type="submit" >Agregar Gasto</Button>
-                                    <Button className={classes.margin} variant="contained" color="primary" type="button" >Cancel</Button>
-                                </Link>
-                                :
-                                <>
-                                    <Link to={'../../board'}>
-                                        <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleUpdate} >Actualizar</Button>
-                                        <Button className={classes.margin} variant="contained" color="primary" type="button" >Cancel</Button>
-                                        <Button className={classes.margin} variant="contained" color="primary" type="button" onClick={handleDelete}>Eliminar</Button>
-                                    </Link>
-                                </>
-                        }
+                                    </NativeSelect>
+                                    {/* <TextField id="building-name" label="Nombre" defaultValue="Nombre del edificio" /> */}
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1} alignItems="flex-end" className="element">
+                                <Grid item>
+                                    <Domain />
+                                </Grid>
+                                <Grid item>
+                                    <TextField input type="date" id="date" name="date"
+                                        onChange={(e) => setSpending({ ...spending, date: new Date(e.target.value) })} />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1} alignItems="flex-end" className="element">
+                                <Grid item>
+                                    <Room />
+                                </Grid>
+                                <Grid item>
+                                    <TextField id="concepto" name="concept" label="Concepto" defaultValue="Concepto" value={spending.concept} onChange={handleInputChange} />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1} alignItems="flex-end" className="element">
+                                <Grid item>
+                                    <LocationCity />
+                                </Grid>
+                                <Grid item>
+                                    <TextField id="proveedor" label="Proveedor" value={spending.supplier} onChange={handleInputChange} name="supplier" placeholder="supplier" defaultValue="Proveedor" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Grid container spacing={1} alignItems="flex-end" className="element">
+                                <Grid item>
+                                    <Receipt />
+                                </Grid>
+                                <Grid item>
+                                    <TextField id="detalles" label="Detalles" defaultValue="Detalles" value={spending.details} onChange={handleInputChange} name="details" placeholder="details" />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1} alignItems="flex-end" className="element" >
+                                <Grid item>
+                                    <ListAlt />
+                                </Grid>
+                                <Grid item style={{width:"80%"}}>
+                                    <TextField width="80%" id="monto" type="number" label="Monto" defaultValue="1" value={spending.amount} min="1" onChange={handleInputChange} name="amount" />
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
+                        <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                            <Grid item>
+                                {
+                                    props.match.path === '/spendings/newSpending'
+                                        ?
+                                        <Link to={'./board'}>
+                                            <Button className={classes.margin} variant="contained" color="secondary" type="submit" >Agregar Gasto</Button>
+                                            <Button className={classes.margin} variant="contained" color="secondary" type="button" >Cancel</Button>
+                                        </Link>
+                                        :
+                                        <>
+                                            <Link to={'../../board'}>
+                                                <Button className={classes.margin} variant="contained" color="secondary" type="button" style={{ fontWeight: 1000 }} onClick={handleUpdate} >Actualizar</Button>
+                                                <Button className={classes.margin} variant="contained" color="secondary" type="button" style={{ fontWeight: 1000 }} >Cancel</Button>
+                                                <Button className={classes.margin} variant="contained" color="secondary" type="button" style={{ fontWeight: 1000 }} onClick={handleDelete}>Eliminar</Button>
+                                            </Link>
+                                        </>
+                                }
+                            </Grid>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Grid>
-        </form>
+                </form>
+            </div>
+        </ThemeProvider>
     )
 }
 
