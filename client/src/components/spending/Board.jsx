@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import styles from "./board.module.css"
+import moment from 'moment'
 
 
 
@@ -87,7 +88,7 @@ const Board = (props) => {
   const spendings = filterSpend.map((spending) => {
     return {
       id: spending.id,
-      date: spending.date,
+      date: moment(spending.date).format('L'),
       concept: spending.concept,
       details: spending.details,
       amount: spending.amount,
