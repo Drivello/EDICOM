@@ -17,6 +17,8 @@ import styles from "./board.module.css"
 
 const Board = (props) => {
 
+  console.log("ESTOY RENDERIZANDO BOARDDDDDD")
+  console.log(filterSpend)
 
   //--------------------------- Creando estructura de la tabla ------------------------
 
@@ -73,6 +75,7 @@ const Board = (props) => {
   // )
 
   const { filterSpend, totalSpend } = useSelector(state => {
+    console.log("entrando al useSelector")
     return {
       filterSpend: state.reducerSpending.filterSpending,
       totalSpend: state.reducerSpending.totalSpending
@@ -90,6 +93,8 @@ const Board = (props) => {
       amount: spending.amount,
     }
   })
+
+  console.log(spendings)
 
   // console.log((<Link to={__dirname + `board/1/edit` }>
   // Editar/Eliminar 
@@ -117,12 +122,12 @@ const Board = (props) => {
   }, [dispatch]);
 
 
-  // const date1 = new Date('2021-01-01T21:11:54')
+  const date1 = new Date('2021-01-01T00:00:00')
   const date2 = new Date(new Date)
   // console.log(input);
 
   const [input, setInput] = useState({
-    since: date2,
+    since: date1,
     upTo: date2,
     concept: 'All',
   })
@@ -201,8 +206,8 @@ const Board = (props) => {
                       <MenuItem value="" >
                         <em>All</em>
                       </MenuItem >
-                      {totalSpend.map((sepndings, index) =>
-                        <MenuItem value={sepndings.concept} key={index}>{sepndings.concept}</MenuItem>
+                      {totalSpend.map((spending, index) =>
+                        <MenuItem value={spending.concept} key={index}>{spending.concept}</MenuItem>
                       )}
                     </Select>
                   </FormControl>

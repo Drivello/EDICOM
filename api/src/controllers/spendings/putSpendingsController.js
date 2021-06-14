@@ -24,7 +24,9 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        return res.json(spending).status(200);
+        const spendingList = await Spendings.findAll()
+
+        return res.json(spendingList).status(200);
     }
     catch(err){
        /*  console.error(err); */

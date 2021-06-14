@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
 
-
 const Form = (props) => {
 
 
@@ -35,7 +34,6 @@ const Form = (props) => {
     const totalSpend = useSelector(
         (state) => state.reducerSpending.totalSpending
     )
-
 
     useEffect(() => {
         console.log("entra en useEffect")
@@ -114,18 +112,18 @@ const Form = (props) => {
         dispatch(deleteSpending(parseInt(props.match.params.id)));
     }
 
-    const handleSubmit = (e) => {
+    const handleAdd = (e) => {
         e.preventDefault();
         if (spending.supplier === '') return alert("supplier Field Cannot Be Empty")
         if (spending.amount === '') return alert("Concept Field Cannot Be Empty")
         dispatch(postSpending(spending));
-        alert("Anduvo")
+        alert("Gasto agregado!")
     }
 
     return (
         <ThemeProvider theme={theme}>
             <div className="mainContainer">
-                <form onSubmit={handleSubmit}>
+                <form>
                     <Container>
                         <div className="componentHeading1">
                             <Typography variant="h2" className="componentHeading1">
@@ -208,8 +206,9 @@ const Form = (props) => {
                                     props.match.path === '/spendings/newSpending'
                                         ?
                                         <Link to={'./board'}>
-                                            <Button className={classes.margin} variant="contained" color="secondary" type="submit" >Agregar Gasto</Button>
+                                            <Button className={classes.margin} variant="contained" color="secondary" type="button" onClick={handleAdd}>Agregar Gasto</Button>
                                             <Button className={classes.margin} variant="contained" color="secondary" type="button" >Cancel</Button>
+                                            <Button className={classes.margin} variant="contained" color="secondary" type="button" >Ver todos los gastos</Button>
                                         </Link>
                                         :
                                         <>
