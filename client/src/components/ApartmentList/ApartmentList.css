@@ -1,4 +1,15 @@
-.container {
-	padding-top: 100px;
-	padding-left:120px
+.componentHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 90%;
+	margin-bottom: 20px;
+}
+.extContAL{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 100px;
 }

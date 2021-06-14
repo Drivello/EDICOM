@@ -5,8 +5,11 @@ import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {DataGrid} from '@material-ui/data-grid';
 import {Button, Typography, Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 import './ApartmentList.css';
+import { BorderAll } from '@material-ui/icons';
 
 const ApartmentList = ({buildingId}) => {
 	const allApartments = useSelector(state => state.apartmentReducer);
@@ -44,33 +47,36 @@ const ApartmentList = ({buildingId}) => {
 			disableClickEventBubbling: true,
 			renderCell: params => {
 				return (
-					<Link to={`/apartment/${params.id}`}>
-						<Button onClick={() => alert(params.id)}>Editar</Button>
+					<ThemeProvider theme={theme}>
+					<Link to={`/apartment/${params.id}`} >
+						<Button style={{fontWeight: 1000}} variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
 					</Link>
+					</ThemeProvider>
 				);
 			},
 		},
 	];
 
 	return (
-		<Container>
-			<Container className="componentHeader ">
-				<Typography variant="h2" className="componentHeading1">
+		<ThemeProvider theme={theme}>
+		<div className='extContAL'>
+			<div className="componentHeader">
+				<h1>
 					Departamentos {detailBuilding[0]?.name || ""}
-				</Typography>
+				</h1>
 				<Link to="/apartmentadd" className="link">
-					<Button variant="contained" color="primary">
+					<Button variant="contained" color="secondary" style={{fontWeight: 1000}}>
 						Nuevo Departamento
 					</Button>
 				</Link>
-			</Container>
-
+			</div>
 			<Container style={{height: 400, width: '80%'}}>
 				<Container style={{display: 'flex', height: '100%'}}>
-					<DataGrid rows={apartments} columns={columns} />
+					<DataGrid style={{border: " 4px solid black"}}rows={apartments} columns={columns} />
 				</Container>
 			</Container>
-		</Container>
+		</div>
+		</ThemeProvider>
 	);
 };
 

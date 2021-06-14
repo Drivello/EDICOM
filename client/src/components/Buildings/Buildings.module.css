@@ -1,0 +1,13 @@
+
+.componentHeaderBL{
+    margin-top:100px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+}
+.buildingHeader{
+    align-self: flex-start;
+}
+.buildingButton{
+    align-self: flex-end;
+}
