@@ -3,13 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAllApartments} from '../../redux/apartments/apartmentsActions';
 import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {DataGrid} from '@material-ui/data-grid';
-import {Button, Typography, Container} from '@material-ui/core';
+import {Button, Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
 import './ApartmentList.css';
-import { BorderAll } from '@material-ui/icons';
+
 
 const ApartmentList = ({buildingId}) => {
 	const allApartments = useSelector(state => state.apartmentReducer);

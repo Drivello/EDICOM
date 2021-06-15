@@ -15,7 +15,6 @@ import moment from 'moment'
 
 
 
-
 const Board = (props) => {
 
   console.log("ESTOY RENDERIZANDO BOARDDDDDD")
@@ -97,31 +96,10 @@ const Board = (props) => {
 
   console.log(spendings)
 
-  // console.log((<Link to={__dirname + `board/1/edit` }>
-  // Editar/Eliminar 
-  // </Link>).props.children);
-
-  //-------------------------- fin trae del state global los gastos----------
-
-
-
-
-  //----------------------- inicio estado interno con los 3 filtros -----------
-
-
-  //LLEVAR ESTA LÓGICA AL REDUCER
-  // const reducer = (candidato, currentValue) => {
-  //   return candidato < currentValue.date ? candidato : currentValue.date; 
-  // };
-
-  // const date1 = totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"));
-
   //-------------------------- inicio trae del state global los gastos----------
   useEffect(() => {
     dispatch(totalSpending())
-
   }, [dispatch]);
-
 
   const date1 = new Date('2021-01-01T00:00:00')
   const date2 = new Date(new Date)
@@ -133,8 +111,12 @@ const Board = (props) => {
     concept: 'All',
   })
 
-  // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
+  useEffect(() => {
+    console.log('setInput update')
+    dispatch(filterSpending(input))
+  }, [input,setInput]);
 
+  // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
 
   function handleSinceChange(date) {
     setInput({ ...input, since: date });
@@ -145,7 +127,13 @@ const Board = (props) => {
   };
 
   function handleSelect(e) {
+    console.log('handleSelect')
     setInput({ ...input, [e.target.name]: e.target.value })
+  }
+
+  function handleSelectAll(e) {
+    setInput({ since: date1, upTo: date2, concept: 'All'});
+    dispatch(filterSpending(input))
   }
 
   function handleSubmit(e) {
@@ -166,10 +154,13 @@ const Board = (props) => {
         <Container className={classes.root}>
           <Container className="filtersBoard">
             <div className={styles.date}>
+              {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
+                  Eliminar Filtros
+                </Button> */}
               <div>
-                <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSubmit}>
+                {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSubmit}>
                   Buscar
-                </Button>
+                </Button> */}
               </div>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
@@ -203,18 +194,21 @@ const Board = (props) => {
                 <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
                   <FormControl style={{width: '200px'}}>
                     <InputLabel id="demo-controlled-open-select-label">Concepto</InputLabel>
-                    <Select name="concept" onClick={handleSelect}>
-                      <MenuItem value="" >
+                    <Select name="concept" onChange={handleSelect}>
+                      <MenuItem value="">
                         <em>All</em>
                       </MenuItem >
-                      {totalSpend.map((spending, index) =>
+                      
+                      {filterSpend.map((spending, index) =>
                         <MenuItem value={spending.concept} key={index}>{spending.concept}</MenuItem>
                       )}
                     </Select>
                   </FormControl>
                 </Grid>
               </MuiPickersUtilsProvider>
-
+              <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
+                  Eliminar Filtros
+              </Button>
             </div>
           </Container>
 
