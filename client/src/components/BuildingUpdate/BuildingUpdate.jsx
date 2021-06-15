@@ -33,8 +33,6 @@ function BuildingUpdate() {
 
     const [currentLoc, setCurrentLoc] = useState("Direccion");
 
-    let lat, lng;
-
     useEffect(() => {
         //useEffect to get the current bulding info
         dispatch(getBuildingDetail(id))
@@ -89,6 +87,7 @@ function BuildingUpdate() {
         image: '',
     };
 
+
     const [input, setInput] = useState({
         //Control the user inputs for every input
         name: Building.name,
@@ -97,6 +96,8 @@ function BuildingUpdate() {
         cant_apartments: Building.cant_apartments,
         address: Building.address,
         image: Building.image,
+        lat: "",
+        lng:""
     });
 
     const inputHandler = (change, text) => {
@@ -243,11 +244,11 @@ function BuildingUpdate() {
                     cata: input.cata || Build.detailBuilding[0].cata, //if there is nothing writed in an input just re save the current data
                     floor: input.floor || Build.detailBuilding[0].floor,
                     cant_apartments:
-                    input.cant_apartments || Build.detailBuilding[0].cant_apartments,
+                        input.cant_apartments || Build.detailBuilding[0].cant_apartments,
                     name: input.name || Build.detailBuilding[0].name,
                     address: input.address || Build.detailBuilding[0].address,
-                    latitude: lat || Build.detailBuilding[0].latitude,
-                    longitude: lng || Build.detailBuilding[0].longitude
+                    latitude: input.lat || Build.detailBuilding[0].latitude,
+                    longitude: input.lng || Build.detailBuilding[0].longitude
                 })
             );
             dispatch(putBuilding(formData)).then(() =>
@@ -290,10 +291,14 @@ function BuildingUpdate() {
 
     const handleSelect = async (value) => {
         const results = await geocodeByAddress(value);
+        const latlng = await getLatLng(results[0]);
+        setInput({...input, lat: latlng.lat, lng: latlng.lng})
+    }
+
+    const handleSelectItem = async (e, sug) => {
+        const results = await geocodeByAddress(sug.description);
         const latlng = await getLatLng(results[0])
-        console.log(latlng)
-        lat = latlng.lat;
-        lng = latlng.lng;
+        setInput({...input, lat: latlng.lat, lng: latlng.lng, address: sug.description})
     }
 
     return (
@@ -408,7 +413,7 @@ function BuildingUpdate() {
                                     onSelect={handleSelect}
                                 >
                                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                        <div>
+                                        <div className={styles.locInput}>
                                             <TextField
                                                 error={error.address}
                                                 helperText={warning.address}
@@ -418,7 +423,7 @@ function BuildingUpdate() {
                                                     className: 'location-search-input',
                                                 })}
                                             />
-                                            <div className="autocomplete-dropdown-container">
+                                            <div className={styles.dropdown}>
                                                 {loading && <div>Loading...</div>}
                                                 {suggestions.map(suggestion => {
                                                     const className = suggestion.active
@@ -429,13 +434,15 @@ function BuildingUpdate() {
                                                         ? { backgroundColor: '#00ff7f', cursor: 'pointer' }
                                                         : { backgroundColor: '#ffffff', cursor: 'pointer' };
                                                     return (
-                                                        <div key={suggestion.id}
-                                                            {...getSuggestionItemProps(suggestion, {
-                                                                className,
-                                                                style,
-                                                            })}
-                                                        >
-                                                            <span>{suggestion.description}</span>
+                                                        <div onClick={e => handleSelectItem(e, suggestion)}>
+                                                            <div key={suggestion.index}
+                                                                {...getSuggestionItemProps(suggestion, {
+                                                                    className,
+                                                                    style,
+                                                                })}
+                                                            >
+                                                                <span onClick={e => handleSelectItem(e, suggestion)}>{suggestion.description}</span>
+                                                            </div>
                                                         </div>
                                                     );
                                                 })}
