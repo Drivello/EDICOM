@@ -16,6 +16,8 @@ module.exports = async (req, res, next) => {
             cant_apartments: building.cant_apartments,
             name: building.name,
             address: building.address,
+            latitude: building.latitude,
+            longitude: building.longitude,
             image: file && `../../../uploads/${file.name}`
         },
         { where: { id: building.id } }

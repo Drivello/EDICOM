@@ -21,8 +21,8 @@ import {
     geocodeByAddress,
     geocodeByPlaceId,
     getLatLng,
-  } from 'react-places-autocomplete';
-  import PlacesAutocomplete from 'react-places-autocomplete';
+} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
 function BuildingUpdate() {
     const { id } = useParams(); //Building id from query params
@@ -31,10 +31,23 @@ function BuildingUpdate() {
     const reg = new RegExp('^[0-9]+$'); //just numbers test
     const history = useHistory();
 
+    const [currentLoc, setCurrentLoc] = useState("Direccion");
+
+    let lat, lng;
+
     useEffect(() => {
         //useEffect to get the current bulding info
-        dispatch(getBuildingDetail(id));
+        dispatch(getBuildingDetail(id))
     }, [dispatch]);
+
+    useEffect(() => {
+        Build.detailBuilding[0] && setCurrentLoc(Build.detailBuilding[0].address)
+    }, [Build.detailBuilding]);
+
+
+    const currentDirection = () => {
+        setCurrentLoc(Build.detailBuilding[0].address)
+    }
 
     const [editMode, setEditMode] = useState({
         //Control the read mode or edit mode for every input
@@ -44,6 +57,7 @@ function BuildingUpdate() {
         floor: false,
         cant_apartments: false,
     });
+
 
     const [error, setError] = useState({
         //Control the error red border of the inputs
@@ -229,9 +243,11 @@ function BuildingUpdate() {
                     cata: input.cata || Build.detailBuilding[0].cata, //if there is nothing writed in an input just re save the current data
                     floor: input.floor || Build.detailBuilding[0].floor,
                     cant_apartments:
-                        input.cant_apartments || Build.detailBuilding[0].cant_apartments,
+                    input.cant_apartments || Build.detailBuilding[0].cant_apartments,
                     name: input.name || Build.detailBuilding[0].name,
                     address: input.address || Build.detailBuilding[0].address,
+                    latitude: lat || Build.detailBuilding[0].latitude,
+                    longitude: lng || Build.detailBuilding[0].longitude
                 })
             );
             dispatch(putBuilding(formData)).then(() =>
@@ -266,14 +282,18 @@ function BuildingUpdate() {
         }
     };
 
-    const deleteHandler = () =>{
+    const deleteHandler = () => {
         dispatch(deleteBuilding(parseInt(id)));
         alert("Edificio borrado con exito!");
         history.goBack()
     }
 
-    const handleSelect = () => {
-
+    const handleSelect = async (value) => {
+        const results = await geocodeByAddress(value);
+        const latlng = await getLatLng(results[0])
+        console.log(latlng)
+        lat = latlng.lat;
+        lng = latlng.lng;
     }
 
     return (
@@ -301,27 +321,6 @@ function BuildingUpdate() {
                                     className={styles.button}
                                     variant="contained"
                                     name="name"
-                                    onClick={changeModeStatus}
-                                >
-                                    EDITAR
-                                </Button>
-                            </div>
-                        </div>
-                        <div>
-                            <div
-                                container
-                                className={styles.item}
-                                item
-                                justify="space-between"
-                            >
-                                <LocationOnIcon className={styles.icon} fontSize="large" />
-                                {editModestatus('address')}
-                                <Button
-                                    color="secondary"
-                                    className={styles.button}
-                                    variant="contained"
-                                    name="address"
-                                    style={{ fontWeight: 1000 }}
                                     onClick={changeModeStatus}
                                 >
                                     EDITAR
@@ -394,6 +393,58 @@ function BuildingUpdate() {
                                 </Button>
                             </div>
                         </div>
+                        <div>
+                            <div
+                                container
+                                id={styles.location}
+                                className={styles.item}
+                                item
+                                justify="space-between"
+                            >
+                                <LocationOnIcon className={styles.icon} fontSize="large" />
+                                <PlacesAutocomplete
+                                    value={input.address}
+                                    onChange={(e) => inputHandler("address", e)}
+                                    onSelect={handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div>
+                                            <TextField
+                                                error={error.address}
+                                                helperText={warning.address}
+                                                variant="outlined"
+                                                {...getInputProps({
+                                                    placeholder: currentLoc,
+                                                    className: 'location-search-input',
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#00ff7f', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div key={suggestion.id}
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <span>{suggestion.description}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.right}>
                         <div className={styles.item}>
@@ -419,7 +470,7 @@ function BuildingUpdate() {
                                 Guardar Cambios
                             </Button>
                             <Button
-                                style={{ fontWeight: 1000 , marginLeft: 15}}
+                                style={{ fontWeight: 1000, marginLeft: 15 }}
                                 color="primary"
                                 variant="contained"
                                 onClick={deleteHandler}
@@ -430,13 +481,6 @@ function BuildingUpdate() {
                     </div>
                 </form>
             </div>
-            <PlacesAutocomplete
-            value={input.address}
-            onChange={(e) => inputHandler("address", e.target.value)}
-            onSelect={handleSelect}
-            >
-                {() => {return (<div>heey</div>)}}
-            </PlacesAutocomplete>
         </ThemeProvider>
     );
 }
