@@ -15,6 +15,7 @@ import uploadIcon from '../../upload-1118929_1280.png';
 import styles from './BuildingAddForm.module.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
+import swal from "sweetalert";
 
 function BuildingAddForm() {
     const reg = new RegExp('^[0-9]+$');
@@ -151,7 +152,7 @@ function BuildingAddForm() {
             address: '',
             image: '',
         });
-        alert('Edificio creado!');
+        swal("Edificio Creado!", "Gracias!", "success");
     }
 
     function renderImg() {
