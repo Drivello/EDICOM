@@ -45,14 +45,14 @@ const Form = (props) => {
   const dispatch = useDispatch();
   //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
-  const buildingArray = useSelector(
-    //trae del reducer
-    (state) => state.buildingReducer.allBuildings // revisar cuando haga pull el nombre del reducer
-  );
-
-  const totalSpend = useSelector(
-    (state) => state.reducerSpending.totalSpending
-  );
+  const { buildingArray, totalSpend  } = useSelector(state => {
+    console.log("entrando al useSelector")
+    return {
+      buildingArray: state.buildingReducer.allBuildings,
+      totalSpend: state.reducerSpending.totalSpending
+      
+    };
+  });
 
   useEffect(() => {
     dispatch(getBuildings());
@@ -64,7 +64,7 @@ const Form = (props) => {
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
       date: "",
-      building: 0,
+      building: 1,
       concept: "",
       supplier: "",
       details: "",
@@ -139,6 +139,7 @@ const Form = (props) => {
     if (spending.supplier === "")
       return alert("supplier Field Cannot Be Empty");
     if (spending.amount === "") return alert("Concept Field Cannot Be Empty");
+    console.log(spending)
     dispatch(postSpending(spending));
     swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(
@@ -193,7 +194,7 @@ const Form = (props) => {
                     <option> Elegir Edificio </option>
 
                     {buildingArray && buildingArray.length > 0
-                      ? buildingArray.map((building, id) => {
+                      ? buildingArray.map((building) => {
                           return (
                             <option key={building.id} value={building.id}>
                               {building.name}

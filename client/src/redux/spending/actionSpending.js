@@ -6,7 +6,6 @@ export const FILTER_SPENDING = 'FILTER_SPENDINGS';
 export const DELETE_SPENDING = 'DELETE_SPENDINGS';
 
 export function postSpending(data) {
-	console.log('entrando a la action putSpending');
 	return function (dispatch) {
 		return axios
 			.post(' http://localhost:3001/spendings/add ', data)
@@ -60,6 +59,5 @@ export function totalSpending() {
 }
 
 export function filterSpending(payload) {
-	console.log('action filterSpending');
 	return {type: 'FILTER_SPENDINGS', payload};
 }

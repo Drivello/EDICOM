@@ -13,7 +13,7 @@ import BuildingDetail from '../BuildingDetail/BuildingDetail'
 import BuildingUpdate  from '../BuildingUpdate/BuildingUpdate.jsx';
 import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm'
-import Expenses from '../Expenses/Expenses'
+import ExpensesTable from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
 
 
@@ -33,7 +33,7 @@ function App() {
 
         <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
         <Route exact path="/spendings/board" component = {SpendingBoard}/>
-        <Route exact path="/ExpensesTable" component = {Expenses}/>
+        <Route exact path="/ExpensesTable" component = {ExpensesTable}/>
         <Route path="/spendings/board/:id/edit" render = {({match}) => <SpendingForm match={match}/>}/>
       </BrowserRouter>
     </Container>
