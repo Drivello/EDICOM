@@ -3,8 +3,7 @@ const {Sequelize} = require('sequelize'); // trae objeto sequalize
 const fs = require('fs'); //filesystem - mover carpetas dentro del sistema operativo
 const path = require('path'); // ruteo interno
 const Spending = require('./models/Spendings');
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME} = process.env; // credenciales
-
+const {DB_USER, DB_PASSWORD, DB_HOST, DB_NAME} = process.env; // credenciales
 
 const sequelize = new Sequelize(
 	`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -41,7 +40,8 @@ sequelize.models = Object.fromEntries(capsEntries); //[Key, value]
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Spendings, Expenses, Apartment, Buildings, Alerts } = sequelize.models; //ir agregando los modelos que se crean.
+const {Spendings, Expenses, Apartment, Buildings, Alerts, User} =
+	sequelize.models; //ir agregando los modelos que se crean.
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -54,13 +54,15 @@ Alerts.belongsTo(Buildings);
 Buildings.hasMany(Spendings);
 Spendings.belongsTo(Buildings);
 
-Apartment.hasMany(Expenses);				//{ through: 'apartmentId' }
-Expenses.belongsTo(Apartment , 
-	{
-		foreignKey: {
-			unique: 'complexUnique'
-		}
-	});
+Apartment.hasMany(Expenses); //{ through: 'apartmentId' }
+Expenses.belongsTo(Apartment, {
+	foreignKey: {
+		unique: 'complexUnique',
+	},
+});
+
+Apartment.hasOne(User);
+User.belongsTo(Apartment);
 
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS
