@@ -23,6 +23,7 @@ import {
 } from 'react-places-autocomplete';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { useHistory } from 'react-router-dom';
 
 function BuildingAddForm() {
     const reg = new RegExp('^[0-9]+$');
@@ -36,6 +37,7 @@ function BuildingAddForm() {
         lat: "",
         lng: ""
     });
+    const history = useHistory();
 
     const [error, setError] = useState({
         //Control the error red border of the inputs
@@ -144,7 +146,7 @@ function BuildingAddForm() {
             !/\S/.test(buildingData.cata) ||
             !/\S/.test(buildingData.address)
         ) {
-            return alert('Por favor complete todos los datos');
+            return swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");;
         }
         const formData = new FormData();
         formData.append('image', buildingData.image);
@@ -170,6 +172,7 @@ function BuildingAddForm() {
             image: '',
         });
         swal("Edificio Creado!", "Gracias!", "success");
+        history.goBack()
     }
 
     function renderImg() {
