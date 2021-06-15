@@ -2,6 +2,9 @@ import {useState, useEffect} from 'react'
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem, 
 	Typography, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
+import './CreateApartment.css';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 const useStyles = makeStyles((theme)=>({
@@ -121,15 +124,16 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 	const handleRadio = (event) => {
 		setInput({...input, 
 			state:event.target.value}
-			)
+		)
 	};
 	
 
     return (
-        <>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
+		<ThemeProvider theme={theme}>
+        <div className= 'extContCAF'>
+            <h1>
 				Crear Departamento
-			</Typography>
+			</h1>
 			<Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
 					<FormControl className={classes.formControl} error={error["building"]}>
@@ -157,10 +161,10 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
                     </Grid>
             </Grid>
 			<form noValidate autoComplete="off" >
-			<Grid container direction="column" justify="center" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
+			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
                 <Grid item xs={6}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
+                    <Grid container spacing={1} alignItems="center">
+                        <Grid>
                             <Domain />
                         </Grid>
                         <Grid item>
@@ -175,7 +179,7 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 							/>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
+                    <Grid container spacing={1} alignItems="center">
                         <Grid item>
                             <Home />
                         </Grid>
@@ -191,7 +195,7 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 							/>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
+                    <Grid container spacing={1} alignItems="center">
                         <Grid item>
                             <MeetingRoom />
                         </Grid>
@@ -213,23 +217,23 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
                         <Grid item>
 						<FormControl >
 							<RadioGroup row value={input.state} onChange={handleRadio}>
-								<FormControlLabel value="1" control={<Radio/>} label="ACTIVO"/>
-								<FormControlLabel value="0" control={<Radio/>} label="INACTIVO"/>
+								<FormControlLabel value="1" control={<Radio/>} label="OCUPADO"/>
+								<FormControlLabel value="0" control={<Radio/>} label="DESOCUPADO"/>
 							</RadioGroup>
 						</FormControl><br/>
 						</Grid>
 					</Grid>
+				
 				</Grid>
-			</Grid>
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
-                        <Button disabled={disableButton} onClick={handleSubmit} variant="contained" color="primary">Agregar Depto</Button>
+                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" disabled={disableButton} onClick={handleSubmit} variant="contained">Agregar Depto</Button>
                     </Grid>
                 </Grid>
+			</Grid>
         </form>
-		</>
+		</div>
+		</ThemeProvider>
     )
-
-
 }
 export default CreateApartmentForm;

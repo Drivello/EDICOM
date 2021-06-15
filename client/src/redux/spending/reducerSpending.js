@@ -15,13 +15,14 @@ const initialState = {
 const SpendingReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case PUT_SPENDING:
-			console.log('Entre al case de PUT_SPENDING en el reducer');
-			console.log(state.totalSpending);
 			return {...state, filterSpending: action.payload};
 		case POST_SPENDING:
-			return {...state, filterSpending: state.totalSpending};
+			console.log('Entre al case de POST_SPENDING en el reducer');
+			console.log('estado anterior: ', state.totalSpending);
+			console.log('action.payload: ', action.payload);
+			return {...state, filterSpending: action.payload};
 		case DELETE_SPENDING: //
-			return {...state, addSpending: null};
+			return {...state, filterSpending: action.payload};
 		case GET_SPENDINGS:
 			return {totalSpending: action.payload, filterSpending: action.payload};
 		case FILTER_SPENDING:

@@ -6,6 +6,8 @@ module.exports = async (req, res, next) => {
 
     let {date, concept, details, supplier, amount, building} = req.body;
     
+    console.log(building)
+
     try
     {
         let spending = await Spendings.create({
@@ -18,13 +20,15 @@ module.exports = async (req, res, next) => {
 
         let buildingSearched = await Buildings.findOne({
             where: {
-                id: building
+                id: 1
             }
         })
 
         await buildingSearched.addSpending(spending);
 
-        return res.json(spending).status(200);
+        const spendingList = await Spendings.findAll();
+
+        return res.json(spendingList).status(200);
     }
     catch(err){
        /*  console.error(err); */
