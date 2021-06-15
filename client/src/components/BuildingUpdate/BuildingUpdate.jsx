@@ -3,6 +3,7 @@ import { useEffect, useState, React } from 'react';
 import {
     getBuildingDetail,
     putBuilding,
+    deleteBuilding
 } from '../../redux/building/buildingActions';
 import { useParams } from 'react-router-dom';
 import { Button, TextField, Grid, IconButton } from '@material-ui/core';
@@ -257,6 +258,11 @@ function BuildingUpdate() {
         }
     };
 
+    const deleteHandler = () =>{
+        dispatch(deleteBuilding(parseInt(id)));
+        alert("Edificio borrado con exito!")
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.contUpdateB}>
@@ -398,6 +404,14 @@ function BuildingUpdate() {
                                 onClick={saveHandler}
                             >
                                 Guardar Cambios
+                            </Button>
+                            <Button
+                                style={{ fontWeight: 1000 , marginLeft: 15}}
+                                color="primary"
+                                variant="contained"
+                                onClick={deleteHandler}
+                            >
+                                Borrar Edificio
                             </Button>
                         </div>
                     </div>
