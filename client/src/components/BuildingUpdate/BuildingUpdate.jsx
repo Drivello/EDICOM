@@ -5,7 +5,7 @@ import {
     putBuilding,
     deleteBuilding
 } from '../../redux/building/buildingActions';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Button, TextField, Grid, IconButton } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -17,12 +17,19 @@ import { translate } from './Translate';
 import styles from './BuildingUpdate.module.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+  } from 'react-places-autocomplete';
+  import PlacesAutocomplete from 'react-places-autocomplete';
 
 function BuildingUpdate() {
     const { id } = useParams(); //Building id from query params
     const Build = useSelector(state => state.buildingReducer); //Use selector setup
     const dispatch = useDispatch(); //dispatch setup
     const reg = new RegExp('^[0-9]+$'); //just numbers test
+    const history = useHistory();
 
     useEffect(() => {
         //useEffect to get the current bulding info
@@ -231,6 +238,7 @@ function BuildingUpdate() {
                 dispatch(getBuildingDetail(id))
             ); //re render the info of the component and now the changes are the curren data
             alert('Se guardaron los cambios');
+            history.goBack()
         } else {
             alert('Debe completar todos los campos');
         }
@@ -260,7 +268,12 @@ function BuildingUpdate() {
 
     const deleteHandler = () =>{
         dispatch(deleteBuilding(parseInt(id)));
-        alert("Edificio borrado con exito!")
+        alert("Edificio borrado con exito!");
+        history.goBack()
+    }
+
+    const handleSelect = () => {
+
     }
 
     return (
@@ -417,6 +430,13 @@ function BuildingUpdate() {
                     </div>
                 </form>
             </div>
+            <PlacesAutocomplete
+            value={input.address}
+            onChange={(e) => inputHandler("address", e.target.value)}
+            onSelect={handleSelect}
+            >
+                {() => {return (<div>heey</div>)}}
+            </PlacesAutocomplete>
         </ThemeProvider>
     );
 }
