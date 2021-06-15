@@ -23,6 +23,7 @@ import {
     getLatLng,
 } from 'react-places-autocomplete';
 import PlacesAutocomplete from 'react-places-autocomplete';
+import swal from "sweetalert";
 
 function BuildingUpdate() {
     const { id } = useParams(); //Building id from query params
@@ -254,10 +255,10 @@ function BuildingUpdate() {
             dispatch(putBuilding(formData)).then(() =>
                 dispatch(getBuildingDetail(id))
             ); //re render the info of the component and now the changes are the curren data
-            alert('Se guardaron los cambios');
+            swal("Se guardaron los cambios!", "Gracias!", "success");
             history.goBack()
         } else {
-            alert('Debe completar todos los campos');
+            swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");
         }
     };
 
@@ -269,7 +270,7 @@ function BuildingUpdate() {
             img.type === 'image/png'
         ) {
             setInput({ ...input, image: img });
-        } else alert('Tipo de archivo no soportado');
+        } else swal("Tipo de archivo no soportado", "Los archivos solo pueden ser JPG, PNG o JPEG", "error");;
     };
 
     const renderIMG = () => {
@@ -285,7 +286,7 @@ function BuildingUpdate() {
 
     const deleteHandler = () => {
         dispatch(deleteBuilding(parseInt(id)));
-        alert("Edificio borrado con exito!");
+        swal("Edificio borrado con exito!", "Gracias!", "success");
         history.goBack()
     }
 
