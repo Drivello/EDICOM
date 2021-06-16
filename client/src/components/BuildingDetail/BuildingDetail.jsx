@@ -2,25 +2,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import ApartmentList from "../ApartmentList/ApartmentList";
-import Board from "../spending/Board"
+import BSChart from "./BSChart";
+import './BuildingDetail.css';
 
 function BuildingDetail(props) {
     const buildingId = props.match.params.id;
     return (
-        <Grid>
-            <Grid>
+        <div className='contExtBD'>
+            <div>
                 <ApartmentList buildingId={buildingId}/>
-            </Grid>
-            {/* <Grid>
-                <Board />
-            </Grid>
-            <Grid>
-                Aca se reutiliza el componente de listado de alertas
-            </Grid>
-            <Grid>
-                Aca se reutiliza el componente de listado de amenities
-            </Grid> */}
-        </Grid>
+            </div>
+            <div className= 'contChar'>
+                <BSChart buildingId={buildingId}/>
+            </div>
+        </div>
     );
 }
 

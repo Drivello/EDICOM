@@ -6,8 +6,7 @@ export const DELETE_ALERT_URL= "http://localhost:3001/alerts";
 export function filterAlerts(array,building,importance,since,upTo) {
     let result;
     
-    if (building !== 'All') {
-        alert("entre en building")
+    if (building !== 'All' && importance === 'All') {
         result = array.filter(s => s.building.name === building)
         .filter(s => {
             return new Date(s.date) >= since;
@@ -16,8 +15,18 @@ export function filterAlerts(array,building,importance,since,upTo) {
         return result
     }
 
-    if (importance !== 'All') {
+    if (importance !== 'All' && building === 'All') {
         result = array.filter(s => s.importance === importance)
+        .filter(s => {
+            return new Date(s.date) >= since;
+        })
+        .filter(s => new Date(s.date) <= upTo)
+        return result
+    }
+
+    if (building !== 'All' && importance !== 'All') {
+        result = array.filter(s => s.building.name === building)
+        .filter(s => s.importance === importance)
         .filter(s => {
             return new Date(s.date) >= since;
         })
