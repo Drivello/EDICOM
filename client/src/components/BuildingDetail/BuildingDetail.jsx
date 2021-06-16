@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+
 import { Grid } from '@material-ui/core';
 import ApartmentList from "../ApartmentList/ApartmentList";
-import Board from "../spending/Board"
+
 
 function BuildingDetail(props) {
     const buildingId = props.match.params.id;

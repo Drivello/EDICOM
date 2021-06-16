@@ -46,7 +46,6 @@ const Form = (props) => {
   //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
   const { buildingArray, totalSpend  } = useSelector(state => {
-    console.log("entrando al useSelector")
     return {
       buildingArray: state.buildingReducer.allBuildings,
       totalSpend: state.reducerSpending.totalSpending
@@ -139,7 +138,6 @@ const Form = (props) => {
     if (spending.supplier === "")
       return alert("supplier Field Cannot Be Empty");
     if (spending.amount === "") return alert("Concept Field Cannot Be Empty");
-    console.log(spending)
     dispatch(postSpending(spending));
     swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(

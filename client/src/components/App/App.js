@@ -15,6 +15,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm'
 import ExpensesTable from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
+import Logging from '../Logging/Logging';
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <Route exact path="/BuildingUpdate/:id" component = {BuildingUpdate}/> 
         <Route path="/apartmentadd" component={CreateApartment} />
 				<Route path="/apartment/:id" component={EditApartmentForm} />
-
+        <Route exact path="/logging" component = {Logging}/>
         <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
         <Route exact path="/spendings/board" component = {SpendingBoard}/>
         <Route exact path="/ExpensesTable" component = {ExpensesTable}/>

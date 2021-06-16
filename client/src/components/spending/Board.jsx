@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
-import { totalSpending, filterSpending, deleteSpending } from '../../redux/spending/actionSpending'
+import { totalSpending, filterSpending,  } from '../../redux/spending/actionSpending'
 import { getBuildings } from "../../redux/building/buildingActions";
-import { Container, Typography, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { Container, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider,KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -18,8 +18,6 @@ import moment from 'moment'
 
 const Board = (props) => {
 
-  console.log("ESTOY RENDERIZANDO BOARDDDDDD")
-  console.log(filterSpend)
 
   //--------------------------- Creando estructura de la tabla ------------------------
 
@@ -75,7 +73,7 @@ const Board = (props) => {
   //   (state) => state.reducerSpending.totalSpending
   // )
 
-  const { filterSpend, totalSpend, buildingArray} = useSelector(state => {
+  const { filterSpend, buildingArray} = useSelector(state => {
     console.log("entrando al useSelector")
     return {
       filterSpend: state.reducerSpending.filterSpending, 
@@ -83,10 +81,7 @@ const Board = (props) => {
       buildingArray: state.buildingReducer.allBuildings
     };
   });
-  console.log("totalSpend")
-  console.log(totalSpend)
-  console.log("buildingArray")
-  console.log(buildingArray)
+
   //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
 
@@ -100,7 +95,7 @@ const Board = (props) => {
     }
   })
 
-  console.log(spendings)
+
 
   //-------------------------- useEffect dispatcha las acciones----------
   useEffect(() => { // envia a las acciones
@@ -109,8 +104,8 @@ const Board = (props) => {
   }, [dispatch]);
 
   const date1 = new Date('2021-01-01T00:00:00')
-  const date2 = new Date(new Date)
-  // console.log(input);
+  const date2 = new Date (new Date())
+
 
   const [input, setInput] = useState({
     since: date1,
@@ -122,7 +117,7 @@ const Board = (props) => {
   useEffect(() => {
     console.log('setInput update')
     dispatch(filterSpending(input))
-  }, [input,setInput]);
+  }, [dispatch,input,setInput]);
 
   // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
 
@@ -150,10 +145,6 @@ const Board = (props) => {
 
   function handleSelectAll(e) {
     setInput({ since: date1, upTo: date2, concept: 'All'});
-    dispatch(filterSpending(input))
-  }
-
-  function handleSubmit(e) {
     dispatch(filterSpending(input))
   }
 

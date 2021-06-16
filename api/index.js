@@ -2,9 +2,10 @@ const { DataTypes } = require('sequelize');
 
 const server = require('./src/app.js'); //app
 const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
-const { Spendings, Apartment, Expenses, Buildings, Alerts } = require('./src/db.js');
+const { Spendings, Apartment, Expenses, Buildings, Alerts,User } = require('./src/db.js');
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
+const bcrypt = require('bcryptjs')
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -89,6 +90,32 @@ conn.sync({ force: true }).then(() => {
     amount: 3700,
   });
 
+// --- Creamos unos usuarios
+const hashedPassword = bcrypt.hash("123", 12)
+hashedPassword.then((res)=>{
+  console.log("asdfsdafdasfasdfasdfasdf",res);
+  let user1 = User.create({
+    name:"agustin",
+    email: "agustin@gmail.com",
+    password: res,
+    contact:"78788678",
+    isDeleted:false
+  });
+  let user2 = User.create({
+    name:"mariano",
+    email: "mariano@gmail.com",
+    password: res,
+    contact:"78788678",
+    isDeleted:false
+  })
+  let user3 = User.create({
+    name:"mauri",
+    email: "mauri@gmail.com",
+    password: res,
+    contact:"78788678",
+    isDeleted:false
+  })
+})
 
   
   // Mock Buildings Data

@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getExpenses } from "./../../redux/expenses/actionExpenses";
-import { apartmentsActions } from "./../../redux/apartments/apartmentsActions";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from '../themeStyle';
-import styles from "./../spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
-import ExpensesDetail from './ExpensesDetail'
 
 import {
    Box,
@@ -16,11 +9,9 @@ import {
    Table,
    TableBody,
    TableCell,
-   TableContainer,
    TableHead,
    TableRow,
    Typography,
-   Paper,
 } from "@material-ui/core";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
