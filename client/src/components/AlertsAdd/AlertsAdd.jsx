@@ -1,25 +1,56 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import styles from "./AlertsAdd.module.css";
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, MenuItem } from '@material-ui/core';
 import swal from "sweetalert";
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory } from 'react-router-dom';
+import {
+    postAlert
+} from '../../redux/alerts/alertActions';
+import {
+    getBuildings
+} from '../../redux/building/buildingActions';
 
 
 const AlertsAdd = (props) => {
     const date = new Date;
     const history = useHistory();
+    const dispatch = useDispatch(); //dispatch setup
+    const buildings = useSelector(state => state.buildingReducer);
 
-    
+
+    useEffect(() => {
+        //useEffect to get the current bulding info
+        dispatch(getBuildings())
+    }, [dispatch]);
+
+    const currencies = [
+        {
+            value: 'alta',
+            label: 'Alta',
+        },
+        {
+            value: 'media',
+            label: 'Media',
+        },
+        {
+            value: 'baja',
+            label: 'Baja',
+        }
+    ];
+
+
     const [input, setInput] = useState({
         date: date,
         time: date,
         concept: "",
         detail: "",
         important: "",
+        building: ""
     })
 
 
@@ -28,17 +59,19 @@ const AlertsAdd = (props) => {
         time: false,
         concept: false,
         detail: false,
-        important: false
+        important: false,
+        building: false,
     });
 
     const saveHandler = () => {
-        if(input.concept !== "" && input.importance !== ""){
+        if (input.concept !== "" && input.importance !== "" && input.building !== "") {
             setError({
                 date: false,
                 time: false,
                 concept: false,
                 detail: false,
-                important: false
+                important: false,
+                building: false
             });
             setInput({
                 date: date,
@@ -46,20 +79,29 @@ const AlertsAdd = (props) => {
                 concept: "",
                 detail: "",
                 important: "",
+                building: ""
             })
-
-            swal("Se ha creado la alerta!", "Gracias!", "success");
-            history.goBack()
-        }else{
-            if(input.concept === "") setError({...error, concept: true});
-            if(input.importance === "") setError({...error, important: true});
+            let body = {
+                date: input.date,
+                concept: input.concept,
+                details: input.detail,
+                building: input.building,
+                importance: input.important
+            }
+            dispatch(postAlert(body))
+            .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
+            .then(history.goBack())
+        } else {
+            if (input.concept === "") setError({ ...error, concept: true });
+            if (input.importance === "") setError({ ...error, important: true });
+            if (input.building === "") setError({ ...error, building: true });
             swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");
         }
     }
-    
+
     const handleChange = (e, change) => {
-        if(change !== "date" && change !== "time") e = e.target.value;
-        setInput({...input, [change]: e})
+        if (change !== "date" && change !== "time") e = e.target.value;
+        setInput({ ...input, [change]: e })
     }
 
     return (
@@ -108,6 +150,7 @@ const AlertsAdd = (props) => {
                         <TextField variant="outlined"
                             className={styles.input}
                             label="Detalles"
+                            multiline
                             value={input.detail}
                             onChange={e => handleChange(e, "detail")} />
                         <TextField variant="outlined"
@@ -115,7 +158,27 @@ const AlertsAdd = (props) => {
                             label="Importancia"
                             value={input.important}
                             error={error.concept}
-                            onChange={e => handleChange(e, "important")} />
+                            select
+                            onChange={e => handleChange(e, "important")} >
+                            {currencies.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField variant="outlined"
+                            className={styles.input}
+                            label="Seleccione un edificio"
+                            value={input.building}
+                            select
+                            error={error.building}
+                            onChange={e => handleChange(e, "building")} >
+                            {buildings.allBuildings && buildings.allBuildings.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                    {option.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         <Button
                             className={styles.submit}
                             style={{ fontWeight: 1000 }}
