@@ -77,7 +77,8 @@ const AlertsUpdate = (props) => {
     });
 
     const saveHandler = () => {
-        if (input.concept !== "" && input.important !== "" && input.building !== "") {
+        console.log(input.date)
+        if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date !== null) {
             setError({
                 date: false,
                 concept: false,
@@ -106,7 +107,7 @@ const AlertsUpdate = (props) => {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
             if (input.concept === "") setError({ ...error, concept: true });
-            swal("Debe completar el concepto, la importancia y el edificio", "Por favor revise los datos!", "warning");
+            swal("Debe completar la fecha, concepto, importancia y el edificio", "Por favor revise los datos!", "warning");
         }
     }
 
