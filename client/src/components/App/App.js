@@ -16,6 +16,8 @@ import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm'
 import Expenses from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
 import Alerts from '../Alerts/AlertsList';
+import AlertsUpdate from '../AlertsUpdate/AlertsUpdate';
+import AlertsAdd from '../AlertsAdd/AlertsAdd';
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
         <Route exact path="/apartmentadd" component={CreateApartment} />
 				<Route exact path="/apartment/:id" component={EditApartmentForm} />
         <Route exact path="/alerts" component = {Alerts}/>
+        <Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
+        <Route exact path="/alertsAdd" component = {AlertsAdd}/>
         <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
         <Route exact path="/spendings/board" component = {SpendingBoard}/>
         <Route exact path="/ExpensesTable" component = {Expenses}/>

@@ -168,7 +168,6 @@ function BuildingAddForm() {
                 longitude: buildingData.lng || null
             })
         );
-        dispatch(postBuilding(formData));
         setBuildingData({
             cata: '',
             floor: '',
@@ -177,8 +176,9 @@ function BuildingAddForm() {
             address: '',
             image: '',
         });
-        swal("Edificio Creado!", "Gracias!", "success");
-        history.goBack()
+        dispatch(postBuilding(formData))
+        .then(swal("Edificio Creado!", "Gracias!", "success"))
+        .then(history.goBack())
     }
 
     function renderImg() {

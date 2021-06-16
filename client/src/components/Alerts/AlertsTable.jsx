@@ -27,13 +27,12 @@ function AlertsTable(props) {
             concept: alert.concept,
             detail: alert.details,
             importance: alert.importance,
-            edit: `/`
+            edit: `/alertsUpdate/${alert.id}`
         }
     })
 
     const buildingSelect = alerts.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
     const importanceSelect = alerts.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
-    
     
 
     
