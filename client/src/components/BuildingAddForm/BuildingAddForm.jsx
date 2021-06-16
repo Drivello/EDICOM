@@ -24,7 +24,6 @@ import {
 } from 'react-places-autocomplete';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { useHistory } from 'react-router-dom';
 
 function BuildingAddForm() {
     const reg = new RegExp('^[0-9]+$');
@@ -61,7 +60,6 @@ function BuildingAddForm() {
     });
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const allBuildings = useSelector((state) => state.buildingReducer.allBuildings);
     const postStatus = useSelector((state) => state.buildingReducer.postStatus);
 
