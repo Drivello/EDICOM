@@ -32,11 +32,6 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 	const [buildingOpen, setBuildingOpen] = useState(false);
 	const [apartmentOpen, setApartmentOpen] = useState(false);
 
-	// useEffect(() => {
-	// 	dispatch(getAllApartments())
-	// })
-
-
 	const [error, setError] = useState({//Control the error red border of the inputs
 		name: false,
         email: false,
@@ -59,22 +54,21 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 		Validate("contact")
 	}, [error])
 	
-	console.log('ACA VIENEN LOS BUILDINGS DEL STORE', allBuildings)
 
 	const Validate = (field) => {
 		switch (field.name){
 			case "name":
-				console.log("name", field.value, input.name)
 				if(!/^[A-Za-z .'-]{3,20}$/.test(field.value)) {
-					setError({...error, building: true})
-					setHelperText({...helperText, name: "Seleccione un Edificio"})
+					setError({...error, name: true})
+					if(field.value.length < 3) {setHelperText({...helperText, name: "Es muy corto"})}
+                    else if (field.value.length > 20) {setHelperText({...helperText, name: "Es muy largo"})}
+                    else{setHelperText({...helperText, name: "No se permiten caracteres especiales"})}
 				}else{
 					setError({...error, name: false})
 					setHelperText({...helperText, name: ""})
 				}
 				break;
 			case "email":
-				console.log("email", field.value, input.email)
 				if(!/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(field.value)) {
 					setError({...error, email: true})
 					if(field.value.length < 3) {setHelperText({...helperText, email: "Es muy corto"})}
@@ -87,12 +81,11 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 				}
 				break;
 			case "password":
-				console.log("password", field.value, input.password)
-				if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(field.value)) {
+				if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,60}$/.test(field.value)) {
 					setError({...error, password: true})
-					if(field.value.length < 2) {setHelperText({...helperText, password: "Es muy corto"})}
-					else if(field.value.length > 10) {setHelperText({...helperText, password: "Es muy largo"})}
-					else{setHelperText({...helperText, password: "Solo se permiten numeros, comas y puntos"})}
+					if(field.value.length < 8) {setHelperText({...helperText, password: "Es muy corto"})}
+					else if(field.value.length > 60) {setHelperText({...helperText, password: "Es muy largo"})}
+					else{setHelperText({...helperText, password: "1 nro, 1 mayus y 1 min"})}
 				}
 				else{
 					setError({...error, password: false})
@@ -100,12 +93,11 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 				}
 				break;
 			case "contact":
-				console.log("contact", field.value, input.contact)
-				if(!/^[+0-9-]{6,20}$/.test(field.value)) {
+				if(!/^[+0-9-]{8,20}$/.test(field.value)) {
 					setError({...error, contact: true})
-					if(field.value.length < 2) {setHelperText({...helperText, contact: "Es muy corto"})}
-					else if(field.value.length > 5) {setHelperText({...helperText, contact: "Es muy largo"})}
-					else{setHelperText({...helperText, contact: "Solo se permiten mayusculas y numeros"})}
+					if(field.value.length < 8) {setHelperText({...helperText, contact: "Es muy corto"})}
+					else if(field.value.length > 20) {setHelperText({...helperText, contact: "Es muy largo"})}
+					else{setHelperText({...helperText, contact: "Solo se permiten numeros"})}
 				}
 				else{
 					setError({...error, contact: false})
@@ -115,15 +107,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 			default:
 				break;
 		}
-		// Object.values(error).every(x => x === false) && Object.values(helperText).every(x => x === "") ? setdisableButton(false) : setdisableButton(true) 
-		//(error.building && error.cata_apartment && error.mt2 && error.number_apartment) ? setdisableButton(false) : setdisableButton(true)
 	}
-    /* name: '',
-    email:'',
-    password: '',
-    contact: '',
-    isDeleted:'',
-    apartment:'' */
 	const handleInputChange = function (e) {
 		setInput({
 			...input,

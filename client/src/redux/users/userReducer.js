@@ -8,7 +8,7 @@ import {
 
 const initialState = {
 	users: [],
-	userDetail: {},
+	userDetail: undefined,
 };
 
 const userReducer = (state = initialState, action) => {
