@@ -7,25 +7,24 @@ import { TextField, Button, MenuItem } from '@material-ui/core';
 import swal from "sweetalert";
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { useHistory } from 'react-router-dom';
+import { useHistory , useParams} from 'react-router-dom';
 import {
     postAlert
 } from '../../redux/alerts/alertActions';
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
+import {findAlert} from "../../redux/alerts/alertActions"
 
 
 const AlertsUpdate = (props) => {
     const date = new Date;
     const history = useHistory();
+    const { id } = useParams();
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
+    const alert = useSelector(state => state.alertsReducer);
 
-
-    useEffect(() => {
-        dispatch(getBuildings())
-    }, [dispatch]);
 
     const currencies = [
         {
@@ -45,17 +44,31 @@ const AlertsUpdate = (props) => {
 
     const [input, setInput] = useState({
         date: date,
-        time: date,
         concept: "",
         detail: "",
         important: "",
         building: ""
     })
 
+    useEffect(() => {
+      dispatch(getBuildings())
+      dispatch(findAlert(id))
+  }, [dispatch]);
+
+  useEffect(() => {
+    alert.findAlert[0] && setInput({
+      ...input, 
+      date: alert.findAlert[0].date, 
+      concept: alert.findAlert[0].concept, 
+      important: alert.findAlert[0].importance, 
+      building: alert.findAlert[0].building
+    }) 
+/*     alert.findAlert[0] && alert.findAlert[0].details && setInput({...input, detail: alert.findAlert[0].details})  */
+}, [alert.findAlert]);
+
 
     const [error, setError] = useState({
         date: false,
-        time: false,
         concept: false,
         detail: false,
         important: false,
@@ -66,7 +79,6 @@ const AlertsUpdate = (props) => {
         if (input.concept !== "" && input.important !== "" && input.building !== "") {
             setError({
                 date: false,
-                time: false,
                 concept: false,
                 detail: false,
                 important: false,
@@ -74,7 +86,6 @@ const AlertsUpdate = (props) => {
             });
             setInput({
                 date: date,
-                time: date,
                 concept: "",
                 detail: "",
                 important: "",
@@ -99,7 +110,7 @@ const AlertsUpdate = (props) => {
     }
 
     const handleChange = (e, change) => {
-        if (change !== "date" && change !== "time") e = e.target.value;
+        if (change !== "date") e = e.target.value;
         setInput({ ...input, [change]: e })
     }
 
@@ -125,17 +136,6 @@ const AlertsUpdate = (props) => {
                                 format="MM/dd/yyyy"
                                 value={input.date}
                                 onChange={e => handleChange(e, "date")}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }} />
-                            <KeyboardTimePicker
-                                className={styles.input}
-                                color="secondary"
-                                name="since"
-                                margin="normal"
-                                label="Hora"
-                                value={input.time}
-                                onChange={e => handleChange(e, "time")}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }} />
