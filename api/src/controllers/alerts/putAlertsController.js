@@ -2,14 +2,15 @@ const { Alerts } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let {id, date, concept, details, importance} = req.body;
-    
+    let {id, date, concept, details, importance, building} = req.body;
+    console.log(id)
     try
     {
         let alert = await Alerts.update({
             date,
             concept,
             details: details || null,
+            buildingId: building,
             importance
 
         },

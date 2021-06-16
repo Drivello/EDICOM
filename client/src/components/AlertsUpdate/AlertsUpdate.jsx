@@ -9,7 +9,7 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from 
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory , useParams} from 'react-router-dom';
 import {
-    postAlert
+    putBuilding
 } from '../../redux/alerts/alertActions';
 import {
     getBuildings
@@ -56,14 +56,15 @@ const AlertsUpdate = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    alert.findAlert[0] && setInput({
+    alert.findAlert[0] && 
+    setInput({
       ...input, 
       date: alert.findAlert[0].date, 
       concept: alert.findAlert[0].concept, 
       important: alert.findAlert[0].importance, 
-      building: alert.findAlert[0].building
-    }) 
-/*     alert.findAlert[0] && alert.findAlert[0].details && setInput({...input, detail: alert.findAlert[0].details})  */
+      building: alert.findAlert[0].buildingId,
+      detail: alert.findAlert[0].details || ""
+    })
 }, [alert.findAlert]);
 
 
@@ -92,15 +93,15 @@ const AlertsUpdate = (props) => {
                 building: ""
             })
             let body = {
+                id: id,
                 date: input.date,
                 concept: input.concept,
                 details: input.detail,
                 building: input.building,
                 importance: input.important
             }
-            dispatch(postAlert(body))
-            .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
-            .then(history.goBack())
+            dispatch(putBuilding(body))
+            .then(swal("Se ha modificado la alerta!", "Gracias!", "success"))
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
