@@ -24,7 +24,6 @@ const AlertsAdd = (props) => {
 
 
     useEffect(() => {
-        //useEffect to get the current bulding info
         dispatch(getBuildings())
     }, [dispatch]);
 
@@ -64,7 +63,7 @@ const AlertsAdd = (props) => {
     });
 
     const saveHandler = () => {
-        if (input.concept !== "" && input.importance !== "" && input.building !== "") {
+        if (input.concept !== "" && input.important !== "" && input.building !== "") {
             setError({
                 date: false,
                 time: false,
@@ -92,10 +91,10 @@ const AlertsAdd = (props) => {
             .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
             .then(history.goBack())
         } else {
-            if (input.concept === "") setError({ ...error, concept: true });
-            if (input.importance === "") setError({ ...error, important: true });
             if (input.building === "") setError({ ...error, building: true });
-            swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");
+            if (input.important === "") setError({ ...error, important: true });
+            if (input.concept === "") setError({ ...error, concept: true });
+            swal("Debe completar el concepto, la importancia y el edificio", "Por favor revise los datos!", "warning");
         }
     }
 
@@ -157,7 +156,7 @@ const AlertsAdd = (props) => {
                             className={styles.input}
                             label="Importancia"
                             value={input.important}
-                            error={error.concept}
+                            error={error.important}
                             select
                             onChange={e => handleChange(e, "important")} >
                             {currencies.map((option) => (
