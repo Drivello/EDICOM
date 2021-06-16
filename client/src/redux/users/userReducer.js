@@ -8,6 +8,7 @@ import {
 
 const initialState = {
 	users: [],
+	buildingUsers: [],
 	userDetail: {},
 };
 

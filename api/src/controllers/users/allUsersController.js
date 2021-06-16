@@ -2,34 +2,62 @@ const {User, Apartment, Buildings} = require('../../db');
 
 module.exports = async (req, res, next) => {
 	const {id} = req.params;
-	console.log('BUILDINGGGGGGG', id);
 	try {
 		const building = await Buildings.findOne({where: {id}});
-		console.log('FINDALLLL BUILDING', building);
 
 		let apartments = await Apartment.findAll({
 			where: {
 				buildingId: building.id,
 			},
 		});
-		console.log('FINDALLLL Apartment', typeof apartments);
 
-		apartments.map(apa => console.log('AAAAAPAAAAAAAA', apa.id));
+		const allUsers = await User.findAll();
 
-		let users = await User.findAll({
-			include: {
-				//<------ By this you can use association
-				model: Apartment,
-				where: {apartmentId: apartments},
-			},
-			/* where: {
-				apartmentId: apartments.buildingId,
-			}, */
+		const users_building = [];
+
+		const trola = apartments.map(apa => {
+			return allUsers.find(u => u.dataValues.apartmentId === apa.id);
 		});
 
-		return res.json(users);
+		return res.json(trola);
 	} catch (err) {
 		res.json(err);
 		return console.log(err);
 	}
 };
+
+/* 
+db.users.findAll({
+	include: [
+	  {
+		model: db.posts,
+		include: [
+		  {
+			model: db.comments
+		  }
+		]
+	  }
+	]
+  }) 
+db.comments.belongsTo(db.posts);
+db.posts.hasMany(db.comments);
+db.posts.belongsTo(db.users);
+db.users.hasMany(db.posts);
+ 
+ 
+ db.building.finddAll({
+	where: {id}
+	include: [
+		model: db.apartments,
+		where: {buildingId: building.id:}
+		include: [
+		{
+			where: {apartmentId: id}
+			model: db.user
+		}
+		]
+	]
+ })
+ 
+ 
+  */
