@@ -11,7 +11,6 @@ module.exports = (sequelize) => {
         concept: {
             type: DataTypes.STRING,
             // allowNull: false,
-            unique: false
         },
         details: {
             type: DataTypes.STRING(16384),
