@@ -15,6 +15,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import EditApartmentForm from '../ApartmentUpdate/EditApartmentForm'
 import Expenses from '../Expenses/Expenses'
 import CreateApartment from '../ApartmentAdd/CreateApartment';
+import Alerts from '../Alerts/AlertsList';
 
 
 function App() {
@@ -28,9 +29,9 @@ function App() {
         <Route exact path="/buildingadd" component = {BuildingAdd}/>
         <Route exact path="/buildingDetail/:id" component = {BuildingDetail}/>
         <Route exact path="/BuildingUpdate/:id" component = {BuildingUpdate}/> 
-        <Route path="/apartmentadd" component={CreateApartment} />
-				<Route path="/apartment/:id" component={EditApartmentForm} />
-
+        <Route exact path="/apartmentadd" component={CreateApartment} />
+				<Route exact path="/apartment/:id" component={EditApartmentForm} />
+        <Route exact path="/alerts" component = {Alerts}/>
         <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
         <Route exact path="/spendings/board" component = {SpendingBoard}/>
         <Route exact path="/ExpensesTable" component = {Expenses}/>

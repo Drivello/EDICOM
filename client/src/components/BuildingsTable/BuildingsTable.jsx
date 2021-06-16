@@ -43,11 +43,9 @@ function BuildingsTable(props) {
     return (
         <ThemeProvider theme={theme}>
             <div style={{ height: 400, width: '100%' }}>
-                {/* <div style={{ display: 'flex', height: '100%' }}> */}
                 <Box display="flex" justifyContent="center" height="100%" border={0}>
-                    <DataGrid rows={buildings} columns={columns} pageSize={5}/>
+                    <DataGrid className= "MuiDataGrid-colCellTitle MuiDataGrid-cell"rows={buildings} columns={columns} pageSize={5}/>
                 </Box>
-                {/* </div> */}
             </div>
         </ThemeProvider>
     );
