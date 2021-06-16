@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import CreateUserForm from './CreateUserForm'
 import {createUser} from '../../redux/users/userActions'
 import {getBuildings} from '../../redux/building/buildingActions'
+import swal from "sweetalert";
 
 const CreateUser = () => {
 	
@@ -26,7 +27,7 @@ const CreateUser = () => {
 
 	const handleSubmit = e => {
 		dispatch(createUser(input));
-		alert('User Agregado Exitosamente')
+		swal('Usuario creado exitosamente', "Gracias!", "success");
 	};
 
 	return (

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { Person, Home, MeetingRoom } from '@material-ui/icons';
 import { getUser, updateUser } from '../../redux/users/userActions'
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -77,7 +78,7 @@ export function UserUpdate() {
 
     const handleSubmit = e => {
 		dispatch(updateUser(input));
-		alert('User actualizado exitosamente')
+        swal('Usuario actualizado exitosamente', "Gracias!", "success");
 	};
 
     const handleRadio = function (e) {
