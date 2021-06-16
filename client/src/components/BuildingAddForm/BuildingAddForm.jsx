@@ -17,6 +17,14 @@ import styles from './BuildingAddForm.module.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import swal from "sweetalert";
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { useHistory } from 'react-router-dom';
 
 function BuildingAddForm() {
     const reg = new RegExp('^[0-9]+$');
@@ -27,7 +35,10 @@ function BuildingAddForm() {
         name: '',
         address: '',
         image: '',
+        lat: "",
+        lng: ""
     });
+    const history = useHistory();
 
     const [error, setError] = useState({
         //Control the error red border of the inputs
@@ -58,9 +69,15 @@ function BuildingAddForm() {
         dispatch(getBuildings())
     }, [postStatus])
 
-    function handleChange(e) {
-        const change = e.target.name;
-        const text = e.target.value;
+    function handleChange(e, change) {
+        if (typeof change === "undefined"){
+            console.log("es de otro")
+            var change = e.target.name;
+            var text = e.target.value;        }
+        else{
+            console.log("es del address")
+            var text = e;
+        }
         if (
             (change === 'floor' || change === 'cant_apartments') &&
             !reg.test(text)
@@ -71,7 +88,7 @@ function BuildingAddForm() {
                 ...warning,
                 [change]: 'Solo puedes ingresar numeros!',
             });
-            setError({
+            return setError({
                 //set the error of that input in true
                 ...error,
                 [change]: true,
@@ -137,7 +154,7 @@ function BuildingAddForm() {
             !/\S/.test(buildingData.cata) ||
             !/\S/.test(buildingData.address)
         ) {
-            return alert('Por favor complete todos los datos');
+            return swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");;
         }
         const formData = new FormData();
         formData.append('image', buildingData.image);
@@ -149,6 +166,8 @@ function BuildingAddForm() {
                 cant_apartments: buildingData.cant_apartments,
                 name: buildingData.name,
                 address: buildingData.address,
+                latitude: buildingData.lat || null,
+                longitude: buildingData.lng || null
             })
         );
         dispatch(postBuilding(formData));
@@ -161,11 +180,24 @@ function BuildingAddForm() {
             image: '',
         });
         swal("Edificio Creado!", "Gracias!", "success");
+        history.goBack()
     }
 
     function renderImg() {
         if (!buildingData.image) return uploadIcon;
         else return URL.createObjectURL(buildingData.image);
+    }
+
+    const handleSelect = async (value) => {
+        const results = await geocodeByAddress(value);
+        const latlng = await getLatLng(results[0]);
+        setBuildingData({ ...buildingData, lat: latlng.lat, lng: latlng.lng })
+    }
+
+    const handleSelectItem = async (e, sug) => {
+        const results = await geocodeByAddress(sug.description);
+        const latlng = await getLatLng(results[0])
+        setBuildingData({ ...buildingData, lat: latlng.lat, lng: latlng.lng, address: sug.description })
     }
 
     return (
@@ -180,16 +212,6 @@ function BuildingAddForm() {
                                 name="name"
                                 label="Nombre del edificio"
                                 value={buildingData.name}
-                                variant="outlined"
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className={styles.item}>
-                            <Room fontSize="large" />
-                            <TextField
-                                name="address"
-                                label="Dirección"
-                                value={buildingData.address}
                                 variant="outlined"
                                 onChange={handleChange}
                             />
@@ -228,6 +250,58 @@ function BuildingAddForm() {
                                 onChange={handleChange}
                             />
                         </div>
+                        <div
+                            container
+                            id={styles.location}
+                            className={styles.item}
+                            item
+                            justify="space-between"
+                        >
+                            <LocationOnIcon className={styles.iconAdress} fontSize="large" />
+                            <PlacesAutocomplete
+                                value={buildingData.address}
+                                onChange={(e) => handleChange(e, "address")}
+                                onSelect={handleSelect}
+                            >
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                    <div className={styles.locInput}>
+                                        <TextField
+                                            error={error.address}
+                                            helperText={warning.address}
+                                            variant="outlined"
+                                            {...getInputProps({
+                                                placeholder: "Direccion",
+                                                className: 'location-search-input',
+                                            })}
+                                        />
+                                        <div className={styles.dropdown}>
+                                            {loading && <div>Loading...</div>}
+                                            {suggestions.map(suggestion => {
+                                                const className = suggestion.active
+                                                    ? 'suggestion-item--active'
+                                                    : 'suggestion-item';
+                                                // inline style for demonstration purpose
+                                                const style = suggestion.active
+                                                    ? { backgroundColor: '#00ff7f', cursor: 'pointer' }
+                                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                return (
+                                                    <div onClick={e => handleSelectItem(e, suggestion)}>
+                                                        <div key={suggestion.index}
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                className,
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <span onClick={e => handleSelectItem(e, suggestion)}>{suggestion.description}</span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </PlacesAutocomplete>
+                        </div>
                     </div>
                     <div className={styles.right}>
                         <div className={styles.item}>
@@ -249,7 +323,7 @@ function BuildingAddForm() {
                             </IconButton>
                         </div>
                         <div className={styles.guardarCambios}>
-                            <Button variant="contained" color="secondary" onClick={handleSubmit} style={{fontWeight: 1000}}>
+                            <Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
                                 Confirmar
                             </Button>
                         </div>
