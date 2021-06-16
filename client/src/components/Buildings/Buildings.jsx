@@ -14,7 +14,7 @@ function Buildings() {
 
     useEffect(() => {
         dispatch(getBuildings());
-    }, [dispatch])
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>

@@ -11,5 +11,4 @@ module.exports = async (req, res, next) => {
             console.log(err);
             res.status(400).json(new Error("Error deleting the building"))
         })
-
 };
