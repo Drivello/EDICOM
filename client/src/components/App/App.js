@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/apartmentadd" component={CreateApartment} />
 				<Route exact path="/apartment/:id" component={EditApartmentForm} />
         <Route exact path="/alerts" component = {Alerts}/>
-        <Route exact path="/alertsUpdate" component = {AlertsUpdate}/>
+        <Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
         <Route exact path="/alertsAdd" component = {AlertsAdd}/>
         <Route exact path="/spendings/newSpending" component = {SpendingForm}/>
         <Route exact path="/spendings/board" component = {SpendingBoard}/>
