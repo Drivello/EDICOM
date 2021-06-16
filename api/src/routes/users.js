@@ -6,10 +6,12 @@ const createUser = require('../controllers/users/createUserController');
 //const deleteUser = require('../controllers/users/deleteUserController');
 const getUserById = require('../controllers/users/getUserByIdController');
 const updateUser = require('../controllers/users/updateUserController');
+const getAll = require('../controllers/users/getAllUsersControllers');
 
 router.use(express.json());
 
 router.get('/all/:id', allUsers);
+router.get('/getall/', getAll);
 router.get('/:id', getUserById);
 router.post('/', createUser);
 router.put('/:id', updateUser);

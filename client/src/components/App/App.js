@@ -17,7 +17,8 @@ import Expenses from '../Expenses/Expenses';
 import CreateApartment from '../ApartmentAdd/CreateApartment';
 import CreateUser from '../UserAdd/CreateUser';
 import UserList from '../UserList/UserList';
-import UserUpdate from '../UserUpdate/UserUpdate'
+import UserUpdate from '../UserUpdate/UserUpdate';
+import UserView from '../UserView/UserView';
 
 function App() {
 	return (
@@ -43,6 +44,7 @@ function App() {
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
+				<Route path="/userView" component={UserView} />
 			</BrowserRouter>
 		</Container>
 	);

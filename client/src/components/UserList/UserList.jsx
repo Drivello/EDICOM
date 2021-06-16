@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBuildings} from '../../redux/building/buildingActions'
 import {getAllApartments} from'../../redux/apartments/apartmentsActions'
-import {getALLUsers,filterUsers} from '../../redux/users/userActions'
+import {getALLUsers,filterUsers, getAllUsersForList} from '../../redux/users/userActions'
 import { makeStyles, Grid, Button, FormControl, InputLabel, Select, MenuItem, Container } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
@@ -14,6 +14,7 @@ const UserList = () => {
     const {allBuildings} = useSelector(state => state.buildingReducer)
 	const {users} = useSelector(state => state.userReducer)
 
+
 	const dispatch = useDispatch();
 
     const [input, setInput] = useState({
@@ -23,6 +24,10 @@ const UserList = () => {
 
 	useEffect(() => {
         dispatch(getBuildings())
+    }, [dispatch])
+	
+	useEffect(() => {
+        dispatch(getAllUsersForList())
     }, [dispatch])
 
 	const useStyles = makeStyles((theme)=>({
@@ -65,6 +70,7 @@ const UserList = () => {
 	}; 
     
     const handleBuildingChange =  (e) => {
+		console.log('EEEERRROOOOOOOR',e.target.value)
 		dispatch(getALLUsers(e.target.value))
 		dispatch(getAllApartments(e.target.value))
 		setInput({
@@ -81,34 +87,29 @@ const UserList = () => {
 		});
 	}
     
-    
-    // const user = allApartments?.map(user => {
-	// 	console.log('test',user)
-    //     return {
-    //         id: user.id,
-    //         name: user.name,
-    //         email: user.email,
-    //         contact: user.contact
-    // };
-	// });
-    
-
     const columns = [
-        {field: 'id', headerName: '#', width: 90},
-		{field: 'name', headerName: 'Nombre', width: 90},
-		{field: 'email', headerName: 'Email', width: 150},
-		{field: 'contact', headerName: 'Contacto', width: 150},
+        {field: 'id', headerName: '#', width: 90 },
+		{field: 'name', headerName: 'Nombre', width: 200},
+		{field: 'email', headerName: 'Email', width: 200},
+		{field: 'contact', headerName: 'Contacto', width: 150 },
+		{
+			field: 'isDeleted', headerName: 'Estado', width: 150, renderCell: params => {
+				return (
+					<ThemeProvider theme={theme}>
+					{params.row.isDeleted ? 'Deshabilitado' : 'Habilitado'}
+					</ThemeProvider>
+		)} },
 		{
 			field: 'Editar',
 			headerName: 'EDITAR',
 			sortable: false,
-			width: 100,
+			width: 120,
 			disableClickEventBubbling: true,
 			renderCell: params => {
 				return (
 					<ThemeProvider theme={theme}>
-					<Link to={`/apartment/${params.id}`} >
-						<Button style={{fontWeight: 1000}} variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
+					<Link to={`/userupdate/${params.id}`} >
+						<Button style={{fontWeight: 1000}} variant="contained" color="secondary">Editar</Button>
 					</Link>
 					</ThemeProvider>
 				);
@@ -179,7 +180,7 @@ const UserList = () => {
 				</div>
 				<Container style={{height: 400, width: '80%'}}>
 					<Container style={{display: 'flex', height: '100%'}}>
-						<DataGrid style={{border: " 4px solid black"}} rows={users} columns={columns} />
+						<DataGrid rows={users} columns={columns} />
 					</Container>
 				</Container>
 			</div>

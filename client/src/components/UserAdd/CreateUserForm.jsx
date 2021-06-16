@@ -271,7 +271,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
                 </Grid>
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
-                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Agregar Depto</Button>
+                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Agregar Usuario</Button>
                     </Grid>
                 </Grid>
 			</Grid>

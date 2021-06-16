@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { Person, Home, MeetingRoom } from '@material-ui/icons';
 import { getUser, updateUser } from '../../redux/users/userActions'
+import { Link, useHistory } from 'react-router-dom'
+
 import swal from "sweetalert";
 
 const useStyles = makeStyles((theme)=>({
@@ -30,6 +32,8 @@ export function UserUpdate() {
     const {userDetail} = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
     const classes = useStyles();
+	const history = useHistory();
+
 
     const [input, setInput] = useState({})
 
@@ -45,9 +49,12 @@ export function UserUpdate() {
             })
         }else{
             dispatch(getUser(id))
-        }
-    },[userDetail])
+		}	
+    },[dispatch, id, userDetail])
 
+	useEffect(() => {
+		dispatch(getUser(id))
+	},[])
     useEffect(() => {
 
     },[input,setInput])
@@ -79,6 +86,9 @@ export function UserUpdate() {
     const handleSubmit = e => {
 		dispatch(updateUser(input));
         swal('Usuario actualizado exitosamente', "Gracias!", "success");
+		//add redirect
+		//history.push('/userDetail')
+		history.goBack()
 	};
 
     const handleRadio = function (e) {
@@ -141,6 +151,8 @@ export function UserUpdate() {
 				break;
 		}
 	}
+
+	
 
     return(
         <>

@@ -3,7 +3,8 @@ import {
 	DELETE_USER,
 	GET_ALL_USERS,
 	GET_USER,
-	UPDATE_USER
+	UPDATE_USER,
+	GET_ALL_USERS_FOR_LIST,
 } from '../users/userActions';
 
 const initialState = {
@@ -37,6 +38,11 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				userDetail: action.payload,
+			};
+		case GET_ALL_USERS_FOR_LIST:
+			return {
+				...state,
+				users: action.payload,
 			};
 		default:
 			return state;

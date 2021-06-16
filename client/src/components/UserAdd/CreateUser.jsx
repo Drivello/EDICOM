@@ -28,6 +28,7 @@ const CreateUser = () => {
 	const handleSubmit = e => {
 		dispatch(createUser(input));
 		swal('Usuario creado exitosamente', "Gracias!", "success");
+		//this should redirect? where?
 	};
 
 	return (
