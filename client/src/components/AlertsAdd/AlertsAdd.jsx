@@ -84,8 +84,8 @@ const AlertsAdd = (props) => {
                 importance: input.important
             }
             dispatch(postAlert(body))
-            .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
-            .then(history.goBack())
+                .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
+                .then(history.goBack())
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
@@ -105,64 +105,71 @@ const AlertsAdd = (props) => {
                 <h1>Crear alerta:</h1>
                 <div className={styles.formCont}>
                     <form
-                        className={styles.form}
                         noValidate
                         autoComplete="off"
                         onSubmit={saveHandler}
                     >
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                className={styles.input}
-                                name="date"
-                                margin="normal"
-                                color="secondary"
-                                id="date-picker-dialog"
-                                label="Fecha"
-                                format="MM/dd/yyyy"
-                                value={input.date}
-                                onChange={e => handleChange(e, "date")}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }} />
-                        </MuiPickersUtilsProvider>
-                        <TextField variant="outlined"
-                            className={styles.input}
-                            label="Concepto"
-                            value={input.concept}
-                            error={error.concept}
-                            onChange={e => handleChange(e, "concept")} />
-                        <TextField variant="outlined"
-                            className={styles.input}
-                            label="Detalles"
-                            multiline
-                            value={input.detail}
-                            onChange={e => handleChange(e, "detail")} />
-                        <TextField variant="outlined"
-                            className={styles.input}
-                            label="Importancia"
-                            value={input.important}
-                            error={error.important}
-                            select
-                            onChange={e => handleChange(e, "important")} >
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <TextField variant="outlined"
-                            className={styles.input}
-                            label="Seleccione un edificio"
-                            value={input.building}
-                            select
-                            error={error.building}
-                            onChange={e => handleChange(e, "building")} >
-                            {buildings.allBuildings && buildings.allBuildings.map((option) => (
-                                <MenuItem key={option.id} value={option.id}>
-                                    {option.name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        <div className={styles.form}>
+                            <div className={styles.left}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        className={styles.input}
+                                        name="date"
+                                        margin="normal"
+                                        color="secondary"
+                                        id="date-picker-dialog"
+                                        label="Fecha"
+                                        format="MM/dd/yyyy"
+                                        value={input.date}
+                                        onChange={e => handleChange(e, "date")}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }} />
+                                </MuiPickersUtilsProvider>
+                                <TextField variant="outlined"
+                                    className={styles.input}
+                                    label="Concepto"
+                                    value={input.concept}
+                                    error={error.concept}
+                                    onChange={e => handleChange(e, "concept")} />
+                                <TextField variant="outlined"
+                                    className={styles.input}
+                                    label="Detalles"
+                                    multiline
+                                    value={input.detail}
+                                    onChange={e => handleChange(e, "detail")} />
+                            </div>
+                            <div className={styles.right}>
+                                <TextField variant="outlined"
+                                id={styles.important}
+                                    className={styles.input}
+                                    label="Importancia"
+                                    value={input.important}
+                                    error={error.important}
+                                    select
+                                    onChange={e => handleChange(e, "important")} >
+                                    {currencies.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                <TextField variant="outlined"
+                                    id={styles.building}
+                                    className={styles.input}
+                                    label="Seleccione un edificio"
+                                    value={input.building}
+                                    select
+                                    error={error.building}
+                                    onChange={e => handleChange(e, "building")} >
+                                    {buildings.allBuildings && buildings.allBuildings.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.name}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </div>
+                        </div>
                         <Button
                             className={styles.submit}
                             style={{ fontWeight: 1000 }}
