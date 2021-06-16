@@ -101,77 +101,87 @@ const AlertsAdd = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className={styles.cont}>
+            <div id={styles.cont}>
                 <h1>Crear alerta:</h1>
-                <div className={styles.formCont}>
+                <div id={styles.formCont}>
                     <form
                         noValidate
                         autoComplete="off"
                         onSubmit={saveHandler}
                     >
-                        <div className={styles.form}>
-                            <div className={styles.left}>
+                        <div id={styles.form}>
+                            <div id={styles.left}>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <KeyboardDatePicker
-                                        className={styles.input}
-                                        name="date"
-                                        margin="normal"
-                                        color="secondary"
-                                        id="date-picker-dialog"
-                                        label="Fecha"
-                                        format="MM/dd/yyyy"
-                                        value={input.date}
-                                        onChange={e => handleChange(e, "date")}
-                                        KeyboardButtonProps={{
-                                            'aria-label': 'change date',
-                                        }} />
+                                    <div className={styles.box}>
+                                        <KeyboardDatePicker
+                                            id={styles.input}
+                                            name="date"
+                                            margin="normal"
+                                            color="secondary"
+                                            id="date-picker-dialog"
+                                            label="Fecha"
+                                            format="MM/dd/yyyy"
+                                            value={input.date}
+                                            onChange={e => handleChange(e, "date")}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }} />
+                                    </div>
                                 </MuiPickersUtilsProvider>
-                                <TextField variant="outlined"
-                                    className={styles.input}
-                                    label="Concepto"
-                                    value={input.concept}
-                                    error={error.concept}
-                                    onChange={e => handleChange(e, "concept")} />
-                                <TextField variant="outlined"
-                                    className={styles.input}
-                                    label="Detalles"
-                                    multiline
-                                    value={input.detail}
-                                    onChange={e => handleChange(e, "detail")} />
+                                <div className={styles.box}>
+                                    <TextField variant="outlined"
+                                        id={styles.input}
+                                        label="Concepto"
+                                        value={input.concept}
+                                        error={error.concept}
+                                        onChange={e => handleChange(e, "concept")} />
+                                </div>
+                                <div className={styles.box}>
+                                    <TextField variant="outlined"
+                                        id={styles.input}
+                                        label="Detalles"
+                                        multiline
+                                        value={input.detail}
+                                        onChange={e => handleChange(e, "detail")} />
+                                </div>
                             </div>
-                            <div className={styles.right}>
-                                <TextField variant="outlined"
-                                id={styles.important}
-                                    className={styles.input}
-                                    label="Importancia"
-                                    value={input.important}
-                                    error={error.important}
-                                    select
-                                    onChange={e => handleChange(e, "important")} >
-                                    {currencies.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                                <TextField variant="outlined"
-                                    id={styles.building}
-                                    className={styles.input}
-                                    label="Seleccione un edificio"
-                                    value={input.building}
-                                    select
-                                    error={error.building}
-                                    onChange={e => handleChange(e, "building")} >
-                                    {buildings.allBuildings && buildings.allBuildings.map((option) => (
-                                        <MenuItem key={option.id} value={option.id}>
-                                            {option.name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                            <div id={styles.right}>
+                                <div className={styles.box}>
+                                    <TextField variant="outlined"
+                                        id={styles.important}
+                                        id={styles.input}
+                                        label="Importancia"
+                                        value={input.important}
+                                        error={error.important}
+                                        select
+                                        onChange={e => handleChange(e, "important")} >
+                                        {currencies.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </div>
+                                <div className={styles.box}>
+                                    <TextField variant="outlined"
+                                        id={styles.building}
+                                        id={styles.input}
+                                        label="Seleccione un edificio"
+                                        value={input.building}
+                                        select
+                                        error={error.building}
+                                        onChange={e => handleChange(e, "building")} >
+                                        {buildings.allBuildings && buildings.allBuildings.map((option) => (
+                                            <MenuItem key={option.id} value={option.id}>
+                                                {option.name}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </div>
                             </div>
                         </div>
                         <Button
-                            className={styles.submit}
+                            id={styles.submit}
                             style={{ fontWeight: 1000 }}
                             color="secondary"
                             variant="contained"
