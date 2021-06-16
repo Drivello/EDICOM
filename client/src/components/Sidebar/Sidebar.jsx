@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { useTheme } from '@material-ui/core/styles';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -17,13 +16,17 @@ import './Sidebar.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-
-
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/logging/actionLogging';
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const [currentUser, setCurrentUser] =
+  useState(JSON.parse(localStorage.getItem('profile')));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -41,6 +44,13 @@ export default function Sidebar() {
     setAnchorEl(null);
   };
 
+ const handleLogout = () => {
+        dispatch(logout({ type: "LOGOUT" }))
+     
+        console.log("entre logout")
+        setCurrentUser(null);
+     
+    }
   return (
     <ThemeProvider theme={theme}>
     <div className={classes.root}>
@@ -81,8 +91,10 @@ export default function Sidebar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+              <Link className='btnNavbar' to='/logging'>
             <MenuItem onClick={handleClose}>Login</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Link>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </AppBar>
@@ -123,13 +135,6 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to="//apartmentadd" className='link'>
-            <ListItem button key={'Departamentos'}>
-            <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}} /></ListItemIcon>
-            <ListItemText className ='fontColor'  primary={'Departamentos'} />
-            </ListItem>
-            </Link>
-
             <Link to='/spendings/board'>
             <ListItem button key={'Gastos'}>
             <ListItemIcon><MonetizationOnIcon style={{color: "#00ff7f"}} /></ListItemIcon>
@@ -137,7 +142,7 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to=''>
+            <Link to='/alerts'>
             <ListItem button key={'Alertas'}>
             <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Alertas'} />

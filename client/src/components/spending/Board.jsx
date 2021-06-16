@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
-import { totalSpending, filterSpending, deleteSpending } from '../../redux/spending/actionSpending'
-import { Container, Typography, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { totalSpending, filterSpending,  } from '../../redux/spending/actionSpending'
+import { getBuildings } from "../../redux/building/buildingActions";
+import { Container, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider,KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -17,8 +18,6 @@ import moment from 'moment'
 
 const Board = (props) => {
 
-  console.log("ESTOY RENDERIZANDO BOARDDDDDD")
-  console.log(filterSpend)
 
   //--------------------------- Creando estructura de la tabla ------------------------
 
@@ -74,13 +73,15 @@ const Board = (props) => {
   //   (state) => state.reducerSpending.totalSpending
   // )
 
-  const { filterSpend, totalSpend } = useSelector(state => {
+  const { filterSpend, buildingArray} = useSelector(state => {
     console.log("entrando al useSelector")
     return {
-      filterSpend: state.reducerSpending.filterSpending,
-      totalSpend: state.reducerSpending.totalSpending
+      filterSpend: state.reducerSpending.filterSpending, 
+      totalSpend: state.reducerSpending.totalSpending,
+      buildingArray: state.buildingReducer.allBuildings
     };
   });
+
   //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
 
@@ -94,27 +95,29 @@ const Board = (props) => {
     }
   })
 
-  console.log(spendings)
 
-  //-------------------------- inicio trae del state global los gastos----------
-  useEffect(() => {
+
+  //-------------------------- useEffect dispatcha las acciones----------
+  useEffect(() => { // envia a las acciones
     dispatch(totalSpending())
+    dispatch(getBuildings());
   }, [dispatch]);
 
   const date1 = new Date('2021-01-01T00:00:00')
-  const date2 = new Date(new Date)
-  // console.log(input);
+  const date2 = new Date (new Date())
+
 
   const [input, setInput] = useState({
     since: date1,
     upTo: date2,
     concept: 'All',
+    buildingId: 'All'    
   })
 
   useEffect(() => {
     console.log('setInput update')
     dispatch(filterSpending(input))
-  }, [input,setInput]);
+  }, [dispatch,input,setInput]);
 
   // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
 
@@ -127,16 +130,21 @@ const Board = (props) => {
   };
 
   function handleSelect(e) {
-    console.log('handleSelect')
+    console.log("e.target.value")
+    console.log(e.target.value + "hola")
+    if(e.target.value !== 'All' && e.target.value){
+      console.log("entra a e.target.name !== 'All' || e.target.name !== ' '")
+      const buildingId = buildingArray.filter(b => b.name === e.target.value)[0].id
+      e.target.value = buildingId
+    }
+    else{
+      e.target.value= "All"
+    }
     setInput({ ...input, [e.target.name]: e.target.value })
   }
 
   function handleSelectAll(e) {
     setInput({ since: date1, upTo: date2, concept: 'All'});
-    dispatch(filterSpending(input))
-  }
-
-  function handleSubmit(e) {
     dispatch(filterSpending(input))
   }
 
@@ -205,6 +213,22 @@ const Board = (props) => {
                     </Select>
                   </FormControl>
                 </Grid>
+
+                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                  <FormControl style={{width: '200px'}}>
+                    <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
+                    <Select name="buildingId" onChange={handleSelect}>
+                      <MenuItem value="">
+                        <em>All</em>
+                      </MenuItem >
+                      
+                      {buildingArray.map((building, index) =>
+                        <MenuItem value={building.name} key={index}>{building.name}</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                </Grid>          
+
               </MuiPickersUtilsProvider>
               <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
                   Eliminar Filtros

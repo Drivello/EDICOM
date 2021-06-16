@@ -19,6 +19,11 @@ import CreateUser from '../UserAdd/CreateUser';
 import UserList from '../UserList/UserList';
 import UserUpdate from '../UserUpdate/UserUpdate';
 import UserView from '../UserView/UserView';
+import ExpensesTable from '../Expenses/Expenses'
+import Logging from '../Logging/Logging';
+import Alerts from '../Alerts/AlertsList';
+import AlertsUpdate from '../AlertsUpdate/AlertsUpdate';
+import AlertsAdd from '../AlertsAdd/AlertsAdd';
 
 function App() {
 	return (
@@ -27,13 +32,16 @@ function App() {
 			<BrowserRouter>
 				<Route path="/" component={Sidebar} />
 				<Route exact path="/" component={Home} />
+				<Route exact path="/logging" component = {Logging}/>
+				<Route exact path="/alerts" component = {Alerts}/>
+				<Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
+				<Route exact path="/alertsAdd" component = {AlertsAdd}/>
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
 				<Route exact path="/buildingDetail/:id" component={BuildingDetail} />
 				<Route exact path="/BuildingUpdate/:id" component={BuildingUpdate} />
 				<Route path="/apartmentadd" component={CreateApartment} />
 				<Route path="/apartment/:id" component={EditApartmentForm} />
-
 				<Route exact path="/spendings/newSpending" component={SpendingForm} />
 				<Route exact path="/spendings/board" component={SpendingBoard} />
 				<Route exact path="/ExpensesTable" component={Expenses} />

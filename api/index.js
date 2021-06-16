@@ -12,6 +12,7 @@ const {
 } = require('./src/db.js');
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
+const bcrypt = require('bcryptjs')
 
 // Syncing all the models at once.
 conn.sync({force: true}).then(() => {
@@ -69,26 +70,36 @@ conn.sync({force: true}).then(() => {
 		state: 1,
 	});
 
-	// --- Creamos unos usuarios de prueba ---
-
-	let user1 = User.create({
-		name: 'Marcelo Fernandez',
-		email: 'marce@marce.com',
-		password: 'estanolaadivinas',
-		contact: '3455896235',
-	});
-	let user2 = User.create({
-		name: 'Nicolas Sanchez',
-		email: 'nico@nico.com',
-		password: 'jajaja',
-		contact: '3654125896',
-	});
-	let user3 = User.create({
-		name: 'Gabi Fresco',
-		email: 'gabi@gabi.com',
-		password: 'jajajareloco',
-		contact: '3215962584',
-	});
+	// --- Creamos unos usuarios
+	const hashedPassword = bcrypt.hash("123", 12)
+	
+	var user1 = hashedPassword.then((res)=>{
+		return User.create({
+			name:"agustin",
+			email: "agustin@gmail.com",
+			password: res,
+			contact:"78788678",
+			isDeleted:false
+		});
+	})
+	var user2 = hashedPassword.then((res)=>{
+		return User.create({
+			name:"mauri",
+			email: "mauri@gmail.com",
+			password: res,
+			contact:"78788678",
+			isDeleted:false
+		})
+	})
+	var user3 = hashedPassword.then((res)=>{
+		return User.create({
+			name:"mariano",
+			email: "mariano@gmail.com",
+			password: res,
+			contact:"78788678",
+			isDeleted:false
+		});
+	})
 
 	// --- Creamos unas expensas de prueba
 

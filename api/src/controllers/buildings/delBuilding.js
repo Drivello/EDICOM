@@ -1,7 +1,7 @@
 const { Buildings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
-    let delId = req.body.id;
+    let delId = req.params.id;
     
     await Buildings.destroy({
         where: { id: delId }
@@ -11,5 +11,4 @@ module.exports = async (req, res, next) => {
             console.log(err);
             res.status(400).json(new Error("Error deleting the building"))
         })
-
 };

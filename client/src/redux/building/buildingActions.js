@@ -87,9 +87,10 @@ export function putBuilding(body) {
     }
 }
 
-export function deleteBuilding(body) {
+export function deleteBuilding(id) {
+    console.log(id)
     return function(dispatch) {
-        return axios.delete(DELETE_BUILDING_URL,body)
+        return axios.delete(`${DELETE_BUILDING_URL}/${id}`)
         .then(data => {
             dispatch({
                 type: DELETE_BUILDING,

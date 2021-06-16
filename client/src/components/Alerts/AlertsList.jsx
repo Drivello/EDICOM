@@ -1,48 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom' 
-import { useSelector, useDispatch } from "react-redux";
-import { getAlerts } from '../../redux/alerts/alertActions';
-import { Container, Typography, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 import AlertsTable from './AlertsTable';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-}));
-
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
+import './Alerts.css';
 
 
 const Alerts = (props) => {
-    const classes = useStyles();
-    const allAlerts = useSelector(state => state.alertsReducer.allAlerts)
-    const dispatch = useDispatch();
-
-    
-  useEffect(() => {
-    dispatch(getAlerts());
-  }, [dispatch]);
 
   return (
-    <Container>
-        <div className="componentHeader">
-            <Typography variant="h2" className="componentHeading1">
+    <ThemeProvider theme={theme}>
+    <div className='contExtAlerts'>
+        <div className="componentHeaderAlertsList">
+            <h1>
                 Todas las Alertas
-            </Typography>
-            <Link to="/buildingadd">
-                <Button variant="contained" color="primary">
-                    Nueva
+            </h1>
+            <Link to="/alertsAdd">
+                <Button style={{ fontWeight: 1000 }}  variant="contained" color="secondary">
+                    Nueva Alerta
                 </Button>
             </Link>
         </div>
-        <AlertsTable data={allAlerts} />
-    </Container>
+        <div className='contAlertsTable'>
+          <AlertsTable/>
+        </div>
+    </div>
+    </ThemeProvider>
 );
 }
 

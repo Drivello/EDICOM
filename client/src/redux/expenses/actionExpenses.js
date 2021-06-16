@@ -8,7 +8,6 @@ export const getExpenses =()=>  {
   return function (dispatch) {
     return axios.get('http://localhost:3001/expenses/allByApartments')
       .then(res => {
-        console.log("respuesta action", res)
         dispatch({
           type: GET_EXPENSES,
           payload: res.data

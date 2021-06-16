@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBuildings } from '../../redux/building/buildingActions';
 import BuildingsTable from '../BuildingsTable/BuildingsTable';
-import { Container, Typography, Button } from '@material-ui/core';
+import { Container, Button } from '@material-ui/core';
 import styles from "./Buildings.module.css";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
@@ -14,7 +14,7 @@ function Buildings() {
 
     useEffect(() => {
         dispatch(getBuildings());
-    }, [dispatch])
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>

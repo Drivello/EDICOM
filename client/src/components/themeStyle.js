@@ -1,5 +1,5 @@
 import {createMuiTheme} from '@material-ui/core/styles';
-import {createTheme} from '@material-ui/data-grid';
+
 
 const theme = createMuiTheme({
 	palette: {
@@ -9,7 +9,7 @@ const theme = createMuiTheme({
 		},
 		secondary: {
 			main: '#00ff7f',
-			contrastText: '#ffffff',
+			contrastText: '#212121',
 		},
 		background: {
 			default: '#ffffff',

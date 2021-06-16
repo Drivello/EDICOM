@@ -28,6 +28,7 @@ module.exports = async (req, res, next) => {
         })
 
         const totalSurfaceQuery = await Apartment.findAll({
+            // where: {buildingId: 1},
             attributes: [
               [conn.fn('SUM', conn.col('mt2')), 'totalMt2'],
             ]
