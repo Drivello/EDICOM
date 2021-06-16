@@ -88,7 +88,7 @@ function AlertsTable(props) {
 
     useEffect(() => {
         dispatch(getAlerts());
-    }, [dispatch, allAlerts]);
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(filterAlerts(input))
