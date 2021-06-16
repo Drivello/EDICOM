@@ -15,11 +15,11 @@ module.exports = async (req, res, next) => {
 
 		const users_building = [];
 
-		const trola = apartments.map(apa => {
+		const apartmentsAll = apartments.map(apa => {
 			return allUsers.find(u => u.dataValues.apartmentId === apa.id);
 		});
 
-		return res.json(trola);
+		return res.json(apartmentsAll);
 	} catch (err) {
 		res.json(err);
 		return console.log(err);
