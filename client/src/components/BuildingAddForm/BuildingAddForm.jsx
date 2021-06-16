@@ -60,12 +60,6 @@ function BuildingAddForm() {
     });
 
     const dispatch = useDispatch();
-    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings);
-    const postStatus = useSelector((state) => state.buildingReducer.postStatus);
-
-    useEffect(() => {
-        dispatch(getBuildings())
-    }, [postStatus])
 
     function handleChange(e, change) {
         if (typeof change === "undefined"){
