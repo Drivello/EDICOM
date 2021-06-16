@@ -103,6 +103,7 @@ const AlertsUpdate = (props) => {
             }
             dispatch(putBuilding(body))
             .then(swal("Se ha modificado la alerta!", "Gracias!", "success"))
+            .then(history.goBack())
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
