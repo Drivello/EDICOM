@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { postBuilding } from '../../redux/building/buildingActions';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { postBuilding, getBuildings } from '../../redux/building/buildingActions';
 import { TextField, Grid, Button, IconButton } from '@material-ui/core';
 import {
     Domain,
@@ -49,6 +50,13 @@ function BuildingAddForm() {
     });
 
     const dispatch = useDispatch();
+    const history = useHistory();
+    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings);
+    const postStatus = useSelector((state) => state.buildingReducer.postStatus);
+
+    useEffect(() => {
+        dispatch(getBuildings())
+    }, [postStatus])
 
     function handleChange(e) {
         const change = e.target.name;

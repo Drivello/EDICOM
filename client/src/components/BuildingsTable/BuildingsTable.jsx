@@ -1,17 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Box } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { DataGrid, GridRowParams } from '@material-ui/data-grid';
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { borders } from '@material-ui/system';
 import theme from '../themeStyle';
 
 function BuildingsTable(props) {
     const buildingsData = props.data;
-
+    
     const columns = [
-        { field: 'id', headerName: 'Nº Catastral', flex: 2 },
-        { field: 'name', headerName: 'Nombre', flex: 3.5 },
+        { field: 'id', hide: true },
+        { field: 'cata', headerName: 'Nº Catastral', flex: 2 },
+        { 
+            field: 'name', 
+            headerName: 'Nombre', 
+            flex: 3.5,
+            renderCell: (GridRowParams) => (
+                <Link to={`/buildingDetail/${GridRowParams.id}`}>
+                    {GridRowParams.value}
+                </Link>
+            )
+        },
         { field: 'address', headerName: 'Dirección', flex: 2 },
         { field: 'floor', headerName: 'Pisos', flex: 1.5 },
         { field: 'apartments', headerName: 'Dtos.', flex: 1.5 },
@@ -31,7 +41,8 @@ function BuildingsTable(props) {
 
     const buildings = buildingsData.map(building => {
         return {
-            id: building.cata,
+            id: building.id,
+            cata: building.cata,
             name: building.name,
             address: building.address,
             floor: building.floor,
@@ -43,11 +54,13 @@ function BuildingsTable(props) {
     return (
         <ThemeProvider theme={theme}>
             <div style={{ height: 400, width: '100%' }}>
-                {/* <div style={{ display: 'flex', height: '100%' }}> */}
                 <Box display="flex" justifyContent="center" height="100%" border={0}>
-                    <DataGrid rows={buildings} columns={columns} pageSize={5}/>
+                    <DataGrid 
+                        rows={buildings} 
+                        columns={columns} 
+                        pageSize={5} 
+                    />
                 </Box>
-                {/* </div> */}
             </div>
         </ThemeProvider>
     );
