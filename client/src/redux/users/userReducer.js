@@ -3,12 +3,11 @@ import {
 	DELETE_USER,
 	GET_ALL_USERS,
 	GET_USER,
-	UPDATE_USER,
+	UPDATE_USER
 } from '../users/userActions';
 
 const initialState = {
 	users: [],
-	buildingUsers: [],
 	userDetail: {},
 };
 

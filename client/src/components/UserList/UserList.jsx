@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBuildings} from '../../redux/building/buildingActions'
 import {getAllApartments} from'../../redux/apartments/apartmentsActions'
+import {getALLUsers,filterUsers} from '../../redux/users/userActions'
 import { makeStyles, Grid, Button, FormControl, InputLabel, Select, MenuItem, Container } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
@@ -11,13 +12,18 @@ import {Link} from 'react-router-dom'
 const UserList = () => {
     const { allApartments } = useSelector(state => state.apartmentReducer);
     const {allBuildings} = useSelector(state => state.buildingReducer)
-	
+	const {users} = useSelector(state => state.userReducer)
+
 	const dispatch = useDispatch();
+
     const [input, setInput] = useState({
         apartment:'',
         building:''
 	});
 
+	useEffect(() => {
+        dispatch(getBuildings())
+    }, [dispatch])
 
 	const useStyles = makeStyles((theme)=>({
         root: {
@@ -57,29 +63,34 @@ const UserList = () => {
 	const handleApartmentOpen = () => {
 		setApartmentOpen(true);
 	}; 
-
-    useEffect(() => {
-        dispatch(getBuildings())
-    }, [dispatch])
     
     const handleBuildingChange =  (e) => {
-        dispatch(getAllApartments(e.target.value))
+		dispatch(getALLUsers(e.target.value))
+		dispatch(getAllApartments(e.target.value))
 		setInput({
 			...input,
-			[e.target.name]: e.target.value, 
+			building: e.target.value, 
+		});
+	}
+
+	const handleApartmentChange = (e) => {
+		dispatch(getALLUsers(input.building,e.target.value))
+		setInput({
+			...input,
+			apartment: e.target.value, 
 		});
 	}
     
-        
-    const user = allApartments?.map(user => {
-		console.log('test',user)
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            contact: user.contact
-    };
-	});
+    
+    // const user = allApartments?.map(user => {
+	// 	console.log('test',user)
+    //     return {
+    //         id: user.id,
+    //         name: user.name,
+    //         email: user.email,
+    //         contact: user.contact
+    // };
+	// });
     
 
     const columns = [
@@ -146,7 +157,7 @@ const UserList = () => {
 							onClose={handleApartmentClose}
 							onOpen={handleApartmentOpen}
 							value={input.apartment}
-							onChange={handleBuildingChange}
+							onChange={handleApartmentChange}
 						>
 						<MenuItem value="">
 						<em>None</em>
@@ -168,8 +179,7 @@ const UserList = () => {
 				</div>
 				<Container style={{height: 400, width: '80%'}}>
 					<Container style={{display: 'flex', height: '100%'}}>
-						{console.log(user)}
-						<DataGrid style={{border: " 4px solid black"}} rows={user} columns={columns} />
+						<DataGrid style={{border: " 4px solid black"}} rows={users} columns={columns} />
 					</Container>
 				</Container>
 			</div>

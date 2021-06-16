@@ -6,11 +6,14 @@ export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
-export function getALLUsers(id_building) {
+export function getALLUsers(id_building,id_apartment = undefined) {
 	return async function (dispatch) {
-		const {data} = await axios.get(
+		var {data} = await axios.get(
 			`http://localhost:3001/users/all/${id_building}`
 		);
+		if(id_apartment !== undefined){
+			data = data.filter(u => u.apartmentId === id_apartment)
+		}
 		dispatch({type: GET_ALL_USERS, payload: data});
 	};
 }
