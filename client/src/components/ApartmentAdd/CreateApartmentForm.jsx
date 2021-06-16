@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
+	
+
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [disableButton, setdisableButton] = useState(false)

@@ -1,10 +1,12 @@
 const {Router} = require('express');
 
-const spendings = require("./spendings")
-const expenses = require("./expenses")
+const spendings = require('./spendings');
+const expenses = require('./expenses');
 const apartments = require('./apartments');
 const buildings = require('./buildings');
 const alerts = require('./alerts');
+const users = require('./users');
+const {route} = require('./spendings');
 const loggings = require('./loggings');
 
 // Importar todos los routers;
@@ -13,11 +15,12 @@ const loggings = require('./loggings');
 const router = Router();
 
 // Configurar los routers
-router.use('/spendings', spendings)
-router.use('/expenses', expenses)
+router.use('/spendings', spendings);
+router.use('/expenses', expenses);
 router.use('/apartments', apartments);
 router.use('/buildings', buildings);
 router.use('/alerts', alerts);
+router.use('/users', users);
 router.use('/loggings', loggings);
 
 module.exports = router;
