@@ -1,7 +1,7 @@
 const { Alerts } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
-    let delId = req.body.id;   
+    let delId = req.params.id;   
     try
     {   
         await Alerts.destroy( {

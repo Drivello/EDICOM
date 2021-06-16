@@ -3,8 +3,9 @@ import { useEffect, useState, React } from 'react';
 import {
     getBuildingDetail,
     putBuilding,
+    deleteBuilding
 } from '../../redux/building/buildingActions';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Button, TextField, Grid, IconButton } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -16,17 +17,36 @@ import { translate } from './Translate';
 import styles from './BuildingUpdate.module.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
+import {
+    geocodeByAddress,
+    geocodeByPlaceId,
+    getLatLng,
+} from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import swal from "sweetalert";
 
 function BuildingUpdate() {
     const { id } = useParams(); //Building id from query params
     const Build = useSelector(state => state.buildingReducer); //Use selector setup
     const dispatch = useDispatch(); //dispatch setup
     const reg = new RegExp('^[0-9]+$'); //just numbers test
+    const history = useHistory();
+
+    const [currentLoc, setCurrentLoc] = useState("Direccion");
 
     useEffect(() => {
         //useEffect to get the current bulding info
-        dispatch(getBuildingDetail(id));
+        dispatch(getBuildingDetail(id))
     }, [dispatch]);
+
+    useEffect(() => {
+        Build.detailBuilding[0] && setCurrentLoc(Build.detailBuilding[0].address)
+    }, [Build.detailBuilding]);
+
+
+    const currentDirection = () => {
+        setCurrentLoc(Build.detailBuilding[0].address)
+    }
 
     const [editMode, setEditMode] = useState({
         //Control the read mode or edit mode for every input
@@ -36,6 +56,7 @@ function BuildingUpdate() {
         floor: false,
         cant_apartments: false,
     });
+
 
     const [error, setError] = useState({
         //Control the error red border of the inputs
@@ -67,6 +88,7 @@ function BuildingUpdate() {
         image: '',
     };
 
+
     const [input, setInput] = useState({
         //Control the user inputs for every input
         name: Building.name,
@@ -75,6 +97,8 @@ function BuildingUpdate() {
         cant_apartments: Building.cant_apartments,
         address: Building.address,
         image: Building.image,
+        lat: "",
+        lng:""
     });
 
     const inputHandler = (change, text) => {
@@ -224,14 +248,17 @@ function BuildingUpdate() {
                         input.cant_apartments || Build.detailBuilding[0].cant_apartments,
                     name: input.name || Build.detailBuilding[0].name,
                     address: input.address || Build.detailBuilding[0].address,
+                    latitude: input.lat || Build.detailBuilding[0].latitude,
+                    longitude: input.lng || Build.detailBuilding[0].longitude
                 })
             );
             dispatch(putBuilding(formData)).then(() =>
                 dispatch(getBuildingDetail(id))
             ); //re render the info of the component and now the changes are the curren data
-            alert('Se guardaron los cambios');
+            swal("Se guardaron los cambios!", "Gracias!", "success");
+            history.goBack()
         } else {
-            alert('Debe completar todos los campos');
+            swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");
         }
     };
 
@@ -243,7 +270,7 @@ function BuildingUpdate() {
             img.type === 'image/png'
         ) {
             setInput({ ...input, image: img });
-        } else alert('Tipo de archivo no soportado');
+        } else swal("Tipo de archivo no soportado", "Los archivos solo pueden ser JPG, PNG o JPEG", "error");;
     };
 
     const renderIMG = () => {
@@ -256,6 +283,24 @@ function BuildingUpdate() {
             return 'false';
         }
     };
+
+    const deleteHandler = () => {
+        dispatch(deleteBuilding(parseInt(id)))
+        .then(swal("Edificio borrado con exito!", "Gracias!", "success"))
+        .then(history.goBack())
+    }
+
+    const handleSelect = async (value) => {
+        const results = await geocodeByAddress(value);
+        const latlng = await getLatLng(results[0]);
+        setInput({...input, lat: latlng.lat, lng: latlng.lng})
+    }
+
+    const handleSelectItem = async (e, sug) => {
+        const results = await geocodeByAddress(sug.description);
+        const latlng = await getLatLng(results[0])
+        setInput({...input, lat: latlng.lat, lng: latlng.lng, address: sug.description})
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -282,27 +327,6 @@ function BuildingUpdate() {
                                     className={styles.button}
                                     variant="contained"
                                     name="name"
-                                    onClick={changeModeStatus}
-                                >
-                                    EDITAR
-                                </Button>
-                            </div>
-                        </div>
-                        <div>
-                            <div
-                                container
-                                className={styles.item}
-                                item
-                                justify="space-between"
-                            >
-                                <LocationOnIcon className={styles.icon} fontSize="large" />
-                                {editModestatus('address')}
-                                <Button
-                                    color="secondary"
-                                    className={styles.button}
-                                    variant="contained"
-                                    name="address"
-                                    style={{ fontWeight: 1000 }}
                                     onClick={changeModeStatus}
                                 >
                                     EDITAR
@@ -375,6 +399,60 @@ function BuildingUpdate() {
                                 </Button>
                             </div>
                         </div>
+                        <div>
+                            <div
+                                container
+                                id={styles.location}
+                                className={styles.item}
+                                item
+                                justify="space-between"
+                            >
+                                <LocationOnIcon className={styles.icon} fontSize="large" />
+                                <PlacesAutocomplete
+                                    value={input.address}
+                                    onChange={(e) => inputHandler("address", e)}
+                                    onSelect={handleSelect}
+                                >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                        <div className={styles.locInput}>
+                                            <TextField
+                                                error={error.address}
+                                                helperText={warning.address}
+                                                variant="outlined"
+                                                {...getInputProps({
+                                                    placeholder: currentLoc,
+                                                    className: 'location-search-input',
+                                                })}
+                                            />
+                                            <div className={styles.dropdown}>
+                                                {loading && <div>Loading...</div>}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? 'suggestion-item--active'
+                                                        : 'suggestion-item';
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? { backgroundColor: '#00ff7f', cursor: 'pointer' }
+                                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                                    return (
+                                                        <div onClick={e => handleSelectItem(e, suggestion)}>
+                                                            <div key={suggestion.index}
+                                                                {...getSuggestionItemProps(suggestion, {
+                                                                    className,
+                                                                    style,
+                                                                })}
+                                                            >
+                                                                <span onClick={e => handleSelectItem(e, suggestion)}>{suggestion.description}</span>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.right}>
                         <div className={styles.item}>
@@ -398,6 +476,14 @@ function BuildingUpdate() {
                                 onClick={saveHandler}
                             >
                                 Guardar Cambios
+                            </Button>
+                            <Button
+                                style={{ fontWeight: 1000, marginLeft: 15 }}
+                                color="primary"
+                                variant="contained"
+                                onClick={deleteHandler}
+                            >
+                                Borrar Edificio
                             </Button>
                         </div>
                     </div>

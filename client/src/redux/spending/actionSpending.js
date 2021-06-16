@@ -4,6 +4,7 @@ export const PUT_SPENDING = 'PUT_SPENDING';
 export const GET_SPENDINGS = 'GET_SPENDINGS';
 export const FILTER_SPENDING = 'FILTER_SPENDINGS';
 export const DELETE_SPENDING = 'DELETE_SPENDINGS';
+export const GET_BUILDING_SPENDINGS = 'GET_BUILDING_SPENDINGS';
 
 export function postSpending(data) {
 	console.log('entrando a la action putSpending');
@@ -62,4 +63,16 @@ export function totalSpending() {
 export function filterSpending(payload) {
 	console.log('action filterSpending');
 	return {type: 'FILTER_SPENDINGS', payload};
+}
+
+export function buildingSpendings(id) {
+    return function(dispatch) {
+        return axios.get(`http://localhost:3001/spendings/all?buildingId=${id}`)
+        .then(data => {
+            dispatch({
+                type: GET_BUILDING_SPENDINGS,
+                payload: data
+            })
+        })
+    }
 }

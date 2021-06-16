@@ -123,13 +123,6 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to="//apartmentadd" className='link'>
-            <ListItem button key={'Departamentos'}>
-            <ListItemIcon><MeetingRoomIcon style={{color: "#00ff7f"}} /></ListItemIcon>
-            <ListItemText className ='fontColor'  primary={'Departamentos'} />
-            </ListItem>
-            </Link>
-
             <Link to='/spendings/board'>
             <ListItem button key={'Gastos'}>
             <ListItemIcon><MonetizationOnIcon style={{color: "#00ff7f"}} /></ListItemIcon>
@@ -137,7 +130,7 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to=''>
+            <Link to='/alerts'>
             <ListItem button key={'Alertas'}>
             <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Alertas'} />
