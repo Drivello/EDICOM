@@ -1,5 +1,5 @@
 import {createMuiTheme} from '@material-ui/core/styles';
-import {createTheme} from '@material-ui/data-grid';
+
 
 const theme = createMuiTheme({
 	palette: {

@@ -34,27 +34,46 @@ const SpendingReducer = (state = initialState, action) => {
 			}
 		case FILTER_SPENDING:
 			if (action.payload.concept === 'All' || action.payload.concept === '') {
-				return {
-					...state,
-					// filterSpending: state.totalSpending,
-					filterSpending: state.totalSpending
+				if(action.payload.buildingId === 'All' || action.payload.buildingId === '')
+					return {...state, filterSpending: state.totalSpending	
 						.filter(s => {
 							return new Date(s.date) >= action.payload.since;
 						})
-						.filter(s => new Date(s.date) <= action.payload.upTo),
+						.filter(s => new Date(s.date) <= action.payload.upTo)
 				};
+				else{
+					return {...state, filterSpending: state.totalSpending	
+						.filter(s => {
+							return new Date(s.date) >= action.payload.since;
+						})
+						.filter(s => new Date(s.date) <= action.payload.upTo)
+						.filter(s => s.buildingId === action.payload.buildingId)
+					}
+				}
+					
 			}
 
 			if (action.payload.concept !== 'All') {
-				return {
-					...state,
-					filterSpending: state.totalSpending
+				if(action.payload.buildingId === 'All' || action.payload.buildingId === ''){
+					return {...state, filterSpending: state.totalSpending
 						.filter(s => s.concept === action.payload.concept)
 						.filter(s => {
 							return new Date(s.date) >= action.payload.since;
 						})
-						.filter(s => new Date(s.date) <= action.payload.upTo),
-				};
+						.filter(s => new Date(s.date) <= action.payload.upTo)					
+					};
+				}
+				else{
+					return {...state, filterSpending: state.totalSpending
+						.filter(s => s.concept === action.payload.concept)
+						.filter(s => {
+							return new Date(s.date) >= action.payload.since;
+						})
+						.filter(s => new Date(s.date) <= action.payload.upTo)	
+						.filter(s => s.buildingId === action.payload.buildingId)				
+					};
+				}
+				
 			}
 			break;
 		default:
