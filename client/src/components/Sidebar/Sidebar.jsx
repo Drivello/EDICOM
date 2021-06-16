@@ -130,7 +130,7 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
-            <Link to=''>
+            <Link to='/alerts'>
             <ListItem button key={'Alertas'}>
             <ListItemIcon><AnnouncementIcon style={{color: "#00ff7f"}}/></ListItemIcon>
             <ListItemText className ='fontColor'  primary={'Alertas'} />

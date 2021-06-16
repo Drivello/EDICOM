@@ -1,0 +1,24 @@
+.contExtAlerts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+.contAlertsTable{
+    width: 100%;
+}
+.componentHeaderAlertsList{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+.homeCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 70px;
+}
