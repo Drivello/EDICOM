@@ -33,14 +33,16 @@ const NotificationBar = () => {
                                     {noti.subject}
                                 </div>
                                 <div className={styles.data}>
-                                    <div className={styles.importance}>
-                                        {noti.importance} .
-                                    </div>
-                                    <div className={styles.building}>
-                                        {noti.building} .
+                                    <div>
+                                        <div className={styles.importance}>
+                                            Importancia: {noti.importance}
+                                        </div>
+                                        <div className={styles.building}>
+                                            Edificio: {noti.building}
+                                        </div>
                                     </div>
                                     <div className={styles.date}>
-                                        {noti.date} .
+                                        {noti.date}
                                     </div>
                                 </div>
                             </div>

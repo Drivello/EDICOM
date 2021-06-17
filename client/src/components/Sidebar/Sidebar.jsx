@@ -93,7 +93,7 @@ export default function Sidebar() {
             </Link>
             <Link className='btnNavbar' to={noti}>
               <div onClick={notiHandler}>
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={2} color="secondary">
                   <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
                 </Badge>
               </div>
