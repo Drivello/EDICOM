@@ -1,7 +1,7 @@
 .box{
     z-index: 2;
     position: fixed;
-    width: 80%;
+    width: 81%;
     height: 500px;
     display: flex;
     flex-direction:row-reverse;
