@@ -60,8 +60,8 @@ Expenses.belongsTo(Apartment, {
 	},
 });
 
-Apartment.hasOne(User);
-User.belongsTo(Apartment);
+Apartment.hasOne(Users);
+Users.belongsTo(Apartment);
 
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS
