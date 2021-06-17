@@ -21,13 +21,38 @@ import { logout } from '../../redux/logging/actionLogging';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 
 export default function Sidebar() {
   const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [noti, setNoti] = useState(false)
+  const [noti, setNoti] = useState(false);
+
+  const notification = {
+    date: "16/08/2020",
+    subject: "Reclamo caño roto",
+    importance: "Alta",
+    building: "Donnelly Group",
+    read:false
+}
+
+const notification2 = {
+    date: "10/08/2020",
+    subject: "Reclamo no hay wifi",
+    importance: "Media",
+    building: "Donnelly Group",
+    read:false
+}
+
+const test = [notification, notification2];
+
+const [notiNumb, setNotiNumb] = useState(0)
+
+useState(() =>{
+  setNotiNumb(test.filter((not) => !not.read ? true: false).length)
+},[test])
 
   const [currentUser, setCurrentUser] =
     useState(JSON.parse(localStorage.getItem('profile')));
@@ -55,15 +80,17 @@ export default function Sidebar() {
     setCurrentUser(null);
 
   }
+  
 
   const notiHandler = () => {
-    console.log(noti)
+    test.map(not => {return {...not, read:true}})
+    setNotiNumb(0)
     setNoti(!noti)
   }
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        {noti ? <NotificationBar>Hola</NotificationBar> : <div></div>}
+        {noti ? <NotificationBar /> : <div></div>}
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -93,8 +120,11 @@ export default function Sidebar() {
             </Link>
             <Link className='btnNavbar' to={noti}>
               <div onClick={notiHandler}>
-                <Badge badgeContent={2} color="secondary">
+                <Badge badgeContent={notiNumb} color="secondary">
+                  {notiNumb === 0 ? 
+                  <NotificationsNoneOutlinedIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />:
                   <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
+                  }
                 </Badge>
               </div>
             </Link>

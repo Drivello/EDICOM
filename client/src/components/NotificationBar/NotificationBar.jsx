@@ -5,14 +5,14 @@ import styles from "./NotificationBar.module.css"
 const NotificationBar = () => {
 
     const notification = {
-        date: "16/08/2000",
+        date: "16/08/2020",
         subject: "Reclamo caño roto",
         importance: "Alta",
         building: "Donnelly Group"
     }
 
     const notification2 = {
-        date: "10/08/2000",
+        date: "10/08/2020",
         subject: "Reclamo no hay wifi",
         importance: "Media",
         building: "Donnelly Group"
