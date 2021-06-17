@@ -14,15 +14,9 @@ const expensesReducer = (state = initialState, action) => {
 
             return { expensesArray: action.payload };
 
-        case GET_EXPENSES:
-            return {
-                ...state,
-                expensesArray: action.payload.data
-            }
-
-            break;
-        default:
-            return state
+            default:
+                return state
+                
     }
 }
 export default expensesReducer;

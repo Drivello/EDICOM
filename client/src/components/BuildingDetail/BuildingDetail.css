@@ -1,0 +1,12 @@
+
+.contExtBD{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+.contChar{
+    margin: 100px;
+    width: 500px;
+    height: 500px;
+}

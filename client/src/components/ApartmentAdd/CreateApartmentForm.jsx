@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem, 
-	Typography, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+	 RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
 import './CreateApartment.css';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
+	
+
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [disableButton, setdisableButton] = useState(false)

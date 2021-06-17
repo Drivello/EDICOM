@@ -1,11 +1,14 @@
 const {DataTypes} = require('sequelize');
 
 module.exports = sequelize => {
-	sequelize.define('tenant', {
+	sequelize.define('user', {
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
+		},
+		name: {
+			type: DataTypes.STRING,
 		},
 		email: {
 			type: DataTypes.STRING(60),
@@ -24,7 +27,7 @@ module.exports = sequelize => {
 			},
 		},
 		password: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(60),
 			allowNull: false,
 			validate: {
 				notEmpty: {
@@ -33,7 +36,11 @@ module.exports = sequelize => {
 			},
 		},
 		contact: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
+		},
+		isDeleted: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
 		},
 	});
 };
