@@ -1,0 +1,33 @@
+.box{
+    z-index: 1;
+    position: absolute;
+    width: 80%;
+    height: 500px;
+    display: flex;
+    flex-direction:row-reverse;
+}
+
+.cont{
+    width: 500px;
+    min-height: 350px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 6px black;
+    background-color: #212121de;
+}
+
+.items{
+    margin-top: 100px;
+    color: black;
+    font-weight: 1000;
+}
+
+.item{
+    border: 2px solid #00ff7f;
+    background-color: #00ff8098;
+    margin: 20px 10%;
+    height: 80px;
+    border-radius: 5px;
+}
+.data{
+    display: flex;
+}
