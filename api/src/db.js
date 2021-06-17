@@ -53,6 +53,9 @@ Alerts.belongsTo(Buildings);
 Buildings.hasMany(Complaints);
 Complaints.belongsTo(Buildings);
 
+User.hasMany(Complaints);
+Complaints.belongsTo(User);
+
 Buildings.hasMany(Spendings);
 Spendings.belongsTo(Buildings);
 
