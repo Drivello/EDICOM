@@ -40,9 +40,9 @@ module.exports = async (req, res, next) => {
 
             let foo = await transporter.sendMail({
                 from: '"Edicom" <edicombuilds@gmail.com>', // sender address
-                to: "mauriciocuello91@gmail.com", // list of receivers
+                to: userRegistered.email, // list of receivers
                 subject: "Contraseña", // Subject line
-                text: "La contraseña otorgada por el Administrador es:", password, // plain text body
+                text: "La contraseña otorgada por el Administrador es:123" +userRegistered.password , // plain text body
                 html: "<b>La contraseña otorgada por el Administrador es: 123</b>", // html body
          });
    
