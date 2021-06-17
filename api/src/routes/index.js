@@ -8,6 +8,7 @@ const alerts = require('./alerts');
 const users = require('./users');
 const {route} = require('./spendings');
 const loggings = require('./loggings');
+const amenities = require('./amenities');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -22,5 +23,6 @@ router.use('/buildings', buildings);
 router.use('/alerts', alerts);
 router.use('/users', users);
 router.use('/loggings', loggings);
+router.use('/amenities', amenities);
 
 module.exports = router;

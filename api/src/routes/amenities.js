@@ -1,19 +1,16 @@
 const router = require('express').Router();
 const express = require('express');
 
-const allAmenities = require('../controllers/amenities/addAmenityController'); // importando todos los amenities
-const findAmenity = require('../controllers/amenities/findAmenityController'); // importando buscar un amenity
-const addAmenity = require('../controllers/amenities/addAmenityController'); // agregar un amenity
+const getAllAmenities = require('../controllers/amenities/getAllAmenitiesController');
+const createAmenitie = require('../controllers/amenities/createAmenitieController');
+const updateAmenitie = require('../../src/controllers/amenities/updateAmenitieController');
 
 router.use(express.json());
 
-router.get('/', allAmenities); //      localhost3001/amenities/all
-router.get('/?name', findAmenity); //      ej: localhost3001/amenities?name=parrilla
-router.post('/add', addAmenity); //      localhost3001/amenities/add
-
-router.get('/', async function (req, res, next) {
-	// endPoint
-	console.log('Estoy en la ruta /amenities');
-});
+router.get('/all/:id', getAllAmenities);
+// // router.get('/:id', getAmenitieById);
+router.post('/', createAmenitie);
+// router.put('/:id', updateAmenitie);
+// // router.delete('/:id', deleteAmenitie)
 
 module.exports = router;
