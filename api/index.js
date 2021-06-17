@@ -9,10 +9,12 @@ const {
 	Buildings,
 	Alerts,
 	User,
+	Complaints
 } = require('./src/db.js');
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
-const bcrypt = require('bcryptjs')
+const complaintsData = require('../complaintsDataMock.json');
+const bcrypt = require('bcryptjs');
 
 // Syncing all the models at once.
 conn.sync({force: true}).then(() => {
@@ -152,7 +154,23 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
-	// console.log(buildingsDataCreation);
+	// reclamos de prueba
+	let complaintsDataStr = JSON.stringify(complaintsData);
+	let complaintsDataArray = JSON.parse(complaintsDataStr);
+	let complaintsDataCreation = async (array, Buildings, Complaints) => {
+		for(var i = 0; i < array.length; i++) {
+		var Building = await Buildings.findByPk(array[i].building);
+		var Complaint = await Complaints.create({
+			date: array[i].date,
+			subject: array[i].subject,
+			details: array[i].details || null,
+			importance: array[i].importance,
+			image: array[i].image
+		});
+		await Building.addComplaint(Complaint);
+		}
+	}
+
 
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
@@ -185,6 +203,7 @@ conn.sync({force: true}).then(() => {
 			res[11].setApartment(res[5]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
+			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
 			console.log('todo listo');
 		},
 		err => {
@@ -193,3 +212,4 @@ conn.sync({force: true}).then(() => {
 		}
 	);
 });
+
