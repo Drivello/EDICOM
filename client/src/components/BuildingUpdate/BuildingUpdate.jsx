@@ -285,9 +285,9 @@ function BuildingUpdate() {
     };
 
     const deleteHandler = () => {
-        dispatch(deleteBuilding(parseInt(id)));
-        swal("Edificio borrado con exito!", "Gracias!", "success");
-        history.goBack()
+        dispatch(deleteBuilding(parseInt(id)))
+        .then(swal("Edificio borrado con exito!", "Gracias!", "success"))
+        .then(history.goBack())
     }
 
     const handleSelect = async (value) => {

@@ -20,7 +20,7 @@ const ApartmentList = ({buildingId}) => {
 		dispatch(getAllApartments(buildingId));
 		dispatch(getBuildingDetail(buildingId))
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch]);
+	}, [dispatch, buildingId]);
 	
 	const apartments = allApartments?.allApartments?.map(apartment => {
 		return {

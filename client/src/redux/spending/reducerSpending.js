@@ -4,12 +4,14 @@ import {
 	FILTER_SPENDING,
 	DELETE_SPENDING,
 	PUT_SPENDING,
+	GET_BUILDING_SPENDINGS
 } from '../spending/actionSpending';
 
 const initialState = {
 	addSpending: null,
 	totalSpending: [], //cambiar x spending
 	filterSpending: [],
+	buildingSpendings: []
 };
 
 const SpendingReducer = (state = initialState, action) => {
@@ -25,29 +27,53 @@ const SpendingReducer = (state = initialState, action) => {
 			return {...state, filterSpending: action.payload};
 		case GET_SPENDINGS:
 			return {totalSpending: action.payload, filterSpending: action.payload};
+		case GET_BUILDING_SPENDINGS:
+			return {
+				...state,
+				buildingSpendings: action.payload.data
+			}
 		case FILTER_SPENDING:
 			if (action.payload.concept === 'All' || action.payload.concept === '') {
-				return {
-					...state,
-					// filterSpending: state.totalSpending,
-					filterSpending: state.totalSpending
+				if(action.payload.buildingId === 'All' || action.payload.buildingId === '')
+					return {...state, filterSpending: state.totalSpending	
 						.filter(s => {
 							return new Date(s.date) >= action.payload.since;
 						})
-						.filter(s => new Date(s.date) <= action.payload.upTo),
+						.filter(s => new Date(s.date) <= action.payload.upTo)
 				};
+				else{
+					return {...state, filterSpending: state.totalSpending	
+						.filter(s => {
+							return new Date(s.date) >= action.payload.since;
+						})
+						.filter(s => new Date(s.date) <= action.payload.upTo)
+						.filter(s => s.buildingId === action.payload.buildingId)
+					}
+				}
+					
 			}
 
 			if (action.payload.concept !== 'All') {
-				return {
-					...state,
-					filterSpending: state.totalSpending
+				if(action.payload.buildingId === 'All' || action.payload.buildingId === ''){
+					return {...state, filterSpending: state.totalSpending
 						.filter(s => s.concept === action.payload.concept)
 						.filter(s => {
 							return new Date(s.date) >= action.payload.since;
 						})
-						.filter(s => new Date(s.date) <= action.payload.upTo),
-				};
+						.filter(s => new Date(s.date) <= action.payload.upTo)					
+					};
+				}
+				else{
+					return {...state, filterSpending: state.totalSpending
+						.filter(s => s.concept === action.payload.concept)
+						.filter(s => {
+							return new Date(s.date) >= action.payload.since;
+						})
+						.filter(s => new Date(s.date) <= action.payload.upTo)	
+						.filter(s => s.buildingId === action.payload.buildingId)				
+					};
+				}
+				
 			}
 			break;
 		default:

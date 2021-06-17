@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
 
         let buildingSearched = await Buildings.findOne({
             where: {
-                id: 1
+                id: building
             }
         })
 

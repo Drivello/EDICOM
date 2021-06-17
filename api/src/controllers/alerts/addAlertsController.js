@@ -14,7 +14,6 @@ module.exports = async (req, res, next) => {
             importance
         });
         await Building.addAlert(Alert);
-        console.log("sali del alert")
         return res.status(200).json({succes: `Alert created successfully`});
     }
     catch(err){

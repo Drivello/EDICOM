@@ -9,6 +9,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import './Alerts.css';
 import moment from 'moment';
+import filter from '../../utils/filter-remove.png';
 
 
 
@@ -26,13 +27,12 @@ function AlertsTable(props) {
             concept: alert.concept,
             detail: alert.details,
             importance: alert.importance,
-            edit: `/`
+            edit: `/alertsUpdate/${alert.id}`
         }
     })
 
     const buildingSelect = alerts.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
     const importanceSelect = alerts.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
-    
     
 
     
@@ -50,7 +50,7 @@ function AlertsTable(props) {
             flex: 1.5,
             renderCell: (params) => (
                 <Link to={`${params.value}`}>                    
-                    <Button variant="contained" color="secondary" size="small" >
+                    <Button style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
                         Editar
                     </Button>
                 </Link>
@@ -99,7 +99,7 @@ function AlertsTable(props) {
           flexGrow: 1,
         },
         paper: {
-          padding: theme.spacing(2),
+          padding: theme.spacing(1),
           textAlign: 'center',
           color: theme.palette.text.secondary,
         },
@@ -111,7 +111,7 @@ function AlertsTable(props) {
         <div style={{height: 400, width: '100%'}}>
             <div className='contSelectsAT'>        
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
                   <KeyboardDatePicker
                     name="since"
                     margin="normal"
@@ -124,7 +124,7 @@ function AlertsTable(props) {
                       'aria-label': 'change date',
                     }} />
                 </Grid>
-                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
+                <Grid container justify="flex-start" alignItems="center" style ={{marginLeft: "-50px"}} className={classes.paper} item xs={6} sm={3}>
                   <KeyboardDatePicker
                     name="upTo"
                     margin="normal"
@@ -138,11 +138,11 @@ function AlertsTable(props) {
                     }} />
                 </Grid>
 
-                <Grid container justify="space-around" item xs={6} sm={3}>
+                <Grid container justify="flex-start" alignItems="center" style ={{marginLeft: "-50px", marginTop:"7px"}} className={classes.paper} item xs={6} sm={3}>
                   <FormControl style={{width: '200px'}}>
                     <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
-                    <Select name="building" onChange={handleSelect}>
-                      <MenuItem value="">
+                    <Select name="building" onChange={handleSelect} value={input.building}>
+                      <MenuItem value="All">
                         <em>All</em>
                       </MenuItem >
                       
@@ -152,11 +152,11 @@ function AlertsTable(props) {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid container justify="space-around" item xs={6} sm={3}>
+                <Grid container justify="flex-start" style ={{marginLeft: "-100px", marginTop:"7px"}}alignItems="center" className={classes.paper} item xs={6} sm={3}>
                   <FormControl style={{width: '200px'}}>
                     <InputLabel id="demo-controlled-open-select-label">Importancia</InputLabel>
-                    <Select name="importance" onChange={handleSelect}>
-                      <MenuItem value="">
+                    <Select name="importance" onChange={handleSelect} value={input.importance}>
+                      <MenuItem value="All">
                         <em>All</em>
                       </MenuItem >
                       
@@ -167,8 +167,8 @@ function AlertsTable(props) {
                   </FormControl>
                 </Grid>
               </MuiPickersUtilsProvider>
-              <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
-                  Eliminar Filtros
+              <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
+                  <img style={{width: "25px", height:"25px"}} src={filter}></img>
               </Button>
             </div>
             <div style={{display: 'flex', height: '100%'}}>

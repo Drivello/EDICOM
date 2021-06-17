@@ -16,7 +16,7 @@ const Alerts = (props) => {
             <h1>
                 Todas las Alertas
             </h1>
-            <Link to="/buildingadd">
+            <Link to="/alertsAdd">
                 <Button style={{ fontWeight: 1000 }}  variant="contained" color="secondary">
                     Nueva Alerta
                 </Button>
