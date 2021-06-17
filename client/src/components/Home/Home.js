@@ -26,8 +26,6 @@ const Home = (props) => {
 		dispatch(getAlerts());
 	},[dispatch])
 
-	console.log("state.reducerSpending.totalSpending") //prueba marian
-	console.log(spends) //prueba marian
 
 	return (
 		<ThemeProvider theme={theme}>

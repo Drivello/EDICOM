@@ -13,13 +13,13 @@ const reducerLogging = (state = initialState, action) => {
     switch (action.type) {
        //elimine reducer normal 
 
-            case LOGGING_IN_SUCCESS:{
-                return{
-                    ...state,
-                    authData:action.payload,
-                    success:true
-                }
+        case LOGGING_IN_SUCCESS:{
+            return{
+                ...state,
+                authData:action.payload,
+                success:true
             }
+        }
 
         case LOGGING_REJECT:
             return {

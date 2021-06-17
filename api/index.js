@@ -9,7 +9,8 @@ const {
 	Buildings,
 	Alerts,
 	User,
-	Complaints
+	Complaints,
+	Admin
 } = require('./src/db.js');
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
@@ -103,6 +104,21 @@ conn.sync({force: true}).then(() => {
 		});
 	})
 
+
+	// --- Creamos un admin ---
+
+	const hashedPassword2 = bcrypt.hash("321", 12)
+
+	var admin1 = hashedPassword2.then((res)=>{
+		return Admin.create({
+			name:"the admin",
+			email: "admin@gmail.com",
+			password: res,
+			contact:"33445566",
+		});
+	})
+
+
 	// --- Creamos unas expensas de prueba
 
 	let expense1 = Expenses.create({
@@ -187,7 +203,8 @@ conn.sync({force: true}).then(() => {
 			user1, //9
 			user2, //10
 			user3, //11
-		].concat(buildingsDataCreation) ////12.....21
+		].concat(buildingsDataCreation) ////12.....23
+		.concat([admin1])
 	).then(
 		res => {
 			res[12].addSpendings([res[0], res[1], res[2]]);
@@ -201,6 +218,7 @@ conn.sync({force: true}).then(() => {
 			res[9].setApartment(res[3]);
 			res[10].setApartment(res[4]);
 			res[11].setApartment(res[5]);
+			res[24].addBuilding(res[12]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
 			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);

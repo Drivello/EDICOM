@@ -5,12 +5,14 @@ export const LOGGING_IN = 'LOGGING_IN';
 export const LOGGING_REJECT = 'LOGGING_REJECT';
 export const LOGOUT = 'LOGOUT';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 export const loggingIn = (user, swalert) => {
   return function (dispatch) {
     dispatch({ type: LOGGING_IN })
-    axios.post('http://localhost:3001/loggings/loggingIn', user)
+    axios.post('http://localhost:3001/loggings/loggingIn', user)    //loguearse en el back
       .then(res => {
+        console.log('respuesta del loging', res)
         if (res) {
           localStorage.setItem('profile', JSON.stringify(res.data));
         }
@@ -49,9 +51,21 @@ export const loggingIn = (user, swalert) => {
       })
   }
 }
+
 export const logout = () => async (dispatch) => {
   dispatch({
     type: LOGOUT
   })
   swal("Chau culiado!","");
+}
+
+
+export function handleChangePassword(data) {
+	return function (dispatch) {
+		return axios
+			.put(' http://localhost:3001/loggings/changepassword ', data)
+			.then(res => {
+				dispatch({type: CHANGE_PASSWORD, payload: res.data});
+			});
+	};
 }

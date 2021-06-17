@@ -2,7 +2,7 @@ const express = require('express'); // libreria para crear serrvidor
 const cookieParser = require('cookie-parser'); //middleware cookie-parser
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan'); // middleware
-const routes = require('./routes/index.js'); 
+const routes = require('./routes/index.js');
 
 require('./db.js');
 
