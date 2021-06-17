@@ -5,7 +5,8 @@ module.exports = async (req, res, next) => {
 		let data = await Alerts.findAll({
 			include: [{
                 model: Buildings,
-				attributes: ['name']
+				attributes: ['name'],
+				paranoid: false
             }],
 		});
 		return res.json(data);
