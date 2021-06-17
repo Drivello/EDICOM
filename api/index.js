@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
-
 const server = require('./src/app.js'); //app
 const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
-const { Spendings, Apartment, Expenses, Buildings, Alerts } = require('./src/db.js');
-const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
+const { Spendings, Apartment, Expenses, Buildings, Alerts, Complaints } = require('./src/db.js');
+// fake data imported from json files
+const buildingsData = require('../buildingsDataMock.json');
 const alertsData = require('../alertsDataMock.json');
+const complaintsData = require('../complaintsDataMock.json');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -89,9 +90,7 @@ conn.sync({ force: true }).then(() => {
     amount: 3700,
   });
 
-
-  
-  // Mock Buildings Data
+  // buildings de prueba
   let buildingsDataStr = JSON.stringify(buildingsData);
   let buildingsDataArray = JSON.parse(buildingsDataStr);
   let buildingsDataCreation = buildingsDataArray.map(building => {
@@ -122,8 +121,23 @@ conn.sync({ force: true }).then(() => {
     }
   }
 
-  // console.log(buildingsDataCreation);
-  
+  // reclamos de prueba
+  let complaintsDataStr = JSON.stringify(complaintsData);
+  let complaintsDataArray = JSON.parse(complaintsDataStr);
+  let complaintsDataCreation = async (array, Buildings, Complaints) => {
+    for(var i = 0; i < array.length; i++) {
+      var Building = await Buildings.findByPk(array[i].building);
+      var Complaint = await Complaints.create({
+        date: array[i].date,
+        subject: array[i].subject,
+        details: array[i].details || null,
+        importance: array[i].importance,
+        image: array[i].image
+      });
+      await Building.addComplaint(Complaint);
+    }
+  }
+
 // ---              0         1           2         3           4           5           6       7           8             9.....21
   Promise.all([spending1, spending2, spending3, apartment1, apartment2, apartment3, expense1, expense2, expense3, ].concat(buildingsDataCreation))
     .then(res => {
@@ -138,6 +152,7 @@ conn.sync({ force: true }).then(() => {
       res[5].setBuilding(res[9])
       console.log("datos de prueba cargados");
       alertDataCreation(alertsDataArray,Buildings,Alerts);
+      complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
       console.log("todo listo")
     },
       (err) =>{
