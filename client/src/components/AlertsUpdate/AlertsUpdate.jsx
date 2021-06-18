@@ -14,7 +14,7 @@ import {
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
-import { findAlert } from "../../redux/alerts/alertActions"
+import { findAlert, deleteBuilding } from "../../redux/alerts/alertActions"
 
 
 const AlertsUpdate = (props) => {
@@ -112,6 +112,12 @@ const AlertsUpdate = (props) => {
         }
     }
 
+    const deleteHandler = () => {
+        dispatch(deleteBuilding(id))
+                .then(swal("Se ha eliminado la alerta!", "Gracias!", "success"))
+                .then(history.goBack())
+    }
+
     const handleChange = (e, change) => {
         if (change === "concept") setError({ ...error, concept: false })
         if (change !== "date") e = e.target.value;
@@ -205,6 +211,15 @@ const AlertsUpdate = (props) => {
                             onClick={saveHandler}
                         >
                             Modificar alerta
+                        </Button>
+                        <Button
+                            id={styles.submit}
+                            style={{ fontWeight: 1000 }}
+                            color="primary"
+                            variant="contained"
+                            onClick={deleteHandler}
+                        >
+                            Eliminar alerta
                         </Button>
                     </form>
                 </div>
