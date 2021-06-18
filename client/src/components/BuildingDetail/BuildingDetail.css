@@ -5,8 +5,27 @@
     justify-content: space-between;
    
 }
+.contALComp{
+    width: 100%;
+    margin: 50px;
+}
 .contChar{
-    margin: 100px;
+    margin-top: 138px;
+    margin-left: 100px;
     width: 500px;
     height: 500px;
+}
+.contChar1{
+    margin-top: 70px;
+    width: 500px;
+    height: 500px;
+}
+.contExtBothCharts{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
 }
