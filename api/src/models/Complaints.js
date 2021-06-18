@@ -25,6 +25,12 @@ module.exports = (sequelize) => {
         image: {
             type: DataTypes.STRING,
         },
+        state: {
+            type: DataTypes.ENUM({
+                values: ['opened', 'closed']
+            }),
+            defaultValue: 'opened'
+        }
     }, {
         paranoid: true,
     });
