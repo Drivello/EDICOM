@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
+import { Button, TextField, makeStyles,Grid,} from '@material-ui/core';
 import { Person, Home, MeetingRoom } from '@material-ui/icons';
 import {getAmenityById, updateAmenity} from '../../redux/amenities/amenitiesActions'
 import { Link, useHistory } from 'react-router-dom'
@@ -33,10 +33,18 @@ export function UpdateAmenity() {
     const classes = useStyles();
 	const history = useHistory();
 
+    
 
     const [input, setInput] = useState({})
 
-	useEffect(() => {
+    useEffect(() => {
+        setInput({
+            id: id,
+            amenity_type: input.amenity_type,
+            quantity: input.quantity,
+            amenity_detail: input.amenity_detail
+
+        })
 		dispatch(getAmenityById(id))
 	},[])
     useEffect(() => {
