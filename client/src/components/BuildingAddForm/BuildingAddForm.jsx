@@ -60,12 +60,6 @@ function BuildingAddForm() {
     });
 
     const dispatch = useDispatch();
-    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings);
-    const postStatus = useSelector((state) => state.buildingReducer.postStatus);
-
-    useEffect(() => {
-        dispatch(getBuildings())
-    }, [postStatus])
 
     function handleChange(e, change) {
         if (typeof change === "undefined"){
@@ -123,7 +117,7 @@ function BuildingAddForm() {
             img.type === 'image/png'
         ) {
             setBuildingData({ ...buildingData, image: img });
-        } else alert('Tipo de archivo no soportado');
+        } else swal("Tipo de archivo no soportado", "Los archivos solo pueden ser JPG, PNG o JPEG", "error");
     }
 
     function handleSubmit(e) {

@@ -4,14 +4,15 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
     
-    sequelize.define('Alerts', {
+    sequelize.define('Complaints', {
         date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        concept: {
+        subject: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         details: {
             type: DataTypes.STRING(16384),
@@ -22,5 +23,8 @@ module.exports = (sequelize) => {
             }),
             allowNull: false,
         },
-    },{paranoid: true});
+        image: {
+            type: DataTypes.STRING,
+        },
+    });
 };
