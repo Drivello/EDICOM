@@ -10,7 +10,7 @@ router.use(express.json());
 router.get('/all/:id', getAllAmenities);
 // // router.get('/:id', getAmenitieById);
 router.post('/', createAmenitie);
-// router.put('/:id', updateAmenitie);
+router.put('/:id', updateAmenitie);
 // // router.delete('/:id', deleteAmenitie)
 
 module.exports = router;

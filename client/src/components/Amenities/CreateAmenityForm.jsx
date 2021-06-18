@@ -1,250 +1,323 @@
-import {useState, useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
-import { Domain, Home, MeetingRoom } from '@material-ui/icons';
-import { ThemeProvider } from '@material-ui/core/styles';
+import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+	makeStyles,
+	Grid,
+	Button,
+	TextField,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+} from '@material-ui/core';
+import {Domain, Home, MeetingRoom} from '@material-ui/icons';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt' ;
+import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import {getAllApartments} from '../../redux/apartments/apartmentsActions'
+import {getAllApartments} from '../../redux/apartments/apartmentsActions';
+import styles from './CreateAmenityForm.module.css';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 
-
-const useStyles = makeStyles((theme)=>({
-    root: {
+const useStyles = makeStyles(theme => ({
+	root: {
 		marginTop: 50,
 		marginBottom: 30,
-		border:5
+		border: 5,
 	},
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
-		width:500,
+		width: 500,
 	},
 	last: {
 		padding: 8,
-	}
+	},
 }));
 
-const CreateAmenityForm = ({ input, setInput, allBuildings, handleSubmit }) => {
-	const { allApartments } = useSelector( state => state.apartmentReducer);
-	
+const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit}) => {
+	const {allApartments} = useSelector(state => state.apartmentReducer);
+	const reg = new RegExp('^[0-9]+$'); //just numbers test
+
 	const dispatch = useDispatch();
-	
+
 	const classes = useStyles();
 	const [buildingOpen, setBuildingOpen] = useState(false);
 
-	const [error, setError] = useState({//Control the error red border of the inputs
+	const [error, setError] = useState({
+		//Control the error red border of the inputs
 		amenity_type: false,
-        quantity: false,
+		quantity: false,
 		capacity: false,
 		amenity_detail: false,
-    })
-	const [helperText, setHelperText] = useState({//Control the warning message
-		amenity_type: "Ingrese un tipo de amenity",
-        quantity: "Ingrese la cantidad",
-        capacity: "Ingrese cuantas personas pueden haber",
-		amenity_detail: "Detalles del amenitie",
-    })
+	});
+	const [helperText, setHelperText] = useState({
+		//Control the warning message
+		amenity_type: 'Ingrese un tipo de amenity',
+		quantity: 'Ingrese la cantidad',
+		capacity: 'Cuantas personas pueden usarlo',
+		amenity_detail: 'Detalles del amenitie',
+	});
 
 	useEffect(() => {
-		Validate("amenity_type")
-		Validate("quantity")
-		Validate("capacity")
-		Validate("amenity_detail")
-	}, [error])
-	
+		Validate('amenity_type');
+		Validate('quantity');
+		Validate('capacity');
+		Validate('amenity_detail');
+	}, [error]);
 
-	const Validate = (field) => {
-		switch (field.name){
-			case "amenity_type":
-				if(!/^[A-Za-z .'-]{3,20}$/.test(field.value)) {
-					setError({...error, amenity_type: true})
-					if(field.value.length < 3) {setHelperText({...helperText, amenity_type: "Es muy corto"})}
-                    else if (field.value.length > 20) {setHelperText({...helperText, amenity_type: "Es muy largo"})}
-                    else{setHelperText({...helperText, amenity_type: "No se permiten caracteres especiales"})}
-				}else{
-					setError({...error, amenity_type: false})
-					setHelperText({...helperText, amenity_type: ""})
+	const Validate = field => {
+		switch (field.name) {
+			case 'amenity_type':
+				if (!/^[A-Za-z .'-]{3,20}$/.test(field.value)) {
+					setError({...error, amenity_type: true});
+					if (field.value.length < 3) {
+						setHelperText({...helperText, amenity_type: 'Es muy corto'});
+					} else if (field.value.length > 20) {
+						setHelperText({...helperText, amenity_type: 'Es muy largo'});
+					} else {
+						setHelperText({
+							...helperText,
+							amenity_type: 'No se permiten caracteres especiales',
+						});
+					}
+				} else {
+					setError({...error, amenity_type: false});
+					setHelperText({...helperText, amenity_type: ''});
 				}
 				break;
-			case "quantity":
-				if(!/^([0-9])*$/.test(field.value)) {
-					setError({...error, quantity: true})
-					if(field.value.length < 3) {setHelperText({...helperText, quantity: "Es muy corto"})}
-					else if(field.value.length > 20) {setHelperText({...helperText, quantity: "Es muy largo"})}
-					else{setHelperText({...helperText, quantity: "Contiene caracteres no aceptados"})}
-				}
-				else{
-					setError({...error, quantity: false})
-					setHelperText({...helperText, quantity: ""})
-				}
-				break;
-			case "capacity":
-				if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,60}$/.test(field.value)) {
-					setError({...error, capacity: true})
-					if(field.value.length < 8) {setHelperText({...helperText, capacity: "Es muy corto"})}
-					else if(field.value.length > 60) {setHelperText({...helperText, capacity: "Es muy largo"})}
-					else{setHelperText({...helperText, capacity: "1 nro, 1 mayus y 1 min"})}
-				}
-				else{
-					setError({...error, capacity: false})
-					setHelperText({...helperText, capacity: ""})
+			case 'quantity':
+				if (!/^([0-9])*$/.test(field.value)) {
+					setError({...error, quantity: true});
+					if (field.value.length < 3) {
+						setHelperText({...helperText, quantity: 'Es muy corto'});
+					} else if (field.value.length > 20) {
+						setHelperText({...helperText, quantity: 'Es muy largo'});
+					} else {
+						setHelperText({
+							...helperText,
+							quantity: 'Contiene caracteres no aceptados',
+						});
+					}
+				} else {
+					setError({...error, quantity: false});
+					setHelperText({...helperText, quantity: ''});
 				}
 				break;
-			case "amenity_detail":
-				if(!/^[+0-9-]{8,20}$/.test(field.value)) {
-					setError({...error, amenity_detail: true})
-					if(field.value.length < 8) {setHelperText({...helperText, amenity_detail: "Es muy corto"})}
-					else if(field.value.length > 20) {setHelperText({...helperText, amenity_detail: "Es muy largo"})}
-					else{setHelperText({...helperText, amenity_detail: "Solo se permiten numeros"})}
+			case 'capacity':
+				if (
+					!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,60}$/.test(
+						field.value
+					)
+				) {
+					setError({...error, capacity: true});
+					if (field.value.length < 8) {
+						setHelperText({...helperText, capacity: 'Es muy corto'});
+					} else if (field.value.length > 60) {
+						setHelperText({...helperText, capacity: 'Es muy largo'});
+					} else {
+						setHelperText({...helperText, capacity: '1 nro, 1 mayus y 1 min'});
+					}
+				} else {
+					setError({...error, capacity: false});
+					setHelperText({...helperText, capacity: ''});
 				}
-				else{
-					setError({...error, amenity_detail: false})
-					setHelperText({...helperText, amenity_detail: ""})
+				break;
+			case 'amenity_detail':
+				if (!/^[+0-9-]{0,200}$/.test(field.value)) {
+					if (field.value.length > 200) {
+						setError({...error, amenity_detail: true});
+						setHelperText({...helperText, amenity_detail: 'Es muy largo'});
+					}
+				} else {
+					setError({...error, amenity_detail: false});
+					setHelperText({...helperText, amenity_detail: ''});
 				}
 				break;
 			default:
 				break;
 		}
-	}
-	const handleInputChange = function (e) {
-		setInput({
-			...input,
-			[e.target.name]: e.target.value, 
-		});
-		Validate(e.target)
 	};
-	
+	const handleInputChange = function (e, change) {
+		if (change === 'capacity' || change === 'quantity') {
+			if (reg.test(e.target.value) || e.target.value === '') {
+				setError({...error, [change]: false});
+				setHelperText({
+					...helperText,
+					[change]: '',
+				});
+				setInput({
+					...input,
+					[e.target.name]: e.target.value,
+				});
+			} else {
+				setError({...error, [change]: true});
+				setHelperText({
+					...helperText,
+					[change]: 'Solo puede ingresar numeros!',
+				});
+			}
+		} else {
+			setInput({
+				...input,
+				[e.target.name]: e.target.value,
+			});
+			Validate(e.target);
+		}
+	};
+
 	const handleBuildingClose = () => {
 		setBuildingOpen(false);
-        
 	};
 
 	const handleBuildingOpen = () => {
 		setBuildingOpen(true);
-	}; 
+	};
 
-
-
-    const handleBuildingChange =  (e) => {
-        dispatch(getAllApartments(e.target.value))
+	const handleBuildingChange = e => {
+		dispatch(getAllApartments(e.target.value));
 		setInput({
 			...input,
-			[e.target.name]: e.target.value, 
+			[e.target.name]: e.target.value,
 		});
-	}
-	
-	console.log(allApartments)
+	};
 
-    return (
+	return (
 		<ThemeProvider theme={theme}>
-        <div className= 'extContCAF'>
-            <h1>
-				Nuevo Amenity
-			</h1>
-			<Grid container direction="row" justify="center" alignItems="center">
-                    <Grid item>
-					<FormControl className={classes.formControl} error={error["building"]}>
-						<InputLabel id="demo-controlled-open-select-label">Seleccionar Edificio</InputLabel>
-						<Select
-							labelId="demo-controlled-open-select-label"
-							id="building"
-							name="building"
-							open={buildingOpen}
-							onClose={handleBuildingClose}
-							onOpen={handleBuildingOpen}
-							value={input.building}
-							onChange={handleBuildingChange}
+			<div className="extContCAF">
+				<h1>Nuevo Amenity</h1>
+				<Grid container direction="row" justify="center" alignItems="center">
+					<Grid item>
+						<FormControl
+							className={classes.formControl}
+							error={error['building']}
 						>
-						<MenuItem value="">
-						<em>None</em>
-						</MenuItem>
-						{allBuildings?.map(building => {
-							return (
-								<MenuItem key={building.id} value={building.id}>{` ${building.id} ${building.cata} ${building.name}`}</MenuItem>
-							)
-						})}
-						</Select>
-					</FormControl>
-                    </Grid>
-            </Grid>
-            
-			<form noValidate autoComplete="off" >
-			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
-                <Grid item xs={6}>
-                    <Grid container spacing={1} alignItems="center">
-                        <Grid>
-                            <Domain />
-                        </Grid>
-                        <Grid item>
-                            <TextField 
-								error={error["amenity_type"]}
-								helperText={[helperText["amenity_type"]]}
-								id="amenity_type" 
-								label="Tipo de Amenity" 
-								name="amenity_type"
-								value={input.amenity_type}
-								onChange={handleInputChange} 
-							/>
-                        </Grid>
-                    </Grid>
-					
-					<Grid container spacing={1} alignItems="center">
-                        <Grid item>
-                            <Home />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-								error={error["quantity"]}
-								helperText={[helperText["quantity"]]}  
-								id="quantity" 
-								label="Cantidad" 
-								name='quantity'
-								value={input.quantity}
-								onChange={handleInputChange}
-							/>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="center">
-                        <Grid item>
-                            <Home />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-								error={error["capacity"]}
-								helperText={[helperText["capacity"]]}  
-								id="capacity" 
-								label="Capacidad de personas" 
-								name='capacity'
-								value={input.capacity}
-								onChange={handleInputChange}
-							/>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="center">
-                        <Grid item>
-                            <MeetingRoom />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-								error={error["amenity_detail"]}
-								helperText={[helperText["amenity_detail"]]}
-								id="amenity_detail"
-								name="amenity_detail"
-								label="Detalles" 
-								value={input.amenity_detail}
-								onChange={handleInputChange}
-							/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid container direction="row" justify="center" alignItems="center">
-                    <Grid item>
-                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Agregar Amenity</Button>
-                    </Grid>
-                </Grid>
-			</Grid>
-        </form>
-		</div>
+							<InputLabel id="demo-controlled-open-select-label">
+								Seleccionar Edificio
+							</InputLabel>
+							<Select
+								labelId="demo-controlled-open-select-label"
+								id="building"
+								name="building"
+								open={buildingOpen}
+								onClose={handleBuildingClose}
+								onOpen={handleBuildingOpen}
+								value={input.building}
+								onChange={handleBuildingChange}
+							>
+								<MenuItem value="">
+									<em>None</em>
+								</MenuItem>
+								{allBuildings?.map(building => {
+									return (
+										<MenuItem
+											key={building.id}
+											value={building.id}
+										>{` ${building.id} ${building.cata} ${building.name}`}</MenuItem>
+									);
+								})}
+							</Select>
+						</FormControl>
+					</Grid>
+				</Grid>
+
+				<form noValidate autoComplete="off">
+					<Grid
+						container
+						direction="row"
+						justify="space-around"
+						alignItems="center"
+						className={`componentDataBox ${classes.root}`}
+						spacing={1}
+					>
+						<div className={styles.form}>
+							<div className={styles.left}>
+								<Grid container spacing={1} alignItems="center">
+									<div className={styles.item}>
+										<Domain fontSize="large" />
+										<TextField
+											variant="outlined"
+											error={error['amenity_type']}
+											helperText={[helperText['amenity_type']]}
+											id="amenity_type"
+											label="Tipo de Amenity"
+											name="amenity_type"
+											value={input.amenity_type}
+											onChange={handleInputChange}
+										/>
+									</div>
+								</Grid>
+
+								<Grid container spacing={1} alignItems="center">
+									<div className={styles.item}>
+										<FormatListNumberedIcon fontSize="large" />
+										<TextField
+											variant="outlined"
+											error={error['quantity']}
+											helperText={[helperText['quantity']]}
+											id="quantity"
+											label="Cantidad"
+											name="quantity"
+											value={input.quantity}
+											onChange={e => handleInputChange(e, 'quantity')}
+										/>
+									</div>
+								</Grid>
+							</div>
+							<div className={styles.right}>
+								<Grid container spacing={1} alignItems="center">
+									<div className={styles.item}>
+										<PeopleAltIcon fontSize="large" />
+										<TextField
+											variant="outlined"
+											error={error['capacity']}
+											helperText={[helperText['capacity']]}
+											id="capacity"
+											label="Capacidad de personas"
+											name="capacity"
+											value={input.capacity}
+											onChange={e => handleInputChange(e, 'capacity')}
+										/>
+									</div>
+								</Grid>
+								<Grid container spacing={1} alignItems="center">
+									<div className={styles.item}>
+										<AssignmentIcon fontSize="large" />
+										<TextField
+											variant="outlined"
+											error={error['amenity_detail']}
+											helperText={[helperText['amenity_detail']]}
+											id="amenity_detail"
+											name="amenity_detail"
+											label="Detalles"
+											value={input.amenity_detail}
+											onChange={handleInputChange}
+										/>
+									</div>
+								</Grid>
+							</div>
+						</div>
+						<Grid
+							container
+							direction="row"
+							justify="center"
+							alignItems="center"
+						>
+							<Grid item>
+								<Button
+									style={{fontWeight: 1000, marginTop: 50}}
+									color="secondary"
+									onClick={handleSubmit}
+									variant="contained"
+								>
+									Agregar Amenity
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+				</form>
+			</div>
 		</ThemeProvider>
-    )
-}
+	);
+};
 export default CreateAmenityForm;

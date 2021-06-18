@@ -26,6 +26,7 @@ import AlertsUpdate from '../AlertsUpdate/AlertsUpdate';
 import AlertsAdd from '../AlertsAdd/AlertsAdd';
 import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
+import UpdateAmenity from '../Amenities/UpdateAmenity';
 
 function App() {
 	return (
@@ -57,6 +58,7 @@ function App() {
 				<Route path="/userView" component={UserView} />
 				<Route path="/amenities/:id_building" component={ShowAmenities} />
 				<Route path="/amenityCreate" component={CreateAmenity} />
+				<Route path="/amenityUpdate/:id" component={UpdateAmenity} />
 			</BrowserRouter>
 		</Container>
 	);

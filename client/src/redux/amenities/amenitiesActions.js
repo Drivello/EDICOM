@@ -42,7 +42,7 @@ export function getAmenityById(id) {
 export function updateAmenity(amenity) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://localhost:3001/users/${amenity.id}`,
+			`http://localhost:3001/amenities/${amenity.id}`,
 			amenity
 		);
 		dispatch({type: UPDATE_AMENITY, payload: data});
