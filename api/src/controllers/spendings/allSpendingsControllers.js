@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
 	const {buildingId} = req.query;
 
 	try{
-		if(false)
+		if(buildingId)
 		{
  			var data = await Spendings.findAll(
 				{
