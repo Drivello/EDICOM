@@ -14,5 +14,5 @@ module.exports = async (req, res, next) => {
         text: "Haga click en el link para restablecer su contraseña ", // plain text body
         html: "<b>Haga click en el link para restablecer su contraseña: http://localhost:3000/logging/restaurarcontraseña</b>", // html body
     });
-    foo();
+    // foo();
 }
