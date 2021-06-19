@@ -37,7 +37,7 @@ const Home = (props) => {
     		PrevIcon={<NavigateBeforeIcon/>}
 			>
 			{
-				buildings && buildings.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
+				buildings && buildings?.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
 			}
 			</Carousel>
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
@@ -45,8 +45,8 @@ const Home = (props) => {
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
-			```{
-					buildings && buildings.map((building, i) => <Marker key={i} position={[(building.latitude || -31.426780), (building.longitude || -64.190910)]}>
+			{
+					buildings && buildings?.map((building, i) => <Marker key={i} position={[(building.latitude || -31.426780), (building.longitude || -64.190910)]}>
 						<Popup>
 							<h3>{building.name}</h3>
 						</Popup>
@@ -55,12 +55,12 @@ const Home = (props) => {
 				}
 			</MapContainer>
 			</Grid>
-			<h1 className='title'>Mis Alertas</h1>
+			{/* <h1 className='title'>Mis Alertas</h1>
 			<Grid className='alerts'>
 				{
 					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
 				}
-			</Grid>
+			</Grid> */}
 		</Grid>
 		</ThemeProvider>
 	);

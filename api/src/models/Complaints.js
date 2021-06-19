@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
-    
     sequelize.define('Complaints', {
         date: {
             type: DataTypes.DATE,
@@ -26,5 +25,13 @@ module.exports = (sequelize) => {
         image: {
             type: DataTypes.STRING,
         },
+        state: {
+            type: DataTypes.ENUM({
+                values: ['opened', 'closed']
+            }),
+            defaultValue: 'opened'
+        }
+    }, {
+        paranoid: true,
     });
 };

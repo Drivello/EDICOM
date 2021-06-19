@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { buildingSpendings } from '../../redux/spending/actionSpending';
-import { Bar } from 'react-chartjs-2';
-import { Data } from './cleaning_data';
+import { Line } from 'react-chartjs-2';
+import { dataLine } from './cleaning_data';
 import './BuildingDetail.css';
 
 
@@ -14,21 +14,19 @@ export default function BSChart({date, buildingId}) {
         dispatch(buildingSpendings(buildingId))
     }, [dispatch])
 
-    const raw_data = date === "All" ? building_spendings : building_spendings.filter(e => new Date(e.date).getMonth() === parseInt(date))
+    const raw_data = building_spendings.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear())
 
-    const labels = Data(raw_data).map(e => e = e.concept);
-    const amount = Data(raw_data).map(e => e = e.amount);
+    const amount = dataLine(raw_data).map(e => e = e.amount);
 
 
     const data = {
-        labels:labels,
+        labels: ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],
         datasets:[
             {
-                label: "Gastos por Concepto",
-                backgroundColor: '#00ff7f',
-                borderWidth: 1,
-                fontColor: '#212121',
-                hoverBackgorundColor: '#00e572',
+                label: "Gastos por Mes",
+                fill: false,
+                borderColor: "#00ff7f",
+                backgroundColor: "#00ff7f",
                 data: amount,
 
             }
@@ -46,24 +44,14 @@ export default function BSChart({date, buildingId}) {
                     font: {
                         size: 20,
                     },
-                    color: '#212121'
+                    color: '#212121',
                 },
                 
             },
         },
     }
 
-    if(building_spendings.length > 0){
-        return (
-            <Bar width={100} height={300} data={data} options={options}/>
-        )
-    }else{
-        return(
-            <div>
-                <h1>
-                    Loading...
-                </h1>
-            </div>
-        )
-    }
+    return (
+        <Line width={100} height={300} data={data} options={options}/>
+    )
 }
