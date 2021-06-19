@@ -9,7 +9,7 @@ const updateApartment = require('../controllers/apartments/updateApartmentContro
 
 router.use(express.json());
 
-router.get('/', allApartments);
+router.get('/all/:id', allApartments);
 router.get('/:id', getApartmentById);
 router.post('/', createApartment);
 router.put('/:id', updateApartment);

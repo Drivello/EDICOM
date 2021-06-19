@@ -7,3 +7,15 @@
     width: 30%;
     height: 18rem;
 }
+.mainContainer{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+.componentHeading1{
+    margin-top: 90px;
+    margin-bottom: 50px;
+}
+.element{
+    margin-bottom: 20px !important;
+}

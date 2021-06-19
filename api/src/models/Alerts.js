@@ -11,15 +11,14 @@ module.exports = (sequelize) => {
         },
         concept: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         details: {
             type: DataTypes.STRING(16384),
         },
         importance: {
             type: DataTypes.ENUM({
-              values: ["alta", "media", "baja"]
+                values: ["alta", "media", "baja"]
             }),
             allowNull: false,
         },

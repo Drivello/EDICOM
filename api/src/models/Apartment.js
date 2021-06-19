@@ -19,9 +19,6 @@ module.exports = sequelize => {
 		mt2: {
 			type: DataTypes.INTEGER,
 		},
-		commons: {
-			type: DataTypes.INTEGER,
-		},
 		state: {
 			type: DataTypes.INTEGER,
 		},

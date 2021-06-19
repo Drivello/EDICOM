@@ -2,7 +2,7 @@ const { Alerts, Buildings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let { date, concept, details, building, importance} = req.body;
+    let { date, concept, details, building, importance } = req.body;
     
     try
     {
@@ -14,7 +14,6 @@ module.exports = async (req, res, next) => {
             importance
         });
         await Building.addAlert(Alert);
-        console.log("sali del alert")
         return res.status(200).json({succes: `Alert created successfully`});
     }
     catch(err){

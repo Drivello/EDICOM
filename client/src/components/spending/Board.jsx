@@ -1,207 +1,319 @@
-import './board.css'
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom' 
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { totalSpending, filterSpending, deleteSpending   } from '../../redux/spending/actionSpending'
-import { Container, Typography, Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
-import { DataGrid} from '@material-ui/data-grid';
-import {MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-
+import {
+   totalSpending,
+   filterSpending,
+} from "../../redux/spending/actionSpending";
+import { getBuildings } from "../../redux/building/buildingActions";
+import {
+   Container,
+   Button,
+   Grid,
+   InputLabel,
+   MenuItem,
+   FormControl,
+   Select,
+} from "@material-ui/core";
+import { DataGrid } from "@material-ui/data-grid";
+import {
+   MuiPickersUtilsProvider,
+   KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import { makeStyles } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "../themeStyle";
+import styles from "./board.module.css";
+import moment from "moment";
 
 const Board = (props) => {
+   //--------------------------- Creando estructura de la tabla ------------------------
 
-  //--------------------------- Creando estructura de la tabla ------------------------
+   const columns = [
+      { field: "id", headerName: "ID", flex: 1.5, hide: true },
+      { field: "date", headerName: "Fecha", flex: 3 },
+      { field: "concept", headerName: "Concepto", flex: 3 },
+      { field: "details", headerName: "Detalle", flex: 5 },
+      { field: "amount", headerName: "Importe", flex: 3 },
+      {
+         field: "edit",
+         headerName: "Editar - Eliminar",
+         type: "",
+         flex: 3,
 
-  const columns = [
-    {field: 'id', headerName: 'ID', flex: 1.5, hide: true},
-    {field: 'date', headerName: 'Fecha', flex: 3},
-    {field: 'concept', headerName: 'Concepto', flex: 3},
-    {field: 'details', headerName: 'Detalle', flex: 5},
-    {field: 'amount', headerName: 'Importe', flex: 3},
-    {
-      field: 'edit',
-      headerName: 'Editar - Eliminar', 
-      type: '', 
-      flex: 3, 
-    
-      renderCell: (params) => (
-        <Link to={__dirname + `board/${params.id}/edit` }>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginLeft: 16 }}
-            >
-              Editar
-            </Button>
-        </Link>
-      )
-    },
-  ]
+         renderCell: (params) => (
+            <Link to={__dirname + `spendings/board/${params.id}/edit`}>
+               <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  style={{ marginLeft: 16, fontWeight: 1000 }}
+               >
+                  Editar
+               </Button>
+            </Link>
+         ),
+      },
+   ];
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
+   const useStyles = makeStyles((theme) => ({
+      root: {
+         flexGrow: 1,
+      },
+      paper: {
+         padding: theme.spacing(2),
+         textAlign: "center",
+         color: theme.palette.text.secondary,
+      },
+   }));
 
-  
-  const classes = useStyles();
-  const dispatch = useDispatch();
+   const classes = useStyles();
+   const dispatch = useDispatch();
 
 
-   //-------------------------- Inicio cambio Mapdispatch x useSelcetor pa traer acciones----------
-   const filterSpend = useSelector(
-    (state) => state.reducerSpending.filterSpending,// revisar cuando haga pull el nombre del reducer
-  );
+   const { filterSpend, buildingArray } = useSelector((state) => {
+      return {
+         filterSpend: state.reducerSpending.filterSpending,
+         totalSpend: state.reducerSpending.totalSpending,
+         buildingArray: state.buildingReducer.allBuildings,
+      };
+   });
+   //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
-  const totalSpend = useSelector(
-    (state) => state.reducerSpending.totalSpending
-  )
-  //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
+   const spendings = filterSpend.map((spending) => {
+      return {
+         id: spending.id,
+         date: moment(spending.date).format("L"),
+         concept: spending.concept,
+         details: spending.details,
+         amount: spending.amount,
+      };
+   });
 
+   //-------------------------- useEffect dispatcha las acciones----------
+   useEffect(() => {
+      // envia a las acciones
+      dispatch(totalSpending());
+      dispatch(getBuildings());
+   }, [dispatch]);
 
-  const spendings = filterSpend.map((spending)=> {
-    return {
-      id: spending.id,
-      date: spending.date,
-      concept: spending.concept,
-      details: spending.details,
-      amount: spending.amount,
-    }
-  })
+   const date1 = new Date("2021-01-01T00:00:00");
+   const date2 = new Date(new Date());
 
-  console.log((<Link to={__dirname + `board/1/edit` }>
-  Editar/Eliminar 
-  </Link>).props.children);
+   const [input, setInput] = useState({
+      since: date1,
+      upTo: date2,
+      concept: "All",
+      buildingId: "All",
+   });
 
-  //-------------------------- inicio trae del state global los gastos----------
-  useEffect(() => {
-    dispatch(totalSpending());
-  }, [dispatch]);
-  //-------------------------- fin trae del state global los gastos----------
+   useEffect(() => {
+      dispatch(filterSpending(input));
+   }, [dispatch, input, setInput]);
 
+   // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
 
- 
+   function handleSinceChange(date) {
+      setInput({ ...input, since: date });
+   }
 
-  //----------------------- inicio estado interno con los 3 filtros -----------
+   function handleUpToChange(date) {
+      setInput({ ...input, upTo: date });
+   }
 
-  const date1 = new Date('2014-08-18T21:11:54')
-  const date2 = new Date('2014-08-18T21:11:54')
+   function handleSelectBuilding(e) {
 
-  const [input, setInput] = useState({
-    since: date1,
-    upTo: date2,
-    concept: '',
-  })
+      if (e.target.value !== "All" && e.target.value) {
+         const buildingId = buildingArray.filter(
+            (b) => b.name === e.target.value
+         )[0]?.id;
+         e.target.value = buildingId;
+      } else {
+         e.target.value = "All";
+      }
+      setInput({ ...input, [e.target.name]: e.target.value });
+   }
 
-  const [sinceDate, setSinceDate] = React.useState(new Date('2014-08-18T21:11:54'));
+   function handleSelectConcept(e){
+      if (e.target.value !== "All" && e.target.value) {
+        console.log("filterSpend", filterSpend)
+        const concept = filterSpend.map(
+          (spending) => {
+            console.log("spending", spending)
+            return spending.concept})
+          .filter(
+            (b) => {
+              console.log("bbbbbbbb", b)
+              return b === e.target.value
+            }
+          )[0];
+        e.target.value = concept;
+      } else {
+        e.target.value = "All";
+   }
+   setInput({ ...input, [e.target.name]: e.target.value });
 
-  function handleSinceChange (date){
-    setInput({...input, [input.since]: date});
-  };
+   }
 
-  function handleUpToChange (date){
-    setInput({...input, [input.UpTo]: date});
-  };
+   function handleSelectAll(e) {
+      setInput({ since: date1, upTo: date2, concept: "All" });
+      dispatch(filterSpending(input));
+   }
 
+   return (
+      <ThemeProvider theme={theme}>
+         <div className={styles.header}>
+            <div className={styles.componentHeading1}>
+               <h1>Gastos:</h1>
+               <div>
+                  <Button
+                     variant="contained"
+                     color="secondary"
+                     style={{ fontWeight: 1000 }}
+                     href="./newSpending"
+                  >
+                     Agregar gasto
+                  </Button>
+               </div>
+            </div>
+            <Container className={classes.root}>
+               <Container className="filtersBoard">
+                  <div className={styles.date}>
+                     {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
+                  Eliminar Filtros
+                </Button> */}
+                     <div>
+                        {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSubmit}>
+                  Buscar
+                </Button> */}
+                     </div>
+                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <Grid
+                           container
+                           justify="space-around"
+                           className={classes.paper}
+                           item
+                           xs={6}
+                           sm={3}
+                        >
+                           <KeyboardDatePicker
+                              name="since"
+                              margin="normal"
+                              id="date-picker-dialog"
+                              label="Desde"
+                              format="MM/dd/yyyy"
+                              value={input.since}
+                              onChange={handleSinceChange}
+                              KeyboardButtonProps={{
+                                 "aria-label": "change date",
+                              }}
+                           />
+                        </Grid>
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-  function handleDateChange(e) { 
-    setInput({...input, [e.target.name]: e.target.value} );
-  };
-  
-  function handleSelect(e) { 
-    setInput({...input, [e.target.name]: e.target.value})
-  }
-  // console.log(input.since)
-  
-  function handleSubmit(e) {
-    dispatch(filterSpending(input))
-  }
+                        <Grid
+                           container
+                           justify="space-around"
+                           className={classes.paper}
+                           item
+                           xs={6}
+                           sm={3}
+                        >
+                           <KeyboardDatePicker
+                              name="upTo"
+                              margin="normal"
+                              id="date-picker-dialog"
+                              label="Hasta"
+                              format="MM/dd/yyyy"
+                              value={input.upTo}
+                              onChange={handleUpToChange}
+                              KeyboardButtonProps={{
+                                 "aria-label": "change date",
+                              }}
+                           />
+                        </Grid>
 
-    return (
-        <Container className={classes.root}>
-          <Container className="filtersBoard">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
-                  <KeyboardDatePicker
-                    name="since"
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="From"
-                    format="MM/dd/yyyy"
-                    value={sinceDate}
-                    onChange={handleSinceChange}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}/>
-                </Grid>
+                        <Grid
+                           container
+                           justify="space-around"
+                           className={classes.paper}
+                           item
+                           xs={6}
+                           sm={3}
+                        >
+                           <FormControl style={{ width: "200px" }}>
+                              <InputLabel id="demo-controlled-open-select-label">
+                                 Concepto
+                              </InputLabel>
+                              <Select name="concept" onChange={handleSelectConcept}>
+                                 <MenuItem value="">
+                                    <em>All</em>
+                                 </MenuItem>
 
-                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
-                  <KeyboardDatePicker
-                    name="upTo"
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="To"
-                    format="MM/dd/yyyy"
-                    value={input.upTo}
-                    onChange={handleUpToChange}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}/>
-                </Grid>
+                                 {filterSpend.map((spending, index) => (
+                                    <MenuItem
+                                       value={spending.concept}
+                                       key={index}
+                                    >
+                                       {spending.concept}
+                                    </MenuItem>
+                                 ))}
+                              </Select>
+                           </FormControl>
+                        </Grid>
 
-                <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
-                  <FormControl >
-                    <InputLabel id="demo-controlled-open-select-label">Concept</InputLabel>
-                    <Select name="concept" onClick={handleSelect}>
-                      <MenuItem value="All" >
-                        <em>All</em>
-                      </MenuItem >
-                      {totalSpend.map((sepndings, index) =>
-                      <MenuItem value={sepndings.concept} key={index}>{sepndings.concept}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
-                </Grid>
+                        <Grid
+                           container
+                           justify="space-around"
+                           className={classes.paper}
+                           item
+                           xs={6}
+                           sm={3}
+                        >
+                           <FormControl style={{ width: "200px" }}>
+                              <InputLabel id="demo-controlled-open-select-label">
+                                 Edificio
+                              </InputLabel>
+                              <Select name="buildingId" onChange={handleSelectBuilding}>
+                                 <MenuItem value="">
+                                    <em>All</em>
+                                 </MenuItem>
 
-              </MuiPickersUtilsProvider>
-          </Container>
+                                 {buildingArray.map((building, index) => (
+                                    <MenuItem value={building.name} key={index}>
+                                       {building.name}
+                                    </MenuItem>
+                                 ))}
+                              </Select>
+                           </FormControl>
+                        </Grid>
+                     </MuiPickersUtilsProvider>
+                     <Button
+                        variant="contained"
+                        color="secondary"
+                        style={{ fontWeight: 1000, marginRight: "50px" }}
+                        onClick={handleSelectAll}
+                     >
+                        Eliminar Filtros
+                     </Button>
+                  </div>
+               </Container>
 
-          <Container>
-            <Grid container justify="space-around" className={classes.paper} item xs={6} sm={3}>
-              <Button variant="contained" color="primary" href="#contained-buttons" onClick={handleSubmit}>
-                Find
-              </Button>        
-            </Grid>
-          </Container>
-
-          <Container className="table">
-            <Typography variant="h2" className="componentHeading1">Spendings</Typography>
-          
-            <Container style={{height: 400, width: '100%'}}>
-              
-              <Container style={{display: 'flex', height: '100%'}}>
-                  <DataGrid rows={spendings} columns={columns} pageSize={5} />
-              </Container>
-
+               <Container className="table">
+                  <Container style={{ height: 400, width: "100%" }}>
+                     <Container style={{ display: "flex", height: "100%" }}>
+                        <DataGrid
+                           rows={spendings}
+                           columns={columns}
+                           pageSize={5}
+                        />
+                     </Container>
+                  </Container>
+               </Container>
             </Container>
-          
-          </Container>
+         </div>
+      </ThemeProvider>
+   );
+};
 
-        </Container>
-    )
-}
-
-export default Board
+export default Board;

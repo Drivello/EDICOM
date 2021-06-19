@@ -1,27 +1,37 @@
 const { Spendings } = require("../../db.js");
 
-module.exports = async (req, res, next) => {
 
-    console.log(req)
+// Path of this controller --> Put(http://localhost:3001/spendings/add)
+module.exports = async (req, res, next) => {
     
     let [id, {date, name, details, supplier, amount, building}] = req.body;
-    
+
+    // console.log(req.user);
+
+    if(req.user.typeUser !== 'admin')
+    {
+        console.log("no es un adminnnnnn")
+        return res.status(403).json(new Error("Usuario no autorizado"));
+    }
+
     try
     {
-        await Spendings.update({
+        const spending = await Spendings.update({
             date: date,
             name: name,
             details: details,
             supplier: supplier,
             amount: amount,
-            building: building
+            buildingId: building
         }, {
             where: {
                 id
             }
         });
 
-        return res.json(spending).status(200);
+        const spendingList = await Spendings.findAll()
+
+        return res.json(spendingList).status(200);
     }
     catch(err){
        /*  console.error(err); */

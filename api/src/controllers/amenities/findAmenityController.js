@@ -7,7 +7,6 @@ module.exports = async (req, res, next) => {
 			name: name, //ver si van estos nombres
 		},
 	});
-
 	if (amenity) {
 		res.status(200);
 		return res.json(amenity);

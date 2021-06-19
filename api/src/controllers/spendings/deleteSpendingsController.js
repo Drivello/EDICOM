@@ -1,5 +1,7 @@
 const { Spendings } = require("../../db.js");
 
+
+// delete(http://localhost:3001/spendings/delete/del/:id)
 module.exports = async (req, res, next) => {
 
     console.log(req.params)
@@ -13,8 +15,10 @@ module.exports = async (req, res, next) => {
                 id,
             }
         });
+        
+        const spendingList = await Spendings.findAll()
 
-        return res.json(spending).status(200);
+        return res.json(spendingList).status(200);
     }
     catch(err){
        /*  console.error(err); */
