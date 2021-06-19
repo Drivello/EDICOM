@@ -2,7 +2,7 @@ const express = require('express'); // libreria para crear serrvidor
 const cookieParser = require('cookie-parser'); //middleware cookie-parser
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan'); // middleware
-const routes = require('./routes/index.js'); 
+const routes = require('./routes/index.js');
 
 require('./db.js');
 
@@ -17,10 +17,14 @@ server.use(morgan('dev'));
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
 });
+
 
 server.use('/', routes);
 
@@ -32,4 +36,6 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.status(status).send(message);
 });
 
-module.exports = server;
+module.exports = {
+  server
+};

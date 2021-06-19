@@ -27,6 +27,8 @@ import AlertsAdd from '../AlertsAdd/AlertsAdd';
 import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
+import resetPassword from '../Logging/resetPassword';
+
 
 function App() {
 	return (
@@ -39,6 +41,10 @@ function App() {
 				<Route exact path="/alerts" component={Alerts} />
 				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
+				<Route exact path="/logging/restaurarcontraseña" component = {resetPassword}/>
+				<Route exact path="/alerts" component = {Alerts}/>
+				<Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
+				<Route exact path="/alertsAdd" component = {AlertsAdd}/>
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
 				<Route exact path="/buildingDetail/:id" component={BuildingDetail} />

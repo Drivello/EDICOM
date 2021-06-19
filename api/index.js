@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 
-const server = require('./src/app.js'); //app
-const {conn} = require('./src/db.js'); // conn es la instancia de la bbdd
+const { server } = require('./src/app.js'); //app
+const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
 const {
 	Spendings,
 	Apartment,
@@ -10,9 +10,13 @@ const {
 	Alerts,
 	User,
 	Amenity,
+	Complaints,
+	Admin
 } = require('./src/db.js');
+
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
+const complaintsData = require('../complaintsDataMock.json');
 const bcrypt = require('bcryptjs');
 
 // Syncing all the models at once.
@@ -102,6 +106,21 @@ conn.sync({force: true}).then(() => {
 		});
 	});
 
+
+	// --- Creamos un admin ---
+
+	const hashedPassword2 = bcrypt.hash("321", 12)
+
+	var admin1 = hashedPassword2.then((res)=>{
+		return Admin.create({
+			name:"the admin",
+			email: "admin@gmail.com",
+			password: res,
+			contact:"33445566",
+		});
+	})
+
+
 	// --- Creamos unas expensas de prueba
 
 	let expense1 = Expenses.create({
@@ -153,7 +172,23 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
-	// console.log(buildingsDataCreation);
+	// reclamos de prueba
+	let complaintsDataStr = JSON.stringify(complaintsData);
+	let complaintsDataArray = JSON.parse(complaintsDataStr);
+	let complaintsDataCreation = async (array, Buildings, Complaints) => {
+		for(var i = 0; i < array.length; i++) {
+		var Building = await Buildings.findByPk(array[i].building);
+		var Complaint = await Complaints.create({
+			date: array[i].date,
+			subject: array[i].subject,
+			details: array[i].details || null,
+			importance: array[i].importance,
+			image: array[i].image
+		});
+		await Building.addComplaint(Complaint);
+		}
+	}
+
 
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
@@ -170,7 +205,8 @@ conn.sync({force: true}).then(() => {
 			user1, //9
 			user2, //10
 			user3, //11
-		].concat(buildingsDataCreation) ////12.....21
+		].concat(buildingsDataCreation) ////12.....23
+		.concat([admin1])
 	).then(
 		res => {
 			res[12].addSpendings([res[0], res[1], res[2]]);
@@ -184,8 +220,10 @@ conn.sync({force: true}).then(() => {
 			res[9].setApartment(res[3]);
 			res[10].setApartment(res[4]);
 			res[11].setApartment(res[5]);
+			res[24].addBuilding(res[12]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
+			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
 			console.log('todo listo');
 		},
 		err => {
@@ -194,3 +232,4 @@ conn.sync({force: true}).then(() => {
 		}
 	);
 });
+
