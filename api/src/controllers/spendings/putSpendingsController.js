@@ -4,11 +4,16 @@ const { Spendings } = require("../../db.js");
 // Path of this controller --> Put(http://localhost:3001/spendings/add)
 module.exports = async (req, res, next) => {
     
-    console.log(req.body);
-
     let [id, {date, name, details, supplier, amount, building}] = req.body;
 
-    console.log("update"); 
+    // console.log(req.user);
+
+    if(req.user.typeUser !== 'admin')
+    {
+        console.log("no es un adminnnnnn")
+        return res.status(403).json(new Error("Usuario no autorizado"));
+    }
+
     try
     {
         const spending = await Spendings.update({

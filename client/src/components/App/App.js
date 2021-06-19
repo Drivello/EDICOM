@@ -24,6 +24,8 @@ import Logging from '../Logging/Logging';
 import Alerts from '../Alerts/AlertsList';
 import AlertsUpdate from '../AlertsUpdate/AlertsUpdate';
 import AlertsAdd from '../AlertsAdd/AlertsAdd';
+import resetPassword from '../Logging/resetPassword';
+
 
 function App() {
 	return (
@@ -33,6 +35,7 @@ function App() {
 				<Route path="/" component={Sidebar} />
 				<Route exact path="/" component={Home} />
 				<Route exact path="/logging" component = {Logging}/>
+				<Route exact path="/logging/restaurarcontraseña" component = {resetPassword}/>
 				<Route exact path="/alerts" component = {Alerts}/>
 				<Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
 				<Route exact path="/alertsAdd" component = {AlertsAdd}/>
