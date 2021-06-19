@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
    totalSpending,
    filterSpending,
-} from "../../redux/spending/actionSpending";
+} from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
 import {
    Container,

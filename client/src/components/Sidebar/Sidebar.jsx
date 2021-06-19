@@ -17,7 +17,7 @@ import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/logging/actionLogging';
+import { logout } from '../../redux/logging/loggingActions';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"

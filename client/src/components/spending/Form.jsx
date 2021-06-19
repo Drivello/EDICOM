@@ -5,7 +5,7 @@ import {
   putSpending,
   deleteSpending,
   totalSpending,
-} from "../../redux/spending/actionSpending";
+} from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
 import { Link } from "react-router-dom";
 import "./form.css";

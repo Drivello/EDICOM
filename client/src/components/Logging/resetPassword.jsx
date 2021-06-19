@@ -1,6 +1,6 @@
 import React, { useState, Link } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loggingIn, handleChangePassword, handleSendEmail } from '../../redux/logging/actionLogging';
+import { loggingIn, handleChangePassword, handleSendEmail } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
 
 import {

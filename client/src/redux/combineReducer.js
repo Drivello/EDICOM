@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 
-import reducerSpending from './spending/reducerSpending';
+import reducerSpending from './spending/spendingReducer';
 import apartmentReducer from './apartments/apartmentsReducer';
 import buildingReducer from './building/buildingReducer';
-import reducerExpenses from './expenses/reducerExpenses';
+import reducerExpenses from './expenses/expensesReducer';
 import alertsReducer from './alerts/alertsReducer';
 import userReducer from './users/userReducer';
-import reducerLogging from './logging/reducerLogging';
+import reducerLogging from './logging/loggingReducer';
 import amenitiesReducer from './amenities/amenitiesReducer';
 
 export const reducers = combineReducers({

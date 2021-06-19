@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getExpenses } from "./../../redux/expenses/actionExpenses";
+import { getExpenses } from "../../redux/expenses/expensesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
