@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const express = require('express');
-const auth = require('./../middleware/auth')
+const auth = require('../utils/auth')
 const redirectLoggin = require('./../utils/redirects')
  
 const allSpendings = require("../controllers/spendings/allSpendingsControllers");     
