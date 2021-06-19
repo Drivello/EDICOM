@@ -1,4 +1,5 @@
-import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS} from './actionLogging';
+import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL} from './actionLogging';
+
 
 
 const initialState = {
@@ -26,9 +27,15 @@ const reducerLogging = (state = initialState, action) => {
                 ...state,
                 err: action.payload,
             };
+
         case LOGOUT:
             localStorage.clear();
             return { ...state, authData: null }
+
+        case SEND_EMAIL:
+            console.log("llega al SEND_EMAIL del reducer")
+            return (alert("Revise su correo"))
+        
         default:
             return state
     }

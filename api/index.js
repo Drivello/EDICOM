@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 
-const server = require('./src/app.js'); //app
-const {conn} = require('./src/db.js'); // conn es la instancia de la bbdd
+const { server } = require('./src/app.js'); //app
+const { conn } = require('./src/db.js'); // conn es la instancia de la bbdd
 const {
 	Spendings,
 	Apartment,
@@ -79,7 +79,7 @@ conn.sync({force: true}).then(() => {
 	var user1 = hashedPassword.then((res)=>{
 		return User.create({
 			name:"agustin",
-			email: "agustin@gmail.com",
+			email: "agustinreynaud6@gmail.com",
 			password: res,
 			contact:"78788678",
 			isDeleted:false
@@ -88,7 +88,7 @@ conn.sync({force: true}).then(() => {
 	var user2 = hashedPassword.then((res)=>{
 		return User.create({
 			name:"mauri",
-			email: "mauri@gmail.com",
+			email: "mauricoio@gmail.com",
 			password: res,
 			contact:"78788678",
 			isDeleted:false

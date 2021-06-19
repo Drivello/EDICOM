@@ -6,6 +6,20 @@ export const LOGGING_REJECT = 'LOGGING_REJECT';
 export const LOGOUT = 'LOGOUT';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const SEND_EMAIL = 'SEND_EMAIL';
+
+
+//----------   Middleware para agrgar el headers Authorization  ----------------
+axios.interceptors.request.use((req)=> {
+  if(localStorage.getItem('profile')) {
+      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+  }
+
+  return req;
+})
+
+
+
 
 export const loggingIn = (user, swalert) => {
   return function (dispatch) {
@@ -66,6 +80,21 @@ export function handleChangePassword(data) {
 			.put(' http://localhost:3001/loggings/changepassword ', data)
 			.then(res => {
 				dispatch({type: CHANGE_PASSWORD, payload: res.data});
+			});
+	};
+}
+
+
+export function handleSendEmail(data) {
+  var email = {correo:data}
+  console.log("entra a la accion del action send email", email)
+	return function (dispatch) {
+    console.log("entra a la accion del action send email2", email)
+		return axios
+			.post('http://localhost:3001/loggings/sendEmail ', email)
+			.then(console.log("entra a la accion del action send email3", email))
+      .then(res => {
+				dispatch({type: SEND_EMAIL, payload: res.data});
 			});
 	};
 }

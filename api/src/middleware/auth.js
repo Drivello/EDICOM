@@ -3,10 +3,7 @@ const secret = 'test';
 
 const auth = async(req,res,next) => {
     try{
-        console.log("cargamos el token")
-
-        console.log(req.headers)
-
+        
         const token = req.headers.authorization.split(' ')[1];
         const isCustomAuth = token.length < 500;
 
@@ -14,11 +11,12 @@ const auth = async(req,res,next) => {
         
         if(token && isCustomAuth){
             decodedData = jwt.verify(token, secret);
-            req.userId = decodedData?.id;
+            req.user = { id: decodedData?.id, userType: decodedData?.userType };
         } else {
             decodedData = jwt.decode(token);
-            req.userId = decodedData?.sub;
+            req.user = { id: decodedData?.sub, userType: decodedData?.userType};
         }
+        // console.log('decodeData', decodedData)
         next();
     } catch(error) {
         console.log(error);

@@ -73,7 +73,6 @@ const Board = (props) => {
 
 
    const { filterSpend, buildingArray } = useSelector((state) => {
-      console.log("entrando al useSelector");
       return {
          filterSpend: state.reducerSpending.filterSpending,
          totalSpend: state.reducerSpending.totalSpending,
@@ -110,7 +109,6 @@ const Board = (props) => {
    });
 
    useEffect(() => {
-      console.log("setInput update");
       dispatch(filterSpending(input));
    }, [dispatch, input, setInput]);
 
