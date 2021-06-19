@@ -4,8 +4,9 @@ export const GET_ALL_ALERTS = 'GET_ALL_ALERTS';
 export const POST_ALERT = 'POST_ALERT';
 export const PUT_ALERT = 'PUT_ALERT';
 export const DELETE_ALERT = 'DELETE_ALERT';
-export const FIND_ALERT = 'FIND_ALERT';
+export const FIND_ALERT = 'FIND_ALERTS';
 export const FILTER_ALERTS = 'FILTER_ALERTS';
+export const FIND_ALERTS_BUILDING = 'FIND_ALERTS_BUILDING';
 
 export function getAlerts() {
     return function(dispatch) {
@@ -39,7 +40,7 @@ export function postAlert(body) {
         })
         .catch(err => {
             dispatch({
-                type: GET_ALL_ALERTS,
+                type: POST_ALERT,
                 payload: {
                     status: "error"
                 }
@@ -48,7 +49,7 @@ export function postAlert(body) {
     }
 }
 
-export function putBuilding(body) {
+export function putAlert(body) {
     return function(dispatch){
         return axios.put(PUT_ALERT_URL,body)
         .then(status => {
@@ -59,7 +60,7 @@ export function putBuilding(body) {
         })
         .catch(err => {
             dispatch({
-                type: GET_ALL_ALERTS,
+                type: PUT_ALERT,
                 payload: {
                     status: "error"
                 }
@@ -68,7 +69,7 @@ export function putBuilding(body) {
     }
 }
 
-export function deleteBuilding(id) {
+export function deleteAlert(id) {
     return function(dispatch) {
         return axios.delete(`${DELETE_ALERT_URL}/${id}`)
         .then(data => {
@@ -79,7 +80,7 @@ export function deleteBuilding(id) {
         })
         .catch(err => {
             dispatch({
-                type: GET_ALL_ALERTS,
+                type: DELETE_ALERT,
                 payload: {
                     status: "error"
                 }
@@ -103,7 +104,26 @@ export function findAlert(id) {
         })
         .catch(err => {
             dispatch({
-                type: GET_ALL_ALERTS,
+                type: FIND_ALERT,
+                payload: {
+                    status: "error"
+                }
+            })
+        })
+    }
+}
+export function findAlertsBuilding(id){
+    return function(dispatch) {
+        return axios.get(`${GET_ALL_ALERTS_URL}/${id}`)
+        .then(data => {
+            dispatch({
+                type: FIND_ALERTS_BUILDING,
+                payload: data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: FIND_ALERTS_BUILDING,
                 payload: {
                     status: "error"
                 }
