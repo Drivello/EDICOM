@@ -9,9 +9,11 @@ const {
 	Buildings,
 	Alerts,
 	User,
+	Amenity,
 	Complaints,
 	Admin
 } = require('./src/db.js');
+
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
 const complaintsData = require('../complaintsDataMock.json');
@@ -74,35 +76,35 @@ conn.sync({force: true}).then(() => {
 	});
 
 	// --- Creamos unos usuarios
-	const hashedPassword = bcrypt.hash("123", 12)
-	
-	var user1 = hashedPassword.then((res)=>{
+	const hashedPassword = bcrypt.hash('123', 12);
+
+	var user1 = hashedPassword.then(res => {
 		return User.create({
-			name:"agustin",
-			email: "agustinreynaud6@gmail.com",
+			name: 'agustin',
+			email: 'agustin@gmail.com',
 			password: res,
-			contact:"78788678",
-			isDeleted:false
+			contact: '78788678',
+			isDeleted: false,
 		});
-	})
-	var user2 = hashedPassword.then((res)=>{
+	});
+	var user2 = hashedPassword.then(res => {
 		return User.create({
-			name:"mauri",
-			email: "mauricoio@gmail.com",
+			name: 'mauri',
+			email: 'mauri@gmail.com',
 			password: res,
-			contact:"78788678",
-			isDeleted:false
-		})
-	})
-	var user3 = hashedPassword.then((res)=>{
-		return User.create({
-			name:"mariano",
-			email: "mariano@gmail.com",
-			password: res,
-			contact:"78788678",
-			isDeleted:false
+			contact: '78788678',
+			isDeleted: false,
 		});
-	})
+	});
+	var user3 = hashedPassword.then(res => {
+		return User.create({
+			name: 'mariano',
+			email: 'mariano@gmail.com',
+			password: res,
+			contact: '78788678',
+			isDeleted: false,
+		});
+	});
 
 
 	// --- Creamos un admin ---
