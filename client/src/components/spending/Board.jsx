@@ -26,6 +26,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeStyle";
 import styles from "./board.module.css";
 import moment from "moment";
+import AddIcon from '@material-ui/icons/Add';
+import filter from '../../utils/filter-remove.png';
 
 const Board = (props) => {
    //--------------------------- Creando estructura de la tabla ------------------------
@@ -158,7 +160,7 @@ const Board = (props) => {
 
    function handleSelectAll(e) {
       setInput({ since: date1, upTo: date2, concept: "All" });
-      dispatch(filterSpending(input));
+      dispatch(filterSpending({ since: date1, upTo: date2, concept: "All" }));
    }
 
    return (
@@ -170,15 +172,14 @@ const Board = (props) => {
                   <Button
                      variant="contained"
                      color="secondary"
-                     style={{ fontWeight: 1000 }}
+                     style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '20px'}}
                      href="./newSpending"
                   >
-                     Agregar gasto
+                     <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                   </Button>
                </div>
             </div>
             <Container className={classes.root}>
-               <Container className="filtersBoard">
                   <div className={styles.date}>
                      {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
                   Eliminar Filtros
@@ -190,19 +191,14 @@ const Board = (props) => {
                      </div>
                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid
-                           container
-                           justify="space-around"
-                           className={classes.paper}
-                           item
-                           xs={6}
-                           sm={3}
+                           container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}
                         >
                            <KeyboardDatePicker
                               name="since"
                               margin="normal"
                               id="date-picker-dialog"
                               label="Desde"
-                              format="MM/dd/yyyy"
+                              format="dd/MM/yyyy"
                               value={input.since}
                               onChange={handleSinceChange}
                               KeyboardButtonProps={{
@@ -212,19 +208,14 @@ const Board = (props) => {
                         </Grid>
 
                         <Grid
-                           container
-                           justify="space-around"
-                           className={classes.paper}
-                           item
-                           xs={6}
-                           sm={3}
+                           container justify="flex-start" alignItems="center" style ={{marginLeft: "-60px"}} className={classes.paper} item xs={6} sm={3}
                         >
                            <KeyboardDatePicker
                               name="upTo"
                               margin="normal"
                               id="date-picker-dialog"
                               label="Hasta"
-                              format="MM/dd/yyyy"
+                              format="dd/MM/yyyy"
                               value={input.upTo}
                               onChange={handleUpToChange}
                               KeyboardButtonProps={{
@@ -234,18 +225,13 @@ const Board = (props) => {
                         </Grid>
 
                         <Grid
-                           container
-                           justify="space-around"
-                           className={classes.paper}
-                           item
-                           xs={6}
-                           sm={3}
+                           container justify="flex-start" alignItems="center" style ={{marginLeft: "-60px", marginTop:"7px"}} className={classes.paper} item xs={6} sm={3}
                         >
                            <FormControl style={{ width: "200px" }}>
                               <InputLabel id="demo-controlled-open-select-label">
                                  Concepto
                               </InputLabel>
-                              <Select name="concept" onChange={handleSelectConcept}>
+                              <Select name="concept" onChange={handleSelectConcept} value={input.concept}>
                                  <MenuItem value="">
                                     <em>All</em>
                                  </MenuItem>
@@ -263,18 +249,13 @@ const Board = (props) => {
                         </Grid>
 
                         <Grid
-                           container
-                           justify="space-around"
-                           className={classes.paper}
-                           item
-                           xs={6}
-                           sm={3}
+                           container justify="flex-start" style ={{marginLeft: "-100px", marginTop:"7px"}}alignItems="center" className={classes.paper} item xs={6} sm={3}
                         >
                            <FormControl style={{ width: "200px" }}>
                               <InputLabel id="demo-controlled-open-select-label">
                                  Edificio
                               </InputLabel>
-                              <Select name="buildingId" onChange={handleSelectBuilding}>
+                              <Select name="buildingId" onChange={handleSelectBuilding} value={input.buildingId}>
                                  <MenuItem value="">
                                     <em>All</em>
                                  </MenuItem>
@@ -288,20 +269,12 @@ const Board = (props) => {
                            </FormControl>
                         </Grid>
                      </MuiPickersUtilsProvider>
-                     <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{ fontWeight: 1000, marginRight: "50px" }}
-                        onClick={handleSelectAll}
-                     >
-                        Eliminar Filtros
-                     </Button>
+                     <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
+                  <img style={{width: "25px", height:"25px"}} src={filter}></img>
+                  </Button>
                   </div>
-               </Container>
-
-               <Container className="table">
                   <Container style={{ height: 400, width: "100%" }}>
-                     <Container style={{ display: "flex", height: "100%" }}>
+                     <Container style={{ display: "flex", height: "100%", width: "100%"}}>
                         <DataGrid
                            rows={spendings}
                            columns={columns}
@@ -309,7 +282,6 @@ const Board = (props) => {
                         />
                      </Container>
                   </Container>
-               </Container>
             </Container>
          </div>
       </ThemeProvider>

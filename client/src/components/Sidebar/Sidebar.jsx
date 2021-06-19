@@ -167,7 +167,6 @@ useState(() =>{
           <Divider />
 
           <List>
-
             <Link to="/buildings" className='link'>
               <ListItem button key={'Edificios'}>
                 <ListItemIcon><ApartmentIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
@@ -176,8 +175,8 @@ useState(() =>{
             </Link>
 
             <Link to="" className='link'>
-              <ListItem button key={'Amenities'}>
-                <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+              <ListItem button key={'Amenities'} style={{ marginTop: '-20px'}} >
+                <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f"}} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Amenities'} />
               </ListItem>
             </Link>

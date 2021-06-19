@@ -23,7 +23,7 @@ function AlertsTable(props) {
         return {
             id: alert.id,
             building: alert.building.name,
-            date: moment(alert.date).format('L'),
+            date: moment(alert.date).format("DD/MM/YYYY"),
             concept: alert.concept,
             detail: alert.details,
             importance: alert.importance,
@@ -117,7 +117,7 @@ function AlertsTable(props) {
                     margin="normal"
                     id="date-picker-dialog"
                     label="Desde"
-                    format="MM/dd/yyyy"
+                    format="dd/MM/yyyy"
                     value={input.since}
                     onChange={handleSinceChange}
                     KeyboardButtonProps={{
@@ -130,7 +130,7 @@ function AlertsTable(props) {
                     margin="normal"
                     id="date-picker-dialog"
                     label="Hasta"
-                    format="MM/dd/yyyy"
+                    format="dd/MM/yyyy"
                     value={input.upTo}
                     onChange={handleUpToChange}
                     KeyboardButtonProps={{

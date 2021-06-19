@@ -18,7 +18,8 @@
 #submit{
     width: 210px;
     height: 40px;
-    margin-left:10rem
+    margin-left:14rem;
+    margin-top: 40px;
 }
 
 #left{
@@ -27,7 +28,7 @@
 }
 
 #right{
-    margin-top: 8px;
+    margin-top: 92px;
     margin-left: 2rem;
     display: flex;
     flex-direction: column;
