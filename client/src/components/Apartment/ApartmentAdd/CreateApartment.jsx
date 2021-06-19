@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import CreateApartmentForm from './CreateApartmentForm'
 import {createApartment} from '../../../redux/apartments/apartmentsActions';
 import {getBuildings} from '../../../redux/building/buildingActions';
+import swal from "sweetalert";
+
 
 const CreateApartment = () => {
 
@@ -28,7 +30,7 @@ const CreateApartment = () => {
 
 	const handleSubmit = e => {
 		dispatch(createApartment(input));
-		alert('Departamento Agregado Exitosamente')
+		swal('Departamento Agregado Exitosamente', "Capo!")
 		history.goBack()
 	};
 

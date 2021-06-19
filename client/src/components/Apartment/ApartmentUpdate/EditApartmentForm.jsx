@@ -10,6 +10,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import '../ApartmentAdd/CreateApartment.css';
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
+import swal from "sweetalert";
+
 const useStyles = makeStyles((theme)=>({
     root: {
 		marginTop: 50,
@@ -97,7 +99,7 @@ export function EditApartmentForm(props) {
                 headers: {'Content-Type': 'application/json'},
             })
             .then(r => {
-                alert('Departamento Modificado Exitosamente')
+                swal("Departamento Modificado Exitosamente", "success")
                 history.push(`/buildingDetail/${r.data.buildingId}`)
              } )//console.log(r.status)
              

@@ -50,7 +50,7 @@ const ApartmentList = ({buildingId}) => {
 				return (
 					<ThemeProvider theme={theme}>
 					<Link to={`/apartment/${params.id}`} >
-						<Button style={{fontWeight: 1000}} variant="contained" color="secondary" onClick={() => alert(params.id)}>Editar</Button>
+						<Button style={{fontWeight: 1000}} variant="contained" color="secondary" >Editar</Button>
 					</Link>
 					</ThemeProvider>
 				);
