@@ -57,12 +57,12 @@ const Home = (props) => {
 				}
 			</MapContainer>
 			</Grid>
-			<h1 className='title'>Mis Alertas</h1>
+			{/* <h1 className='title'>Mis Alertas</h1>
 			<Grid className='alerts'>
 				{
 					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
 				}
-			</Grid>
+			</Grid> */}
 		</Grid>
 		</ThemeProvider>
 	);

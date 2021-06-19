@@ -9,12 +9,12 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from 
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-    putBuilding
+    putAlert
 } from '../../redux/alerts/alertActions';
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
-import { findAlert, deleteBuilding } from "../../redux/alerts/alertActions"
+import { findAlert, deleteAlert } from "../../redux/alerts/alertActions"
 
 
 const AlertsUpdate = (props) => {
@@ -101,7 +101,7 @@ const AlertsUpdate = (props) => {
                 building: input.building,
                 importance: input.important
             }
-            dispatch(putBuilding(body))
+            dispatch(putAlert(body))
                 .then(swal("Se ha modificado la alerta!", "Gracias!", "success"))
                 .then(history.goBack())
         } else {
@@ -113,7 +113,7 @@ const AlertsUpdate = (props) => {
     }
 
     const deleteHandler = () => {
-        dispatch(deleteBuilding(id))
+        dispatch(deleteAlert(id))
                 .then(swal("Se ha eliminado la alerta!", "Gracias!", "success"))
                 .then(history.goBack())
     }

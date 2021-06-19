@@ -3,6 +3,11 @@ import { InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import ApartmentList from "../ApartmentList/ApartmentList";
 import BSChart from "./BSChart";
 import TimeChart from './TimeChart';
+import Calendar from "./Calendar";
+import BuildingPresentation from "./BuildingPresentation";
+import {Button} from '@material-ui/core';
+import {Link} from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 import './BuildingDetail.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
@@ -19,11 +24,22 @@ function BuildingDetail(props) {
     return (
         <ThemeProvider theme={theme}>
         <div className='contExtBD'>
+            <BuildingPresentation buildingId={buildingId}/>
             <div className = 'contALComp'>
                 <ApartmentList buildingId={buildingId}/>
             </div>
+            <div className="contTitleGastosBD">
+                    <h1>
+                        Gastos
+                    </h1>
+                    <Link to="/spendings/board" className="link">
+                        <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
+                            <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
+                        </Button>
+                    </Link>
+            </div>
             <div className= 'contExtBothCharts'>
-                <div className= 'contChar1'>
+                    <div className= 'contChar1'>
                     <div>
                         <FormControl style={{width: '200px', marginBottom: '20px'}}>
                             <InputLabel id="demo-controlled-open-select-label">Mes</InputLabel>
@@ -75,6 +91,19 @@ function BuildingDetail(props) {
                 <div className= 'contChar'>
                 <TimeChart buildingId={buildingId}/>
                 </div>
+            </div>
+            <div className="contTitleAlertasBD">
+                    <h1>
+                        Calendario Alertas
+                    </h1>
+                    <Link to="/alerts" className="link">
+                        <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
+                            <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
+                        </Button>
+                    </Link>
+            </div>
+            <div id='calendar'>
+                <Calendar buildingId={buildingId}/>
             </div>
         </div>
         </ThemeProvider>

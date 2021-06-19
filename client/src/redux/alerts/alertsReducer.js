@@ -1,4 +1,4 @@
-import { GET_ALL_ALERTS, POST_ALERT, PUT_ALERT, DELETE_ALERT, FILTER_ALERTS , FIND_ALERT} from './alertActions';
+import { GET_ALL_ALERTS, POST_ALERT, PUT_ALERT, DELETE_ALERT, FILTER_ALERTS , FIND_ALERT, FIND_ALERTS_BUILDING} from './alertActions';
 import { filterAlerts } from './utils';
 
 const initialState = {
@@ -7,7 +7,8 @@ const initialState = {
     postStatus: 0,
     putStatus: 0,
     deleteStatus: 0,
-    findAlert: 0
+    findAlert: 0,
+    findAlertsBuilding: []
 }
 
 export default function alertsReducer(state = initialState, action) {
@@ -43,7 +44,11 @@ export default function alertsReducer(state = initialState, action) {
                 ...state,
                 findAlert: action.payload.data
             }
-
+        case FIND_ALERTS_BUILDING:
+            return {
+                ...state,
+                findAlertsBuilding: action.payload.data
+            }
         default:
             return state;
     }

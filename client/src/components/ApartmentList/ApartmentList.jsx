@@ -5,6 +5,7 @@ import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {DataGrid} from '@material-ui/data-grid';
 import {Button, Container} from '@material-ui/core';
 import {Link} from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
@@ -62,11 +63,11 @@ const ApartmentList = ({buildingId}) => {
 		<div className='extContAL'>
 			<div className="componentHeader">
 				<h1>
-					Departamentos {detailBuilding[0]?.name || ""}
+					Departamentos
 				</h1>
 				<Link to="/apartmentadd" className="link">
-					<Button variant="contained" color="secondary" style={{fontWeight: 1000}}>
-						Nuevo Departamento
+					<Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
+						<AddIcon style={{ fontSize: 25, color: "#212121" }}/>
 					</Button>
 				</Link>
 			</div>

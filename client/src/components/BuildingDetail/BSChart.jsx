@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { buildingSpendings } from '../../redux/spending/actionSpending';
 import { Bar } from 'react-chartjs-2';
@@ -53,7 +53,17 @@ export default function BSChart({date, buildingId}) {
         },
     }
 
-    return (
-        <Bar width={100} height={300} data={data} options={options}/>
-    )
+    if(building_spendings.length > 0){
+        return (
+            <Bar width={100} height={300} data={data} options={options}/>
+        )
+    }else{
+        return(
+            <div>
+                <h1>
+                    Loading...
+                </h1>
+            </div>
+        )
+    }
 }

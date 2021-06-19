@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
