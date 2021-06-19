@@ -42,9 +42,6 @@ function App() {
 				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
 				<Route exact path="/logging/restaurarcontraseña" component = {resetPassword}/>
-				<Route exact path="/alerts" component = {Alerts}/>
-				<Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
-				<Route exact path="/alertsAdd" component = {AlertsAdd}/>
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
 				<Route exact path="/buildingDetail/:id" component={BuildingDetail} />
