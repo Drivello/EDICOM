@@ -19,11 +19,16 @@ import CreateUser from '../UserAdd/CreateUser';
 import UserList from '../UserList/UserList';
 import UserUpdate from '../UserUpdate/UserUpdate';
 import UserView from '../UserView/UserView';
-import ExpensesTable from '../Expenses/Expenses'
+import ExpensesTable from '../Expenses/Expenses';
 import Logging from '../Logging/Logging';
 import Alerts from '../Alerts/AlertsList';
 import AlertsUpdate from '../AlertsUpdate/AlertsUpdate';
 import AlertsAdd from '../AlertsAdd/AlertsAdd';
+import ShowAmenities from '../Amenities/ShowAmenities';
+import CreateAmenity from '../Amenities/CreateAmenity';
+import UpdateAmenity from '../Amenities/UpdateAmenity';
+import resetPassword from '../Logging/resetPassword';
+
 
 function App() {
 	return (
@@ -32,10 +37,11 @@ function App() {
 			<BrowserRouter>
 				<Route path="/" component={Sidebar} />
 				<Route exact path="/" component={Home} />
-				<Route exact path="/logging" component = {Logging}/>
-				<Route exact path="/alerts" component = {Alerts}/>
-				<Route exact path="/alertsUpdate/:id" component = {AlertsUpdate}/>
-				<Route exact path="/alertsAdd" component = {AlertsAdd}/>
+				<Route exact path="/logging" component={Logging} />
+				<Route exact path="/alerts" component={Alerts} />
+				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
+				<Route exact path="/alertsAdd" component={AlertsAdd} />
+				<Route exact path="/logging/restaurarcontraseña" component = {resetPassword}/>
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
 				<Route exact path="/buildingDetail/:id" component={BuildingDetail} />
@@ -53,6 +59,9 @@ function App() {
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
 				<Route path="/userView" component={UserView} />
+				<Route path="/amenities/:id_building" component={ShowAmenities} />
+				<Route path="/amenityCreate" component={CreateAmenity} />
+				<Route path="/amenityUpdate/:id" component={UpdateAmenity} />
 			</BrowserRouter>
 		</Container>
 	);

@@ -10,12 +10,32 @@ import theme from '../themeStyle';
 import {Link} from 'react-router-dom'
 
 const UserList = () => {
+	const useStyles = makeStyles((theme)=>({
+		root: {
+			marginTop: 100,
+			marginBottom: 30,
+			border:5
+		},
+		formControl: {
+			margin: theme.spacing(1),
+			minWidth: 120,
+			width:500,
+		},
+		last: {
+			padding: 8,
+		}
+	}));
+
+
+
     const { allApartments } = useSelector(state => state.apartmentReducer);
     const {allBuildings} = useSelector(state => state.buildingReducer)
 	const {users} = useSelector(state => state.userReducer)
-
-
 	const dispatch = useDispatch();
+	const classes = useStyles();
+	const [buildingOpen, setBuildingOpen] = useState(false);
+	const [apartmentOpen, setApartmentOpen] = useState(false);
+
 
     const [input, setInput] = useState({
         apartment:'',
@@ -30,26 +50,8 @@ const UserList = () => {
         dispatch(getAllUsersForList())
     }, [dispatch])
 
-	const useStyles = makeStyles((theme)=>({
-        root: {
-            marginTop: 100,
-            marginBottom: 30,
-            border:5
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-            width:500,
-        },
-        last: {
-            padding: 8,
-        }
-    }));
 	
 	
-	const classes = useStyles();
-	const [buildingOpen, setBuildingOpen] = useState(false);
-	const [apartmentOpen, setApartmentOpen] = useState(false);
 
 
 	const handleBuildingClose = () => {

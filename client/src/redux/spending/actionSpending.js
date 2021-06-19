@@ -6,11 +6,13 @@ export const FILTER_SPENDING = 'FILTER_SPENDINGS';
 export const DELETE_SPENDING = 'DELETE_SPENDINGS';
 export const GET_BUILDING_SPENDINGS = 'GET_BUILDING_SPENDINGS';
 
+
+
 export function postSpending(data) {
 	return function (dispatch) {
 		return axios
-			.post(' http://localhost:3001/spendings/add ', data)
-			.then(res => {
+		.post(' http://localhost:3001/spendings/add ', data)
+		.then(res => {
 				console.log('Se resolvió la action de postSpending');
 				console.log(res.data);
 				dispatch({type: POST_SPENDING, payload: res.data});
@@ -19,13 +21,20 @@ export function postSpending(data) {
 }
 
 export function putSpending(data) {
-	return function (dispatch) {
-		console.log(data);
+	return function (dispatch) {	
 		return axios
 			.put(' http://localhost:3001/spendings/add ', data)
 			.then(res => {
-				dispatch({type: PUT_SPENDING, payload: res.data});
-			});
+					console.log("se aceptó la modificación")
+					console.log('respuesta de put spending', res)
+					dispatch({type: PUT_SPENDING, payload: res.data});
+				},
+				err => {
+					console.log("se rechazó la modificación")
+					console.log('respuesta de put spending', err)
+					alert('No tienes los permisos para hacer esta modificación')
+				}
+			);
 	};
 }
 

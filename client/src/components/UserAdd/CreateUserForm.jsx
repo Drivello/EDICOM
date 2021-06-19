@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme)=>({
     root: {
 		marginTop: 50,
 		marginBottom: 30,
-		border:5
+		border:5,
+		display:'flex'
 	},
 	formControl: {
 		margin: theme.spacing(1),
@@ -140,8 +141,6 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 		});
 	}
 	
-	console.log(allApartments)
-
     return (
 		<ThemeProvider theme={theme}>
         <div className= 'extContCAF'>
@@ -202,12 +201,12 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
             </Grid>
 			<form noValidate autoComplete="off" >
 			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
-                <Grid item xs={6}>
+                <Grid >
                     <Grid container spacing={1} alignItems="center">
-                        <Grid>
+                        <Grid item >
                             <Domain />
                         </Grid>
-                        <Grid item>
+                        <Grid item >
                             <TextField 
 								error={error["name"]}
 								helperText={[helperText["name"]]}
