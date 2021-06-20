@@ -1,4 +1,4 @@
-import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL, TOKEN_TO_EMAIL} from './loggingActions';
+import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL, TOKEN_TO_EMAIL, EMAIL_TO_TOKEN} from './loggingActions';
 
 
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
     success: false,
     err: {},
     recoveryMail: null,
+    tokenToConfirm: null,
 };
 
 
@@ -47,6 +48,12 @@ const loggingReducer = (state = initialState, action) => {
             console.log("action.payload", action.payload);
             return {
                 ...state, recoveryMail: action.payload.mail
+            }
+
+        case EMAIL_TO_TOKEN:
+            console.log("action.payload", action.payload);
+            return {
+                ...state, tokenToConfirm: action.payload.token
             }
         
         default:
