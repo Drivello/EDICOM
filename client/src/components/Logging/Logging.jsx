@@ -1,22 +1,16 @@
-import React, { useState } from 'react'
-import Link from 'react-router-dom'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { loggingIn, handleChangePassword, handleSendEmail } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
 
 import {
-    Typography,
-    InputLabel,
-    NativeSelect,
     Grid,
     Button,
-    Container,
     TextField,
     makeStyles,
 } from "@material-ui/core";
 
-import { useHistory } from 'react-router-dom';
-import swal from 'sweetalert';
 
 const Logging = () => {
 
@@ -30,8 +24,8 @@ const Logging = () => {
         },
       }));
     
-    const classes = useStyles();
     const dispatch = useDispatch();
+    const classes = useStyles();
     const history = useHistory();
 
     
@@ -42,21 +36,27 @@ const Logging = () => {
         }
     )
 
-    const { username, password } = user;
+    const { username, password } = user;            //destructuring
     
     const { authData } = useSelector(state => {
         return {
-            authData: state.reducerLogging.authData,
+            authData: state.loggingReducer.authData,
         };
     });
-    console.log("authData", authData)
+    
+    const {first_logging, name, token} = authData
 
-    // if (authData) history.push('/');
-    // if (localStorage.getItem('profile')) history.push('/');
+    useEffect(() => {
+
+        if(!first_logging && token){
+            history.push('/');
+        }
+    }, [authData])
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loggingIn(user, swal)) // ----> va a modificar nuestro authData en el store!
+        dispatch(loggingIn(user)) // ----> va a modificar nuestro authData en el store!
         
     };
 
@@ -67,7 +67,6 @@ const Logging = () => {
         // agustinreynaud6@gmail.com
         dispatch(handleSendEmail(email))
     }
-
 
 
     return (

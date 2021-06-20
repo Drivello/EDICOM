@@ -1,51 +1,73 @@
-import React, { useState, Link } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { loggingIn, handleChangePassword, handleSendEmail } from '../../redux/logging/loggingActions';
+import { loggingIn, handleChangePassword, handleSendEmail, tokenToEmail } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import {
-    Typography,
-    InputLabel,
-    NativeSelect,
     Grid,
     Button,
-    Container,
     TextField,
     makeStyles,
 } from "@material-ui/core";
 
-import { useHistory } from 'react-router-dom';
-import swal from 'sweetalert';
 
 const ResetPasword = () => {
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-          marginTop: 50,
-          marginBottom: 30,
-        },
-        margin: {
-          margin: theme.spacing(1),
-        },
-      }));
-    
-    const classes = useStyles();
-    const dispatch = useDispatch();
     const history = useHistory();
+    const dispatch = useDispatch();
+    
+    const token = useLocation().search.substring(1);
 
+    const [ mail, setEmail ] = useState();
+    
     const { state: newPassword, handleChange: handleNewPassword } = useForm(
         {
             newPass: " ",
             confirmPassword: " ",
-            email: " "
         }
     )
+        
+    const { recoveryMail } = useSelector(state => {
+        return {
+            recoveryMail: state.loggingReducer.recoveryMail,
+        };
+    });
+        
+    useEffect(() => 
+    {
+        dispatch(tokenToEmail(token))
+        setEmail(recoveryMail)
+
+    }, [recoveryMail])
+
+    // ------ Style Material UI ----------
+    
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            marginTop: 50,
+            marginBottom: 30,
+        },
+        margin: {
+            margin: theme.spacing(1),
+        },
+        textField: {
+            width: '50ch',
+          },
+    }));
+
+    const classes = useStyles();
+
+    // -----------------------------------
+
+    console.log("recoveryMail", recoveryMail )
+
 
     function handleNewPass(e){
         e.preventDefault();
         if(newPassword.newPass===newPassword.confirmPassword){
             alert("Contraseña cambiada")
-            dispatch(handleChangePassword(newPassword))
+            dispatch(handleChangePassword({newPass: newPassword.newPass, email: mail}))
             history.push('/logging')
         }
         else{
@@ -56,15 +78,18 @@ const ResetPasword = () => {
     
     return(
 
+        <div style={{ marginTop: '100px'}}>
         <form  onSubmit={handleNewPass}>
 
-            <Grid>
+            <Grid container justify="flex-start" alignItems="center" className={classes.paper}>
                 <TextField
-                    className={classes.margin}
+                    variant="outlined"
+                    className={classes.margin, classes.textField}
                     id="email"
                     name="email"
-                    label="email"
-                    value={newPassword.email}                        
+                    autoComplete="off"
+                    value={mail}    
+                    labelWidth={60}                  
                 />
             </Grid>
             
@@ -73,12 +98,13 @@ const ResetPasword = () => {
                     className={classes.margin}
                     id="newPass"
                     name="newPass"
+                    type = "password"
                     label="Nueva Contraseña"
                     // type="password"
                     onChange={(e) => {
                         handleNewPassword(e)
+                        }
                     }
-                }
                 />
             </Grid>
             
@@ -87,8 +113,8 @@ const ResetPasword = () => {
                     className={classes.margin}
                     id="confirmPassword"
                     name="confirmPassword"
+                    type = "password"
                     label="Confirmar Contraseña"
-                    // type="password"
                     onChange={(e) => {
                         handleNewPassword(e)
                     }
@@ -110,6 +136,7 @@ const ResetPasword = () => {
                 u obtenemos el correo mediante el Link que le llega al mail
                 o hay que autentificar la pagina  
         </form>
+        </div>
     )
     
 }
