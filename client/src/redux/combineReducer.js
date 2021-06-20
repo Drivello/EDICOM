@@ -8,6 +8,7 @@ import alertsReducer from './alerts/alertsReducer';
 import userReducer from './users/userReducer';
 import loggingReducer from './logging/loggingReducer';
 import amenitiesReducer from './amenities/amenitiesReducer';
+import complaintsReducer from './complaints/complaintsReducer';
 
 export const reducers = combineReducers({
 	userReducer: userReducer,
@@ -18,6 +19,7 @@ export const reducers = combineReducers({
 	alertsReducer: alertsReducer,
 	loggingReducer: loggingReducer,
 	amenitiesReducer: amenitiesReducer,
+	complaintsReducer: complaintsReducer
 });
 
 export default reducers;

@@ -7,12 +7,14 @@ const putComplaint = require('../controllers/complaints/putComplaintsController'
 const deleteComplaint = require('../controllers/complaints/deleteComplaintsController');
 const complaintsBuilding = require('../controllers/complaints/complaintsBuildingController');
 const findComplaint = require('../controllers/complaints/findComplaintController');
+const seenComplaint = require('../controllers/complaints/seenComplaintController');
 
 router.use(express.json());
 
 router.get("/all", allComplaints);
 router.post("/", addComplaint);
 router.put("/", putComplaint);
+router.put("/:id", seenComplaint);
 router.delete("/:id", deleteComplaint);
 router.get("/all/:id", complaintsBuilding);
 router.get("/:id", findComplaint);
