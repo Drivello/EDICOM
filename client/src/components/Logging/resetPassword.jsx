@@ -88,7 +88,10 @@ const ResetPasword = () => {
                     id="email"
                     name="email"
                     autoComplete="off"
-                    value={mail}    
+                    value={mail}
+                    InputProps={{
+                        readOnly: true
+                    }}    
                     labelWidth={60}                  
                 />
             </Grid>
