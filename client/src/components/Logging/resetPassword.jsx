@@ -88,7 +88,10 @@ const ResetPasword = () => {
                     id="email"
                     name="email"
                     autoComplete="off"
-                    value={mail}    
+                    value={mail}
+                    InputProps={{
+                        readOnly: true
+                    }}    
                     labelWidth={60}                  
                 />
             </Grid>
@@ -132,9 +135,6 @@ const ResetPasword = () => {
                     </Button>
             </Grid>
 
-                Aca hay que plantear 2 cosas:
-                u obtenemos el correo mediante el Link que le llega al mail
-                o hay que autentificar la pagina  
         </form>
         </div>
     )

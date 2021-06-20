@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loggingIn, handleChangePassword, handleSendEmail } from '../../redux/logging/loggingActions';
+import { loggingIn, handleChangePassword, handleSendEmail, emailToToken } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
 
 import {
@@ -36,11 +36,12 @@ const Logging = () => {
         }
     )
 
-    const { username, password } = user;            //destructuring
+    const { email: username, password } = user;            //destructuring
     
-    const { authData } = useSelector(state => {
+    const { authData, tokenToConfirm } = useSelector(state => {
         return {
             authData: state.loggingReducer.authData,
+            tokenToConfirm: state.loggingReducer.tokenToConfirm,
         };
     });
     
@@ -48,10 +49,26 @@ const Logging = () => {
 
     useEffect(() => {
 
-        if(!first_logging && token){
-            history.push('/');
+        if(token){
+            if(!first_logging){                
+                history.push('/');
+            }
+            else{
+                dispatch(emailToToken(username))
+                //hacer el dispatch para pedir el tokenToConfirm para este email
+            }
         }
+
+
     }, [authData])
+
+    useEffect(() => {
+        if(first_logging){        
+            if(tokenToConfirm?.length > 2){
+                history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`)
+            }
+        }
+    }, [tokenToConfirm])
 
 
     const handleSubmit = (e) => {
@@ -63,8 +80,6 @@ const Logging = () => {
     
     function handleEmail(){
         var email = prompt("Introduzca su correo:", "");
-        // console.log(typeof(email))
-        // agustinreynaud6@gmail.com
         dispatch(handleSendEmail(email))
     }
 

@@ -106,8 +106,8 @@ export function EditApartmentForm(props) {
     const handleDelete = (e, id, data) => {
         dispatch(deleteApartmentById(id))
         .then(() =>{
-            swal("Departamento Eliminado Exitosamente", `Apartamento ${apartmentDeleted.cata_apartment} Eliminado`)
-            history.push(`/buildingDetail/${apartmentDeleted.buildingId}`)
+            swal("Departamento Eliminado Exitosamente", `Apartamento ${apartmentDetail.cata_apartment} Eliminado`)
+            history.push(`/buildingDetail/${apartmentDetail.buildingId}`)
         })
     }
 

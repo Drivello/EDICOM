@@ -8,7 +8,6 @@ module.exports = async (req, res, next) => {
 
     try {
         
-        console.log("llego send email", req.body);
         let { email } = req.body 
 
         let userRegistered = await User.findOne(
@@ -20,8 +19,6 @@ module.exports = async (req, res, next) => {
         if (!userRegistered) return res.status(404).json({ message: { message: "Usuario no existente", styles: "red" } });
 
         const token = jwt.sign({ email: userRegistered.email }, secret, { expiresIn: '1hr' });
-
-        console.log("token", token)
         
         let foo = await transporter.sendMail({
             from: '"Edicom" <edicombuilds@gmail.com>', // sender address
@@ -31,7 +28,8 @@ module.exports = async (req, res, next) => {
             html: `<b>Haga click en el link para restablecer su contraseña: <a href="http://localhost:3000/logging/restaurarcontraseña?${token}"> Link </a> </b>`, // html body
         });
 
-        res.status(201).json({ token });
+        // res.status(201).json({ token });
+        res.status(201);
 
     } catch (error) {
 

@@ -8,6 +8,7 @@ export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const SEND_EMAIL = 'SEND_EMAIL';
 export const TOKEN_TO_EMAIL = 'TOKEN_TO_EMAIL';
+export const EMAIL_TO_TOKEN = 'EMAIL_TO_TOKEN';
 
 
 //----------   Middleware para agrgar el headers Authorization  ----------------
@@ -93,17 +94,14 @@ export function handleChangePassword(data) {
 
 export function handleSendEmail(data) {
   var email = {email:data}
-  console.log("entra a la accion del action send email", email)
 	return function (dispatch) {
-    console.log("entra a la accion del action send email2", email)
 		return axios
 			.post('http://143.244.166.41:3001/loggings/sendEmail ', email)
 			// .then(console.log("entra a la accion del action send email3", email))
       .then(res => {
-				dispatch({type: SEND_EMAIL, payload: res.data});
+				dispatch({type: SEND_EMAIL});
 			},
       err => {
-        console.log(err)
         console.log(err.response)
           dispatch({
             type: LOGGING_REJECT,
@@ -128,6 +126,19 @@ export function tokenToEmail(data) {
       .then(res => {
         console.log('respuesta de controller tokenToEmail', res)
 				dispatch({type: TOKEN_TO_EMAIL, payload: res.data});
+			});
+	};
+}
+
+
+export function emailToToken(data) {
+  var email = {email:data}
+	return function (dispatch) {
+		return axios
+			.post('http://143.244.166.41:3001/loggings/emailToToken ', email)
+      .then(res => {
+        console.log('respuesta de controller emailToToken', res)
+				dispatch({type: EMAIL_TO_TOKEN, payload: res.data});
 			});
 	};
 }
