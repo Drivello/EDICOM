@@ -120,7 +120,7 @@ const AlertsAdd = (props) => {
                                             color="secondary"
                                             id="date-picker-dialog"
                                             label="Fecha"
-                                            format="MM/dd/yyyy"
+                                            format="dd/MM/yyyy"
                                             value={input.date}
                                             onChange={e => handleChange(e, "date")}
                                             KeyboardButtonProps={{

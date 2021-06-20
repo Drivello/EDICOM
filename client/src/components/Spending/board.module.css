@@ -1,23 +1,23 @@
 .header{
     margin-top: 100px;
+    margin-bottom: 50px;
+    margin-left: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
 }
 
 .date{
-    display:flex;
-    flex-direction: row;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
+    margin-left: -50px;
 }
 
 .componentHeading1{
-    margin-bottom: 30px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+    margin-left: 100px;
 }

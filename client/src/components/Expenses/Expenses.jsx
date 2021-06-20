@@ -3,7 +3,7 @@ import { getExpenses } from "../../redux/expenses/expensesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import styles from "./../Spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
+import styles from "../Spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
 import ExpensesDetail from './ExpensesDetail'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core";
 

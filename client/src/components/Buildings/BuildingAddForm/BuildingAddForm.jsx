@@ -195,7 +195,7 @@ function BuildingAddForm() {
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.contUpdateB}>
-                <h1>Crear edificio:</h1>
+                <h1 className='h1BuildingAddForm'>Crear edificio:</h1>
                 <form action="" className={styles.formCont}>
                     <div className={styles.form}>
                         <div className={styles.item}>
