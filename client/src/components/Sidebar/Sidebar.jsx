@@ -45,7 +45,11 @@ export default function Sidebar() {
   }, [Notifications])
 
 
-
+  const { authData } = useSelector(state => {
+    return {
+        authData: state.loggingReducer.authData,
+    };
+  });
 
   const [currentUser, setCurrentUser] =
     useState(JSON.parse(localStorage.getItem('profile')));
