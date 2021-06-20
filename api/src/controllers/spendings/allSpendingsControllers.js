@@ -1,7 +1,7 @@
 const { Spendings } = require('../../db');
 
 
-// Path of this controller --> get(http://localhost:3001/spendings/all?buildingId)
+// Path of this controller --> get(http://143.244.166.41:3001/spendings/all?buildingId)
 module.exports = async (req, res, next) => {
 
 	const { buildingId } = req.query;

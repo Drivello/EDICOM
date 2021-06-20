@@ -33,7 +33,7 @@ axios.interceptors.request.use((req)=> {
 export const loggingIn = (user) => {
   return function (dispatch) {
     // dispatch({ type: LOGGING_IN })
-    axios.post('http://localhost:3001/loggings/loggingIn', user)    //loguearse en el back
+    axios.post('http://143.244.166.41:3001/loggings/loggingIn', user)    //loguearse en el back
       .then(res => {
           console.log('respuesta del loging', res)
           localStorage.setItem('profile', JSON.stringify(res.data));
@@ -83,7 +83,7 @@ export const logout = () => async (dispatch) => {
 export function handleChangePassword(data) {
 	return function (dispatch) {
 		return axios
-			.put(' http://localhost:3001/loggings/changepassword ', data)
+			.put(' http://143.244.166.41:3001/loggings/changepassword ', data)
 			.then(res => {
 				dispatch({type: CHANGE_PASSWORD, payload: res.data});
 			});
@@ -97,7 +97,7 @@ export function handleSendEmail(data) {
 	return function (dispatch) {
     console.log("entra a la accion del action send email2", email)
 		return axios
-			.post('http://localhost:3001/loggings/sendEmail ', email)
+			.post('http://143.244.166.41:3001/loggings/sendEmail ', email)
 			// .then(console.log("entra a la accion del action send email3", email))
       .then(res => {
 				dispatch({type: SEND_EMAIL, payload: res.data});
@@ -124,7 +124,7 @@ export function tokenToEmail(data) {
   var token = {token:data}
 	return function (dispatch) {
 		return axios
-			.post('http://localhost:3001/loggings/tokenToEmail ', token)
+			.post('http://143.244.166.41:3001/loggings/tokenToEmail ', token)
       .then(res => {
         console.log('respuesta de controller tokenToEmail', res)
 				dispatch({type: TOKEN_TO_EMAIL, payload: res.data});

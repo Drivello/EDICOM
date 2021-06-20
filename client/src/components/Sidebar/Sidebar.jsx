@@ -109,9 +109,9 @@ export default function Sidebar() {
           <div className='login'>
             <Typography variant="h6" style={{ marginRight: 20 }}>
               {
-                authData.name
+                authData?.name
                 ?
-                `Sesión de ${authData.name}`
+                `Sesión de ${authData?.name}`
                 :
                 false
               }
@@ -140,7 +140,7 @@ export default function Sidebar() {
               onClose={handleClose}
             >
               {
-                authData.name
+                authData?.name
                 ?
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 :

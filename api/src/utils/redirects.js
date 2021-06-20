@@ -3,7 +3,7 @@
 
 const redirectLoggin = (req, res, next) => {
     // if(req.session.userId) {
-      res.redirect('http://localhost:3001/unauthorized');
+      res.redirect('http://143.244.166.41:3001/unauthorized');
     // } else {
     //   next();
     // }

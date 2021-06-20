@@ -11,7 +11,7 @@ export const GET_BUILDING_SPENDINGS = 'GET_BUILDING_SPENDINGS';
 export function postSpending(data) {
 	return function (dispatch) {
 		return axios
-		.post(' http://localhost:3001/spendings/add ', data)
+		.post(' http://143.244.166.41:3001/spendings/add ', data)
 		.then(res => {
 				console.log('Se resolvió la action de postSpending');
 				console.log(res.data);
@@ -23,7 +23,7 @@ export function postSpending(data) {
 export function putSpending(data) {
 	return function (dispatch) {	
 		return axios
-			.put(' http://localhost:3001/spendings/add ', data)
+			.put(' http://143.244.166.41:3001/spendings/add ', data)
 			.then(res => {
 					console.log("se aceptó la modificación")
 					console.log('respuesta de put spending', res)
@@ -45,7 +45,7 @@ export function deleteSpending(id) {
 		console.log(id);
 		return (
 			axios
-				.delete(` http://localhost:3001/spendings/del/${id} `) // ver
+				.delete(` http://143.244.166.41:3001/spendings/del/${id} `) // ver
 				.then(res => {
 					console.log('Se resolvió la action de putSpending');
 					console.log(res.data);
@@ -60,7 +60,7 @@ export function totalSpending() {
 	return function (dispatch) {
 		return (
 			axios
-				.get('http://localhost:3001/spendings/all')
+				.get('http://143.244.166.41:3001/spendings/all')
 				.then((res, req) => {
 					dispatch({type: GET_SPENDINGS, payload: res.data});
 				})
@@ -74,7 +74,7 @@ export function filterSpending(payload) {
 
 export function buildingSpendings(id) {
     return function(dispatch) {
-        return axios.get(`http://localhost:3001/spendings/all?buildingId=${id}`)
+        return axios.get(`http://143.244.166.41:3001/spendings/all?buildingId=${id}`)
         .then(data => {
             dispatch({
                 type: GET_BUILDING_SPENDINGS,

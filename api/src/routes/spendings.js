@@ -10,10 +10,10 @@ const deleteSpendings = require("../controllers/spendings/deleteSpendingsControl
 
 router.use(express.json());
 // router.all('*', auth)
-router.get("/all", allSpendings);                   //      http://localhost:3001/spendings/all
-router.post("/add", addSpendings);                  //      http://localhost:3001/spendings/add
-router.put("/add", auth, putSpendings);                   //      http://localhost:3001/spendings/add
-router.delete("/del/:id", deleteSpendings);                  //      http://localhost:3001/spendings/delete
+router.get("/all", allSpendings);                   //      http://143.244.166.41:3001/spendings/all
+router.post("/add", addSpendings);                  //      http://143.244.166.41:3001/spendings/add
+router.put("/add", auth, putSpendings);                   //      http://143.244.166.41:3001/spendings/add
+router.delete("/del/:id", deleteSpendings);                  //      http://143.244.166.41:3001/spendings/delete
 
 router.get('/', async function(req,res,next){       //      endPoint
     console.log("Estoy en la ruta /spendings")

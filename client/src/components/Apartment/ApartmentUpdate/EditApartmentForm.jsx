@@ -95,7 +95,7 @@ export function EditApartmentForm(props) {
 
     const handleSubmit = function(e, id, data){
         axios
-            .put(`http://localhost:3001/apartments/${id}`, data, {
+            .put(`http://143.244.166.41:3001/apartments/${id}`, data, {
                 headers: {'Content-Type': 'application/json'},
             })
             .then(r => {
