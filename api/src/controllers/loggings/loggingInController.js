@@ -15,47 +15,34 @@ module.exports = async (req, res, next) => {
     let userType;
     
     try {
-        const usuarioRegistered = await User.findOne(
+        let userRegistered = await User.findOne(
             { 
                 where: { email } 
             }
         );
+        if(!userRegistered){
+
+            userRegistered = await Admin.findOne(
+                { 
+                    where: { email } 
+                }
+            );
+        }     
+        if (!userRegistered) return res.status(404).json({ message: { message: "Usuario no existente", styles: "red" } });
+
+        userRegistered instanceof Admin ? userType = "admin": null;
+        userRegistered instanceof User ? userType = "tenant": null;
         
-        const adminRegistered = await Admin.findOne(
-            { 
-                where: { email } 
-            }
-        );
-
-        usuarioRegistered instanceof User ? userType = "tenant": null;
-        usuarioRegistered instanceof Admin ? userType = "admin": null;
-        
-        if (!usuarioRegistered && !adminRegistered) return res.status(404).json({ message: { message: "Usuario no existente", styles: "red" } });
-
-        usuarioRegistered? userRegistered = usuarioRegistered : userRegistered = adminRegistered// prueba marce
-
-
-        // if(usuarioRegistered){ 
-        //     userRegistered = usuarioRegistered
-        // }
-        // else{ // prueba Mariano
-        //     userRegistered = adminRegistered
-        // }
-
         const isPasswordCorrect = await bcrypt.compare(password, userRegistered.password);
         if (!isPasswordCorrect) return res.status(400).json({ message: { message: 'Contraseña Incorrecta', style: "red" } });
+        
         let first_logging = userRegistered.firstLogging;
+        const token = jwt.sign({ email: userRegistered.email, id: userRegistered.id, userType }, secret, { expiresIn: '1hr' });
 
         if(first_logging){ 
                    
-            const token = jwt.sign({ email: userRegistered.email, id: userRegistered.id, userType }, secret, { expiresIn: '1hr' });
-            if(usuarioRegistered){
-                res.status(201).json({ result: userRegistered, token, message: { message: "Ingreso Exitoso ", style: "green", type: "usuario" }, first_logging });
-            }
-            else{
-                res.status(201).json({ result: userRegistered, token, message: { message: "Ingreso Exitoso ", style: "green" }, first_logging, type: "admin" });
-            }
-            // res.status(201).json({ result: userRegistered, token, message: { message: "Ingreso Exitoso", style: "green" }, first_logging });
+            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
+
             await User.update({
                 firstLogging: false,
             }, {
@@ -64,24 +51,15 @@ module.exports = async (req, res, next) => {
                 }
             });
         }
-
         else{
 
-            const token = jwt.sign({ email: userRegistered.email, id: userRegistered.id }, secret, { expiresIn: '10sec' });
-            if(usuarioRegistered){
-                res.status(201).json({ result: userRegistered, token, message: { message: "Ingreso Exitoso Usuario", style: "green", type: "usuario" }, first_logging });
-            }
-            else{
-                res.status(201).json({ result: userRegistered, token, message: { message: "Ingreso Exitoso Adm", style: "green", type: "admin" }, first_logging });
-            }
-            
+            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
         }
 
     } 
     catch (error) {
 
-        res.status(500).json({ message: { message: 'Something went wrong', style: "red" } });
+        res.status(500).json({ message: { message: 'Algo salió mal', style: "red" } });
         console.log(error);
-        res.status(500).json({ message: { message: 'Something went wrong', style: "red" } });
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -16,12 +16,13 @@ import './Sidebar.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/logging/loggingActions';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -36,23 +37,34 @@ export default function Sidebar() {
     importance: "Alta",
     building: "Donnelly Group",
     read:false
-}
+  }
 
-const notification2 = {
-    date: "10/08/2020",
-    subject: "Reclamo no hay wifi",
-    importance: "Media",
-    building: "Donnelly Group",
-    read:false
-}
+  const notification2 = {
+      date: "10/08/2020",
+      subject: "Reclamo no hay wifi",
+      importance: "Media",
+      building: "Donnelly Group",
+      read:false
+  }
 
-const test = [notification, notification2];
+  const test = [notification, notification2];
 
-const [notiNumb, setNotiNumb] = useState(0)
+  const [notiNumb, setNotiNumb] = useState(0)
 
-useState(() =>{
-  setNotiNumb(test.filter((not) => !not.read ? true: false).length)
-},[test])
+  useState(() =>{
+    setNotiNumb(test.filter((not) => !not.read ? true: false).length)
+  },[test])
+
+  //-------- Datos de la sesión actual ---------
+
+  const { authData } = useSelector(state => {
+    return {
+        authData: state.loggingReducer.authData,
+    };
+  });
+
+  // -----------------------------------------
+
 
   const [currentUser, setCurrentUser] =
     useState(JSON.parse(localStorage.getItem('profile')));
@@ -115,6 +127,15 @@ useState(() =>{
             </Typography>
           </Toolbar>
           <div className='login'>
+            <Typography variant="h6" style={{ marginRight: 20 }}>
+              {
+                authData.name
+                ?
+                `Sesión de ${authData.name}`
+                :
+                false
+              }
+            </Typography>
             <Link className='btnNavbar' to='/'>
               <HomeIcon style={{ fontSize: 35, color: "#00ff7f" }} />
             </Link>
@@ -138,10 +159,15 @@ useState(() =>{
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <Link className='btnNavbar' to='/logging'>
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-              </Link>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              {
+                authData.name
+                ?
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                :
+                <Link className='btnNavbar' to='/logging'>
+                  <MenuItem onClick={handleClose}>Login</MenuItem>
+                </Link>
+              }
             </Menu>
           </div>
         </AppBar>
