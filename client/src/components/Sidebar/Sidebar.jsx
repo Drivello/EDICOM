@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -16,44 +16,35 @@ import './Sidebar.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/logging/loggingActions';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
 
 export default function Sidebar() {
+  const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
   const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [noti, setNoti] = useState(false);
 
-  const notification = {
-    date: "16/08/2020",
-    subject: "Reclamo caño roto",
-    importance: "Alta",
-    building: "Donnelly Group",
-    read:false
-}
+  const [notiNumb, setNotiNumb] = useState(0);
 
-const notification2 = {
-    date: "10/08/2020",
-    subject: "Reclamo no hay wifi",
-    importance: "Media",
-    building: "Donnelly Group",
-    read:false
-}
+  useEffect(() => {
+    dispatch(getComplaints())
+  }, [dispatch])
 
-const test = [notification, notification2];
+  useEffect(() => {
+    setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
+  }, [Notifications])
 
-const [notiNumb, setNotiNumb] = useState(0)
 
-useState(() =>{
-  setNotiNumb(test.filter((not) => !not.read ? true: false).length)
-},[test])
+
 
   const [currentUser, setCurrentUser] =
     useState(JSON.parse(localStorage.getItem('profile')));
@@ -76,22 +67,21 @@ useState(() =>{
 
   const handleLogout = () => {
     dispatch(logout({ type: "LOGOUT" }))
-
-    console.log("entre logout")
     setCurrentUser(null);
-
   }
-  
+
 
   const notiHandler = () => {
-    test.map(not => {return {...not, read:true}})
-    setNotiNumb(0)
     setNoti(!noti)
+/*     if(notiNumb !== 0) setNotiNumb(notiNumb - 4); */
+    let notis = Notifications.filter(noti => { if (noti.seen === false) return true });
+    notis = notis.slice(notis.length - 4).map(noti => dispatch(putSeenComplaint(noti.id)))
+    dispatch(getComplaints())
   }
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        {noti ? <NotificationBar /> : <div></div>}
+        {noti ? <NotificationBar notifications={Notifications} /> : <div></div>}
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -122,9 +112,9 @@ useState(() =>{
             <Link className='btnNavbar' to={noti}>
               <div onClick={notiHandler}>
                 <Badge badgeContent={notiNumb} color="secondary">
-                  {notiNumb === 0 ? 
-                  <NotificationsNoneOutlinedIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />:
-                  <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
+                  {notiNumb === 0 ?
+                    <NotificationsNoneOutlinedIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
+                    <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
                   }
                 </Badge>
               </div>
@@ -176,8 +166,8 @@ useState(() =>{
             </Link>
 
             <Link to="/amenityCreate" className='link'>
-              <ListItem button key={'Amenities'} style={{ marginTop: '-20px'}} >
-                <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f"}} /></ListItemIcon>
+              <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
+                <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Amenities'} />
               </ListItem>
             </Link>

@@ -1,34 +1,23 @@
-import { stripTrailingSlash } from 'history/PathUtils'
-import React, { useState, useEffect } from 'react'
-import styles from "./NotificationBar.module.css"
+import { stripTrailingSlash } from 'history/PathUtils';
+import React, { useState, useEffect } from 'react';
+import styles from "./NotificationBar.module.css";
+import { getComplaints } from "../../redux/complaints/complaintsActions";
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
-const NotificationBar = () => {
+const NotificationBar = (props) => {
 
-    const notification = {
-        date: "16/08/2020",
-        subject: "Reclamo caño roto",
-        importance: "Alta",
-        building: "Donnelly Group"
-    }
-
-    const notification2 = {
-        date: "10/08/2020",
-        subject: "Reclamo no hay wifi",
-        importance: "Media",
-        building: "Donnelly Group"
-    }
-
-    const test = [notification, notification2];
-
-
+    let Notifications = props.notifications;
+    Notifications = Notifications.filter(noti => { if (noti.seen === false) return true })
+    Notifications = Notifications.slice(Notifications.length - 4);
 
     return (
         <div className={styles.box}>
             <div className={styles.cont}>
                 <div className={styles.items}>
-                    {test.map((noti) => {
+                    {Notifications?.map((noti) => {
                         return (
-                            <div className={styles.item}>
+                            <div className={styles.item} key={noti.id} >
                                 <div className={styles.subj}>
                                     {noti.subject}
                                 </div>
@@ -38,11 +27,11 @@ const NotificationBar = () => {
                                             Importancia: {noti.importance}
                                         </div>
                                         <div className={styles.building}>
-                                            Edificio: {noti.building}
+                                            Edificio: {noti.building.name}
                                         </div>
                                     </div>
                                     <div className={styles.date}>
-                                        {noti.date}
+                                        {moment(noti.date).format("DD/MM/YYYY")}
                                     </div>
                                 </div>
                             </div>

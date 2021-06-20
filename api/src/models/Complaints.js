@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
                 values: ['opened', 'closed']
             }),
             defaultValue: 'opened'
+        },
+        seen: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     }, {
         paranoid: true,

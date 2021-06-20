@@ -18,7 +18,7 @@ export default function Calendar({buildingId}) {
         dispatch(findAlertsBuilding(buildingId))
     }, [dispatch])
 
-    const eventsCalendar = alerts_building.map(e => e = {title: e.concept, date: e.date, detail: e.details, importance: e.importance, AlertId: e.id });
+    const eventsCalendar = alerts_building.filter(e => e.importance === 'alta' || e.importance === 'media').map(e => e = {title: e.concept, date: e.date, detail: e.details, importance: e.importance, AlertId: e.id });
 
     const handleEventClick = (clickInfo) => {
         console.log(clickInfo.event.extendedProps.importance)
