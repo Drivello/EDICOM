@@ -159,9 +159,9 @@ const Form = (props) => {
         <form>
           <Container>
             <div className="componentHeading1">
-              <Typography variant="h2" className="componentHeading1">
-                Modificar gastos:
-              </Typography>
+              <h1>
+                Agregar o Modificar Gasto:
+              </h1>
             </div>
           </Container>
           <Grid
@@ -327,6 +327,7 @@ const Form = (props) => {
                 {props.match.path === "/spendings/newSpending" ? (
                   <Link to={"./board"}>
                     <Button
+                      style={{ fontWeight: 1000 }}
                       className={classes.margin}
                       variant="contained"
                       color="secondary"
@@ -336,6 +337,7 @@ const Form = (props) => {
                       Agregar Gasto
                     </Button>
                     <Button
+                      style={{ fontWeight: 1000 }}
                       className={classes.margin}
                       variant="contained"
                       color="secondary"
@@ -344,6 +346,7 @@ const Form = (props) => {
                       Cancel
                     </Button>
                     <Button
+                      style={{ fontWeight: 1000 }}
                       className={classes.margin}
                       variant="contained"
                       color="secondary"
