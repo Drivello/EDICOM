@@ -6,7 +6,7 @@ import buildingReducer from './building/buildingReducer';
 import reducerExpenses from './expenses/expensesReducer';
 import alertsReducer from './alerts/alertsReducer';
 import userReducer from './users/userReducer';
-import reducerLogging from './logging/loggingReducer';
+import loggingReducer from './logging/loggingReducer';
 import amenitiesReducer from './amenities/amenitiesReducer';
 import complaintsReducer from './complaints/complaintsReducer';
 
@@ -17,7 +17,7 @@ export const reducers = combineReducers({
 	buildingReducer: buildingReducer,
 	reducerExpenses: reducerExpenses,
 	alertsReducer: alertsReducer,
-	reducerLogging: reducerLogging,
+	loggingReducer: loggingReducer,
 	amenitiesReducer: amenitiesReducer,
 	complaintsReducer: complaintsReducer
 });

@@ -7,45 +7,50 @@ export const LOGOUT = 'LOGOUT';
 export const LOGGING_IN_SUCCESS = 'LOGGING_IN_SUCCESS';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const SEND_EMAIL = 'SEND_EMAIL';
+export const TOKEN_TO_EMAIL = 'TOKEN_TO_EMAIL';
 
 
 //----------   Middleware para agrgar el headers Authorization  ----------------
+
 axios.interceptors.request.use((req)=> {
   if(localStorage.getItem('profile')) {
       req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
   }
-
   return req;
 })
 
 
 
+axios.interceptors.request.use((req)=> {
+  if(!localStorage.getItem('profile')) {
+    
+  }
+  return req;
+})
 
-export const loggingIn = (user, swalert) => {
+//-------------------------------------------------------------------------------
+
+export const loggingIn = (user) => {
   return function (dispatch) {
-    dispatch({ type: LOGGING_IN })
+    // dispatch({ type: LOGGING_IN })
     axios.post('http://localhost:3001/loggings/loggingIn', user)    //loguearse en el back
       .then(res => {
-        console.log('respuesta del loging', res)
-        if (res) {
+          console.log('respuesta del loging', res)
           localStorage.setItem('profile', JSON.stringify(res.data));
+          dispatch({
+            type: LOGGING_IN_SUCCESS,
+            payload: res.data
+          })
+          return true
         }
-        //llega un objeto con email, token y mensaje. 
-        //Token es  email: userRegistered.email, id: userRegistered._id }, secret
-
-        dispatch({
-          type: LOGGING_IN_SUCCESS,
-          payload: res.data
-        })
-        return true
-      }
         ,
         err => {
+          console.log(err.response)
           dispatch({
             type: LOGGING_REJECT,
             payload: err,
           });
-          swalert({
+          swal({
             title: err?.response?.data?.message?.message,
             text: 'Intente de nuevo',
             icon: `warning`
@@ -54,14 +59,15 @@ export const loggingIn = (user, swalert) => {
         }
       )
       .then(async (res) => {
-        if (res) {
-          const message = await JSON.parse(localStorage.getItem('profile'))
-          swalert({
-            title: message?.message?.message,
-            text: 'Bienvenido',
-            icon: `success`
-          })
-        }
+          const profile = await JSON.parse(localStorage.getItem('profile'))
+          console.log('res', res)
+          if(res){
+            swal({
+              title: profile?.message?.message,
+              text: `Bienvenido ${profile?.name}`,
+              icon: `success`
+            })
+          }
       })
   }
 }
@@ -70,7 +76,7 @@ export const logout = () => async (dispatch) => {
   dispatch({
     type: LOGOUT
   })
-  swal("Chau culiado!","");
+  swal("Nos vemos!","");
 }
 
 
@@ -86,15 +92,42 @@ export function handleChangePassword(data) {
 
 
 export function handleSendEmail(data) {
-  var email = {correo:data}
+  var email = {email:data}
   console.log("entra a la accion del action send email", email)
 	return function (dispatch) {
     console.log("entra a la accion del action send email2", email)
 		return axios
 			.post('http://localhost:3001/loggings/sendEmail ', email)
-			.then(console.log("entra a la accion del action send email3", email))
+			// .then(console.log("entra a la accion del action send email3", email))
       .then(res => {
 				dispatch({type: SEND_EMAIL, payload: res.data});
+			},
+      err => {
+        console.log(err)
+        console.log(err.response)
+          dispatch({
+            type: LOGGING_REJECT,
+            payload: err,
+          });
+          swal({
+            title: "Error",
+            text: 'El usuario no existe',
+            icon: `warning`
+          })
+          return false;
+      }
+      );
+	};
+}
+
+export function tokenToEmail(data) {
+  var token = {token:data}
+	return function (dispatch) {
+		return axios
+			.post('http://localhost:3001/loggings/tokenToEmail ', token)
+      .then(res => {
+        console.log('respuesta de controller tokenToEmail', res)
+				dispatch({type: TOKEN_TO_EMAIL, payload: res.data});
 			});
 	};
 }

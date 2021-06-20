@@ -1,15 +1,20 @@
-import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL} from './loggingActions';
-
+import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL, TOKEN_TO_EMAIL} from './loggingActions';
 
 
 const initialState = {
-    authData: null,
+    authData: {
+        first_logging: null,
+        message: null,
+        name: null,
+        token: null
+    },
     success: false,
     err: {},
+    recoveryMail: null,
 };
 
 
-const reducerLogging = (state = initialState, action) => {
+const loggingReducer = (state = initialState, action) => {
 
     switch (action.type) {
        //elimine reducer normal 
@@ -30,14 +35,22 @@ const reducerLogging = (state = initialState, action) => {
 
         case LOGOUT:
             localStorage.clear();
-            return { ...state, authData: null }
+            return { ...state, authData: initialState.authData }
 
         case SEND_EMAIL:
             console.log("llega al SEND_EMAIL del reducer")
-            return (alert("Revise su correo"))
+            alert("Revise su correo")
+            return {...state}
+
+
+        case TOKEN_TO_EMAIL:
+            console.log("action.payload", action.payload);
+            return {
+                ...state, recoveryMail: action.payload.mail
+            }
         
         default:
             return state
     }
 }
-export default reducerLogging;
+export default loggingReducer;

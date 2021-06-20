@@ -80,7 +80,7 @@ conn.sync({force: true}).then(() => {
 
 	var user1 = hashedPassword.then(res => {
 		return User.create({
-			name: 'agustin',
+			name: 'Agustin',
 			email: 'agustin@gmail.com',
 			password: res,
 			contact: '78788678',
@@ -89,8 +89,8 @@ conn.sync({force: true}).then(() => {
 	});
 	var user2 = hashedPassword.then(res => {
 		return User.create({
-			name: 'mauri',
-			email: 'mauri@gmail.com',
+			name: 'Mauri',
+			email: 'mauriciocuello91@gmail.com',
 			password: res,
 			contact: '78788678',
 			isDeleted: false,
@@ -98,7 +98,7 @@ conn.sync({force: true}).then(() => {
 	});
 	var user3 = hashedPassword.then(res => {
 		return User.create({
-			name: 'mariano',
+			name: 'Mariano',
 			email: 'mariano@gmail.com',
 			password: res,
 			contact: '78788678',

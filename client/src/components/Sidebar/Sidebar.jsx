@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -24,6 +24,7 @@ import NotificationBar from "../NotificationBar/NotificationBar"
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
+
 
 export default function Sidebar() {
   const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
@@ -106,6 +107,15 @@ export default function Sidebar() {
             </Typography>
           </Toolbar>
           <div className='login'>
+            <Typography variant="h6" style={{ marginRight: 20 }}>
+              {
+                authData.name
+                ?
+                `Sesión de ${authData.name}`
+                :
+                false
+              }
+            </Typography>
             <Link className='btnNavbar' to='/'>
               <HomeIcon style={{ fontSize: 35, color: "#00ff7f" }} />
             </Link>
@@ -129,10 +139,15 @@ export default function Sidebar() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <Link className='btnNavbar' to='/logging'>
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-              </Link>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              {
+                authData.name
+                ?
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                :
+                <Link className='btnNavbar' to='/logging'>
+                  <MenuItem onClick={handleClose}>Login</MenuItem>
+                </Link>
+              }
             </Menu>
           </div>
         </AppBar>

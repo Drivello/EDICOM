@@ -8,14 +8,7 @@ const { transporter } = require("../../../mailer");
 // Path of this controller --> Put(http://localhost:3001/spendings/add)
 module.exports = async (req, res, next) => {
     
-    // let foo = await transporter.sendMail({
-    //     from: '"Edicom" <edicombuilds@gmail.com>', // sender address
-    //     to: userRegistered.email, // list of receivers
-    //     subject: "Contraseña", // Subject line
-    //     text: "La contraseña otorgada por el Administrador es:123" +userRegistered.password , // plain text body
-    //     html: "<b>La contraseña otorgada por el Administrador es: 123</b>", // html body
-    // });
-    // console.log(req.body);
+    console.log(req.body)
 
     let {newPass, email} = req.body;
     
@@ -24,7 +17,7 @@ module.exports = async (req, res, next) => {
         const hashedPassword = bcrypt.hash(newPass, 12)
         hashedPassword.then(async (newPassHashed) => {
 
-            const newPassword = await User.update(
+            await User.update(
                 {
                     password: newPassHashed,
                 }, 
@@ -35,7 +28,7 @@ module.exports = async (req, res, next) => {
                 }
             );
                 
-            return res.json(newPassword).status(200);
+            return res.status(200);
         })
     }
     catch(err){
