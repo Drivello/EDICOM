@@ -22,6 +22,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 
 
 export default function Sidebar() {
@@ -200,7 +201,7 @@ export default function Sidebar() {
               </ListItem>
             </Link>
 
-            <Link to="" className='link'>
+            <Link to="/amenityCreate" className='link'>
               <ListItem button key={'Amenities'} style={{ marginTop: '-20px'}} >
                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f"}} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Amenities'} />
@@ -218,6 +219,13 @@ export default function Sidebar() {
               <ListItem button key={'Alertas'}>
                 <ListItemIcon><AnnouncementIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Alertas'} />
+              </ListItem>
+            </Link>
+
+            <Link to='/ExpensesTable'>
+              <ListItem button key={'Expensas'}>
+                <ListItemIcon><ReceiptIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                <ListItemText className='fontColor' primary={'Expensas'} />
               </ListItem>
             </Link>
 

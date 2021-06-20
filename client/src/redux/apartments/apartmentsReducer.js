@@ -2,12 +2,14 @@ import {
 	ALL_APARTMENTS,
 	CREATE_APARTMENT,
 	GET_APARTMENT_BY_ID,
+	DELETE_APARTMENT_BY_ID,
 } from './apartmentsActions';
 
 const initialState = {
 	apartmentCreated: [],
 	apartmentDetail: [],
 	allApartments: [],
+	apartmentDeleted: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +28,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				apartmentDetail: action.payload,
+			};
+		case DELETE_APARTMENT_BY_ID:
+			return {
+				...state,
+				apartmentDeleted: action.payload,
 			};
 		default:
 			return state;

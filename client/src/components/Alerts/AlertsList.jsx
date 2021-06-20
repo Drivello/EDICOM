@@ -14,7 +14,7 @@ const Alerts = (props) => {
     <div className='contExtAlerts'>
         <div className='componentHeaderAlertsList'>
             <h1 className='contExtAlerts'>
-                Todas las Alertas
+                Alertas:
             </h1>
             <Link to="/alertsAdd" >
                 <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '20px', marginTop: '30px'}}>

@@ -23,7 +23,7 @@ function Buildings() {
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>
                 <div className={styles.componentHeaderBL}>
                     <h1 className="buildingHeader">
-                        Todos los edificios
+                        Edificios:
                     </h1>
                     <Link to="/buildingadd" className="buildingButton">
                         <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '20px'}}>
