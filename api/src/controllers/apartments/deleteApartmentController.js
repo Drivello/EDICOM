@@ -1,9 +1,22 @@
 const {Apartment} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-	//await jane.destroy();
+	const { id }= req.params
+	try{
+		const apartmentDeleted = await Apartment.findOne({
+			where: {
+				id
+			}
+		})
+		apartment = await Apartment.destroy({
+			where: {
+				id
+			}
+		});
+		res.json(apartmentDeleted).status(200);
 
-	apartment = await Apartment.destroy({where: req.params});
-
-	res.json(apartment).status(200);
+	}catch(err){
+		res.json(err);
+		return console.log(err);
+	}
 };
