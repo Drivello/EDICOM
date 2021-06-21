@@ -26,16 +26,14 @@ _Tecnologías y Herramientas utilizadas_
 
 ## Autores ✒️
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **María Florencia Caballero** - [LinkedIn](https://www.linkedin.com/in/maria-florencia-caballero/)
-* **Mauricio Cuello** - [LinkedIn](https://www.linkedin.com/in/mauricio-adrian-cuello/)
 * **A. Brian Lopez** - [LinkedIn](https://www.linkedin.com/in/alexis-brian-lopez/)
-* **Mariano Guillon** - [LinkedIn](https://www.linkedin.com/in/mariano-guillon-95572770/)
-* **Gabriel Fresco** - [LinkedIn](https://www.linkedin.com/in/gabriel-fresco-dev/)
-* **Marcelo Fernandez** - [LinkedIn](https://www.linkedin.com/in/marcelo-fernandez-fsd/)
-* **Leopoldo Blanco** - [LinkedIn](https://www.linkedin.com/in/leopoldoblanco/)
 * **Agustin Reynaud** - [LinkedIn](https://www.linkedin.com/in/agustinreynaud/)
+* **Gabriel Fresco** - [LinkedIn](https://www.linkedin.com/in/gabriel-fresco-dev/)
+* **Leopoldo Blanco** - [LinkedIn](https://www.linkedin.com/in/leopoldoblanco/)
+* **Marcelo Fernandez** - [LinkedIn](https://www.linkedin.com/in/marcelo-fernandez-fsd/)
+* **María Florencia Caballero** - [LinkedIn](https://www.linkedin.com/in/maria-florencia-caballero/)
+* **Mariano Guillon** - [LinkedIn](https://www.linkedin.com/in/mariano-guillon-95572770/)
+* **Mauricio Cuello** - [LinkedIn](https://www.linkedin.com/in/mauricio-adrian-cuello/)
 * **Nicolas Sanchez** - [LinkedIn](https://www.linkedin.com/in/sanchez-mario-nahuel-nicolas/)
 
 ## Agradecimientos 🎁
