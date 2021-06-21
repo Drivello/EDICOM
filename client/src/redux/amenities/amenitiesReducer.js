@@ -4,10 +4,14 @@ import {
 	GET_ALL_AMENITIES,
 	GET_AMENITY_BY_ID,
 	UPDATE_AMENITY,
+	GET_AMENITIES,
 } from '../amenities/amenitiesActions';
 
 const initialState = {
 	Amenities: [],
+	amenityDetail:[],
+	amenityCreated:[],
+	amenityDeleted:[],
 };
 
 const amenitiesReducer = (state = initialState, action) => {
@@ -17,25 +21,30 @@ const amenitiesReducer = (state = initialState, action) => {
 				...state,
 				Amenities: action.payload,
 			};
+		case GET_AMENITIES:
+			return {
+				...state,
+				Amenities: action.payload,
+			};
 		case CREATE_AMENITY:
 			return {
 				...state,
-				userDetail: action.payload,
+				amenityCreated: action.payload,
 			};
 		case GET_AMENITY_BY_ID:
 			return {
 				...state,
-				userDetail: action.payload,
+				amenityDetail: action.payload,
 			};
 		case UPDATE_AMENITY:
 			return {
 				...state,
-				userDetail: action.payload,
+				amenityDetail: action.payload,
 			};
 		case DELETE_AMENITY:
 			return {
 				...state,
-				userDetail: action.payload,
+				amenityDeleted: action.payload,
 			};
 		default:
 			return state;

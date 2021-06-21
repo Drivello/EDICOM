@@ -60,7 +60,7 @@ export default function ExpensesTable() {
   return (
    <ThemeProvider theme={theme}>
    <div className={styles.header}>
-
+      <h1>Expensas</h1>
       <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
          <TableHead>

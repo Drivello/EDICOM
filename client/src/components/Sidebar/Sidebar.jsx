@@ -23,6 +23,7 @@ import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import GroupIcon from '@material-ui/icons/Group';
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
 
 
@@ -86,15 +87,15 @@ export default function Sidebar() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        {noti ? <NotificationBar notifications={Notifications} /> : <div></div>}
         <CssBaseline />
         <AppBar
           position="fixed"
           className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
           })}
-        >
+          >
           <Toolbar className='navbar'>
+          {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} /> : <div></div>}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -184,7 +185,7 @@ export default function Sidebar() {
               </ListItem>
             </Link>
 
-            <Link to="/amenityCreate" className='link'>
+            <Link to="/amenities/" className='link'>
               <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Amenities'} />
@@ -209,6 +210,13 @@ export default function Sidebar() {
               <ListItem button key={'Expensas'}>
                 <ListItemIcon><ReceiptIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Expensas'} />
+              </ListItem>
+            </Link>
+
+            <Link to="/userDetail">
+              <ListItem button key={'Expensas'}>
+                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                <ListItemText className='fontColor' primary={'Usuarios'} />
               </ListItem>
             </Link>
 

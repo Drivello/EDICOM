@@ -19,9 +19,6 @@ const SpendingReducer = (state = initialState, action) => {
 		case PUT_SPENDING:
 			return {...state, filterSpending: action.payload};
 		case POST_SPENDING:
-			console.log('Entre al case de POST_SPENDING en el reducer');
-			console.log('estado anterior: ', state.totalSpending);
-			console.log('action.payload: ', action.payload);
 			return {...state, filterSpending: action.payload};
 		case DELETE_SPENDING: //
 			return {...state, filterSpending: action.payload};

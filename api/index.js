@@ -99,7 +99,7 @@ conn.sync({force: true}).then(() => {
 	var user3 = hashedPassword.then(res => {
 		return User.create({
 			name: 'Mariano',
-			email: 'mariano@gmail.com',
+			email: 'marianoguillon@hotmail.com',
 			password: res,
 			contact: '78788678',
 			isDeleted: false,

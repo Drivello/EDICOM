@@ -60,7 +60,6 @@ const ResetPasword = () => {
 
     // -----------------------------------
 
-    console.log("recoveryMail", recoveryMail )
 
 
     function handleNewPass(e){

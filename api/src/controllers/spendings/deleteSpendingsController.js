@@ -1,7 +1,7 @@
 const { Spendings } = require("../../db.js");
 
 
-// delete(http://143.244.166.41:3001/spendings/delete/del/:id)
+// delete(http://localhost:3001/spendings/delete/del/:id)
 module.exports = async (req, res, next) => {
 
     console.log(req.params)

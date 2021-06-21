@@ -1,8 +1,6 @@
 const {Amenity} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-	console.log(req.params);
-	console.log(req.body);
 	const {id, amenity_type, quantity, amenity_detail} = req.body;
 	try {
 		const amenity = await Amenity.findOne({where: {id}});

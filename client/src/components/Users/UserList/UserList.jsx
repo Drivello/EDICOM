@@ -7,7 +7,9 @@ import { makeStyles, Grid, Button, FormControl, InputLabel, Select, MenuItem, Co
 import { ThemeProvider } from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
 import theme from '../../themeStyle';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
+import './UserList.css';
 
 const UserList = () => {
 	const useStyles = makeStyles((theme)=>({
@@ -72,7 +74,6 @@ const UserList = () => {
 	}; 
     
     const handleBuildingChange =  (e) => {
-		console.log('EEEERRROOOOOOOR',e.target.value)
 		dispatch(getALLUsers(e.target.value))
 		dispatch(getAllApartments(e.target.value))
 		setInput({
@@ -174,13 +175,18 @@ const UserList = () => {
 					</FormControl>
 				</Grid>
 			</Grid>
-			<div className='extContAL'>
-				<div className="componentHeader">
-					<h1>
-						Usuario
+			<div className='extContUserListTable'>
+				<div className='componentHeaderUserListTable'>
+					<h1 className='contExtAlerts'>
+						Usuario:
 					</h1>
+					<Link to="/userCreate" >
+						<Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '20px', marginTop: '30px'}}>
+							<AddIcon style={{ fontSize: 25, color: "#212121" }}/>
+						</Button>
+					</Link>
 				</div>
-				<Container style={{height: 400, width: '80%'}}>
+				<Container style={{height: 400, width: '90%'}}>
 					<Container style={{display: 'flex', height: '100%'}}>
 						<DataGrid rows={users} columns={columns} />
 					</Container>

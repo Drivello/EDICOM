@@ -15,6 +15,5 @@ module.exports = async (req, res, next) => {
 		return res.json(user).status(200);
 	} catch (err) {
 		res.json(err);
-		return console.log(err);
 	}
 };

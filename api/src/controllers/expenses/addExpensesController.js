@@ -4,7 +4,7 @@ const { MONTHS } = require('./../../utils/constants')
 const { Spendings, Expenses, Apartment } = require("../../db.js");
 
 
-// Path --> Post(http://143.244.166.41:3001/expenses/add/:month/:year)
+// Path --> Post(http://localhost:3001/expenses/add/:month/:year)
 module.exports = async (req, res, next) => {
 
     const {month, year} = req.params;
@@ -100,6 +100,6 @@ module.exports = async (req, res, next) => {
         return console.log(err)
     }
     
-    // axios.get("http://143.244.166.41:3001/spendings/all")     // se puede ver de reutilizar este endpoint
+    // axios.get("http://localhost:3001/spendings/all")     // se puede ver de reutilizar este endpoint
 
 };

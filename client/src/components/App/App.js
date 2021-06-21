@@ -26,7 +26,7 @@ import AlertsAdd from '../Alerts/AlertsAdd';
 import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
-import resetPassword from '../Logging/resetPassword';
+import ResetPassword from '../Logging/resetPassword';
 
 
 function App() {
@@ -34,33 +34,55 @@ function App() {
 		<Container className="App">
 			<CssBaseline />
 			<BrowserRouter>
-				<Route path="/" component={Sidebar} />
-				<Route exact path="/" component={Home} />
-				<Route exact path="/logging" component={Logging} />
+
+				{/* ----------------------------Alertas----------------------------------- */}
 				<Route exact path="/alerts" component={Alerts} />
-				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
-				<Route exact path="/logging/restaurarcontraseña" component = {resetPassword}/>
+				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
+
+				{/* ----------------------------amenities----------------------------------- */}
+				<Route path="/amenityCreate" component={CreateAmenity} />
+				<Route path="/amenities/" component={ShowAmenities} />
+				<Route path="/amenities/:id_building" component={ShowAmenities} />
+				<Route path="/amenityUpdate/:id" component={UpdateAmenity} />
+
+				{/* ----------------------------apartments----------------------------------- */}
+				<Route path="/apartmentadd" component={CreateApartment} />
+				<Route path="/apartment/:id" component={EditApartmentForm} />
+
+
+				{/* ----------------------------buildings----------------------------------- */}
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
 				<Route exact path="/buildingDetail/:id" component={BuildingDetail} />
 				<Route exact path="/BuildingUpdate/:id" component={BuildingUpdate} />
-				<Route path="/apartmentadd" component={CreateApartment} />
-				<Route path="/apartment/:id" component={EditApartmentForm} />
-				<Route exact path="/spendings/newSpending" component={Form} />
+
+				{/* ----------------------------Logging----------------------------------- */}
+				<Route exact path="/logging" component={Logging} />
+				<Route exact path="/logging/restaurarcontraseña" component = {ResetPassword}/>
+
+
+				{/* ----------------------------Spendings&Expenses----------------------------------- */}
 				<Route exact path="/spendings/board" component={Board} />
 				<Route exact path="/ExpensesTable" component={Expenses} />
-				<Route
-					path="/spendings/board/:id/edit"
-					render={({match}) => <Form match={match} />}
-				/>
+				<Route exact path="/spendings/newSpending" component={Form} />
+				<Route path="/spendings/board/:id/edit" render={({match}) => <Form match={match} />}/>
+
+				{/* ----------------------------User----------------------------------- */}
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
 				<Route path="/userView" component={UserView} />
-				<Route path="/amenities/:id_building" component={ShowAmenities} />
-				<Route path="/amenityCreate" component={CreateAmenity} />
-				<Route path="/amenityUpdate/:id" component={UpdateAmenity} />
+				
+
+				{/* ----------------------------Generales----------------------------------- */}
+				<Route exact path="/" component={Home} />
+				<Route path="/" component={Sidebar} />
+				
+				
+				
+				
+				
 			</BrowserRouter>
 		</Container>
 	);

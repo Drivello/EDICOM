@@ -63,11 +63,9 @@ function BuildingAddForm() {
 
     function handleChange(e, change) {
         if (typeof change === "undefined"){
-            console.log("es de otro")
             var change = e.target.name;
             var text = e.target.value;        }
         else{
-            console.log("es del address")
             var text = e;
         }
         if (

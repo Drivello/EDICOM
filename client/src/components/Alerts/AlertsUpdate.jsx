@@ -77,7 +77,6 @@ const AlertsUpdate = (props) => {
     });
 
     const saveHandler = () => {
-        console.log(input.date)
         if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date !== null) {
             setError({
                 date: false,

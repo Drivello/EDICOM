@@ -6,27 +6,27 @@ export const DELETE_APARTMENT_BY_ID = 'DELETE_APARTMENT_BY_ID'
 
 export function createApartment(apartment) {
 	return async function (dispatch) {
-		const {data} = await axios.post(`http://143.244.166.41:3001/apartments/`,apartment);
+		const {data} = await axios.post(`http://localhost:3001/apartments/`,apartment);
 		dispatch({type: CREATE_APARTMENT, payload: data});
 	};
 }
 
 export function getApartmentById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://143.244.166.41:3001/apartments/${id}`);
+		const {data} = await axios.get(`http://localhost:3001/apartments/${id}`);
 		dispatch({type: GET_APARTMENT_BY_ID, payload: data});
 	};
 }
 export function deleteApartmentById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.delete(`http://143.244.166.41:3001/apartments/delete/${id}`);
+		const {data} = await axios.delete(`http://localhost:3001/apartments/delete/${id}`);
 		dispatch({type: DELETE_APARTMENT_BY_ID, payload: data});
 	};
 }
 
 export function getAllApartments(buildingId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://143.244.166.41:3001/apartments/all/${buildingId}`);
+		const {data} = await axios.get(`http://localhost:3001/apartments/all/${buildingId}`);
 		dispatch({type: ALL_APARTMENTS, payload: data});
 	};
 }

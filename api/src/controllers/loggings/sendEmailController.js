@@ -34,6 +34,5 @@ module.exports = async (req, res, next) => {
     } catch (error) {
 
         res.status(500).json({ message: { message: 'Algo salió mal', style: "red" } });
-        console.log(error);
     }
 }

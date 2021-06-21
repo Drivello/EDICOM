@@ -29,6 +29,7 @@ import {
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeStyle";
 import swal from "sweetalert";
+import moment from "moment";
 
 const Form = (props) => {
   
@@ -46,7 +47,7 @@ const Form = (props) => {
   const dispatch = useDispatch();
   //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
-  const { buildingArray, totalSpend  } = useSelector(state => {
+  const { buildingArray, totalSpend } = useSelector(state => {
     return {
       buildingArray: state.buildingReducer.allBuildings,
       totalSpend: state.reducerSpending.totalSpending
@@ -60,10 +61,12 @@ const Form = (props) => {
   }, [dispatch]);
 
   let newSpending = {};
+  // var date1 = new Date(new Date());
+  // console.log("date1", moment(date1).format("L"))
 
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
-      date: "",
+      date: moment(new Date(new Date())).format("L"),
       building: 1,
       concept: "",
       supplier: "",
@@ -71,10 +74,12 @@ const Form = (props) => {
       amount: 0,
     };
   } else {
+    console.log("totalSpend", totalSpend)
     newSpending = {
       date: totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
       )[0].date,
+      // date: moment(new Date(new Date())).format("L"),
       building: 1,
       concept: totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
@@ -220,6 +225,7 @@ const Form = (props) => {
                     type="date"
                     id="date"
                     name="date"
+                    // value={spending.date}
                     onChange={(e) =>
                       setSpending({
                         ...spending,

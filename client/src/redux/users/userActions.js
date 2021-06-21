@@ -10,7 +10,7 @@ export const GET_ALL_USERS_FOR_LIST = 'GET_ALL_USERS_FOR_LIST';
 export function getALLUsers(id_building, id_apartment = undefined) {
 	return async function (dispatch) {
 		var {data} = await axios.get(
-			`http://143.244.166.41:3001/users/all/${id_building}`
+			`http://localhost:3001/users/all/${id_building}`
 		);
 		if (id_apartment !== undefined) {
 			data = data.filter(u => u.apartmentId === id_apartment);
@@ -21,21 +21,21 @@ export function getALLUsers(id_building, id_apartment = undefined) {
 
 export function createUser(user) {
 	return async function (dispatch) {
-		const {data} = await axios.post(`http://143.244.166.41:3001/users/`, user);
+		const {data} = await axios.post(`http://localhost:3001/users/`, user);
 		dispatch({type: CREATE_USER, payload: data});
 	};
 }
 
 export function getAllUsersForList() {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://143.244.166.41:3001/users/getall`);
+		const {data} = await axios.get(`http://localhost:3001/users/getall`);
 		dispatch({type: GET_ALL_USERS_FOR_LIST, payload: data});
 	};
 }
 
 export function getUser(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://143.244.166.41:3001/users/${id}`);
+		const {data} = await axios.get(`http://localhost:3001/users/${id}`);
 		dispatch({type: GET_USER, payload: data});
 	};
 }
@@ -43,7 +43,7 @@ export function getUser(id) {
 export function updateUser(user) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://143.244.166.41:3001/users/${user.id}`,
+			`http://localhost:3001/users/${user.id}`,
 			user
 		);
 		dispatch({type: UPDATE_USER, payload: data});
@@ -53,7 +53,7 @@ export function updateUser(user) {
 export function deleteUser(id) {
 	return async function (dispatch) {
 		const {data} = await axios.delete(
-			`http://143.244.166.41:3001/users/delete/${id}`
+			`http://localhost:3001/users/delete/${id}`
 		);
 		dispatch({type: DELETE_USER, payload: data});
 	};

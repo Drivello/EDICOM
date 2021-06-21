@@ -1,9 +1,11 @@
 .box{
-    z-index: 2;
+    margin-top: 560px;
+    margin-left: 10%;
+    z-index: 20;
+    display: flex;
     position: fixed;
     width: 81%;
     height: 500px;
-    display: flex;
     flex-direction:row-reverse;
 }
 
@@ -17,7 +19,6 @@
 }
 
 .items{
-    margin-top: 100px;
     color: #00ff7f;
     font-weight: 1000;
 }
@@ -52,4 +53,8 @@
 .date{
     margin-left: 100px;
     margin-top: 20px
+}
+
+.building{
+    width: 350px;
 }

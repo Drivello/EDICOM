@@ -139,14 +139,11 @@ const Board = (props) => {
 
    function handleSelectConcept(e){
       if (e.target.value !== "All" && e.target.value) {
-        console.log("filterSpend", filterSpend)
         const concept = filterSpend.map(
           (spending) => {
-            console.log("spending", spending)
             return spending.concept})
           .filter(
             (b) => {
-              console.log("bbbbbbbb", b)
               return b === e.target.value
             }
           )[0];
@@ -159,8 +156,8 @@ const Board = (props) => {
    }
 
    function handleSelectAll(e) {
-      setInput({ since: date1, upTo: date2, concept: "All" });
-      dispatch(filterSpending({ since: date1, upTo: date2, concept: "All" }));
+      setInput({ since: date1, upTo: date2, concept: "All", buildingId: "All" });
+      dispatch(filterSpending({ since: date1, upTo: date2, concept: "All", buildingId: "All" }));
    }
 
    return (

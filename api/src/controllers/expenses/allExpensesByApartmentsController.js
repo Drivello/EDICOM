@@ -1,7 +1,7 @@
 const { Apartment, Expenses } = require("../../db.js");
 
 
-// Path --> get(http://143.244.166.41:3001/expenses/allByApartments)
+// Path --> get(http://localhost:3001/expenses/allByApartments)
 module.exports = async (req, res, next) => {
 
 	try{

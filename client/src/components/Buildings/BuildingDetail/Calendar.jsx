@@ -21,7 +21,6 @@ export default function Calendar({buildingId}) {
     const eventsCalendar = alerts_building.filter(e => e.importance === 'alta' || e.importance === 'media').map(e => e = {title: e.concept, date: e.date, detail: e.details, importance: e.importance, AlertId: e.id });
 
     const handleEventClick = (clickInfo) => {
-        console.log(clickInfo.event.extendedProps.importance)
         setAlertProps({
             id: clickInfo.event.extendedProps.AlertId,
             title: clickInfo.event.title,

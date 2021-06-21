@@ -1,8 +1,7 @@
 const {Amenity, Buildings} = require('../../db');
 //all amenities
 module.exports = async (req, res, next) => {
-	console.log('marce gato');
-	const {id} = req.params;
+	console.log('all Am');
 	try {
 		let amenities = await Amenity.findAll();
 		return res.json(amenities);

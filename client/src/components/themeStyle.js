@@ -18,6 +18,21 @@ const theme = createMuiTheme({
 	typography: {
 		fontFamily: 'Baloo Tammudu 2',
 	},
+	overrides: {
+		MuiCssBaseline: {
+			'@global': {
+				a: {
+					textDecoration: 'none',
+					listStyle: 'none',
+					color: '#000000',
+					fontWeight: 'bold',
+					'&:hover': {
+						color: 'rgb(0, 178, 88)',
+					},
+				},
+			},
+		},
+	},
 });
 
 export default theme;

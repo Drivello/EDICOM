@@ -15,8 +15,7 @@ const reducer = (candidato, currentValue) => {
     return candidato < currentValue ? candidato : currentValue; 
 };
 
-console.log(arrFechas.reduce(reducer, new Date("3000-04-13T16:00:00.000Z")));
 
-// console.log(arrFechas)
+
 
 

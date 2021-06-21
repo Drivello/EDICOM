@@ -3,7 +3,6 @@ const { Alerts } = require("../../db.js");
 module.exports = async (req, res, next) => {
 
     let {id, date, concept, details, importance, building} = req.body;
-    console.log(id)
     try
     {
         let alert = await Alerts.update({

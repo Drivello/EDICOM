@@ -2,9 +2,11 @@ import {useState,useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
-import { Person, Home, MeetingRoom } from '@material-ui/icons';
-import { getUser, updateUser } from '../../../redux/users/userActions'
-import { Link, useHistory } from 'react-router-dom'
+import { Person, Home, MeetingRoom, Email, VpnKey, Phone } from '@material-ui/icons';
+import { getUser, updateUser } from '../../../redux/users/userActions';
+import { Link, useHistory } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../../themeStyle';
 
 import swal from "sweetalert";
 
@@ -155,6 +157,7 @@ export function UserUpdate() {
 	
 
     return(
+		<ThemeProvider theme={theme}>
         <>
             <form noValidate autoComplete="off" >
 			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
@@ -178,7 +181,7 @@ export function UserUpdate() {
 					
 					<Grid container spacing={1} alignItems="center" justify="center">
                         <Grid item>
-                            <Home />
+							<Email />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -194,7 +197,7 @@ export function UserUpdate() {
                     </Grid>
                     <Grid container spacing={1} alignItems="center" justify="center">
                         <Grid item>
-                            <Home />
+							<VpnKey />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -210,7 +213,7 @@ export function UserUpdate() {
                     </Grid>
                     <Grid container spacing={1} alignItems="center" justify="center">
                         <Grid item>
-                            <MeetingRoom />
+                            <Phone />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -239,6 +242,7 @@ export function UserUpdate() {
 			</Grid>
         </form>
         </>
+		</ThemeProvider>
     )
 }
 export default UserUpdate;

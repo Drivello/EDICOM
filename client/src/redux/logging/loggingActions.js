@@ -34,9 +34,8 @@ axios.interceptors.request.use((req)=> {
 export const loggingIn = (user) => {
   return function (dispatch) {
     // dispatch({ type: LOGGING_IN })
-    axios.post('http://143.244.166.41:3001/loggings/loggingIn', user)    //loguearse en el back
+    axios.post('http://localhost:3001/loggings/loggingIn', user)    //loguearse en el back
       .then(res => {
-          console.log('respuesta del loging', res)
           localStorage.setItem('profile', JSON.stringify(res.data));
           dispatch({
             type: LOGGING_IN_SUCCESS,
@@ -46,7 +45,6 @@ export const loggingIn = (user) => {
         }
         ,
         err => {
-          console.log(err.response)
           dispatch({
             type: LOGGING_REJECT,
             payload: err,
@@ -61,7 +59,6 @@ export const loggingIn = (user) => {
       )
       .then(async (res) => {
           const profile = await JSON.parse(localStorage.getItem('profile'))
-          console.log('res', res)
           if(res){
             swal({
               title: profile?.message?.message,
@@ -77,14 +74,14 @@ export const logout = () => async (dispatch) => {
   dispatch({
     type: LOGOUT
   })
-  swal("Nos vemos!","");
+  swal("Sesion cerrada!","");
 }
 
 
 export function handleChangePassword(data) {
 	return function (dispatch) {
 		return axios
-			.put(' http://143.244.166.41:3001/loggings/changepassword ', data)
+			.put(' http://localhost:3001/loggings/changepassword ', data)
 			.then(res => {
 				dispatch({type: CHANGE_PASSWORD, payload: res.data});
 			});
@@ -96,13 +93,13 @@ export function handleSendEmail(data) {
   var email = {email:data}
 	return function (dispatch) {
 		return axios
-			.post('http://143.244.166.41:3001/loggings/sendEmail ', email)
-			// .then(console.log("entra a la accion del action send email3", email))
+			.post('http://localhost:3001/loggings/sendEmail ', email)
       .then(res => {
 				dispatch({type: SEND_EMAIL});
+        swal("Revise su Correo","")
+        alert("Revise su correo")
 			},
       err => {
-        console.log(err.response)
           dispatch({
             type: LOGGING_REJECT,
             payload: err,
@@ -113,8 +110,7 @@ export function handleSendEmail(data) {
             icon: `warning`
           })
           return false;
-      }
-      );
+      });
 	};
 }
 
@@ -122,9 +118,8 @@ export function tokenToEmail(data) {
   var token = {token:data}
 	return function (dispatch) {
 		return axios
-			.post('http://143.244.166.41:3001/loggings/tokenToEmail ', token)
+			.post('http://localhost:3001/loggings/tokenToEmail ', token)
       .then(res => {
-        console.log('respuesta de controller tokenToEmail', res)
 				dispatch({type: TOKEN_TO_EMAIL, payload: res.data});
 			});
 	};
@@ -135,9 +130,8 @@ export function emailToToken(data) {
   var email = {email:data}
 	return function (dispatch) {
 		return axios
-			.post('http://143.244.166.41:3001/loggings/emailToToken ', email)
+			.post('http://localhost:3001/loggings/emailToToken ', email)
       .then(res => {
-        console.log('respuesta de controller emailToToken', res)
 				dispatch({type: EMAIL_TO_TOKEN, payload: res.data});
 			});
 	};

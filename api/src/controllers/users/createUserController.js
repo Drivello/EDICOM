@@ -1,11 +1,13 @@
 const {Apartment, User} = require('../../db.js');
+const bcrypt = require('bcryptjs');
 
 module.exports = async (req, res, next) => {
 	let user = req.body;
 	let {apartment} = req.body;
-	console.log('USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR', user);
+	console.log(user)
 	try {
-		user = await User.create(user);
+		const hashedPassword = await bcrypt.hash(user.password, 12);
+		user = await User.create({...user, password: hashedPassword});
 		user.setApartment(apartment);
 		return res.json(user).status(200);
 	} catch (err) {

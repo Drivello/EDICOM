@@ -5,11 +5,12 @@ export const CREATE_AMENITY = 'CREATE_AMENITY';
 export const GET_AMENITY_BY_ID = 'GET_AMENITY_BY_ID';
 export const UPDATE_AMENITY = 'UPDATE_AMENITY';
 export const DELETE_AMENITY = 'DELETE_AMENITY';
+export const GET_AMENITIES = 'GET_AMENITIES';
 
 export function getAllAmenities(id_building) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://143.244.166.41:3001/amenities/all/${id_building}`
+			`http://localhost:3001/amenities/all/${id_building}`
 		);
 		dispatch({type: GET_ALL_AMENITIES, payload: data});
 	};
@@ -18,23 +19,23 @@ export function getAllAmenities(id_building) {
 export function createAmenity(amenity) {
 	return async function (dispatch) {
 		const {data} = await axios.post(
-			`http://143.244.166.41:3001/amenities/`,
+			`http://localhost:3001/amenities/`,
 			amenity
 		);
 		dispatch({type: CREATE_AMENITY, payload: data});
 	};
 }
 
-// export function getAllUsersForList() {
-// 	return async function (dispatch) {
-// 		const {data} = await axios.get(`http://143.244.166.41:3001/users/getall`);
-// 		dispatch({type: GET_ALL_USERS_FOR_LIST, payload: data});
-// 	};
-// }
+export function allAmenities() {
+	return async function (dispatch) {
+ 		const {data} = await axios.get(`http://localhost:3001/amenities/`);
+ 		dispatch({type: GET_AMENITIES, payload: data});
+ 	};
+ }
 
 export function getAmenityById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://143.244.166.41:3001/amenities/${id}`);
+		const {data} = await axios.get(`http://localhost:3001/amenities/${id}`);
 		dispatch({type: GET_AMENITY_BY_ID, payload: data});
 	};
 }
@@ -42,7 +43,7 @@ export function getAmenityById(id) {
 export function updateAmenity(amenity) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://143.244.166.41:3001/amenities/${amenity.id}`,
+			`http://localhost:3001/amenities/${amenity.id}`,
 			amenity
 		);
 		dispatch({type: UPDATE_AMENITY, payload: data});
@@ -51,7 +52,7 @@ export function updateAmenity(amenity) {
 
 export function deleteAmenity(id) {
 	return async function (dispatch) {
-		const {data} = await axios.delete(`http://143.244.166.41:3001/amenities/${id}`);
+		const {data} = await axios.delete(`http://localhost:3001/amenities/${id}`);
 		dispatch({type: DELETE_AMENITY, payload: data});
 	};
 }

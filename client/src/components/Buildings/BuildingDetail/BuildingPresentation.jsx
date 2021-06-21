@@ -6,7 +6,6 @@ import './BuildingDetail.css'
 export default function BuildingPresentation({buildingId}){
     const building = useSelector(state => state.buildingReducer.detailBuilding);
     const dispatch = useDispatch();
-    console.log(building)
     
     useEffect(() => {
         dispatch(getBuildingDetail(buildingId))

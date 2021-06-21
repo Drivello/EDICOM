@@ -26,15 +26,16 @@ const Home = (props) => {
 		dispatch(getAlerts());
 	},[dispatch])
 
+	if(buildings.length > 0) {
 
-	return (
+		return (
 		<ThemeProvider theme={theme}>
 		<Grid className='homeCont'>
 			<h1 className='title'>Mis Edificios</h1>
 			<Grid className='caruselCont'>
 			<Carousel 
 			NextIcon={<NavigateNextIcon/>}
-    		PrevIcon={<NavigateBeforeIcon/>}
+			PrevIcon={<NavigateBeforeIcon/>}
 			>
 			{
 				buildings && buildings?.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
@@ -63,6 +64,13 @@ const Home = (props) => {
 			</Grid> */}
 		</Grid>
 		</ThemeProvider>
-	);
+		);
+	} else{
+		return(
+			<div>
+				Loading...
+			</div>
+		)
+	}
 };
 export default Home;

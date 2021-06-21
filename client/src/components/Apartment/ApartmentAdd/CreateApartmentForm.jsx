@@ -53,7 +53,6 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 	const Validate = (field) => {
 		switch (field.name){
 			case "building":
-				console.log("building", field.value, input.building)
 				if(field.value < 1) {
 					setError({...error, building: true})
 					setHelperText({...helperText, building: "Seleccione un Edificio"})
@@ -63,7 +62,6 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 				}
 				break;
 			case "cata_apartment":
-				console.log("cata", field.value, input.cata_apartment)
 				if(!/^[A-Za-z0-9 ,.'-]{3,20}$/.test(field.value)) {
 					setError({...error, cata_apartment: true})
 					if(field.value.length < 3) {setHelperText({...helperText, cata_apartment: "Es muy corto"})}
@@ -76,7 +74,6 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 				}
 				break;
 			case "mt2":
-				console.log("mt2", field.value, input.mt2)
 				if(!/^[0-9 ,.']{2,10}$/.test(field.value)) {
 					setError({...error, mt2: true})
 					if(field.value.length < 2) {setHelperText({...helperText, mt2: "Es muy corto"})}
@@ -89,7 +86,6 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 				}
 				break;
 			case "number_apartment":
-				console.log("apartment", field.value, input.number_apartment)
 				if(!/^[A-Z0-9-]{1,5}$/.test(field.value)) {
 					setError({...error, number_apartment: true})
 					if(field.value.length < 2) {setHelperText({...helperText, number_apartment: "Es muy corto"})}

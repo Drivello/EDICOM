@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
-import { Domain, Home, MeetingRoom } from '@material-ui/icons';
+import { MeetingRoom, Person, Email, VpnKey, Phone } from '@material-ui/icons';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import {getAllApartments} from '../../../redux/apartments/apartmentsActions'
@@ -204,7 +204,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
                 <Grid >
                     <Grid container spacing={1} alignItems="center">
                         <Grid item >
-                            <Domain />
+                            <Person />
                         </Grid>
                         <Grid item >
                             <TextField 
@@ -221,7 +221,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 					
 					<Grid container spacing={1} alignItems="center">
                         <Grid item>
-                            <Home />
+                            <Email />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -237,7 +237,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
                     </Grid>
                     <Grid container spacing={1} alignItems="center">
                         <Grid item>
-                            <Home />
+							<VpnKey />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -253,7 +253,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
                     </Grid>
                     <Grid container spacing={1} alignItems="center">
                         <Grid item>
-                            <MeetingRoom />
+							<Phone />
                         </Grid>
                         <Grid item>
                             <TextField

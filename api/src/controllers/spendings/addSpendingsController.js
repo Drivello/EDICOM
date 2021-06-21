@@ -1,6 +1,6 @@
 const { Spendings, Buildings } = require("../../db.js");
 
-// Path of this controller -->  http://143.244.166.41:3001/spendings/add
+// Path of this controller -->  http://localhost:3001/spendings/add
 
 module.exports = async (req, res, next) => {
 

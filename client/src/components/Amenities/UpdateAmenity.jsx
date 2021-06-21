@@ -4,7 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid,} from '@material-ui/core';
 import { Person, Home, MeetingRoom } from '@material-ui/icons';
 import {getAmenityById, updateAmenity} from '../../redux/amenities/amenitiesActions'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 import swal from "sweetalert";
 
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 export function UpdateAmenity() {
+	const { amenityDetail } = useSelector( state => state.amenitiesReducer);
     const {id} = useParams();
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -35,21 +38,28 @@ export function UpdateAmenity() {
 
     
 
-    const [input, setInput] = useState({})
+    const [input, setInput] = useState({
+		id:'',
+		amenity_type:'',
+		quantity:'',
+		amenity_detail:''
+
+	})
+	useEffect(() => {
+		dispatch(getAmenityById(id))
+	},[dispatch])
 
     useEffect(() => {
+		let {id, amenity_type, quantity,amenity_detail} = amenityDetail;
         setInput({
             id: id,
-            amenity_type: input.amenity_type,
-            quantity: input.quantity,
-            amenity_detail: input.amenity_detail
+            amenity_type: amenity_type,
+            quantity: quantity,
+            amenity_detail: amenity_detail
 
         })
-		dispatch(getAmenityById(id))
-	},[])
-    useEffect(() => {
+	},[amenityDetail])
 
-    },[input,setInput])
 
     const [error, setError] = useState({//Control the error red border of the inputs
 		amenity_type: false,
@@ -126,6 +136,7 @@ export function UpdateAmenity() {
 	
 
     return(
+		<ThemeProvider theme={theme}>
         <>
             <form noValidate autoComplete="off" >
 			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
@@ -189,6 +200,7 @@ export function UpdateAmenity() {
 			</Grid>
         </form>
         </>
+		</ThemeProvider>
     )
 }
 export default UpdateAmenity;

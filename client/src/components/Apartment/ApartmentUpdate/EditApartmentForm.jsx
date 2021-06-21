@@ -95,13 +95,13 @@ export function EditApartmentForm(props) {
 
     const handleSubmit = function(e, id, data){
         axios
-            .put(`http://143.244.166.41:3001/apartments/${id}`, data, {
+            .put(`http://localhost:3001/apartments/${id}`, data, {
                 headers: {'Content-Type': 'application/json'},
             })
             .then(r => {
                 swal("Departamento Modificado Exitosamente", "success")
                 history.push(`/buildingDetail/${r.data.buildingId}`)
-             } )//console.log(r.status)    
+             } ) 
     }
     const handleDelete = (e, id, data) => {
         dispatch(deleteApartmentById(id))

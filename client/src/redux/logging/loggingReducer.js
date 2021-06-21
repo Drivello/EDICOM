@@ -1,6 +1,5 @@
 import { LOGGING_REJECT, LOGOUT ,LOGGING_IN_SUCCESS, SEND_EMAIL, TOKEN_TO_EMAIL, EMAIL_TO_TOKEN} from './loggingActions';
 
-
 const initialState = {
     authData: {
         first_logging: null,
@@ -39,19 +38,15 @@ const loggingReducer = (state = initialState, action) => {
             return { ...state, authData: initialState.authData }
 
         case SEND_EMAIL:
-            console.log("llega al SEND_EMAIL del reducer")
-            alert("Revise su correo")
             return {...state}
 
 
         case TOKEN_TO_EMAIL:
-            console.log("action.payload", action.payload);
             return {
                 ...state, recoveryMail: action.payload.mail
             }
 
         case EMAIL_TO_TOKEN:
-            console.log("action.payload", action.payload);
             return {
                 ...state, tokenToConfirm: action.payload.token
             }
