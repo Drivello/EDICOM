@@ -28,14 +28,14 @@ export function createAmenity(amenity) {
 
 export function allAmenities() {
 	return async function (dispatch) {
- 		const {data} = await axios.get(`http://localhost:3001/amenities/`);
- 		dispatch({type: GET_AMENITIES, payload: data});
- 	};
- }
+		const {data} = await axios.get(`http://localhost:3001/amenities/`);
+		dispatch({type: GET_AMENITIES, payload: data});
+	};
+}
 
 export function getAmenityById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/amenities/${id}`);
+		const {data} = await axios.get(`http://localhost:3001/amenities/?=id${id}`);
 		dispatch({type: GET_AMENITY_BY_ID, payload: data});
 	};
 }

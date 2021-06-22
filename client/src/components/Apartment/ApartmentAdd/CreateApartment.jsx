@@ -30,7 +30,7 @@ const CreateApartment = () => {
 
 	const handleSubmit = e => {
 		dispatch(createApartment(input));
-		swal('Departamento Agregado Exitosamente', "Capo!")
+		swal('Departamento Agregado Exitosamente')
 		history.goBack()
 	};
 
