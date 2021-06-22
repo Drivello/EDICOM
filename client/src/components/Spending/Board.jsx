@@ -114,8 +114,6 @@ const Board = (props) => {
       dispatch(filterSpending(input));
    }, [dispatch, input, setInput]);
 
-   // setInput({...input, since: totalSpend.reduce(reducer, new Date("3000-04-13T16:00:00.000Z"))})
-
    function handleSinceChange(date) {
       setInput({ ...input, since: date });
    }
