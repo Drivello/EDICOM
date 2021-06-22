@@ -8,37 +8,50 @@ import moment from 'moment';
 const NotificationBar = (props) => {
 
     let Notifications = props.notifications;
+    let quantity = props.quantity;
     Notifications = Notifications.filter(noti => { if (noti.seen === false) return true })
     Notifications = Notifications.slice(Notifications.length - 4);
+
+    const render = () => {
+        if (quantity === 0) {
+            return (
+                <div className={styles.zero}>
+                    <h1>No hay reclamos nuevos!</h1>
+                </div >
+            )
+        } else {
+            return (<div className={styles.items}>
+                {Notifications?.map((noti) => {
+                    return (
+                        <div className={styles.item} key={noti.id} >
+                            <div className={styles.subj}>
+                                {noti.subject}
+                            </div>
+                            <div className={styles.data}>
+                                <div>
+                                    <div className={styles.importance}>
+                                        Importancia: {noti.importance}
+                                    </div>
+                                    <div className={styles.building}>
+                                        Edificio: {noti.building.name}
+                                    </div>
+                                </div>
+                                <div className={styles.date}>
+                                    {moment(noti.date).format("DD/MM/YYYY")}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })
+                }
+            </div>)
+        }
+    }
 
     return (
         <div className={styles.box}>
             <div className={styles.cont}>
-                <div className={styles.items}>
-                    {Notifications?.map((noti) => {
-                        return (
-                            <div className={styles.item} key={noti.id} >
-                                <div className={styles.subj}>
-                                    {noti.subject}
-                                </div>
-                                <div className={styles.data}>
-                                    <div>
-                                        <div className={styles.importance}>
-                                            Importancia: {noti.importance}
-                                        </div>
-                                        <div className={styles.building}>
-                                            Edificio: {noti.building.name}
-                                        </div>
-                                    </div>
-                                    <div className={styles.date}>
-                                        {moment(noti.date).format("DD/MM/YYYY")}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })
-                    }
-                </div>
+                {render()}
             </div>
         </div>
     )

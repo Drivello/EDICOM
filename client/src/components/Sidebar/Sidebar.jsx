@@ -18,13 +18,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/logging/loggingActions';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import GroupIcon from '@material-ui/icons/Group';
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
+import ErrorIcon from '@material-ui/icons/Error';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
 export default function Sidebar() {
@@ -95,7 +95,7 @@ export default function Sidebar() {
           })}
           >
           <Toolbar className='navbar'>
-          {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} /> : <div></div>}
+          {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} quantity={notiNumb} /> : <div></div>}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -128,8 +128,8 @@ export default function Sidebar() {
               <div onClick={notiHandler}>
                 <Badge badgeContent={notiNumb} color="secondary">
                   {notiNumb === 0 ?
-                    <NotificationsNoneOutlinedIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
-                    <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
+                    <ErrorOutlineIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
+                    <ErrorIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
                   }
                 </Badge>
               </div>
