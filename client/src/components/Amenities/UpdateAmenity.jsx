@@ -1,9 +1,10 @@
 import {useState,useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import { Button, TextField, makeStyles,Grid,} from '@material-ui/core';
-import { Person, Home, MeetingRoom } from '@material-ui/icons';
-import {getAmenityById, updateAmenity} from '../../redux/amenities/amenitiesActions'
+import { Button, TextField, makeStyles, Grid, } from '@material-ui/core';
+import styles from '../Alerts/AlertsUpdate.module.css'
+import { Person, Home } from '@material-ui/icons';
+import {getAmenityById, updateAmenity, deleteAmenity} from '../../redux/amenities/amenitiesActions'
 import { Link, useHistory } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
@@ -38,27 +39,27 @@ export function UpdateAmenity() {
 
     
 
-    const [input, setInput] = useState({
-		id:'',
-		amenity_type:'',
-		quantity:'',
-		amenity_detail:''
-
-	})
+	const [input, setInput] = useState({})
+	
 	useEffect(() => {
 		dispatch(getAmenityById(id))
 	},[dispatch])
 
-    useEffect(() => {
-		let {id, amenity_type, quantity,amenity_detail} = amenityDetail;
-        setInput({
-            id: id,
-            amenity_type: amenity_type,
-            quantity: quantity,
-            amenity_detail: amenity_detail
+	useEffect(() => {
+		
+		if (amenityDetail !== undefined) {
+			setInput({
+            id,
+            amenity_type: amenityDetail.amenity_type,
+            quantity: amenityDetail.quantity,
+            amenity_detail: amenityDetail.amenity_detail
 
         })
-	},[amenityDetail])
+		} else {
+			dispatch(getAmenityById(id))
+		}
+        
+	},[amenityDetail, dispatch, id])
 
 
     const [error, setError] = useState({//Control the error red border of the inputs
@@ -88,6 +89,12 @@ export function UpdateAmenity() {
 		//history.push('/userDetail')
 		history.goBack()
 	};
+
+	const deleteHandler = () => {
+		dispatch(deleteAmenity(id))
+                .then(swal("Se ha eliminado el amenity!", "Gracias!", "success"))
+                .then(history.goBack())
+	}
 
 
     const Validate = (field) => {
@@ -194,7 +201,16 @@ export function UpdateAmenity() {
                 </Grid>
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
-                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
+								<Button id={ styles.submit} style={{ fontWeight: 1000, marginTop: 50 }} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
+								<Button
+                            id={styles.submit}
+                            style={{ fontWeight: 1000, marginTop: 50 }}
+                            color="primary"
+                            variant="contained"
+                            onClick={deleteHandler}
+                        >
+                            Eliminar alerta
+                        </Button>
                     </Grid>
                 </Grid>
 			</Grid>

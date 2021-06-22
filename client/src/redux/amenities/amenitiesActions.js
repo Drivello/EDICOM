@@ -41,6 +41,7 @@ export function getAmenityById(id) {
 }
 
 export function updateAmenity(amenity) {
+	console.log(amenity);
 	return async function (dispatch) {
 		const {data} = await axios.put(
 			`http://localhost:3001/amenities/${amenity.id}`,
