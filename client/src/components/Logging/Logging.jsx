@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { loggingIn, handleChangePassword, handleSendEmail, emailToToken } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
+import {numeroPositivo, numeroPositivoEntero, correoElectronico} from "../../utils/validations"
 
 import {
     Grid,
@@ -73,14 +74,25 @@ const Logging = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loggingIn(user)) // ----> va a modificar nuestro authData en el store!
+        if(!correoElectronico(user.email)){
+            alert ("El correo electronico es incorrecto")
+        }
+        else{
+            dispatch(loggingIn(user)) // ----> va a modificar nuestro authData en el store!
+        }
+        
         
     };
 
     
     function handleEmail(){
         var email = prompt("Introduzca su correo:", "");
-        dispatch(handleSendEmail(email))
+        if(!correoElectronico(email)){
+            alert ("no se introdujo un correo electrónico valido")
+        }
+        else{
+            dispatch(handleSendEmail(email))
+        }
     }
 
 

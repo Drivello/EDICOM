@@ -30,6 +30,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeStyle";
 import swal from "sweetalert";
 import moment from "moment";
+import {numeroPositivo, numeroPositivoEntero, correoElectronico} from "../../utils/validations"
 
 const Form = (props) => {
   
