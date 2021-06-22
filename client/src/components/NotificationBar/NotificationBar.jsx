@@ -16,7 +16,7 @@ const NotificationBar = (props) => {
         if (quantity === 0) {
             return (
                 <div className={styles.zero}>
-                    <h1>No hay reclamos nuevos!</h1>
+                    <h1>No hay nuevos reclamos!</h1>
                 </div >
             )
         } else {
