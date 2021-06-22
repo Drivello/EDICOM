@@ -5,6 +5,7 @@ import {
 	GET_USER,
 	UPDATE_USER,
 	GET_ALL_USERS_FOR_LIST,
+	GET_ALL_USERS_BY_BUILDING,
 } from '../users/userActions';
 
 const initialState = {
@@ -40,6 +41,11 @@ const userReducer = (state = initialState, action) => {
 				userDetail: action.payload,
 			};
 		case GET_ALL_USERS_FOR_LIST:
+			return {
+				...state,
+				users: action.payload,
+			};
+		case GET_ALL_USERS_BY_BUILDING:
 			return {
 				...state,
 				users: action.payload,
