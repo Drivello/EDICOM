@@ -6,6 +6,7 @@ const changePassword = require("../controllers/loggings/changePasswordController
 const sendEmail = require("../controllers/loggings/sendEmailController");
 const tokenToEmail = require("../controllers/loggings/tokenToEmailController");
 const emailToToken = require("../controllers/loggings/emailToTokenController");
+const getUserId = require("../controllers/loggings/getUserIdController");
 
 
 
@@ -15,6 +16,7 @@ router.put("/changepassword", changePassword);
 router.post("/sendEmail", sendEmail);
 router.post("/tokenToEmail", tokenToEmail);
 router.post("/emailToToken", emailToToken);
+router.get("/userId/:token", getUserId);
 
 
 

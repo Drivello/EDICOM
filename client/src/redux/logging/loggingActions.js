@@ -9,6 +9,7 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const SEND_EMAIL = 'SEND_EMAIL';
 export const TOKEN_TO_EMAIL = 'TOKEN_TO_EMAIL';
 export const EMAIL_TO_TOKEN = 'EMAIL_TO_TOKEN';
+export const GET_USER_ID = 'GET_USER_ID';
 
 
 //----------   Middleware para agrgar el headers Authorization  ----------------
@@ -133,6 +134,16 @@ export function emailToToken(data) {
 			.post('http://localhost:3001/loggings/emailToToken ', email)
       .then(res => {
 				dispatch({type: EMAIL_TO_TOKEN, payload: res.data});
+			});
+	};
+}
+
+export function getIdUser(token) {
+	return function (dispatch) {
+		return axios
+			.get(`http://localhost:3001/loggings/userId/${token}`)
+      .then(res => {
+				dispatch({type: GET_USER_ID, payload: res.data});
 			});
 	};
 }

@@ -8,7 +8,7 @@ import { findAlertsBuilding } from '../../../redux/alerts/alertActions';
 import PopUp from './PopUp';
 
 
-export default function Calendar({buildingId}) {
+export default function Calendar({buildingId, user}) {
     const alerts_building = useSelector(state => state.alertsReducer.findAlertsBuilding);
     const [displayPopUp, setDisplayPopUp] = useState(false);
     const [alertProps, setAlertProps] = useState({});
@@ -32,7 +32,7 @@ export default function Calendar({buildingId}) {
     
     return(
         <>
-        <PopUp display={displayPopUp} setDisplay={setDisplayPopUp} alertProps = {alertProps}/>
+        <PopUp user= {user} display={displayPopUp} setDisplay={setDisplayPopUp} alertProps = {alertProps}/>
         <FullCalendar
         locale = {esLocale}
         plugins={[ dayGridPlugin, interactionPlugin ]}

@@ -58,3 +58,12 @@
 .building{
     width: 350px;
 }
+
+.zero{
+    color: #00ff7f;
+    font-weight: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+}

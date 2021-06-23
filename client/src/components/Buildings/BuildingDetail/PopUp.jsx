@@ -24,11 +24,14 @@ export default function PopUp(props) {
                 <h5>
                     Importancia: {props.alertProps.importance}
                 </h5>
-                <Link to={`/alertsUpdate/${props.alertProps.id}`}>                    
+                {
+                    props.user ? "" : <Link to={`/alertsUpdate/${props.alertProps.id}`}>                    
                     <Button style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
                         Editar
                     </Button>
-                </Link>
+                    </Link>
+                }
+                
             </div>
             </div>
         </div>

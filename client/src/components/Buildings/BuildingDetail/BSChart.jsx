@@ -14,10 +14,10 @@ export default function BSChart({date, buildingId}) {
         dispatch(buildingSpendings(buildingId))
     }, [dispatch])
 
-    const raw_data = date === "All" ? building_spendings : building_spendings.filter(e => new Date(e.date).getMonth() === parseInt(date))
+    const raw_data = date === "All" ? building_spendings : building_spendings && building_spendings.filter(e => new Date(e.date).getMonth() === parseInt(date))
 
-    const labels = Data(raw_data).map(e => e = e.concept);
-    const amount = Data(raw_data).map(e => e = e.amount);
+    const labels = raw_data && Data(raw_data).map(e => e = e.concept);
+    const amount = raw_data && Data(raw_data).map(e => e = e.amount);
 
 
     const data = {
@@ -52,18 +52,8 @@ export default function BSChart({date, buildingId}) {
             },
         },
     }
-
-    if(building_spendings.length > 0){
-        return (
-            <Bar width={100} height={300} data={data} options={options}/>
-        )
-    }else{
-        return(
-            <div>
-                <h1>
-                    Loading...
-                </h1>
-            </div>
-        )
-    }
+   
+    return (
+        <Bar width={100} height={300} data={data} options={options}/>
+    )
 }
