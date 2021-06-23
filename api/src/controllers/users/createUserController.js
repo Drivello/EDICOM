@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 module.exports = async (req, res, next) => {
 	let user = req.body;
 	let {apartment} = req.body;
-	console.log(user);
 	try {
 		// const hashedPassword = await bcrypt.hash(user.password, 12);
 		user = await User.create(user);

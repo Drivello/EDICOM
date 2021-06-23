@@ -40,7 +40,18 @@ sequelize.models = Object.fromEntries(capsEntries); //[Key, value]
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Spendings, Expenses, Apartment, Buildings, Alerts, User, Complaints, Admin, Amenity } = sequelize.models; //ir agregando los modelos que se crean.
+const {
+	Spendings,
+	Expenses,
+	Apartment,
+	Buildings,
+	Alerts,
+	User,
+	Complaints,
+	Admin,
+	Amenity,
+	Booking,
+} = sequelize.models; //ir agregando los modelos que se crean.
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -65,6 +76,12 @@ Expenses.belongsTo(Apartment, {
 		unique: 'complexUnique',
 	},
 });
+
+User.hasMany(Booking);
+Booking.belongsTo(User);
+
+Amenity.hasMany(Booking);
+Booking.belongsTo(Amenity);
 
 Apartment.hasOne(User);
 User.belongsTo(Apartment);
