@@ -14,9 +14,9 @@ export default function BSChart({date, buildingId}) {
         dispatch(buildingSpendings(buildingId))
     }, [dispatch])
 
-    const raw_data = building_spendings.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear())
+    const raw_data = building_spendings && building_spendings.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear())
 
-    const amount = dataLine(raw_data).map(e => e = e.amount);
+    const amount = raw_data && dataLine(raw_data).map(e => e = e.amount);
 
 
     const data = {

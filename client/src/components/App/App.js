@@ -27,6 +27,7 @@ import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
+import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 
 
 function App() {
@@ -73,11 +74,13 @@ function App() {
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
 				<Route path="/userView" component={UserView} />
+				<Route exact path="/users/:id/alerts" component={AlertsUser}/>
 				
 
 				{/* ----------------------------Generales----------------------------------- */}
 				<Route exact path="/" component={Home} />
 				<Route path="/" component={Sidebar} />
+
 				
 				
 				

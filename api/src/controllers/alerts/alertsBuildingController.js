@@ -7,7 +7,8 @@ module.exports = async (req, res, next) => {
 		let data = await Alerts.findAll({
 			where: {
 				buildingId: buildingAlert.id
-			}
+			},
+			order: [['date', 'DESC']]
 		});
 		return res.json(data);
 	} catch (err) {

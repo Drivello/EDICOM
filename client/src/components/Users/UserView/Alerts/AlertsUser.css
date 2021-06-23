@@ -1,0 +1,51 @@
+.PaginationAlertsUserView{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.contExtAlertsUserView{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.contTitleAlertsUserView{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+.cardAlertsUserView{
+    width: 700px;
+    background-color: #212121;
+    color: white;
+    margin: 10px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cardAlertsUserView:hover{
+    color: #ff0080;
+}
+.popup-innerAlertsUser{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+    color: #ff0080;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px #000000;
+    background-size: cover;
+    margin-top: 50px;
+}
+.XinputBtnAlertsUser{
+    background: none;
+    border: none;
+    color: #ff0080;
+    cursor: pointer;
+}
