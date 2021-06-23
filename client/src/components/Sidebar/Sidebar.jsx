@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -8,27 +9,28 @@ import ApartmentIcon from '@material-ui/icons/Apartment';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import GroupIcon from '@material-ui/icons/Group';
 import './Sidebar.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/logging/loggingActions';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
 import NotificationBar from "../NotificationBar/NotificationBar"
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import GroupIcon from '@material-ui/icons/Group';
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
+import { getUser } from '../../redux/users/userActions';
 
 
 export default function Sidebar() {
   const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
+  const currentUserData = useSelector(state => state.userReducer.userDetail)
   const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
@@ -40,6 +42,10 @@ export default function Sidebar() {
   useEffect(() => {
     dispatch(getComplaints())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getUser(1))
+}, [])
 
   useEffect(() => {
     setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
@@ -219,6 +225,21 @@ export default function Sidebar() {
                 <ListItemText className='fontColor' primary={'Usuarios'} />
               </ListItem>
             </Link>
+
+            {/* ----------------Links a Users Locatarios----------------- */}
+            <Link to={`/userView/1/home`}>
+              <ListItem button key={'Expensas'}>
+                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                <ListItemText className='fontColor' primary={'Usuarios'} />
+              </ListItem>
+            </Link>
+            <Link to="/userView/1/complaints">
+              <ListItem button key={'Expensas'}>
+                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                <ListItemText className='fontColor' primary={'Usuarios'} />
+              </ListItem>
+            </Link>
+
 
           </List>
         </Drawer>
