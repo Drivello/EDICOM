@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBuildings} from '../../../redux/building/buildingActions'
 import {getAllApartments} from'../../../redux/apartments/apartmentsActions'
-import {getALLUsers,filterUsers, getAllUsersForList} from '../../../redux/users/userActions'
+import {getUsersByBuilding, getUserByApartment, filterUsers, getAllUsersForList} from '../../../redux/users/userActions'
 import { makeStyles, Grid, Button, FormControl, InputLabel, Select, MenuItem, Container } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
@@ -74,7 +74,8 @@ const UserList = () => {
 	}; 
     
     const handleBuildingChange =  (e) => {
-		dispatch(getALLUsers(e.target.value))
+		if(!e.target.value) return
+		dispatch(getUsersByBuilding(e.target.value))
 		dispatch(getAllApartments(e.target.value))
 		setInput({
 			...input,
@@ -83,7 +84,8 @@ const UserList = () => {
 	}
 
 	const handleApartmentChange = (e) => {
-		dispatch(getALLUsers(input.building,e.target.value))
+		if(!e.target.value) return
+		dispatch(getUserByApartment(e.target.value))
 		setInput({
 			...input,
 			apartment: e.target.value, 
