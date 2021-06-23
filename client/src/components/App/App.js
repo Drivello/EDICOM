@@ -28,6 +28,7 @@ import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
 import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
+import RegisterAdmin from "../Admin/RegisterAdmin";
 import CalendarUser from '../Users/UserView/Alerts/CalendarUser';
 
 
@@ -81,7 +82,8 @@ function App() {
 
 				{/* ----------------------------Generales----------------------------------- */}
 				<Route exact path="/" component={Home} />
-				<Route path="/" component={Sidebar} />			
+				<Route path="/" component={Sidebar} />
+				<Route path="/registerAdmin" component={RegisterAdmin} />	
 				
 			</BrowserRouter>
 		</Container>

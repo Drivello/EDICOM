@@ -9,6 +9,7 @@ const complaints = require('./complaints');
 const users = require('./users');
 const loggings = require('./loggings');
 const amenities = require('./amenities');
+const admin = require('./admin');
 const subscriptions = require('./subscriptions');
 const bookings = require('./bookings');
 
@@ -33,6 +34,7 @@ router.use('/complaints', complaints);
 router.use('/users', users);
 router.use('/loggings', loggings);
 router.use('/amenities', amenities);
+router.use('/admin', admin);
 router.use('/subscriptions', subscriptions);
 router.use('/bookings', bookings);
 
