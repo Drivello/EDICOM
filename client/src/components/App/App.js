@@ -73,18 +73,13 @@ function App() {
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
-				<Route path="/userView" component={UserView} />
 				<Route exact path="/users/:id/alerts" component={AlertsUser}/>
+				<Route path="/userView/:id" component={UserView} />
 				
 
 				{/* ----------------------------Generales----------------------------------- */}
 				<Route exact path="/" component={Home} />
-				<Route path="/" component={Sidebar} />
-
-				
-				
-				
-				
+				<Route path="/" component={Sidebar} />			
 				
 			</BrowserRouter>
 		</Container>
