@@ -28,7 +28,7 @@
     cursor: pointer;
 }
 .cardAlertsUserView:hover{
-    color: #ff0080;
+    color: #00ff7f;
 }
 .popup-innerAlertsUser{
     position: absolute;
@@ -36,7 +36,7 @@
     flex-direction: column;
     justify-content: space-around;
     background-color: white;
-    color: #ff0080;
+    color: #212121;
     width: 400px;
     border-radius: 10px;
     box-shadow: 5px 5px 15px 5px #000000;
@@ -46,6 +46,11 @@
 .XinputBtnAlertsUser{
     background: none;
     border: none;
-    color: #ff0080;
+    color: #212121;
     cursor: pointer;
+}
+.contExtCalendarUserView{
+    margin-top: 100px;
+    margin-left: 50px;
+    width: 100%;
 }
