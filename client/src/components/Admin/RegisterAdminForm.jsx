@@ -18,7 +18,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 	}
 
 	const handleChange = (e, change) => {
-		setInput({...input, [change]: e.target.value})
+		setInput({ ...input, [change]: e.target.value })
 	}
 
 	return (
@@ -38,8 +38,11 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 				<form onSubmit={handleSubmit}>
 					<TextField value={input.name} onChange={(e) => handleChange(e, "name")} label="Nombre" variant="outlined" />
 					<TextField value={input.email} onChange={(e) => handleChange(e, "email")} label="Email" variant="outlined" />
-					<TextField value={input.contact} onChange={(e) => handleChange(e, "contact")} label="Contacto" variant="outlined" /> 
+					<TextField value={input.contact} onChange={(e) => handleChange(e, "contact")} label="Contacto" variant="outlined" />
 					<TextField value={input.password} onChange={(e) => handleChange(e, "password")} label="Contraseña" variant="outlined" />
+					<Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
+						Registrarse
+					</Button>
 				</form>
 			</div>
 		</ThemeProvider>

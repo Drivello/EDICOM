@@ -14,7 +14,8 @@ module.exports = async (req, res, next) => {
             name: name || "Administrador",
             contact,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            firstLogging: false
         });
         console.log(User)
         return res.status(200).json({succes: `Admin created successfully`});
