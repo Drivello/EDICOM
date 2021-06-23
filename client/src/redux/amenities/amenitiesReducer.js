@@ -9,9 +9,9 @@ import {
 
 const initialState = {
 	Amenities: [],
-	amenityDetail:[],
-	amenityCreated:[],
-	amenityDeleted:[],
+	amenityDetail: undefined,
+	amenityCreated: [],
+	amenityDeleted: [],
 };
 
 const amenitiesReducer = (state = initialState, action) => {

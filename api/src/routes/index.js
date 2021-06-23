@@ -10,6 +10,7 @@ const users = require('./users');
 const loggings = require('./loggings');
 const amenities = require('./amenities');
 const subscriptions = require('./subscriptions');
+const bookings = require('./bookings');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -18,8 +19,8 @@ const router = Router();
 
 // Redirigido desde el middleware que atrapa las rutas bloqueadas para el usuario loggueado
 router.get('/unauthorized', (req, res) => {
-    res.json("No authorization");
-})
+	res.json('No authorization');
+});
 
 // Configurar los routers
 
@@ -33,5 +34,6 @@ router.use('/users', users);
 router.use('/loggings', loggings);
 router.use('/amenities', amenities);
 router.use('/subscriptions', subscriptions);
+router.use('/bookings', bookings);
 
 module.exports = router;

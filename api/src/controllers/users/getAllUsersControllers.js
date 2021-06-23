@@ -1,5 +1,5 @@
 const {User} = require('../../db');
-
+//router.get('/getall/', getAll);
 module.exports = async (req, res, next) => {
 	try {
 		const users = await User.findAll();
