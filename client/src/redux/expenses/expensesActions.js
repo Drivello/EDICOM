@@ -17,6 +17,6 @@ export const getExpenses =()=>  {
   }
 }
 
-export function filterSpending(payload) {
+export function filterExpenses(payload) {
 	return {type: 'FILTER_EXPENSES', payload};
 }

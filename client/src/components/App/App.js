@@ -30,6 +30,7 @@ import ResetPassword from '../Logging/resetPassword';
 
 
 function App() {
+	alert("app soloooo")
 	return (
 		<Container className="App">
 			<CssBaseline />
@@ -78,10 +79,6 @@ function App() {
 				{/* ----------------------------Generales----------------------------------- */}
 				<Route exact path="/" component={Home} />
 				<Route path="/" component={Sidebar} />
-				
-				
-				
-				
 				
 			</BrowserRouter>
 		</Container>

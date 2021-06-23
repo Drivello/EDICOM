@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getExpenses } from "../../redux/expenses/expensesActions";
+import { getExpenses, filterExpenses } from "../../redux/expenses/expensesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
@@ -34,20 +34,16 @@ export default function ExpensesTable() {
    
    const dispatch = useDispatch();
 
-   
    // No se si anda
    /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
    const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
-   const filterBuildings = useSelector((state) => state.buildingReducer.allBuildings)
+   const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
+   const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
    
-   console.log("expensesArray", expensesArray)
-   console.log("allBuildings", allBuildings)
-
-
-
    useEffect(() => {
       dispatch(getExpenses());
    }, [dispatch]);
+   
 
    // ----------------------seleccion del edificio--------------------------
 
@@ -55,41 +51,36 @@ export default function ExpensesTable() {
       building: "All",
       apartment: "All"
    });
-
-   console.log("buildingID", building)
+  
+   useEffect(() => {
+      dispatch(filterExpenses(building));
+   }, [building]);
 
    function handleSelectBuilding (e){
-      setBuilding({ ...building, [e.target.name]: e.target.value })
-      
-      // console.log("buildingName", buildingName)
-      // if(buildingName!=="All"){
-      //    var buildingId = allBuildings.filter(building => building.name === buildingName)[0].id
-      //    setBuilding(buildingId)
-      // }
-      // else{
-      //    setBuilding("All")
-      // }
+
+      var buildingId = ""
+
+      if(e.target.value!=="All"){
+         buildingId = allBuildings.filter(building => building.name === e.target.value)[0].id
+      }
+      else{
+         buildingId = "All"
+      }
+      setBuilding({ ...building, [e.target.name]: buildingId })
+      // dispatch(filterExpenses(building))
    }
+   
    function handleSelectApartment (e){
       if(building.building==="All"){alert("No se puede elegir departamento sin selecciona edificio")}
+      else{
+         setBuilding({ ...building, [e.target.name]: e.target.value })
+      }
    }
 
+   // console.log("expensesArray", expensesArray)
+   // console.log("filterBuildings", filterBuildings)
 
-   // let arrFinal = []
-   // expensesArray.map((apartment) => apartment.Expenses.map((a) => arrFinal.push(a)))
-   console.log("expensesArray", expensesArray)
-   
-   var buildingArray = []
-
-   if(building === "All" || building === ""){
-      buildingArray = expensesArray
-   }
-   else{
-      buildingArray = expensesArray.filter(expense => expense.buildingId === building)
-   }
-
-
-   const rows = buildingArray.map( (apartment) => {
+   const rows = filterBuildings.map( (apartment) => {
 
       return createApartment(apartment.id, 
          apartment.cata_apartment, 
@@ -110,7 +101,7 @@ export default function ExpensesTable() {
          <InputLabel id="demo-controlled-open-select-label">
             Edificio
          </InputLabel>
-         <Select  onChange={handleSelectBuilding}>
+         <Select  name="building" onChange={handleSelectBuilding}>
             <MenuItem value="All">
                <em>All</em>
             </MenuItem>
@@ -131,17 +122,17 @@ export default function ExpensesTable() {
          <InputLabel id="demo-controlled-open-select-label">
             Departamento
          </InputLabel>
-         <Select onChange={handleSelectApartment}>
+         <Select name="apartment" onChange={handleSelectApartment}>
             <MenuItem value="All">
                <em>All</em>
             </MenuItem>
 
-            {allBuildings.map((apartment, index) => (
+            {filterBuildings.map((apartment, index) => (
                <MenuItem
-                  value={building.number_apartment}
+                  value={apartment.number_apartment}
                   key={index}
                >
-                  {building.number_apartment}
+                  {apartment.number_apartment}
                </MenuItem>
             ))}
          </Select>
