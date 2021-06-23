@@ -59,8 +59,6 @@ const Logging = () => {
                 //hacer el dispatch para pedir el tokenToConfirm para este email
             }
         }
-
-
     }, [authData, dispatch])
 
     useEffect(() => {

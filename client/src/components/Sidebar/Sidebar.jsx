@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -8,7 +8,7 @@ import ApartmentIcon from '@material-ui/icons/Apartment';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
@@ -25,15 +25,24 @@ import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneO
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import GroupIcon from '@material-ui/icons/Group';
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
+import { WindowScrollController } from '@fullcalendar/react';
 
 
-export default function Sidebar() {
+
+
+
+
+export default function Sidebar(props) {
+
+
   const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
   const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [noti, setNoti] = useState(false);
+
+  const history = useHistory();
 
   const [notiNumb, setNotiNumb] = useState(0);
 
@@ -45,7 +54,24 @@ export default function Sidebar() {
     setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
   }, [Notifications])
 
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+
+  const { authData } = useSelector(state => {
+    return {
+        authData: state.loggingReducer.authData,
+    };
+  });
+
+  const current = JSON.parse(localStorage.getItem('profile'))
+
+  const [currentUser, setCurrentUser] = useState(current);
+
+  useEffect(() => {
+    setCurrentUser(current)
+  }, [ authData ])
+
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -66,6 +92,7 @@ export default function Sidebar() {
   const handleLogout = () => {
     dispatch(logout({ type: "LOGOUT" }))
     setCurrentUser(null);
+    window.location.href = 'http://localhost:3000/logging'
   }
 
 
@@ -184,7 +211,7 @@ export default function Sidebar() {
               </ListItem>
             </Link>
 
-            <Link to='/spendings/board'>
+            <Link to='spendings/board'>
               <ListItem button key={'Gastos'}>
                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Gastos'} />

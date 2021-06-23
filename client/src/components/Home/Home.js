@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBuildings } from '../../redux/building/buildingActions';
+import { getBuildings, getTraerSesion } from '../../redux/building/buildingActions';
 import { getAlerts } from '../../redux/alerts/alertActions';
-import { Grid } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import Carousel from 'react-material-ui-carousel';
 import BuildingsList from './BuildingsList';
@@ -13,6 +13,8 @@ import './Home.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
+
+
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
 	const alerts = useSelector(state => state.alertsReducer.allAlerts);
@@ -21,10 +23,24 @@ const Home = (props) => {
 	const today = new Date();
 
 
+
+	const activeSesion = useSelector(state => state.buildingReducer.activeSesion);
+
+
+
 	useEffect(() => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
 	},[dispatch])
+
+	const token = JSON.parse(localStorage.getItem('profile'))?.token
+
+	const handleTraerSesion = function(){
+
+		dispatch(getTraerSesion(token));
+	}
+
+
 
 	if(buildings.length > 0) {
 
@@ -41,6 +57,12 @@ const Home = (props) => {
 				buildings && buildings?.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
 			}
 			</Carousel>
+
+
+			<Typography variant="h6">{JSON.stringify(activeSesion) || "No está trayendo nadaaa"}</Typography>
+			<Button onClick={handleTraerSesion}>Traer sesión activa</Button>
+
+
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

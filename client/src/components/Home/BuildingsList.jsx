@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 export default function BuildingsList(props) {
   return (
     <Grid className='carusel'>
+      <Button>Traer sesión activa</Button>
     <img className='imgCarusel'src={props.item.image} alt="not found" />
     <Paper className='paperCarusel'>
         <Grid className='infoBuilding'>

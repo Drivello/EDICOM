@@ -2,24 +2,25 @@ import './App.css';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route} from 'react-router';
+import Home from '../Home/Home.js';
+import Form from '../Spending/Form';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Render from '../HomeTenant/Render'
 import { Header } from '../HomeTenant/Header';
-import Sidebar from '../Sidebar/Sidebar';
 
 
-function AppPublic() {
+
+function Logging() {
 	return (
 		<Container className="App">
 			<CssBaseline />
 				<BrowserRouter>
-
-					//Poner acá los route con los componentes de la vista del locatario
-					<Route path="/public" component={Sidebar} />
-
+					<Route exact path="/logging" component={Header} />
+					<Route exact path="/logging" component={Render} />
 				</BrowserRouter>
 		</Container>
 	);
 }
 
-export default AppPublic;
+export default Logging;

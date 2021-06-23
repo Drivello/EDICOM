@@ -7,7 +7,7 @@ const secret = 'test';
 const { transporter } = require("../../../mailer");
 //--------------------------------------------------
 
-// Path of this controller --> Put(http://localhost:3001/spendings/add)
+// Path of this controller --> Put(http://localhost:3001/loggings/loggingIn)
 module.exports = async (req, res, next) => {
 
     let { email, password } = req.body;

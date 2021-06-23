@@ -4,12 +4,14 @@ import { loggingIn, handleChangePassword, handleSendEmail, tokenToEmail } from '
 import { useForm } from '../../utils/useForm';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+
 import {
     Grid,
     Button,
     TextField,
     makeStyles,
 } from "@material-ui/core";
+import swal from 'sweetalert';
 
 
 const ResetPasword = () => {
@@ -65,7 +67,7 @@ const ResetPasword = () => {
     function handleNewPass(e){
         e.preventDefault();
         if(newPassword.newPass===newPassword.confirmPassword){
-            alert("Contraseña cambiada")
+            swal("Contraseña cambiada")
             dispatch(handleChangePassword({newPass: newPassword.newPass, email: mail}))
             history.push('/')
         }

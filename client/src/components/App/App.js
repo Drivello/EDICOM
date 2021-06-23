@@ -27,10 +27,11 @@ import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
+import Render from '../HomeTenant/Render';
+import { Header } from '../HomeTenant/Header';
 
 
 function App() {
-	alert("app soloooo")
 	return (
 		<Container className="App">
 			<CssBaseline />
@@ -59,7 +60,7 @@ function App() {
 				<Route exact path="/BuildingUpdate/:id" component={BuildingUpdate} />
 
 				{/* ----------------------------Logging----------------------------------- */}
-				<Route exact path="/logging" component={Logging} />
+				{/* <Route exact path="/logging" component={Logging} /> */}
 				<Route exact path="/logging/restaurarcontraseña" component = {ResetPassword}/>
 
 

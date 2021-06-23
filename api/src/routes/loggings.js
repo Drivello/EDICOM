@@ -10,7 +10,7 @@ const emailToToken = require("../controllers/loggings/emailToTokenController");
 
 
 router.use(express.json());
-router.post("/loggingIn", loggingIn);                   //      http://localhost:3001/loggings/add
+router.post("/loggingIn", loggingIn);                   //      http://localhost:3001/loggings/loggingIn
 router.put("/changepassword", changePassword);
 router.post("/sendEmail", sendEmail);
 router.post("/tokenToEmail", tokenToEmail);

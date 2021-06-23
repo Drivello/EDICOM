@@ -5,7 +5,10 @@ const initialState = {
     detailBuilding: {},
     postStatus: 0,
     putStatus: 0,
-    deleteStatus: 0
+    deleteStatus: 0,
+
+
+    activeSesion: null
 }
 
 export default function buildingReducer(state = initialState, action) {
@@ -34,6 +37,11 @@ export default function buildingReducer(state = initialState, action) {
             return {
                 ...state,
                 deleteStatus: action.payload.status
+            }
+        case "GET_SESION":
+            return {
+                ...state,
+                activeSesion: action.payload.data
             }
         default:
             return state;

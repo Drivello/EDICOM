@@ -30,6 +30,8 @@ import theme from "../themeStyle";
 import swal from "sweetalert";
 import moment from "moment";
 import { numeroPositivo } from "../../utils/validations"
+import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const Form = (props) => {
 
@@ -64,6 +66,7 @@ const Form = (props) => {
   let newSpending = {};
   // var date1 = new Date(new Date());
   // console.log("date1", moment(date1).format("L"))
+  
 
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
@@ -80,7 +83,8 @@ const Form = (props) => {
         (elem) => elem.id === parseInt(props.match.params.id)
       )[0].date,
       // date: moment(new Date(new Date())).format("L"),
-      building: 1,
+      building: totalSpend.filter( 
+        (elem) => elem.id === parseInt(props.match.params.id))[0].buildingId,
       concept: totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
       )[0].concept,
@@ -99,6 +103,8 @@ const Form = (props) => {
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
   const [selectedBuild, setSelectedBuild] = useState({ id: [] });
+
+  console.log("spending", spending)
 
   const handleSelect = (e) => {
     let select = document.getElementById("building");
@@ -155,7 +161,7 @@ const Form = (props) => {
     setSpending(
       (newSpending = {
         date: "",
-        building: 0,
+        building: "E",
         concept: "",
         supplier: "",
         details: "",
@@ -164,6 +170,9 @@ const Form = (props) => {
     );
   };
 
+  console.log("newSpending", newSpending)
+  
+  console.log()
   return (
     <ThemeProvider theme={theme}>
       <div className="mainContainer">
@@ -200,9 +209,10 @@ const Form = (props) => {
                     onChange={handleSelect}
                     name="building"
                     id="building"
+                    value={spending.building}
                   >
-                    <option> Elegir Edificio </option>
-
+                    <option> Edificio </option>
+                      
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
                         return (
@@ -226,19 +236,35 @@ const Form = (props) => {
                   <Domain />
                 </Grid>
                 <Grid item>
-                  <TextField
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    name="date"
+                    margin="normal"
+                    id="date"
+                    format="dd/MM/yyyy"
+                    value={spending.date}
+                    onChange={handleInputChange}
+                    KeyboardButtonProps={{
+                        "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>  
+                
+                  {/* <TextField
                     input
                     type="date"
+                    format="dd/MM/yyyy"
                     id="date"
                     name="date"
-                    // value={spending.date}
+                    value={spending.date}
                     onChange={(e) =>
                       setSpending({
                         ...spending,
-                        date: new Date(e.target.value),
+                        date: new Date(e.target.value)
                       })
                     }
-                  />
+                  /> */}
                 </Grid>
               </Grid>
               <Grid

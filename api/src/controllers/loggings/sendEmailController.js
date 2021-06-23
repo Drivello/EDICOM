@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
             from: '"Edicom" <edicombuilds@gmail.com>', // sender address
             to: email, // list of receivers
             subject: "Recuperar Contraseña", // Subject line
-            text: "Haga click en el link para restablecer su contraseña ", // plain text body
+            text: "Haga click en el link para restablecer su contraseña: ", // plain text body
             html: `<b>Haga click en el link para restablecer su contraseña: <a href="http://localhost:3000/logging/restaurarcontraseña?${token}"> Link </a> </b>`, // html body
         });
 
