@@ -12,8 +12,6 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import GroupIcon from '@material-ui/icons/Group';
 import './Sidebar.css';
@@ -26,6 +24,8 @@ import { logout } from '../../redux/logging/loggingActions';
 import NotificationBar from "../NotificationBar/NotificationBar"
 import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
 import { getUser } from '../../redux/users/userActions';
+import ErrorIcon from '@material-ui/icons/Error';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
 export default function Sidebar() {
@@ -101,7 +101,7 @@ export default function Sidebar() {
           })}
           >
           <Toolbar className='navbar'>
-          {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} /> : <div></div>}
+          {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} quantity={notiNumb} /> : <div></div>}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -134,8 +134,8 @@ export default function Sidebar() {
               <div onClick={notiHandler}>
                 <Badge badgeContent={notiNumb} color="secondary">
                   {notiNumb === 0 ?
-                    <NotificationsNoneOutlinedIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
-                    <NotificationsIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
+                    <ErrorOutlineIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
+                    <ErrorIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
                   }
                 </Badge>
               </div>
