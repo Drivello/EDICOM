@@ -45,22 +45,22 @@ export default function AlertsUser(props){
                         Notificaciones
                     </h1>
                     <Link >
-                        <Button variant="contained" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:'20px', backgroundColor: "#ff0080"}}>
-                            <SubscriptionsIcon style={{ fontSize: 25, color: "white" }}/>
+                        <Button variant="contained" color ="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:'20px'}}>
+                            <SubscriptionsIcon style={{ fontSize: 25, color: "#212121" }}/>
                         </Button>
                     </Link>
         </div>
         <div className='PaginationAlertsUserView'>
-        <Button variant="contained" onClick = {handlePreviuos} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', backgroundColor: "#ff0080", marginRight:"20px"}}>
-            <NavigateBeforeIcon style={{ fontSize: 25, color: "white" }}/>
+        <Button variant="contained" color ="secondary" onClick = {handlePreviuos} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginRight:"20px"}}>
+            <NavigateBeforeIcon style={{ fontSize: 25, color: "#212121" }}/>
         </Button>
         <div className='contExtAlertsUserView'>
             {
                 current.map(alert => <Card key={alert.id} alert={alert}/>)
             }
             </div>
-            <Button variant="contained" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', backgroundColor: "#ff0080", marginLeft:"20px"}}>
-            <NavigateNextIcon style={{ fontSize: 25, color: "white" }}/>
+            <Button variant="contained" color ="secondary" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:"20px"}}>
+            <NavigateNextIcon style={{ fontSize: 25, color: "#212121" }}/>
             </Button>
             </div>
         </ThemeProvider>

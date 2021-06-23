@@ -139,6 +139,7 @@ const Form = (props) => {
   };
 
   const handleUpdate = (e) => {
+    console.log("despache")
     dispatch(putSpending([parseInt(props.match.params.id), spending]));
     swal("Gasto Editado!", "Gracias!", "success");
   };

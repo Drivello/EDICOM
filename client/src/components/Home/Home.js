@@ -13,6 +13,8 @@ import './Home.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
+import { getIdUser } from '../../redux/logging/loggingActions';
+
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
 	const alerts = useSelector(state => state.alertsReducer.allAlerts);
@@ -20,10 +22,12 @@ const Home = (props) => {
 	const dispatch = useDispatch();
 	const today = new Date();
 
+	const token = JSON.parse(localStorage.getItem('profile')).token
 
 	useEffect(() => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
+		dispatch(getIdUser(token))
 	},[dispatch])
 
 	if(buildings.length > 0) {
