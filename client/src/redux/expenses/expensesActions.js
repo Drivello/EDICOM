@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const GET_EXPENSES = 'GET_EXPENSES';
+export const FILTER_EXPENSES = 'FILTER_EXPENSES';
 
 
 
@@ -14,4 +15,8 @@ export const getExpenses =()=>  {
         })
       })
   }
+}
+
+export function filterSpending(payload) {
+	return {type: 'FILTER_EXPENSES', payload};
 }

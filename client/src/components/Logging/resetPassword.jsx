@@ -67,7 +67,7 @@ const ResetPasword = () => {
         if(newPassword.newPass===newPassword.confirmPassword){
             alert("Contraseña cambiada")
             dispatch(handleChangePassword({newPass: newPassword.newPass, email: mail}))
-            history.push('/logging')
+            history.push('/')
         }
         else{
             alert("No coinciden las contraseñas")  

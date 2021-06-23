@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loggingIn, handleChangePassword, handleSendEmail, emailToToken } from '../../redux/logging/loggingActions';
+import { loggingIn, handleSendEmail, emailToToken } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
-import {numeroPositivo, numeroPositivoEntero, correoElectronico} from "../../utils/validations"
+import {correoElectronico} from "../../utils/validations"
 
 import {
     Grid,
@@ -61,7 +61,7 @@ const Logging = () => {
         }
 
 
-    }, [authData])
+    }, [authData, dispatch])
 
     useEffect(() => {
         if(first_logging){        
@@ -80,8 +80,6 @@ const Logging = () => {
         else{
             dispatch(loggingIn(user)) // ----> va a modificar nuestro authData en el store!
         }
-        
-        
     };
 
     

@@ -1,3 +1,8 @@
+
+
+
+
+
 export function numeroPositivo(n) {  // 1 - 2 - 3,1 - 4 --> gastos/expensas  --> OKKKKKKKKKKKKK
     if(!isNaN(n) && n>=0){
         return true

@@ -45,15 +45,7 @@ export default function Sidebar() {
     setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
   }, [Notifications])
 
-
-  const { authData } = useSelector(state => {
-    return {
-        authData: state.loggingReducer.authData,
-    };
-  });
-
-  const [currentUser, setCurrentUser] =
-    useState(JSON.parse(localStorage.getItem('profile')));
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -114,9 +106,9 @@ export default function Sidebar() {
           <div className='login'>
             <Typography variant="h6" style={{ marginRight: 20 }}>
               {
-                authData?.name
+                currentUser?.name
                 ?
-                `Sesión de ${authData?.name}`
+                `Sesión de ${currentUser?.name}`
                 :
                 false
               }
@@ -145,7 +137,7 @@ export default function Sidebar() {
               onClose={handleClose}
             >
               {
-                authData?.name
+                currentUser?.name
                 ?
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 :

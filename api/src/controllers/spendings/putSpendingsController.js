@@ -8,9 +8,8 @@ module.exports = async (req, res, next) => {
 
     // console.log(req.user);
 
-    if(req.user.typeUser !== 'admin')
+    if(req.user.userType !== 'admin')
     {
-        console.log("no es un adminnnnnn")
         return res.status(403).json(new Error("Usuario no autorizado"));
     }
 

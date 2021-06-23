@@ -16,8 +16,7 @@ import {
   Receipt,
   ListAlt,
 } from "@material-ui/icons";
-import {
-  Typography,
+  import {
   InputLabel,
   NativeSelect,
   Grid,
@@ -30,10 +29,10 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeStyle";
 import swal from "sweetalert";
 import moment from "moment";
-import {numeroPositivo, numeroPositivoEntero, correoElectronico} from "../../utils/validations"
+import { numeroPositivo } from "../../utils/validations"
 
 const Form = (props) => {
-  
+
   const useStyles = makeStyles((theme) => ({
     root: {
       marginTop: 50,
@@ -44,6 +43,7 @@ const Form = (props) => {
     },
   }));
 
+  const [error, setError] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
   //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
@@ -52,7 +52,7 @@ const Form = (props) => {
     return {
       buildingArray: state.buildingReducer.allBuildings,
       totalSpend: state.reducerSpending.totalSpending
-      
+
     };
   });
 
@@ -75,7 +75,6 @@ const Form = (props) => {
       amount: 0,
     };
   } else {
-    console.log("totalSpend", totalSpend)
     newSpending = {
       date: totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
@@ -118,10 +117,16 @@ const Form = (props) => {
 
   const handleInputChange = (e) => {
     if (e.target.name === "amount") {
-      setSpending({
-        ...spending,
-        [e.target.name]: parseInt(e.target.value),
-      });
+      if (numeroPositivo(e.target.value)) {
+        setSpending({
+          ...spending,
+          [e.target.name]: parseInt(e.target.value),
+        })
+        setError(false)
+      }else {
+        setError(true)
+        
+      }
     } else {
       setSpending({
         ...spending,
@@ -200,12 +205,12 @@ const Form = (props) => {
 
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
-                          return (
-                            <option key={building.id} value={building.id}>
-                              {building.name}
-                            </option>
-                          );
-                        })
+                        return (
+                          <option key={building.id} value={building.id}>
+                            {building.name}
+                          </option>
+                        );
+                      })
                       : ""}
                   </NativeSelect>
                   {/* <TextField id="building-name" label="Nombre" defaultValue="Nombre del edificio" /> */}
@@ -320,6 +325,8 @@ const Form = (props) => {
                     min="1"
                     onChange={handleInputChange}
                     name="amount"
+                    error ={error ? true:false}
+                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
                   />
                 </Grid>
               </Grid>
