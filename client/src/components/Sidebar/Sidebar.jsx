@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -244,21 +243,6 @@ export default function Sidebar(props) {
                 <ListItemText className='fontColor' primary={'Usuarios'} />
               </ListItem>
             </Link>
-
-            {/* ----------------Links a Users Locatarios----------------- */}
-            <Link to={`/userView/1/home`}>
-              <ListItem button key={'Expensas'}>
-                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
-                <ListItemText className='fontColor' primary={'Usuarios'} />
-              </ListItem>
-            </Link>
-            <Link to="/userView/1/complaints">
-              <ListItem button key={'Expensas'}>
-                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
-                <ListItemText className='fontColor' primary={'Usuarios'} />
-              </ListItem>
-            </Link>
-
 
           </List>
         </Drawer>

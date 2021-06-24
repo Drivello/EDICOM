@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBuildings, getTraerSesion } from '../../redux/building/buildingActions';
+import { getBuildings } from '../../redux/building/buildingActions';
 import { getAlerts } from '../../redux/alerts/alertActions';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
@@ -21,25 +21,11 @@ const Home = (props) => {
 	const dispatch = useDispatch();
 	const today = new Date();
 
-	const token = JSON.parse(localStorage.getItem('profile')).token
-
-
-	const activeSesion = useSelector(state => state.buildingReducer.activeSesion);
-
-
 
 	useEffect(() => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
-		dispatch(getIdUser(token))
 	},[dispatch])
-
-	const token = JSON.parse(localStorage.getItem('profile'))?.token
-
-	const handleTraerSesion = function(){
-
-		dispatch(getTraerSesion(token));
-	}
 
 
 
@@ -59,11 +45,6 @@ const Home = (props) => {
 			}
 			</Carousel>
 
-
-			<Typography variant="h6">{JSON.stringify(activeSesion) || "No está trayendo nadaaa"}</Typography>
-			<Button onClick={handleTraerSesion}>Traer sesión activa</Button>
-
-
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -79,12 +60,6 @@ const Home = (props) => {
 				}
 			</MapContainer>
 			</Grid>
-			{/* <h1 className='title'>Mis Alertas</h1>
-			<Grid className='alerts'>
-				{
-					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
-				}
-			</Grid> */}
 		</Grid>
 		</ThemeProvider>
 		);
