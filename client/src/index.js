@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import App from './components/App/App.js';
+import AppGlobal from './AppGlobal'
 import reportWebVitals from './reportWebVitals'; // ¿de que sirve? ¿Es necesario?
 import {store} from './redux/indexStore';
+
 
 import './index.css';
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<AppGlobal />
 	</Provider>,
 	document.getElementById('root')
 );
@@ -18,3 +19,4 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { getExpenses } from "../../redux/expenses/expensesActions";
+import React, { useEffect, useState } from "react";
+import { getExpenses, filterExpenses } from "../../redux/expenses/expensesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import styles from "../Spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
 import ExpensesDetail from './ExpensesDetail'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, FormControl, InputLabel, Select } from "@material-ui/core";
 
 
 
@@ -34,19 +34,53 @@ export default function ExpensesTable() {
    
    const dispatch = useDispatch();
 
-   
    // No se si anda
    /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
    const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
+   const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
+   const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
    
    useEffect(() => {
       dispatch(getExpenses());
    }, [dispatch]);
+   
 
-   let arrFinal = []
-   expensesArray.map((apartment) => apartment.Expenses.map((a) => arrFinal.push(a)))
+   // ----------------------seleccion del edificio--------------------------
 
-   const rows = expensesArray.map( (apartment) => {
+   const [building, setBuilding] = useState({
+      building: "All",
+      apartment: "All"
+   });
+  
+   useEffect(() => {
+      dispatch(filterExpenses(building));
+   }, [building]);
+
+   function handleSelectBuilding (e){
+
+      var buildingId = ""
+
+      if(e.target.value!=="All"){
+         buildingId = allBuildings.filter(building => building.name === e.target.value)[0].id
+      }
+      else{
+         buildingId = "All"
+      }
+      setBuilding({ ...building, [e.target.name]: buildingId })
+      // dispatch(filterExpenses(building))
+   }
+   
+   function handleSelectApartment (e){
+      if(building.building==="All"){alert("No se puede elegir departamento sin selecciona edificio")}
+      else{
+         setBuilding({ ...building, [e.target.name]: e.target.value })
+      }
+   }
+
+   // console.log("expensesArray", expensesArray)
+   // console.log("filterBuildings", filterBuildings)
+
+   const rows = filterBuildings.map( (apartment) => {
 
       return createApartment(apartment.id, 
          apartment.cata_apartment, 
@@ -61,6 +95,49 @@ export default function ExpensesTable() {
    <ThemeProvider theme={theme}>
    <div className={styles.header}>
       <h1>Expensas</h1>
+
+
+      <FormControl style={{ width: "200px" }}>
+         <InputLabel id="demo-controlled-open-select-label">
+            Edificio
+         </InputLabel>
+         <Select  name="building" onChange={handleSelectBuilding}>
+            <MenuItem value="All">
+               <em>All</em>
+            </MenuItem>
+
+            {allBuildings.map((building, index) => (
+               <MenuItem
+                  value={building.name}
+                  key={index}
+               >
+                  {building.name}
+               </MenuItem>
+            ))}
+         </Select>
+      </FormControl>
+
+
+      <FormControl style={{ width: "200px" }}>
+         <InputLabel id="demo-controlled-open-select-label">
+            Departamento
+         </InputLabel>
+         <Select name="apartment" onChange={handleSelectApartment}>
+            <MenuItem value="All">
+               <em>All</em>
+            </MenuItem>
+
+            {filterBuildings.map((apartment, index) => (
+               <MenuItem
+                  value={apartment.number_apartment}
+                  key={index}
+               >
+                  {apartment.number_apartment}
+               </MenuItem>
+            ))}
+         </Select>
+      </FormControl>
+
       <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
          <TableHead>

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -9,6 +8,7 @@ import ApartmentIcon from '@material-ui/icons/Apartment';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import { Link, useHistory } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
@@ -28,7 +28,13 @@ import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
-export default function Sidebar() {
+
+
+
+
+export default function Sidebar(props) {
+
+
   const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
   const currentUserData = useSelector(state => state.userReducer.userDetail)
   const dispatch = useDispatch();
@@ -36,6 +42,8 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [noti, setNoti] = useState(false);
+
+  const history = useHistory();
 
   const [notiNumb, setNotiNumb] = useState(0);
 
@@ -52,14 +60,23 @@ export default function Sidebar() {
   }, [Notifications])
 
 
+
   const { authData } = useSelector(state => {
     return {
         authData: state.loggingReducer.authData,
     };
   });
 
-  const [currentUser, setCurrentUser] =
-    useState(JSON.parse(localStorage.getItem('profile')));
+  const current = JSON.parse(localStorage.getItem('profile'))
+
+  const [currentUser, setCurrentUser] = useState(current);
+
+  useEffect(() => {
+    setCurrentUser(current)
+  }, [ authData ])
+
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -80,6 +97,7 @@ export default function Sidebar() {
   const handleLogout = () => {
     dispatch(logout({ type: "LOGOUT" }))
     setCurrentUser(null);
+    window.location.href = 'http://localhost:3000/logging'
   }
 
 
@@ -120,9 +138,9 @@ export default function Sidebar() {
           <div className='login'>
             <Typography variant="h6" style={{ marginRight: 20 }}>
               {
-                authData?.name
+                currentUser?.name
                 ?
-                `Sesión de ${authData?.name}`
+                `Sesión de ${currentUser?.name}`
                 :
                 false
               }
@@ -151,7 +169,7 @@ export default function Sidebar() {
               onClose={handleClose}
             >
               {
-                authData?.name
+                currentUser?.name
                 ?
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 :
@@ -198,7 +216,7 @@ export default function Sidebar() {
               </ListItem>
             </Link>
 
-            <Link to='/spendings/board'>
+            <Link to='spendings/board'>
               <ListItem button key={'Gastos'}>
                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Gastos'} />
@@ -225,21 +243,6 @@ export default function Sidebar() {
                 <ListItemText className='fontColor' primary={'Usuarios'} />
               </ListItem>
             </Link>
-
-            {/* ----------------Links a Users Locatarios----------------- */}
-            <Link to={`/userView/1/home`}>
-              <ListItem button key={'Expensas'}>
-                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
-                <ListItemText className='fontColor' primary={'Usuarios'} />
-              </ListItem>
-            </Link>
-            <Link to="/userView/1/complaints">
-              <ListItem button key={'Expensas'}>
-                <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
-                <ListItemText className='fontColor' primary={'Usuarios'} />
-              </ListItem>
-            </Link>
-
 
           </List>
         </Drawer>

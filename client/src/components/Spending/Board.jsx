@@ -34,6 +34,7 @@ const Board = (props) => {
 
    const columns = [
       { field: "id", headerName: "ID", flex: 1.5, hide: true },
+      { field: "building", headerName: "Edificio", flex: 3 },
       { field: "date", headerName: "Fecha", flex: 3 },
       { field: "concept", headerName: "Concepto", flex: 3 },
       { field: "details", headerName: "Detalle", flex: 5 },
@@ -81,11 +82,17 @@ const Board = (props) => {
          buildingArray: state.buildingReducer.allBuildings,
       };
    });
+
+   console.log("----------------------------------------------")
+   console.log("filterSpend", filterSpend)
+   console.log("buildingArray", buildingArray)
+
    //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
    const spendings = filterSpend.map((spending) => {
       return {
          id: spending.id,
+         building: buildingArray.filter(building => building.id === spending.buildingId)[0]?.name,
          date: moment(spending.date).format("L"),
          concept: spending.concept,
          details: spending.details,
@@ -176,14 +183,6 @@ const Board = (props) => {
             </div>
             <Container className={classes.root}>
                   <div className={styles.date}>
-                     {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSelectAll}>
-                  Eliminar Filtros
-                </Button> */}
-                     <div>
-                        {/* <Button variant="contained" color="secondary" style={{ fontWeight: 1000, marginRight: "50px" }} onClick={handleSubmit}>
-                  Buscar
-                </Button> */}
-                     </div>
                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid
                            container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}

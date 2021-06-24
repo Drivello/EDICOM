@@ -61,7 +61,7 @@ function App() {
 				<Route exact path="/BuildingUpdate/:id" component={BuildingUpdate} />
 
 				{/* ----------------------------Logging----------------------------------- */}
-				<Route exact path="/logging" component={Logging} />
+				{/* <Route exact path="/logging" component={Logging} /> */}
 				<Route exact path="/logging/restaurarcontraseña" component = {ResetPassword}/>
 
 

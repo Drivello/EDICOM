@@ -19,9 +19,9 @@ const theme = createMuiTheme({
 			default: '#ffffff',
 		},
 	},
-	typography: {
-		fontFamily: 'Baloo Tammudu 2',
-	},
+	// typography: {
+	// 	fontFamily: 'Baloo Tammudu 2',
+	// },
 	overrides: {
 		MuiCssBaseline: {
 			'@global': {

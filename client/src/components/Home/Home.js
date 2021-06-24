@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBuildings } from '../../redux/building/buildingActions';
 import { getAlerts } from '../../redux/alerts/alertActions';
-import { Grid } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import Carousel from 'react-material-ui-carousel';
 import BuildingsList from './BuildingsList';
@@ -13,7 +13,6 @@ import './Home.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
-import { getIdUser } from '../../redux/logging/loggingActions';
 
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
@@ -22,13 +21,13 @@ const Home = (props) => {
 	const dispatch = useDispatch();
 	const today = new Date();
 
-	const token = JSON.parse(localStorage.getItem('profile')).token
 
 	useEffect(() => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
-		dispatch(getIdUser(token))
 	},[dispatch])
+
+
 
 	if(buildings.length > 0) {
 
@@ -45,6 +44,7 @@ const Home = (props) => {
 				buildings && buildings?.map( (building, i) => <BuildingsList style={{backgroundColor: "#212121"}} key={i} item={building} /> )
 			}
 			</Carousel>
+
 			<MapContainer className='map' center={[-31.426780,-64.190910]} zoom={12}>
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -60,12 +60,6 @@ const Home = (props) => {
 				}
 			</MapContainer>
 			</Grid>
-			{/* <h1 className='title'>Mis Alertas</h1>
-			<Grid className='alerts'>
-				{
-					alerts.filter(alert => new Date(alert.date).getMonth() === today.getMonth()).map(alert => <Alerts concept={alert.concept} building={alert.building.name}/>)
-				}
-			</Grid> */}
 		</Grid>
 		</ThemeProvider>
 		);

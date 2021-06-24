@@ -6,11 +6,10 @@ module.exports = async (req, res, next) => {
 
 	// console.log(req.user);
 
-	// if(req.user.typeUser !== 'admin')
-	// {
-	//     console.log("no es un adminnnnnn")
-	//     return res.status(403).json(new Error("Usuario no autorizado"));
-	// }
+    if(req.user.userType !== 'admin')
+    {
+        return res.status(403).json(new Error("Usuario no autorizado"));
+    }
 
 	try {
 		const spending = await Spendings.update(
