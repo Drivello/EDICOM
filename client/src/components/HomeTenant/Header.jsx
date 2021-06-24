@@ -151,7 +151,7 @@ export const Header = () => {
 
         if(token){
             if(!first_logging){                
-                history.push('/');
+                window.location.href = 'http://localhost:3000/'
             }
             else{
                 dispatch(emailToToken(username))
@@ -159,11 +159,12 @@ export const Header = () => {
             }
         }
     }, [authData, dispatch])
-
+    
     useEffect(() => {
         if(first_logging){        
             if(tokenToConfirm?.length > 2){
-                history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`)
+            /*     history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`) */
+                window.location.href = `http://localhost:3000/logging/restaurarcontraseña?${tokenToConfirm}`;
             }
         }
     }, [tokenToConfirm])

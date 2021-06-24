@@ -1,4 +1,3 @@
-const axios = require('axios');
 const { conn } = require('./../../db')
 const { MONTHS } = require('./../../utils/constants')
 const { Spendings, Expenses, Apartment } = require("../../db.js");
@@ -7,7 +6,12 @@ const { Spendings, Expenses, Apartment } = require("../../db.js");
 // Path --> Post(http://localhost:3001/expenses/add/:month/:year)
 module.exports = async (req, res, next) => {
 
+    console.log("generando las expensassssss")
+
     const {month, year} = req.params;
+
+    console.log('mes', month)
+    console.log('año', year)
 
     const t = await conn.transaction();
 

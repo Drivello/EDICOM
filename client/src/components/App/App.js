@@ -62,7 +62,7 @@ function App() {
 
 				{/* ----------------------------Logging----------------------------------- */}
 				{/* <Route exact path="/logging" component={Logging} /> */}
-				<Route exact path="/logging/restaurarcontraseña" component = {ResetPassword}/>
+				
 
 
 				{/* ----------------------------Spendings&Expenses----------------------------------- */}
