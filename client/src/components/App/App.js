@@ -27,9 +27,8 @@ import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
-import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 import RegisterAdmin from "../Admin/RegisterAdmin";
-import CalendarUser from '../Users/UserView/Alerts/CalendarUser';
+
 
 
 function App() {
@@ -75,8 +74,6 @@ function App() {
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
-				<Route exact path="/users/:id/alerts" component={AlertsUser}/>
-				<Route exact path="/users/:id/calendar" component={CalendarUser}/>
 				<Route path="/userView/:id" component={UserView} />
 				
 

@@ -44,7 +44,7 @@ export default function AlertsUser(props){
                     <h1>
                         Notificaciones
                     </h1>
-                    <Link >
+                    <Link to ={`/public/${id}/subscriptions`}>
                         <Button variant="contained" color ="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:'20px'}}>
                             <SubscriptionsIcon style={{ fontSize: 25, color: "#212121" }}/>
                         </Button>
