@@ -1,19 +1,17 @@
-const {User} = require('../../db.js');
+const {Apartment, User} = require('../../db.js');
+const bcrypt = require('bcryptjs');
 
 module.exports = async (req, res, next) => {
-	let {id, name, email, password, contact, isDeleted}= req.body;
+	let user = req.body;
+	let {apartment} = req.body;
+	console.log(user)
 	try {
-		user = await User.findOne({where: {id}});
-
-        user.name = name;
-        user.email = email;
-        user.password = password;
-        user.contact = contact;
-        user.isDeleted = isDeleted;
-		user.save();
-
+		const hashedPassword = await bcrypt.hash(user.password, 12);
+		user = await User.create({...user, password: hashedPassword});
+		user.setApartment(apartment);
 		return res.json(user).status(200);
 	} catch (err) {
 		res.json(err);
+		return console.log(err);
 	}
 };

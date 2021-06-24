@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const UseStyles = makeStyles((theme) => ({
     //bajo la imagen en responsive
 
     container: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const title = () => {
-    const classes = useStyles();
+    const classes = UseStyles();
     return (
         <div>
             <div className={classes.container}>
