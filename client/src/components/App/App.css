@@ -2,3 +2,13 @@
 	font-family: 'Baloo Tammudu 2', cursive;
 }
  */
+
+ .componentHeader {
+    display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}

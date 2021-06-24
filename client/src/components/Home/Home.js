@@ -14,7 +14,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 
 
-
 const Home = (props) => {
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
 	const alerts = useSelector(state => state.alertsReducer.allAlerts);
@@ -22,6 +21,7 @@ const Home = (props) => {
 	const dispatch = useDispatch();
 	const today = new Date();
 
+	const token = JSON.parse(localStorage.getItem('profile')).token
 
 
 	const activeSesion = useSelector(state => state.buildingReducer.activeSesion);
@@ -31,6 +31,7 @@ const Home = (props) => {
 	useEffect(() => {
 		dispatch(getBuildings());
 		dispatch(getAlerts());
+		dispatch(getIdUser(token))
 	},[dispatch])
 
 	const token = JSON.parse(localStorage.getItem('profile'))?.token

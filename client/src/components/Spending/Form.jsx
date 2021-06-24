@@ -79,24 +79,33 @@ const Form = (props) => {
     };
   } else {
     newSpending = {
-      date: totalSpend.filter(
+      date: totalSpend && (totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].date,
+      )[0] && totalSpend.filter(
+        (elem) => elem.id === parseInt(props.match.params.id)
+      )[0].date),
       // date: moment(new Date(new Date())).format("L"),
-      building: totalSpend.filter( 
-        (elem) => elem.id === parseInt(props.match.params.id))[0].buildingId,
-      concept: totalSpend.filter(
+      building: 1,
+      concept: totalSpend && (totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].concept,
-      supplier: totalSpend.filter(
+      )[0] && totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].supplier,
-      details: totalSpend.filter(
+      )[0].concept),
+      supplier: totalSpend && (totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].details,
-      amount: totalSpend.filter(
+      )[0] && totalSpend.filter(
         (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].amount,
+      )[0].supplier),
+      details: totalSpend && (totalSpend.filter(
+        (elem) => elem.id === parseInt(props.match.params.id)
+      )[0] && totalSpend.filter(
+        (elem) => elem.id === parseInt(props.match.params.id)
+      )[0].details),
+      amount: totalSpend && (totalSpend.filter(
+        (elem) => elem.id === parseInt(props.match.params.id)
+      )[0] && totalSpend.filter(
+        (elem) => elem.id === parseInt(props.match.params.id)
+      )[0].amount),
     };
   }
 
@@ -142,6 +151,7 @@ const Form = (props) => {
   };
 
   const handleUpdate = (e) => {
+    console.log("despache")
     dispatch(putSpending([parseInt(props.match.params.id), spending]));
     swal("Gasto Editado!", "Gracias!", "success");
   };

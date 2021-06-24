@@ -11,6 +11,10 @@ const theme = createMuiTheme({
 			main: '#00ff7f',
 			contrastText: '#212121',
 		},
+		info: {
+			main: '#ff0080',
+			contrastText: '#ffffff',
+		},
 		background: {
 			default: '#ffffff',
 		},
