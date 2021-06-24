@@ -5,8 +5,8 @@ module.exports = async (req, res, next) => {
 	let user = req.body;
 	let {apartment} = req.body;
 	try {
-		// const hashedPassword = await bcrypt.hash(user.password, 12);
-		user = await User.create(user);
+		const hashedPassword = await bcrypt.hash(user.password, 12);
+		user = await User.create({...user, password: hashedPassword});
 		user.setApartment(apartment);
 		return res.json(user).status(200);
 	} catch (err) {
