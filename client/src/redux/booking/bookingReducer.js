@@ -3,7 +3,8 @@ import {
 	ALL_BOOKINGS,
 	GET_BOOKING_BY_ID,
 	DELETE_BOOKING,
-	FILTER_BOOKING
+	FILTER_BOOKING,
+	PUT_BOOKING,
 } from './bookingActions';
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
 	allBookings: [],
 	bookingDetail: [],
 	bookingDeleted: [],
-	bookingFilter: []
+	bookingFilter: [],
+	putBooking: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,10 +33,10 @@ const reducer = (state = initialState, action) => {
 				...state,
 				bookingDetail: action.payload,
 			};
-		case DELETE_BOOKING:
+		case PUT_BOOKING:
 			return {
 				...state,
-				bookingDeleted: action.payload,
+				putBooking: action.payload,
 			};
 		case FILTER_BOOKING:
 			return {

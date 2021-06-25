@@ -3,6 +3,7 @@ export const POST_ALERT_URL = "http://localhost:3001/alerts";
 export const PUT_ALERT_URL = "http://localhost:3001/alerts";
 export const DELETE_ALERT_URL= "http://localhost:3001/alerts";
 export const FIND_ALERT_URL= "http://localhost:3001/alerts";
+export const SEND_EMAIL_URL = "http://localhost:3001/alerts/sendEmail";
 
 export function filterAlerts(array,building,importance,since,upTo) {
     let result;

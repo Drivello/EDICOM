@@ -29,6 +29,10 @@ import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
 import RegisterAdmin from '../Admin/RegisterAdmin';
 import CreateBookings from '../Amenities/CreateBooking/CreateBookings';
+import AmenitieDetail from '../Amenities/AmenitieDetail/AmenitieDetail';
+import ComplaintsList from "../Complaints/ComplaintsList"
+
+
 
 function App() {
 	return (
@@ -81,6 +85,9 @@ function App() {
 
 				{/* ----------------------------Crear Turnos para amenities----------------------------------- */}
 				<Route path="/createBookings" component={CreateBookings} />
+				<Route path="/AmenitieDetail/:id" component={AmenitieDetail} />
+				<Route path="/complaints" component={ComplaintsList} />
+				
 			</BrowserRouter>
 		</Container>
 	);
