@@ -6,6 +6,7 @@ const UseStyles = makeStyles((theme) => ({
 
     container: {
         textAlign: 'center',
+        marginRight:'70px'
        
     },
 }))
