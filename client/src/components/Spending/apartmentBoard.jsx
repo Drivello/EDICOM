@@ -32,7 +32,7 @@ import filter from '../../utils/filter-remove.png';
 import { ExpensesGenerator } from "./ExpensesGenerator/ExpensesGenerator.jsx";
 
 
-const Board = (props) => {
+const ApartmentBoard = (props) => {
 
    //--------------------------- Creando estructura de la tabla ------------------------
 
@@ -314,4 +314,4 @@ const Board = (props) => {
    );
 };
 
-export default Board;
+export default ApartmentBoard;

@@ -17,6 +17,9 @@ const AppGlobal = () => {
 	// });
 
 	const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+	console.log('currentUser',currentUser)
+	
 	
 	
 	return (

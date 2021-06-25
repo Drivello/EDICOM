@@ -27,7 +27,9 @@ import ShowAmenities from '../Amenities/ShowAmenities';
 import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
-import RegisterAdmin from "../Admin/RegisterAdmin";
+import RegisterAdmin from '../Admin/RegisterAdmin';
+import CreateBookings from '../Amenities/CreateBooking/CreateBookings';
+import AmenitieDetail from '../Amenities/AmenitieDetail/AmenitieDetail';
 import ComplaintsList from "../Complaints/ComplaintsList"
 
 
@@ -37,7 +39,6 @@ function App() {
 		<Container className="App">
 			<CssBaseline />
 			<BrowserRouter>
-
 				{/* ----------------------------Alertas----------------------------------- */}
 				<Route exact path="/alerts" component={Alerts} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
@@ -53,7 +54,6 @@ function App() {
 				<Route path="/apartmentadd" component={CreateApartment} />
 				<Route path="/apartment/:id" component={EditApartmentForm} />
 
-
 				{/* ----------------------------buildings----------------------------------- */}
 				<Route exact path="/buildings" component={Buildings} />
 				<Route exact path="/buildingadd" component={BuildingAdd} />
@@ -62,26 +62,30 @@ function App() {
 
 				{/* ----------------------------Logging----------------------------------- */}
 				{/* <Route exact path="/logging" component={Logging} /> */}
-				
-
 
 				{/* ----------------------------Spendings&Expenses----------------------------------- */}
 				<Route exact path="/spendings/board" component={Board} />
 				<Route exact path="/ExpensesTable" component={Expenses} />
 				<Route exact path="/spendings/newSpending" component={Form} />
-				<Route path="/spendings/board/:id/edit" render={({match}) => <Form match={match} />}/>
+				<Route
+					path="/spendings/board/:id/edit"
+					render={({match}) => <Form match={match} />}
+				/>
 
 				{/* ----------------------------User----------------------------------- */}
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
 				<Route path="/userUpdate/:id" component={UserUpdate} />
 				<Route path="/userView/:id" component={UserView} />
-				
 
 				{/* ----------------------------Generales----------------------------------- */}
 				<Route exact path="/" component={Home} />
 				<Route path="/" component={Sidebar} />
-				<Route path="/registerAdmin" component={RegisterAdmin} />	
+				<Route path="/registerAdmin" component={RegisterAdmin} />
+
+				{/* ----------------------------Crear Turnos para amenities----------------------------------- */}
+				<Route path="/createBookings" component={CreateBookings} />
+				<Route path="/AmenitieDetail/:id" component={AmenitieDetail} />
 				<Route path="/complaints" component={ComplaintsList} />
 				
 			</BrowserRouter>
