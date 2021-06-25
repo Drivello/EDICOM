@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        fontFamily: 'Nunito',
 
     },
     appbar: {
@@ -28,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
 
     },
     appbarTitle: {
-
+        marginRight: '150px',
         flexGrow: '1',
     },
     icon: {
-        color: '#fff',
+        color: '#00ff7f',
         fontSize: '1rem',
+
     },
     colorText: {
         color: '#FF0000'
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     container: {
         textAlign: 'center',
         fontSize: '20px',
-        fontFamily: 'Nunito',
         justifyContent: 'center',
         alignItems: 'center',
         height: '10vh',
@@ -49,21 +48,23 @@ const useStyles = makeStyles((theme) => ({
     container2: {
         textAlign: 'center',
         fontSize: '23px',
-        fontFamily: 'Nunito',
         justifyContent: 'center',
         alignItems: 'center',
+        marginRight: '150px'
 
 
     },
     title: {
         /*      marginLeft:'160px', */
-        color: '#000000',
+        color: '#00ff7f',
         fontSize: '3rem',
+       
 
     },
     goDown: {
-        color: '#FF0000',
-        fontSize: '4rem'
+        color: '#00ff7f',
+        fontSize: '4rem',
+        marginRight: '150px'
     },
     container3: {
         marginRight: '200px'
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     boton: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: '45rem'
+      
     }
 
 
@@ -84,13 +85,15 @@ const Text = ({ checked }) => {
             <div className={classes.color}>
                 <div >
                 <div className={classes.container}>
-                        <h2 className={classes.appbarTitle}>Quienes Somos?</h2>
+                        <h2  className={classes.appbarTitle}>Quiénes Somos?</h2>
 
                     </div>
 
                     <Toolbar className={classes.appbarWrapper}>
-                        <p className={classes.container2}>Somos una empresa dedicada de software ,radicada en Argentina,
-                            líderes en innovación y tecnologías que sean simples para el usuario <br/>
+                        <p align="right" className={classes.container2}>Somos una empresa dedicada de software ,radicada en Argentina,
+                            líderes en innovación y tecnologías que sean simples para el usuario . <br></br>
+                            
+                            
                             Actualmente nos dedicamos al desarrollo de un sistema de consorcio con
                             el objetivo maximizar ganancias y reducir perdidas. 
                         </p>

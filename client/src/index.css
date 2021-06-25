@@ -3,7 +3,8 @@ body {
   font-family: 'Baloo Tammudu 2', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: black;
+  background-color: black; 
+ 
 }
 
 code {

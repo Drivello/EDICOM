@@ -50,7 +50,7 @@ const AppGlobal = () => {
 				/>
 
 				<Route 
-					exact path="/"
+					 path="/"
 					component={ (props) => (
 						( (currentUser && currentUser.name === "the admin") )
 						? ( <App { ...props } /> )
