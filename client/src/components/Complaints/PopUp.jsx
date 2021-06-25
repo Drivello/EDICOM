@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
-import { putStateComplaint , getComplaints} from '../../redux/complaints/complaintsActions'
+import { putStateComplaint , getComplaints} from '../../redux/complaints/complaintsActions';
+import styles from "./Styles.module.css";
 
 export default function PopUp(props) {
 
@@ -50,10 +51,10 @@ export default function PopUp(props) {
                         <h4>
                             Estado: {props.alertProps.state}
                         </h4>
-                        <Button onClick={handleClose} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                        <Button id={styles.button} onClick={handleClose} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
                             Cerrar Reclamo
                         </Button>
-                        <Button onClick={handleOpen} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                        <Button id={styles.button} onClick={handleOpen} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
                             Abrir Reclamo
                         </Button>
                     </div>

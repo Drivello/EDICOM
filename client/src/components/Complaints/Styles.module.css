@@ -6,3 +6,7 @@
 .detail{
     text-decoration: underline ;
 }
+
+#button{
+    margin-right: 20px;
+}
