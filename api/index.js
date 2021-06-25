@@ -241,60 +241,7 @@ conn.sync({force: true}).then(() => {
 		}
 	}
 
-	let amenitie1 = Amenity.create({
-        amenity_type: 'Pileta',
-        quantity: '1',
-        capacity: '3',
-        amenity_detail: 'Aca, en la pile, contesteeeen'
-    })
-
-    let amenitie2 = Amenity.create({
-        amenity_type: 'Gimnacio',
-        quantity: '1',
-        capacity: '3',
-        amenity_detail: 'Aca, en la pile, contesteeeen'
-    })
-
-    let amenitie3 = Amenity.create({
-        amenity_type: 'Parrilla',
-        quantity: '1',
-        capacity: '3',
-        amenity_detail: 'Tripa gordaaa'
-    })
-
-
-
-	let booking1 = Booking.create({
-        amenityId: 1,
-        start: '2021-06-24T16:50:00.000Z',
-        finish: '2021-06-30T16:50:00.000Z',
-        status:"free",
-        timeStart: '07:30',
-        timeEnd: '21:30',
-        duration: '08:00'
-    })
-
-    let booking2 = Booking.create({
-        amenityId: 1,
-        start: '2021-06-24T16:50:00.000Z',
-        finish: '2021-06-30T16:50:00.000Z',
-        timeStart: '07:30',
-        timeEnd: '21:30',
-        duration: '08:00',
-        status:"free"
-    })
-
-    let booking3 = Booking.create({
-        amenityId: 2,
-        start: '2021-06-24T16:50:00.000Z',
-        finish: '2021-06-30T16:50:00.000Z',
-        timeStart: '07:30',
-        timeEnd: '21:30',
-        status:"free",
-        duration: '08:00'
-    })
-
-
+	
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
 		[
