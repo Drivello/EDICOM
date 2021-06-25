@@ -1,9 +1,11 @@
 const {Amenity, Booking} = require('../../db.js');
 
 module.exports = async (req, res, next) => {
-	console.log('REEEEEEEEEEQBOOOOOOODY', req.body);
 
 	let {idAmenity, dateStart, dateEnd, timeStart, timeEnd, duration} = req.body;
+
+	dateStart = new Date(dateStart);
+	dateEnd = new Date(dateEnd);
 
 	try {
 		// Busco el amenity al que se le van a crear los turnos y lo guardo en "amenity"
@@ -15,47 +17,60 @@ module.exports = async (req, res, next) => {
 			},
 		});
 
-		console.log('Encontré el amenity', amenity);
-
 		// Obetengo el cupo de ese amenity y lo guardo en "quota"
 		const quota = amenity.capacity;
 
-		console.log('quota', quota);
-
 		// Calculo la cantidad de dias y turnos por día que se van a crear con los datos de:
 		// dateStart, dateEnd, timeStart, timeEnd y quota
-		const totalDays =
-			(dateEnd.valueOf() - dateStart.valueOf()) / (1000 * 60 * 60 * 24) + 1;
 
-		console.log('totalDays', totalDays);
+		const totalDays = Math.round((dateEnd.valueOf() - dateStart.valueOf()) / (1000 * 60 * 60 * 24) + 1);
 
-		const bookingPerDay =
-			Math.floor(
-				(timeEnd.getHours() - timeStart.getHours()) * 60 +
-					(timeEnd.getMinutes() - timeStart.getMinutes())
-			) /
-			(duration.getHours() * 60 + duration.getMinutes());
+		console.log('totalDayssssssssssssssss', totalDays)
 
-		console.log('bookingPerDay', bookingPerDay);
+		const [hoursStart, minutesStart] = timeStart.split(':');
+		const [hoursEnd, minutesEnd] = timeEnd.split(':');
+		const [hoursDuration, minutesDuration] = duration.split(':');
 
-		// Hago un bucle for de 1 a la cantidad de turnos a crear y en cada vuelta de bucle
-		// creo una nueva instancia de "Booking", cuando se finaliza la promesa de creación
-		// se la asigno a "amenity"
+
+
+		timeStart = (new Date((new Date()).setHours(parseInt(hoursStart)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesStart)))).getMinutes();
+		timeEnd = (new Date((new Date()).setHours(parseInt(hoursEnd)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesEnd)))).getMinutes();
+		duration = (new Date((new Date()).setHours(parseInt(hoursDuration)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesDuration)))).getMinutes();
+
+		const bookingPerDay = Math.floor((timeEnd - timeStart)/(duration));
+
+		console.log('BOOOKING PER DAAYYYYYYY', bookingPerDay);
+
 
 		// day.setDate(day.getDate() + 1);
 		let bookingInit = dateStart;
-		bookingInit.setHours(timeStart.getHours(), timeStart.getMinutes());
 
-		let bookingEnd = dateStart;
+		console.log('bookingInitttttttttttt',bookingInit)
+		bookingInit.setHours(timeStart / 60, timeStart % 60);
+
+		console.log('bookingInitttttt con hora cambiadaaaaaaaa', bookingInit)
+
+		// let bookingEnd = JSON.stringify(JSON.parse(dateStart));
+		let bookingEnd = Object.assign(new Date(), dateStart)
+
+		console.log(typeof duration)
+
+		console.log('Numeradorrrrrrrrr', bookingInit.getHours() + duration / 60)
+		console.log('Denominadorrrrrr', bookingInit.getMinutes() + duration)
+
 		bookingEnd.setHours(
-			bookingInit.getHours() + duration.getHours(),
-			bookingInit.getMinutes() + duration.getMinutes()
+			bookingInit.getHours() + duration / 60,
+			bookingInit.getMinutes() + duration % 60
 		);
+
+		console.log('bookingEndddddddddddddd',bookingEnd)
 
 		let newBooking;
 
 		console.log('totalDays', totalDays);
 		console.log('bookingPerDay', bookingPerDay);
+
+		console.log('tipo de total dayssssss', typeof totalDays)
 
 		for (let i = 0; i < totalDays; i++) {
 			console.log('entro al primeerrrrr FORRRRRRRRR');
@@ -74,22 +89,22 @@ module.exports = async (req, res, next) => {
 				console.log('booking', newBooking);
 
 				bookingInit.setHours(
-					bookingInit.getHours() + duration.getHours(),
-					bookingInit.getMinutes() + duration.getMinutes()
+					bookingInit.getHours() + duration / 60,	
+					bookingInit.getMinutes() + duration % 60
 				);
 				bookingEnd.setHours(
-					bookingEnd.getHours() + duration.getHours(),
-					bookingEnd.getMinutes() + duration.getMinutes()
+					bookingEnd.getHours() + duration / 60,
+					bookingEnd.getMinutes() + duration % 60
 				);
 			}
 
 			bookingInit.setDate(bookingInit.getDate() + 1);
-			bookingInit.setHours(timeStart.getHours(), timeInit.getMinutes());
+			bookingInit.setHours(timeStart / 60, timeStart % 60);
 
 			bookingEnd.setDate(bookingEnd.getDate() + 1);
 			bookingEnd.setHours(
-				bookingInit.getHours() + duration.getHours(),
-				bookingInit.getMinutes() + duration.getMinutes()
+				bookingInit.getHours() + duration / 60,
+				bookingInit.getMinutes() + duration % 60
 			);
 		}
 
@@ -97,6 +112,7 @@ module.exports = async (req, res, next) => {
 
 		return res.json('Se cargaron los turnos');
 	} catch (error) {
-		res.json(error);
+		console.log(error);
+		next(error);
 	}
 };
