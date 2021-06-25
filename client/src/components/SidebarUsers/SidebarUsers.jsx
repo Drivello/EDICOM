@@ -26,7 +26,8 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 export default function Sidebar(props) {
 
     const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
-    const currentUserData = useSelector(state => state.userReducer.userDetail)
+    const currentUserData = useSelector(state => state.userReducer.userDetail);
+    const userInfo = useSelector(state => state.loggingReducer.userId);
     const dispatch = useDispatch();
     const classes = useStyles(theme);
     const [open, setOpen] = useState(false);
@@ -35,19 +36,21 @@ export default function Sidebar(props) {
     const history = useHistory();
     const [notiNumb, setNotiNumb] = useState(0);
     const [userToken, setUserToken] = useState('');
+    const [userId, setUserId] = useState('');
     
     async function getToken() {
-      const sessionData = await JSON.parse(localStorage.getItem('profile'))
-      const userToken = sessionData.token
-      setUserToken(userToken)
-      return userToken
-    }
-    getToken()
+        const sessionData = await JSON.parse(localStorage.getItem('profile'))
+        const newUserToken = sessionData.token
+        setUserToken(newUserToken)
+    }    
     useEffect(() => {
-      dispatch(getIdUser(userToken))
-    }, [userToken])
+        getToken();
+    }, [])
     
-    console.log(userToken);
+    useEffect(() => {
+        dispatch(getIdUser(userToken))
+        setUserId(userInfo && userInfo.id)
+    }, [userToken])
     
     useEffect(() => {
         dispatch(getComplaints())
@@ -200,28 +203,28 @@ export default function Sidebar(props) {
 
                     <List>
 
-                        <Link to="/public/:id/" className='link'>
+                        <Link to={`/public/${userId}`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><HomeIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Inicio'} />
                             </ListItem>
                         </Link>
 
-                        <Link to="/public/:id/amenities/" className='link'>
+                        <Link to={`/public/${userId}/amenities`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Amenities'} />
                             </ListItem>
                         </Link>
 
-                        <Link to='/public/:id/myExpenses'>
+                        <Link to={`/public/${userId}/myExpenses`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />
                             </ListItem>
                         </Link>
 
-                        <Link to='/public/:ic/alerts'>
+                        <Link to={`/public/${userId}/complaints`}>
                             <ListItem button key={'Alertas'}>
                                 <ListItemIcon><AnnouncementIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Reclamos'} />

@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { Header } from '../HomeTenant/Header';
 import SidebarUsers from '../SidebarUsers/SidebarUsers';
+import UserView from '../Users/UserView/UserView';
 
 
 function AppPublic() {
@@ -16,6 +17,7 @@ function AppPublic() {
 
 					{/* //Poner acá los route con los componentes de la vista del locatario */}
 					<Route path="/public" component={SidebarUsers} />
+					<Route path="/public" component={UserView} />
 
 				</BrowserRouter>
 		</Container>
