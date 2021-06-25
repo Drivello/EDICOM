@@ -68,3 +68,8 @@
     align-items: center;
     height: 100%
 }
+
+.all{
+    display: flex;
+    justify-content:center
+}
