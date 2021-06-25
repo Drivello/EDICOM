@@ -28,6 +28,7 @@ import CreateAmenity from '../Amenities/CreateAmenity';
 import UpdateAmenity from '../Amenities/UpdateAmenity';
 import ResetPassword from '../Logging/resetPassword';
 import RegisterAdmin from "../Admin/RegisterAdmin";
+import ComplaintsList from "../Complaints/ComplaintsList"
 
 
 
@@ -81,6 +82,7 @@ function App() {
 				<Route exact path="/" component={Home} />
 				<Route path="/" component={Sidebar} />
 				<Route path="/registerAdmin" component={RegisterAdmin} />	
+				<Route path="/complaints" component={ComplaintsList} />
 				
 			</BrowserRouter>
 		</Container>
