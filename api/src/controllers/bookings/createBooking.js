@@ -76,6 +76,7 @@ module.exports = async (req, res, next) => {
 			console.log('entro al primeerrrrr FORRRRRRRRR');
 
 			for (let j = 0; j < bookingPerDay; j++) {
+
 				console.log(
 					'-------------------- estoy creando un nuevo booking ------------------------'
 				);

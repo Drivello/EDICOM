@@ -2,14 +2,14 @@ import {
 	CREATE_BOOKING,
 	ALL_BOOKINGS,
 	GET_BOOKING_BY_ID,
-	DELETE_BOOKING,
+	PUT_BOOKING,
 } from './bookingActions';
 
 const initialState = {
 	bookingCreated: [],
 	allBookings: [],
 	bookingDetail: [],
-	bookingDeleted: [],
+	putBooking: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,10 +29,10 @@ const reducer = (state = initialState, action) => {
 				...state,
 				bookingDetail: action.payload,
 			};
-		case DELETE_BOOKING:
+		case PUT_BOOKING:
 			return {
 				...state,
-				bookingDeleted: action.payload,
+				putBooking: action.payload,
 			};
 		default:
 			return state;

@@ -2,7 +2,7 @@ import axios from 'axios';
 export const CREATE_BOOKING = 'CREATE_BOOKING';
 export const ALL_BOOKINGS = 'ALL_BOOKINGS';
 export const GET_BOOKING_BY_ID = 'GET_BOOKING_BY_ID';
-export const DELETE_BOOKING = 'DELETE_BOOKING';
+export const PUT_BOOKING = 'PUT_BOOKING';
 
 export function createBooking(booking) {
 	return async function (dispatch) {
@@ -18,18 +18,26 @@ export function allBookings() {
 	};
 }
 
-export function getBookingById(userId) {
+export function getBookingByAmenity(amenityId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/bookings/${userId}`);
+		const {data} = await axios.get(`http://localhost:3001/bookings/${amenityId}`);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
 	};
 }
 
-export function deleteBooking(bookingId) {
+
+export function getBookingById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.delete(
-			`http://localhost:3001/bookings/${bookingId}`
+		const {data} = await axios.get(`http://localhost:3001/bookings/${id}`);
+		dispatch({type: GET_BOOKING_BY_ID, payload: data});
+	};
+}
+
+export function putBooking(id) {
+	return async function (dispatch) {
+		const {data} = await axios.put(
+			`http://localhost:3001/bookings/${id}`
 		);
-		dispatch({type: DELETE_BOOKING, payload: data});
+		dispatch({type: PUT_BOOKING, payload: data});
 	};
 }
