@@ -5,6 +5,7 @@ export const POST_SUBSCRIPTION = 'POST_SUBSCRIPTION';
 export const PUT_SUBSCRIPTION = 'PUT_SUBSCRIPTION';
 export const DELETE_SUBSCRIPTION = 'DELETE_SUBSCRIPTION';
 export const FIND_SUBSCRIPTION = 'FIND_SUBSCRIPTION';
+export const GET_SUBSCRIPTIONS_BUILDING = 'GET_SUBSCRIPTIONS_BUILDING';
 
 
 export function getSubscriptions() {
@@ -27,6 +28,25 @@ export function getSubscriptions() {
     }
 }
 
+export function getSubscriptionsBuilding(id) {
+    return function(dispatch) {
+        return axios.get(`${GET_ALL_SUBSCRIPTIONS_URL}/${id}`)
+        .then(data => {
+            dispatch({
+                type: GET_SUBSCRIPTIONS_BUILDING,
+                payload: data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: GET_SUBSCRIPTIONS_BUILDING,
+                payload: {
+                    status: "error"
+                }
+            })
+        })
+    }
+}
 
 export function postSubscription(body) {
     return function(dispatch){

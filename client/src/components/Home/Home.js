@@ -15,6 +15,8 @@ import theme from '../themeStyle';
 
 
 const Home = (props) => {
+
+
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
 	const alerts = useSelector(state => state.alertsReducer.allAlerts);
 	const spends = useSelector(state => state.reducerSpending.totalSpending); //prueba marian

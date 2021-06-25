@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '30px',
         // border: 'red 2px solid'
     },
-    ingresar:{
+    ingresar: {
         color: 'white',
         fontSize: '20px',
         // border: 'red 2px solid'
@@ -111,12 +111,12 @@ const useStyles = makeStyles((theme) => ({
         // Fix IE 11 issue.
         // marginTop: theme.spacing(1),
         marginTop: '100px',
-        marginLeft:'1050px'
+        marginLeft: '1050px'
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#00ff7f',
-        width:'19rem'
+        width: '19rem'
     },
     root2: {
         height: '80vh',
@@ -136,9 +136,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#000000',
         opacity: '3'
     },
-    boton:{
-       textDecoration:'none',
-       color: 'white'
+    boton: {
+        textDecoration: 'none',
+        color: 'white'
     },
 }));
 
@@ -180,7 +180,7 @@ export const Header = () => {
 
         if (token) {
             if (!first_logging) {
-                history.push('/');
+                window.location.href = 'http://localhost:3000/'
             }
             else {
                 dispatch(emailToToken(username))
@@ -192,7 +192,8 @@ export const Header = () => {
     useEffect(() => {
         if (first_logging) {
             if (tokenToConfirm?.length > 2) {
-                history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`)
+                /*     history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`) */
+                window.location.href = `http://localhost:3000/logging/restaurarcontraseña?${tokenToConfirm}`;
             }
         }
     }, [tokenToConfirm])
@@ -221,10 +222,10 @@ export const Header = () => {
     }
 
     const [open, setOpen] = React.useState(false);
-    function handleOpen(){
+    function handleOpen() {
         setOpen(true);
     }
-    function handleClose(){
+    function handleClose() {
         setOpen(false);
     }
 
@@ -233,114 +234,111 @@ export const Header = () => {
 
             <AppBar className={classes.appbar} elevation={0}>
                 <Toolbar className={classes.appbarWrapper}>
-                    <h2 className={classes.appbarTitle}>Edi<span className={classes.colorText}>com.</span>
-                        {/* <img src={logoEdicom} href='/logging' alt='Logo Edicom' width="160" height="55" ></img */}</h2>
-                    {/* <button type="button" onClick={handleOpen}>
-                        Ingresar
-                    </button> */}
-                        <CssBaseline />
+                    <h2 className={classes.appbarTitle}>Edi<span className={classes.colorText}>com.</span></h2>
+            
+                    <CssBaseline />
 
-                        <div className={classes.paper}>
-                            <div className={classes.bottonIngresar}>
-                                <Avatar className={classes.avatar} onClick={handleOpen}>
-                                    <LockOutlinedIcon />
-                                </Avatar>
+                    <div className={classes.paper}>
+                        <div className={classes.bottonIngresar}>
+                            <Avatar className={classes.avatar} onClick={handleOpen}>
+                                <LockOutlinedIcon />
+                            </Avatar>
 
-                                <Typography component="h1" variant="h5" onClick={handleOpen}>
-                                    Ingresar
-                                </Typography>
-                            </div>
-                            
-
-                            <Modal
-                                aria-labelledby="transition-modal-title"
-                                aria-describedby="transition-modal-description"
-                                className={classes.modal}
-                                open={open}
-                                onClose={handleClose}
-                                closeAfterTransition
-                                BackdropComponent={Backdrop}
-                                BackdropProps={{
-                                timeout: 500,
-                                }}
-                            >
-
-                                <Fade in={open}>
-                                    <div className={classes.paper}>
-                                        <form onSubmit={handleSubmit} className={classes.form} noValidate>
-                                            <TextField
-                                                variant="outlined"
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                id="email"
-                                                label="Email"
-                                                name="email"
-                                                autoComplete="email"
-                                                autoFocus
-                                                value={username}
-                                                style={{ backgroundColor: 'transparent' }}
-                                                className={classes.inputs}
-                                                onChange={(e) => {
-                                                    handleChange(e)
-                                                }
-                                                }
-                                            />
-                                            <TextField
-                                                variant="outlined"
-                                                margin="normal"
-                                                required
-                                                fullWidth
-                                                className={classes.inputs}
-                                                name="password"
-                                                label="Contraseña"
-                                                type="password"
-                                                id="password"
-                                                autoComplete="current-password"
-                                                style={{ backgroundColor: 'transparent' }}
-                                                value={password}
-                                                onChange={(e) => {
-                                                    handleChange(e);
-                                                }
-                                                }
-                                            />
-                                            <FormControlLabel
-                                                control={<Checkbox value="remember" color="primary" />}
-                                                label="Recuerdame"
-
-                                            />
-                                            <Button
-                                                type="submit"
-                                                fullWidth
-                                                variant="contained"
-                                                color="primary"
-                                                className={classes.submit}
-
-                                            >
-                                                Ingresar
-                                            </Button>
-                                            <Grid container>
-                                                <Grid item xs>
-                                                    <Link href="#" className={classes.boton} onClick={handleEmail} variant="body2">
-                                                        Olvidaste la constraseña?
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Link href="#" variant="body2" className={classes.boton}>
-
-                                                        {"Registrate"}
-                                                    </Link>
-                                                </Grid>
-                                            </Grid>
-                                        </form>
-                                    </div>
-                                </Fade>
-                            </Modal>
+                            <Typography component="h1" variant="h5" onClick={handleOpen}>
+                                Ingresar
+                            </Typography>
                         </div>
+
+
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            className={classes.modal}
+                            open={open}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                                timeout: 500,
+                            }}
+                        >
+
+                            <Fade in={open}>
+                                <div className={classes.paper}>
+                                    <form onSubmit={handleSubmit} className={classes.form} noValidate>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email"
+                                            name="email"
+                                            autoComplete="email"
+                                            autoFocus
+                                            value={username}
+                                            style={{ backgroundColor: 'transparent' }}
+                                            className={classes.inputs}
+                                            onChange={(e) => {
+                                                handleChange(e)
+                                            }
+                                            }
+                                        />
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            className={classes.inputs}
+                                            name="password"
+                                            label="Contraseña"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                            style={{ backgroundColor: 'transparent' }}
+                                            value={password}
+                                            onChange={(e) => {
+                                                handleChange(e);
+                                            }
+                                            }
+                                        />
+                                        <FormControlLabel
+                                            control={<Checkbox value="remember" color="primary" />}
+                                            label="Recuerdame"
+
+                                        />
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.submit}
+
+                                        >
+                                            Ingresar
+                                        </Button>
+                                        <Grid container>
+                                            <Grid item xs>
+                                                <Link href="#" className={classes.boton} onClick={handleEmail} variant="body2">
+                                                    Olvidaste la constraseña?
+                                                </Link>
+                                            </Grid>
+                                            <Grid item>
+                                                <Link href="#" variant="body2" className={classes.boton}>
+
+                                                    {"Registrate"}
+                                                </Link>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </div>
+                            </Fade>
+                        </Modal>
+                    </div>
                 </Toolbar>
             </AppBar>
 
-            
+
             <div className={classes.root2}>
                 <Collapse in={checked}
                     {...(checked ? { timeout: 1000 } : {})}
@@ -360,86 +358,6 @@ export const Header = () => {
 
                 </Collapse>
 
-                {/* <Grid container component="main" className={classes.form}>
-                    <CssBaseline />
-
-                    <div className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Ingresar
-                        </Typography>
-                        <form onSubmit={handleSubmit} className={classes.form} noValidate>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                value={username}
-                                style={{ backgroundColor: 'transparent' }}
-                                className={classes.inputs}
-                                onChange={(e) => {
-                                    handleChange(e)
-                                }
-                                }
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                className={classes.inputs}
-                                name="password"
-                                label="Contraseña"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                style={{ backgroundColor: 'transparent' }}
-                                value={password}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                }
-                                }
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Recuerdame"
-
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-
-                            >
-                                Ingresar
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" className={classes.boton} onClick={handleEmail} variant="body2">
-                                        Olvidaste la constraseña?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2" className={classes.boton}>
-
-                                        {"Registrate"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
-
-                        </form>
-                    </div>
-
-                </Grid> */}
             </div>
 
         </div>

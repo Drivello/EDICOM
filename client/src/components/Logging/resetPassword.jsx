@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loggingIn, handleChangePassword, handleSendEmail, tokenToEmail } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-
-
+import { ThemeProvider } from "@material-ui/core/styles";
+import { Container,} from "@material-ui/core";
+import theme from "../themeStyle";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {
     Grid,
     Button,
@@ -15,18 +17,18 @@ import swal from 'sweetalert';
 
 
 const ResetPasword = () => {
-
+   
     const history = useHistory();
     const dispatch = useDispatch();
     
     const token = useLocation().search.substring(1);
 
-    const [ mail, setEmail ] = useState();
+    const [ mail, setEmail ] = useState('');
     
     const { state: newPassword, handleChange: handleNewPassword } = useForm(
         {
-            newPass: " ",
-            confirmPassword: " ",
+            newPass: "",
+            confirmPassword: "",
         }
     )
         
@@ -49,11 +51,15 @@ const ResetPasword = () => {
         root: {
             marginTop: 50,
             marginBottom: 30,
+            background:'white',
+            width:'100%'
+            
         },
         margin: {
             margin: theme.spacing(1),
         },
         textField: {
+            
             width: '50ch',
           },
     }));
@@ -78,13 +84,15 @@ const ResetPasword = () => {
     
     
     return(
-
+        <ThemeProvider theme={theme}>
+            	<CssBaseline />
+              <Container className={classes.root}>
         <div style={{ marginTop: '100px'}}>
         <form  onSubmit={handleNewPass}>
 
             <Grid container justify="flex-start" alignItems="center" className={classes.paper}>
                 <TextField
-                    variant="outlined"
+                   /*  variant="outlined" */
                     className={classes.margin, classes.textField}
                     id="email"
                     name="email"
@@ -93,7 +101,7 @@ const ResetPasword = () => {
                     InputProps={{
                         readOnly: true
                     }}    
-                    labelWidth={60}                  
+                           
                 />
             </Grid>
             
@@ -138,6 +146,8 @@ const ResetPasword = () => {
 
         </form>
         </div>
+        </Container>
+        </ThemeProvider>
     )
     
 }

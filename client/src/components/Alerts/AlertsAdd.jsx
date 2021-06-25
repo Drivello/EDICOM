@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import {
     postAlert
 } from '../../redux/alerts/alertActions';
+import { getSubscriptionsBuilding } from '../../redux/subscriptions/subscriptionsActions';
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
@@ -21,6 +22,10 @@ const AlertsAdd = (props) => {
     const history = useHistory();
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
+    const subscriptions = useSelector(state => state.subscriptionsReducer.buildingSubscriptions);
+
+    const subscriptions_building = subscriptions && subscriptions.filter(e => e.user !== null);
+    
 
 
     useEffect(() => {
@@ -84,6 +89,7 @@ const AlertsAdd = (props) => {
                 importance: input.important
             }
             dispatch(postAlert(body))
+                .then(dispatch(getSubscriptionsBuilding(input.building)))
                 .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
                 .then(history.goBack())
         } else {

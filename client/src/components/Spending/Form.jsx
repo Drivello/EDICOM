@@ -164,14 +164,14 @@ const Form = (props) => {
   const handleAdd = (e) => {
     e.preventDefault();
     if (spending.supplier === "")
-      return alert("supplier Field Cannot Be Empty");
-    if (spending.amount === "") return alert("Concept Field Cannot Be Empty");
+      return alert("El campo proveedor no puede ser vacío");
+    if (spending.amount === "") return alert("El campo concepto no puede ser vacío");
     dispatch(postSpending(spending));
     swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(
       (newSpending = {
         date: "",
-        building: "E",
+        building: "",
         concept: "",
         supplier: "",
         details: "",
