@@ -11,27 +11,33 @@ import { Container, CssBaseline } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   //bajo la imagen en responsive
+  container: {
+    textAlign: 'center',
+    /*  marginLeft:'200px', */
+
+    width: '100%',
+
+  },
   root: {
     minHeight: '100vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+
     [theme.breakpoints.down('md')]: {
       flexDirection: 'row',
     },
   },
-    root2: {
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      [theme.breakpoints.down('md')]: {
-        flexDirection: 'column',
-      },
+  root2: {
+    minHeight: '100vh',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
     },
-    container: {
-      textAlign: 'center',
-      marginLeft:'200px',
   },
 
 }))
@@ -45,8 +51,8 @@ export default function () {
       <div id="Text" className={classes.root2}   >
         <Text checked={checked} />
       </div>
-      <br/>
-      <Title/>
+      <br />
+      <Title />
       <div className={classes.root} id="ImageCard">
         <ImageCard place={places[1]} checked={checked} />
         <ImageCard place={places[0]} checked={checked} />

@@ -10,7 +10,9 @@ import './index.css';
 
 ReactDOM.render(
 	<Provider store={store}>
+		<div>
 		<AppGlobal />
+		</div>
 	</Provider>,
 	document.getElementById('root')
 );

@@ -2,7 +2,7 @@ const places = [
     {
       title: 'Salas Comunes',
       description:
-        "Administra de forma ordenada con dias y horarios los espacios comunes de tu edificio. Animate !",
+        "Administra de forma ordenada con dias y horarios los espacios comunes de tu edificio.",
       imageUrl: 'https://images.pexels.com/photos/221457/pexels-photo-221457.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
       time: 1500,
     },
