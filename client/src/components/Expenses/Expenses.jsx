@@ -77,9 +77,6 @@ export default function ExpensesTable() {
       }
    }
 
-   // console.log("expensesArray", expensesArray)
-   // console.log("filterBuildings", filterBuildings)
-
    const rows = filterBuildings.map( (apartment) => {
 
       return createApartment(apartment.id, 

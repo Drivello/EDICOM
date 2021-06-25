@@ -91,7 +91,7 @@ const AlertsAdd = (props) => {
             dispatch(postAlert(body))
                 .then(dispatch(getSubscriptionsBuilding(input.building)))
                 .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
-                /* .then(history.goBack()) */
+                .then(history.goBack())
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });

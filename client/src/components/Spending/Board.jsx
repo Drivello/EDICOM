@@ -28,6 +28,8 @@ import styles from "./board.module.css";
 import moment from "moment";
 import AddIcon from '@material-ui/icons/Add';
 import filter from '../../utils/filter-remove.png';
+import { ExpensesGenerator } from "./ExpensesGenerator/ExpensesGenerator.jsx";
+
 
 const Board = (props) => {
    //--------------------------- Creando estructura de la tabla ------------------------
@@ -83,24 +85,19 @@ const Board = (props) => {
       };
    });
 
-   console.log("----------------------------------------------")
-   console.log("filterSpend", filterSpend)
-   console.log("buildingArray", buildingArray)
 
-   //-------------------------- Fin cambio Mapdispatch x useSelcetor pa traer acciones----------
 
    const spendings = filterSpend.map((spending) => {
       return {
          id: spending.id,
          building: buildingArray.filter(building => building.id === spending.buildingId)[0]?.name,
-         date: moment(spending.date).format("L"),
+         date: moment(spending.date).format("DD/MM/YY"),
          concept: spending.concept,
          details: spending.details,
          amount: spending.amount,
       };
    });
 
-   //-------------------------- useEffect dispatcha las acciones----------
    useEffect(() => {
       // envia a las acciones
       dispatch(totalSpending());
@@ -110,11 +107,14 @@ const Board = (props) => {
    const date1 = new Date("2021-01-01T00:00:00");
    const date2 = new Date(new Date());
 
+   const [showedExpensesGenerator, setShowedExpensesGenerator] = useState(false)
+
    const [input, setInput] = useState({
       since: date1,
       upTo: date2,
       concept: "All",
       buildingId: "All",
+      buildingName: "All"
    });
 
    useEffect(() => {
@@ -130,16 +130,16 @@ const Board = (props) => {
    }
 
    function handleSelectBuilding(e) {
-
+      var buildingId = "All"
       if (e.target.value !== "All" && e.target.value) {
-         const buildingId = buildingArray.filter(
+         buildingId = buildingArray.filter(
             (b) => b.name === e.target.value
          )[0]?.id;
-         e.target.value = buildingId;
+         // e.target.value = buildingId;
       } else {
          e.target.value = "All";
       }
-      setInput({ ...input, [e.target.name]: e.target.value });
+      setInput({ ...input, [e.target.name]: buildingId, buildingName: e.target.value });
    }
 
    function handleSelectConcept(e){
@@ -165,6 +165,10 @@ const Board = (props) => {
       dispatch(filterSpending({ since: date1, upTo: date2, concept: "All", buildingId: "All" }));
    }
 
+   function toggleFormExpensesGenerator(){
+      setShowedExpensesGenerator(!showedExpensesGenerator)
+   }
+
    return (
       <ThemeProvider theme={theme}>
          <div className={styles.header}>
@@ -178,6 +182,14 @@ const Board = (props) => {
                      href="./newSpending"
                   >
                      <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
+                  </Button>
+                  <Button
+                     variant="contained"
+                     color="secondary"
+                     style={{minWidth:'30px',minHeight:'30px', marginLeft: '500px'}}
+                     onClick={toggleFormExpensesGenerator}
+                  >
+                     Generar Expensas
                   </Button>
                </div>
             </div>
@@ -243,13 +255,14 @@ const Board = (props) => {
                         </Grid>
 
                         <Grid
-                           container justify="flex-start" style ={{marginLeft: "-100px", marginTop:"7px"}}alignItems="center" className={classes.paper} item xs={6} sm={3}
+                           container justify="flex-start" alignItems="center" style ={{marginLeft: "-60px", marginTop:"7px"}} className={classes.paper} item xs={6} sm={3}
                         >
                            <FormControl style={{ width: "200px" }}>
                               <InputLabel id="demo-controlled-open-select-label">
                                  Edificio
                               </InputLabel>
-                              <Select name="buildingId" onChange={handleSelectBuilding} value={input.buildingId}>
+                              <Select 
+                                 name="buildingId" onChange={handleSelectBuilding} value={input.buildingName}>
                                  <MenuItem value="">
                                     <em>All</em>
                                  </MenuItem>
@@ -264,9 +277,24 @@ const Board = (props) => {
                         </Grid>
                      </MuiPickersUtilsProvider>
                      <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
-                  <img style={{width: "25px", height:"25px"}} src={filter}></img>
-                  </Button>
+                        <img style={{width: "25px", height:"25px"}} src={filter}></img>
+                     </Button>
                   </div>
+                  {
+                     showedExpensesGenerator
+                     ?
+                     // <p>Mostrar generador de expesas</p>
+                     <ExpensesGenerator 
+                        visibility={showedExpensesGenerator} 
+                        changeVisibility={setShowedExpensesGenerator}
+                        idBuildings={input.buildingId}
+                        nameBuildings={input.buildingName}
+                        year={null}
+                        month={null}
+                     />
+                     :
+                     false
+                  }
                   <Container style={{ height: 400, width: "100%" }}>
                      <Container style={{ display: "flex", height: "100%", width: "100%"}}>
                         <DataGrid

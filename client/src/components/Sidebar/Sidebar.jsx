@@ -216,7 +216,7 @@ export default function Sidebar(props) {
               </ListItem>
             </Link>
 
-            <Link to='spendings/board'>
+            <Link to='/spendings/board'>
               <ListItem button key={'Gastos'}>
                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Gastos'} />
