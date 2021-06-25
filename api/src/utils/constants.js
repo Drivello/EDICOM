@@ -1,5 +1,5 @@
 const MONTHS = {
-    0: 'ene',
+    0: 'jan',
     1: 'feb',
     2: 'mar',
     3: 'apr',
@@ -8,7 +8,7 @@ const MONTHS = {
     6: 'jul',
     7: 'aug',
     8: 'sep',
-    9: 'okt',
+    9: 'oct',
     10: 'nov',
     11: 'dec',
 }

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import App from './components/App/App.js';
 import AppPublic from './components/App/AppPublic.js';
 import Logging from './components/App/Logging.js';
+import ResetPassword from './components/Logging/resetPassword.jsx';
 
 
 
@@ -21,7 +22,11 @@ const AppGlobal = () => {
 	return (
 		<BrowserRouter>
 
-			{/* <Switch>  */}
+			<Switch> 
+				<Route 
+					path="/logging/restaurarcontraseña" 
+					component = {ResetPassword}
+				/>
 
 				<Route 
 					path="/logging"
@@ -50,17 +55,15 @@ const AppGlobal = () => {
 				/>
 
 				<Route 
-					exact path="/"
+					path="/"
 					component={ (props) => (
 						( (currentUser && currentUser.name === "the admin") )
 						? ( <App { ...props } /> )
 						: ( <Redirect to="/logging" /> )
 					)}
 				/>
-
-				{/* <Route exact path="/" component={App} /> */}
 			
-			{/* </Switch> */}
+			</Switch>
 			
 		</BrowserRouter>
 	)

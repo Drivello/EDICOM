@@ -1,8 +1,9 @@
-import { GET_ALL_SUBSCRIPTIONS, POST_SUBSCRIPTION, PUT_SUBSCRIPTION, DELETE_SUBSCRIPTION, FIND_SUBSCRIPTION } from './subscriptionsActions';
+import { GET_ALL_SUBSCRIPTIONS, POST_SUBSCRIPTION, PUT_SUBSCRIPTION, DELETE_SUBSCRIPTION, FIND_SUBSCRIPTION, GET_SUBSCRIPTIONS_BUILDING } from './subscriptionsActions';
 
 const initialState = {
     allSubscriptions: [],
     findSubscription: {},
+    buildingSubscriptions: [],
     postStatus: 0,
     putStatus: 0,
     deleteStatus: 0,
@@ -34,6 +35,11 @@ export default function subscriptionsReducer(state = initialState, action) {
             return {
                 ...state,
                 findSubscription: action.payload.data
+            }
+        case GET_SUBSCRIPTIONS_BUILDING:
+            return {
+                ...state,
+                buildingSubscriptions: action.payload.data
             }
         default:
             return state;
