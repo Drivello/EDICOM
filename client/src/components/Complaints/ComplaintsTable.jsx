@@ -19,16 +19,9 @@ function AlertsTable(props) {
   const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
   const dispatch = useDispatch();
 
-  const [compleints, setCompleints] = useState(allComplaints)
-
   useEffect(() => {
     dispatch(getComplaints())
-  },[dispatch, compleints])
-
-  useEffect(() => {
-    setCompleints(allComplaints)
-  },[allComplaints])
-
+  },[dispatch])
 
   const complaints = allComplaints?.map(complaint => {
     let stateSpanish;
