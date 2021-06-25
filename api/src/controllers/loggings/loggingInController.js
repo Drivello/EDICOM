@@ -37,7 +37,7 @@ module.exports = async (req, res, next) => {
         if (!isPasswordCorrect) return res.status(400).json({ message: { message: 'Contraseña Incorrecta', style: "red" } });
         
         let first_logging = userRegistered.firstLogging;
-        const token = jwt.sign({ email: userRegistered.email, id: userRegistered.id, userType }, secret, { expiresIn: '1hr' });
+        const token = jwt.sign({ email: userRegistered.email, id: userRegistered.id, userType }, secret, { expiresIn: '50d' });
 
         if(first_logging){ 
                    
