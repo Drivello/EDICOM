@@ -1,4 +1,4 @@
-import { GET_EXPENSES, FILTER_EXPENSES } from '../expenses/expensesActions';
+import { GET_EXPENSES, FILTER_EXPENSES, POST_EXPENSES } from '../expenses/expensesActions';
 
 
 const initialState = {
@@ -12,6 +12,9 @@ const expensesReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_EXPENSES:
             return { expensesArray: action.payload, filterArray:action.payload };
+
+        case POST_EXPENSES:
+            return state
 
         case FILTER_EXPENSES:
             console.log("action.payload", action.payload)

@@ -43,14 +43,17 @@ module.exports = async (req, res, next) => {
                    
             res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
 
-            await User.update({
-                firstLogging: false,
-            }, {
-                where: {
-                    id: userRegistered.id
-                }
-            });
-        }
+      /*       if(userRegistered.password != password){ */
+                
+                await User.update({
+                    firstLogging: false,
+                }, {
+                    where: {
+                        id: userRegistered.id
+                    }
+                });
+            }
+           /*  } */
         else{
 
             res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
