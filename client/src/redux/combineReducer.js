@@ -10,8 +10,9 @@ import loggingReducer from './logging/loggingReducer';
 import amenitiesReducer from './amenities/amenitiesReducer';
 import complaintsReducer from './complaints/complaintsReducer';
 import subscriptionsReducer from './subscriptions/subscriptionReducer';
-
+import bookingReducer from './booking/bookingReducer';
 export const reducers = combineReducers({
+	bookingReducer: bookingReducer,
 	userReducer: userReducer,
 	reducerSpending: reducerSpending,
 	apartmentReducer: apartmentReducer,
@@ -21,7 +22,7 @@ export const reducers = combineReducers({
 	loggingReducer: loggingReducer,
 	amenitiesReducer: amenitiesReducer,
 	complaintsReducer: complaintsReducer,
-	subscriptionsReducer: subscriptionsReducer
+	subscriptionsReducer: subscriptionsReducer,
 });
 
 export default reducers;
