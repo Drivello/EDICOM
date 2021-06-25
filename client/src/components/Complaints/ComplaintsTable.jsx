@@ -7,7 +7,6 @@ import { DataGrid } from '@material-ui/data-grid';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
-import './Alerts.css';
 import moment from 'moment';
 import filter from '../../utils/filter-remove.png';
 
@@ -15,24 +14,27 @@ import filter from '../../utils/filter-remove.png';
 
 function AlertsTable(props) {
 
-    /* const filteredAlerts = useSelector(state => state.alertsReducer.filteredAlerts) */
-    const allComplaints = useSelector(state => state.complaintsReducer.allAlerts)
+    const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
     const dispatch = useDispatch();
 
-    const alerts = filteredAlerts.map(alert => {
+    const complaints = allComplaints.map(complaint => {
+      let stateSpanish;
+      if(complaint.state === "opened") stateSpanish = "Abierto"
+      else stateSpanish = "Cerrado"
         return {
-            id: alert.id,
-            building: alert.building.name,
-            date: moment(alert.date).format("DD/MM/YYYY"),
-            concept: alert.concept,
-            detail: alert.details,
-            importance: alert.importance,
-            edit: `/alertsUpdate/${alert.id}`
+            id: complaint.id,
+            building: complaint.building.name,
+            date: moment(complaint.date).format("DD/MM/YYYY"),
+            concept: complaint.subject,
+            state: stateSpanish,
+            detail: complaint.details,
+            importance: complaint.importance,
+            edit: `/alertsUpdate/${complaint.id}`
         }
     })
 
-    const buildingSelect = alerts.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
-    const importanceSelect = alerts.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
+/*     const buildingSelect = alerts.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index); */
+    const importanceSelect = complaints.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
     
 
     
@@ -40,10 +42,11 @@ function AlertsTable(props) {
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1.5, hide: true },
-        {field: 'building', headerName: 'Edificio', flex: 3},
-        {field: 'date', headerName: 'Fecha', flex: 2},
+        {field: 'building', headerName: 'Edificio', flex: 2},
+        {field: 'date', headerName: 'Fecha', flex: 1},
         {field: 'concept', headerName: 'Concepto', flex: 3.5},
-        {field: 'importance', headerName: 'Importancia', flex: 2},
+        {field: 'importance', headerName: 'Importancia', flex: 1},
+        {field: 'state', headerName: 'Estado', flex: 1},
         {
             field: 'edit', 
             headerName: 'Edit', 
@@ -81,18 +84,18 @@ function AlertsTable(props) {
         setInput({ ...input, [e.target.name]: e.target.value })
     };
 
-    function handleSelectAll(e) {
+/*     function handleSelectAll(e) {
         setInput({ since: date1, upTo: date2, building: 'All', importance: 'All'})
         dispatch(filterAlerts({ since: date1, upTo: date2, building: 'All', importance: 'All'}))
-    }
+    } */
 
     useEffect(() => {
-        dispatch(getAlerts());
+        dispatch(getComplaints());
     }, [dispatch]);
 
-    useEffect(() => {
+/*     useEffect(() => {
         dispatch(filterAlerts(input))
-    }, [input,setInput]);
+    }, [input,setInput]); */
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -141,7 +144,7 @@ function AlertsTable(props) {
                 <Grid container justify="flex-start" alignItems="center" style ={{marginLeft: "-50px", marginTop:"7px"}} className={classes.paper} item xs={6} sm={3}>
                   <FormControl style={{width: '200px'}}>
                     <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
-                    <Select name="building" onChange={handleSelect} value={input.building}>
+{/*                     <Select name="building" onChange={handleSelect} value={input.building}>
                       <MenuItem value="All">
                         <em>All</em>
                       </MenuItem >
@@ -149,7 +152,7 @@ function AlertsTable(props) {
                       {buildingSelect.map((building, index) =>
                         <MenuItem value={building} key={index}>{building}</MenuItem>
                       )}
-                    </Select>
+                    </Select> */}
                   </FormControl>
                 </Grid>
                 <Grid container justify="flex-start" style ={{marginLeft: "-100px", marginTop:"7px"}}alignItems="center" className={classes.paper} item xs={6} sm={3}>
@@ -167,12 +170,12 @@ function AlertsTable(props) {
                   </FormControl>
                 </Grid>
               </MuiPickersUtilsProvider>
-              <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
+{/*               <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
                   <img style={{width: "25px", height:"25px"}} src={filter}></img>
-              </Button>
+              </Button> */}
             </div>
             <div style={{display: 'flex', height: '100%'}}>
-                <DataGrid rows={alerts} columns={columns} pageSize={5} />
+                <DataGrid rows={complaints} columns={columns} pageSize={5} />
             </div>
         </div>
     );

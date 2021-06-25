@@ -63,6 +63,7 @@
     color: #00ff7f;
     font-weight: 1000;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%
