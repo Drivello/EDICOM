@@ -11,8 +11,11 @@ import { getUser } from '../../../redux/users/userActions';
 
 
 const UserView = (props) => {
-    const currentUser = useSelector(state => state.userReducer.userDetail)
-    console.log(currentUser)
+    const [userInfo, setUserInfo] = useState('');
+    const currentUser = useSelector(state => state.loggingReducer.userId)
+    useEffect(() => {
+        setUserInfo(currentUser);
+    }, [currentUser])
     const dispatch = useDispatch();
     return (
         <ThemeProvider theme={theme}>
@@ -21,11 +24,11 @@ const UserView = (props) => {
                     <h1>Info Departamento</h1>
                 </div>
                 <Switch>
-                    <Route  path={`/userView/1/home`}>
-                        <UserHome userId={currentUser.id} />
+                    <Route exact path={`/public/:id`}>
+                        <UserHome />
                     </Route>
-                    <Route  path={`/userView/1/complaints`}>
-                        <UserComplaints userId={currentUser.id} />
+                    <Route  path={`/public/:id/complaints`}>
+                        <UserComplaints />
                     </Route>
                 </Switch>
             </Container>

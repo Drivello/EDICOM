@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_ALERTS_URL, POST_ALERT_URL, PUT_ALERT_URL, DELETE_ALERT_URL,  FIND_ALERT_URL} from './utils';
+import { GET_ALL_ALERTS_URL, POST_ALERT_URL, PUT_ALERT_URL, DELETE_ALERT_URL,  FIND_ALERT_URL, SEND_EMAIL_URL} from './utils';
 export const GET_ALL_ALERTS = 'GET_ALL_ALERTS';
 export const POST_ALERT = 'POST_ALERT';
 export const PUT_ALERT = 'PUT_ALERT';
@@ -7,6 +7,7 @@ export const DELETE_ALERT = 'DELETE_ALERT';
 export const FIND_ALERT = 'FIND_ALERTS';
 export const FILTER_ALERTS = 'FILTER_ALERTS';
 export const FIND_ALERTS_BUILDING = 'FIND_ALERTS_BUILDING';
+export const SEND_EMAIL = 'SEND_EMAIL';
 
 export function getAlerts() {
     return function(dispatch) {
@@ -124,6 +125,26 @@ export function findAlertsBuilding(id){
         .catch(err => {
             dispatch({
                 type: FIND_ALERTS_BUILDING,
+                payload: {
+                    status: "error"
+                }
+            })
+        })
+    }
+}
+
+export function sendEmail(body) {
+    return function(dispatch){
+        return axios.post(SEND_EMAIL_URL,body)
+        .then(status => {
+            dispatch({
+                type: SEND_EMAIL,
+                payload: status
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: SEND_EMAIL,
                 payload: {
                     status: "error"
                 }

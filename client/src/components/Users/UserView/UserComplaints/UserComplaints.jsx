@@ -5,6 +5,7 @@ function UserComplaints(props) {
     return (
         <div>
             This is User Complaints
+            <p>My id number is {props}</p>
         </div>
     );
 }
