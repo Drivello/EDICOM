@@ -1,4 +1,4 @@
-import './App.css';
+import './Logging.css';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Route} from 'react-router';
@@ -13,7 +13,7 @@ import { Header } from '../HomeTenant/Header';
 
 function Logging() {
 	return (
-		<Container className="App">
+		<Container className="Logging">
 			<CssBaseline />
 				<BrowserRouter>
 					<Route exact path="/logging" component={Header} />
