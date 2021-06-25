@@ -4,7 +4,6 @@ import { Button } from '@material-ui/core';
 import ComplaintsTable from './ComplaintsTable';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import './Alerts.css';
 import AddIcon from '@material-ui/icons/Add';
 
 const Complaints = (props) => {
@@ -18,7 +17,7 @@ const Complaints = (props) => {
             </h1>
         </div>
         <div className='contAlertsTable'>
-          <AlertsTable/>
+          <ComplaintsTable/>
         </div>
     </div>
     </ThemeProvider>

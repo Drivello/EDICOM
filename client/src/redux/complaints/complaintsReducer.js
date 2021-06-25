@@ -1,4 +1,4 @@
-import { GET_ALL_COMPLAINTS, PUT_SEEN_COMPLAINT } from './complaintsActions';
+import { GET_ALL_COMPLAINTS, PUT_SEEN_COMPLAINT, PUT_STATE_COMPLAINT } from './complaintsActions';
 
 const initialState = {
     allComplaints: [],
@@ -16,6 +16,11 @@ export default function buildingReducer(state = initialState, action) {
             return {
                 ...state,
                 seenStatus: action.payload.status
+            }
+        case PUT_STATE_COMPLAINT:
+            return {
+                ...state,
+                stateStatus: action.payload.status
             }
         default:
             return state;
