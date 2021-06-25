@@ -51,6 +51,13 @@ const NotificationBar = (props) => {
                     )
                 })
                 }
+                                <div className={styles.all} >
+                    <Link to="/complaints">
+                        <Button style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                            Ver todos los reclamos
+                        </Button>
+                    </Link>
+                </div>
             </div>)
         }
     }
@@ -59,13 +66,6 @@ const NotificationBar = (props) => {
         <div className={styles.box}>
             <div className={styles.cont}>
                 {render()}
-                <div className={styles.all} >
-                    <Link to="/complaints">
-                        <Button style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
-                            Ver todos los reclamos
-                        </Button>
-                    </Link>
-                </div>
             </div>
         </div>
     )

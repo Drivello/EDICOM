@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import filter from '../../utils/filter-remove.png';
 import PopUp from './PopUp';
+import styles from "./Styles.module.css"
 
 
 
@@ -63,7 +64,7 @@ function AlertsTable(props) {
     { field: 'building', headerName: 'Edificio', flex: 2 },
     { field: 'date', headerName: 'Fecha', flex: 1 },
     { field: 'concept', headerName: 'Concepto', flex: 3.5,renderCell: (params) => (
-      <div onClick={(e) => handleEventClick(e, params.row)}>
+      <div className={styles.detail} onClick={(e) => handleEventClick(e, params.row)}>
         {params.formattedValue}
       </div>
     ) },
@@ -84,7 +85,6 @@ function AlertsTable(props) {
   const [alertProps, setAlertProps] = useState({});
 
   const handleEventClick = (clickInfo, data) => {
-    console.log(data, "data del boton")
     setAlertProps({
         id: data.id,
         title: data.concept,

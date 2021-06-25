@@ -1,0 +1,8 @@
+.detail:hover{
+    color:green;
+    cursor: pointer;
+}
+
+.detail{
+    text-decoration: underline ;
+}
