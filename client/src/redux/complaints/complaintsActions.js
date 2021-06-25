@@ -3,6 +3,7 @@ import { GET_ALL_COMPLAINTS_URL, PUT_SEEN_COMPLAINT_URL, PUT_STATE_COMPLAINT_URL
 export const GET_ALL_COMPLAINTS = 'GET_ALL_COMPLAINTS';
 export const PUT_SEEN_COMPLAINT = 'PUT_SEEN_COMPLAINT'; 
 export const PUT_STATE_COMPLAINT = 'PUT_STATE_COMPLAINT'; 
+export const FILTER_COMPLAINTS = 'FILTER_COMPLAINTS'
 
 export function getComplaints() {
     return function(dispatch) {
@@ -63,4 +64,8 @@ export function putStateComplaint(id, newState) {
             })
         })
     }
+}
+
+export function filterComplaints(payload) {
+	return {type: FILTER_COMPLAINTS, payload};
 }
