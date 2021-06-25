@@ -19,7 +19,18 @@ function AlertsTable(props) {
   const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
   const dispatch = useDispatch();
 
-  const complaints = allComplaints.map(complaint => {
+  const [compleints, setCompleints] = useState(allComplaints)
+
+  useEffect(() => {
+    dispatch(getComplaints())
+  },[dispatch, compleints])
+
+  useEffect(() => {
+    setCompleints(allComplaints)
+  },[allComplaints])
+
+
+  const complaints = allComplaints?.map(complaint => {
     let stateSpanish;
     if (complaint.state === "opened") stateSpanish = "Abierto"
     else stateSpanish = "Cerrado"
@@ -110,15 +121,6 @@ function AlertsTable(props) {
     setInput({ ...input, [e.target.name]: e.target.value })
   };
 
-/*       function handleSelect(e) {
-            setInput({ since: date1, upTo: date2, building: 'All', importance: 'All' })
-          dispatch(filterAlerts({since: date1, upTo: date2, building: 'All', importance: 'All'}))
-      } */
-
-  useEffect(() => {
-    dispatch(getComplaints());
-  }, [dispatch]);
-
   /*     useEffect(() => {
             dispatch(filterAlerts(input))
           }, [input,setInput]); */
@@ -139,8 +141,8 @@ function AlertsTable(props) {
   return (
     <div style={{ height: 400, width: '100%' }}>
       <div className='contSelectsAT'>
-      <PopUp /* user= {user} */ display={displayPopUp} setDisplay={setDisplayPopUp} alertProps = {alertProps}/>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <PopUp setPop={setDisplayPopUp} display={displayPopUp} setDisplay={setDisplayPopUp} alertProps = {alertProps}/>
+{/*         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
             <KeyboardDatePicker
               name="since"
@@ -169,9 +171,9 @@ function AlertsTable(props) {
           </Grid>
 
           <Grid container justify="flex-start" alignItems="center" style={{ marginLeft: "-50px", marginTop: "7px" }} className={classes.paper} item xs={6} sm={3}>
-            {/*                   <FormControl style={{width: '200px'}}> */}
-            {/*                     <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel> */}
-            {/*                     <Select name="building" onChange={handleSelect} value={input.building}>
+                              <FormControl style={{width: '200px'}}>
+                                <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
+                                <Select name="building" onChange={handleSelect} value={input.building}>
                       <MenuItem value="All">
                         <em>All</em>
                       </MenuItem >
@@ -179,8 +181,8 @@ function AlertsTable(props) {
                       {buildingSelect.map((building, index) =>
                         <MenuItem value={building} key={index}>{building}</MenuItem>
                       )}
-                    </Select> */}
-            {/*                   </FormControl> */}
+                    </Select>
+                              </FormControl>
           </Grid>
           <Grid container justify="flex-start" style={{ marginLeft: "-100px", marginTop: "7px" }} alignItems="center" className={classes.paper} item xs={6} sm={3}>
             <FormControl style={{ width: '200px' }}>
@@ -196,7 +198,7 @@ function AlertsTable(props) {
               </Select>
             </FormControl>
           </Grid>
-        </MuiPickersUtilsProvider>
+        </MuiPickersUtilsProvider> */}
         {/*               <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
                   <img style={{width: "25px", height:"25px"}} src={filter}></img>
               </Button> */}
