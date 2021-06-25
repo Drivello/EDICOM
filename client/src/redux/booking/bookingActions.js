@@ -2,6 +2,8 @@ import axios from 'axios';
 export const CREATE_BOOKING = 'CREATE_BOOKING';
 export const ALL_BOOKINGS = 'ALL_BOOKINGS';
 export const GET_BOOKING_BY_ID = 'GET_BOOKING_BY_ID';
+export const DELETE_BOOKING = 'DELETE_BOOKING';
+export const FILTER_BOOKING = 'FILTER_BOOKING'
 export const PUT_BOOKING = 'PUT_BOOKING';
 
 export function createBooking(booking) {
@@ -11,7 +13,7 @@ export function createBooking(booking) {
 	};
 }
 
-export function allBookings() {
+export function getAllBookings() {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/bookings/`);
 		dispatch({type: ALL_BOOKINGS, payload: data});
@@ -40,4 +42,9 @@ export function putBooking(id) {
 		);
 		dispatch({type: PUT_BOOKING, payload: data});
 	};
+}
+
+export function filterBookings(payload) {
+	console.log(payload)
+	return {type: FILTER_BOOKING, payload}
 }

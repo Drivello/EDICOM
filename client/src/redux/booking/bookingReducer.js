@@ -2,6 +2,8 @@ import {
 	CREATE_BOOKING,
 	ALL_BOOKINGS,
 	GET_BOOKING_BY_ID,
+	DELETE_BOOKING,
+	FILTER_BOOKING,
 	PUT_BOOKING,
 } from './bookingActions';
 
@@ -9,6 +11,8 @@ const initialState = {
 	bookingCreated: [],
 	allBookings: [],
 	bookingDetail: [],
+	bookingDeleted: [],
+	bookingFilter: [],
 	putBooking: [],
 };
 
@@ -34,6 +38,12 @@ const reducer = (state = initialState, action) => {
 				...state,
 				putBooking: action.payload,
 			};
+		case FILTER_BOOKING:
+			return {
+				...state, bookingFilter: state.allBookings.filter(booking => {
+					return booking.date === action.payload.start
+				})
+			}
 		default:
 			return state;
 	}
