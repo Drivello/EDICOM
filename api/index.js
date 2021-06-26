@@ -165,30 +165,24 @@ conn.sync({force: true}).then(() => {
 
 	let booking1 = Booking.create({
 		idAmenity: 1,
-		start: '2021-06-24T16:50:00.000Z',
-		finish: '2021-06-30T16:50:00.000Z',
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
 		status:"free",
-		timeStart: '07:30',
-		timeEnd: '21:30',
 		duration: '08:00'
 	})
 
 	let booking2 = Booking.create({
 		idAmenity: 2,
-		start: '2021-06-24T16:50:00.000Z',
-		finish: '2021-06-30T16:50:00.000Z',
-		timeStart: '07:30',
-		timeEnd: '21:30',
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
 		duration: '08:00',
 		status:"free"
 	})
 
 	let booking3 = Booking.create({
 		idAmenity: 3,
-		start: '2021-06-24T16:50:00.000Z',
-		finish: '2021-06-30T16:50:00.000Z',
-		timeStart: '07:30',
-		timeEnd: '21:30',
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
 		status:"free",
 		duration: '08:00'
 	})

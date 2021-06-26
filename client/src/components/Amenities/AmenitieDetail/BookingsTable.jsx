@@ -10,7 +10,7 @@ import {
    Select,
 } from "@material-ui/core";
 import { getAmenityById } from "../../../redux/amenities/amenitiesActions";
-import { getBookingByAmenity } from "../../../redux/booking/bookingActions";
+import { getBookingByAmenity, filterBookingsByGroup} from "../../../redux/booking/bookingActions";
 import { DataGrid } from "@material-ui/data-grid";
 import {
    MuiPickersUtilsProvider,
@@ -25,7 +25,7 @@ import styles from "./Styles.module.css";
 
 function BookingsTable(props) {
 
-console.log("estoy renderizando bookingTable")
+   console.log("estoy renderizando bookingTable")
    const dispatch = useDispatch();
 
    console.log(props.amenitieId, "TABLE");
@@ -36,10 +36,6 @@ console.log("estoy renderizando bookingTable")
    useEffect(() => {
       dispatch(getBookingByAmenity(props.amenitieId))
    }, [dispatch])
-
-/*    useEffect(() => {
-      dispatch(getBookingByAmenity(props.amenitieId))
-   }, [allComplaints]) */
 
    const complaints = allComplaints?.map((booking) => {
       let stateSpanish;
@@ -54,43 +50,27 @@ console.log("estoy renderizando bookingTable")
       };
    });
 
-   const [currency, setCurrency] = React.useState("opened");
+   const [filter, setFilter] = useState("hour");
 
-   const handleChange = (event) => {
-      setCurrency(event.target.value);
-   };
-
-   /*     const startSelect = alerts.map(element => element = element.start).filter((value, index, self) => self.indexOf(value) === index); */
-   const importanceSelect = complaints
-      .map((element) => (element = element.state))
-      .filter((value, index, self) => self.indexOf(value) === index);
 
 
    const columns = [
       { field: "id", headerName: "ID", flex: 1.5, hide: true },
       { field: "start", headerName: "Comienzo", flex: 1 },
       { field: "date", headerName: "Fin", flex: 1 },
-      { field: "state", headerName: "Estado", flex: 1 ,
-      renderCell: params => {
-         console.log(params, "rows")
-			return (
-					<Link onClick={(e) => handleEventClick(e, params.row)}>
-						{params.row.state}
-					</Link>
-			);
-		},
-   },
-];
+      {
+         field: "state", headerName: "Estado", flex: 1,
+         renderCell: params => {
+            console.log(params, "rows")
+            return (
+               <Link onClick={(e) => handleEventClick(e, params.row)}>
+                  {params.row.state}
+               </Link>
+            );
+         },
+      },
+   ];
 
-   const date1 = new Date("2021-01-01T00:00:00");
-   const date2 = new Date(new Date());
-
-   const [input, setInput] = useState({
-      since: date1,
-      upTo: date2,
-      start: "All",
-      state: "All",
-   });
    const [displayPopUp, setDisplayPopUp] = useState(false);
    const [alertProps, setAlertProps] = useState({});
 
@@ -107,18 +87,6 @@ console.log("estoy renderizando bookingTable")
       setDisplayPopUp(true);
    };
 
-   function handleSinceChange(date) {
-      setInput({ ...input, since: date });
-   }
-
-   function handleUpToChange(date) {
-      setInput({ ...input, upTo: date });
-   }
-
-   function handleSelect(e) {
-      setInput({ ...input, [e.target.name]: e.target.value });
-   }
-
    const useStyles = makeStyles((theme) => ({
       root: {
          flexGrow: 1,
@@ -130,7 +98,31 @@ console.log("estoy renderizando bookingTable")
       },
    }));
 
-   const classes = useStyles();
+
+   function handleSelectFilter(e) {
+
+      /* var buildingId = ""
+
+      if(e.target.value!=="All"){
+         buildingId = allBuildings.filter(building => building.name === e.target.value)[0].id
+      }
+      else{
+         buildingId = "All"
+      }
+      setBuilding({ ...building, [e.target.name]: buildingId }) */
+      // dispatch(filterExpenses(building))
+
+      console.log(e.target.value)
+
+      if(e.target.value === "All"){
+         setFilter("All");
+      }else if(e.target.value === "Hour"){
+         setFilter("Hour");
+      }else{
+         setFilter("Day");
+      }
+      dispatch(filterBookingsByGroup(filter))
+   }
 
    return (
       <div style={{ height: 400, width: "100%" }}>
@@ -142,6 +134,20 @@ console.log("estoy renderizando bookingTable")
                alertProps={alertProps}
             />
          </div>
+         <InputLabel id="demo-controlled-open-select-label">
+            Filtrar
+         </InputLabel>
+         <Select onChange={handleSelectFilter}>
+            <MenuItem value="All">
+               <em>Todos</em>
+            </MenuItem>
+            <MenuItem value="Hour">
+               <em>Hora</em>
+            </MenuItem>
+            <MenuItem value="Day">
+               <em>Dia</em>
+            </MenuItem>
+         </Select>
          <div style={{ display: "flex", height: "100%" }}>
             <DataGrid rows={complaints} columns={columns} pageSize={5} />
          </div>

@@ -1,8 +1,8 @@
-const {Amenity, Booking} = require('../../db.js');
+const { Amenity, Booking } = require('../../db.js');
 
 module.exports = async (req, res, next) => {
 
-	let {idAmenity, dateStart, dateEnd, timeStart, timeEnd, duration} = req.body;
+	let { idAmenity, dateStart, dateEnd, timeStart, timeEnd, duration } = req.body;
 
 	dateStart = new Date(dateStart);
 	dateEnd = new Date(dateEnd);
@@ -37,7 +37,7 @@ module.exports = async (req, res, next) => {
 		timeEnd = (new Date((new Date()).setHours(parseInt(hoursEnd)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesEnd)))).getMinutes();
 		duration = (new Date((new Date()).setHours(parseInt(hoursDuration)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesDuration)))).getMinutes();
 
-		const bookingPerDay = Math.floor((timeEnd - timeStart)/(duration));
+		const bookingPerDay = Math.floor((timeEnd - timeStart) / (duration));
 
 		console.log('BOOOKING PER DAAYYYYYYY', bookingPerDay);
 
@@ -45,7 +45,7 @@ module.exports = async (req, res, next) => {
 		// day.setDate(day.getDate() + 1);
 		let bookingInit = dateStart;
 
-		console.log('bookingInitttttttttttt',bookingInit)
+		console.log('bookingInitttttttttttt', bookingInit)
 		bookingInit.setHours(timeStart / 60, timeStart % 60);
 
 		console.log('bookingInitttttt con hora cambiadaaaaaaaa', bookingInit)
@@ -63,7 +63,7 @@ module.exports = async (req, res, next) => {
 			bookingInit.getMinutes() + duration % 60
 		);
 
-		console.log('bookingEndddddddddddddd',bookingEnd)
+		console.log('bookingEndddddddddddddd', bookingEnd)
 
 		let newBooking;
 
@@ -77,20 +77,23 @@ module.exports = async (req, res, next) => {
 
 			for (let j = 0; j < bookingPerDay; j++) {
 
-				console.log(
-					'-------------------- estoy creando un nuevo booking ------------------------'
-				);
-				newBooking = await Booking.create({
-					start: bookingInit,
-					finish: bookingEnd,
-				});
+				for (let k = 0; k < quota; k++) {
 
-				await newBooking.setAmenity(amenity);
+					console.log(
+						'-------------------- estoy creando un nuevo booking ------------------------'
+					);
 
-				console.log('booking', newBooking);
+					newBooking = await Booking.create({
+						start: bookingInit,
+						finish: bookingEnd,
+					});
+					await newBooking.setAmenity(amenity);
+
+					console.log('booking', newBooking);
+				}
 
 				bookingInit.setHours(
-					bookingInit.getHours() + duration / 60,	
+					bookingInit.getHours() + duration / 60,
 					bookingInit.getMinutes() + duration % 60
 				);
 				bookingEnd.setHours(
