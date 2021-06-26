@@ -3,7 +3,7 @@ import { GET_ALL_SUBSCRIPTIONS, POST_SUBSCRIPTION, PUT_SUBSCRIPTION, DELETE_SUBS
 const initialState = {
     allSubscriptions: [],
     findSubscription: {},
-    buildingSubscriptions: [],
+    buildingSubscriptions: null,
     postStatus: 0,
     putStatus: 0,
     deleteStatus: 0,

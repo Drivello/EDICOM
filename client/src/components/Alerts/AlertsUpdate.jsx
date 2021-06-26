@@ -9,8 +9,9 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from 
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory, useParams } from 'react-router-dom';
 import {
-    putAlert
+    putAlert, sendEmail
 } from '../../redux/alerts/alertActions';
+import { getSubscriptionsBuilding } from '../../redux/subscriptions/subscriptionsActions';
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
@@ -24,6 +25,7 @@ const AlertsUpdate = (props) => {
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
     const alert = useSelector(state => state.alertsReducer);
+    const subscriptions = useSelector(state => state.subscriptionsReducer.buildingSubscriptions);
 
 
     const currencies = [
@@ -100,9 +102,14 @@ const AlertsUpdate = (props) => {
                 building: input.building,
                 importance: input.important
             }
-            dispatch(putAlert(body))
-                .then(swal("Se ha modificado la alerta!", "Gracias!", "success"))
-                .then(history.goBack())
+            dispatch(getSubscriptionsBuilding(input.building))
+            .then(subscriptions !== null && dispatch(putAlert(body)))
+            .then(subscriptions !== null && dispatch(sendEmail({subscriptions: subscriptions.filter(e => e.user !== null), update: true, body: {date: input.date,
+                concept: input.concept,
+                details: input.detail,
+                importance: input.important}})))
+            .then(subscriptions !== null ? swal("Se ha modificado la alerta!", "Gracias!", "success") : swal("Alerta no creada!", "Intente de nuevo!", "warning"))
+            .then(subscriptions !== null && history.goBack())
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });

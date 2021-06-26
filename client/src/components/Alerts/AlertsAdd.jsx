@@ -9,7 +9,7 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from 
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory } from 'react-router-dom';
 import {
-    postAlert
+    postAlert, sendEmail
 } from '../../redux/alerts/alertActions';
 import { getSubscriptionsBuilding } from '../../redux/subscriptions/subscriptionsActions';
 import {
@@ -23,9 +23,6 @@ const AlertsAdd = (props) => {
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
     const subscriptions = useSelector(state => state.subscriptionsReducer.buildingSubscriptions);
-
-    const subscriptions_building = subscriptions && subscriptions.filter(e => e.user !== null);
-    
 
 
     useEffect(() => {
@@ -88,10 +85,15 @@ const AlertsAdd = (props) => {
                 building: input.building,
                 importance: input.important
             }
-            dispatch(postAlert(body))
-                .then(dispatch(getSubscriptionsBuilding(input.building)))
-                .then(swal("Se ha creado la alerta!", "Gracias!", "success"))
-                .then(history.goBack())
+            dispatch(getSubscriptionsBuilding(input.building))
+                .then(subscriptions !== null && dispatch(postAlert(body)))
+                .then(subscriptions !== null && dispatch(sendEmail({subscriptions: subscriptions.filter(e => e.user !== null), update: false, body: {date: input.date,
+                    concept: input.concept,
+                    details: input.detail,
+                    importance: input.important}})))
+                .then(subscriptions !== null ? swal("Se ha creado la alerta!", "Gracias!", "success") : swal("Alerta no creada!", "Intente de nuevo!", "warning"))
+                .then(subscriptions !== null && history.goBack())
+                
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
