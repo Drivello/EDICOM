@@ -33,9 +33,9 @@ module.exports = async (req, res, next) => {
 		timeEnd = (new Date((new Date()).setHours(parseInt(hoursEnd)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesEnd)))).getMinutes();
 		duration = (new Date((new Date()).setHours(parseInt(hoursDuration)))).getHours() * 60 + (new Date((new Date()).setMinutes(parseInt(minutesDuration)))).getMinutes();
 
-		const bookingPerDay = Math.floor((timeEnd - timeStart) / (duration) * quota);
+		const bookingPerDay = Math.floor((timeEnd - timeStart) / (duration));
 
-
+		console.log('bookingPerDay',bookingPerDay);
 		// day.setDate(day.getDate() + 1);
 		let bookingInit = dateStart;
 

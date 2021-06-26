@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { groupBy } from '../../utils';
+
 export const CREATE_BOOKING = 'CREATE_BOOKING';
 export const ALL_BOOKINGS = 'ALL_BOOKINGS';
 export const GET_BOOKING_BY_ID = 'GET_BOOKING_BY_ID';
@@ -50,15 +52,9 @@ export function filterBookings(payload) {
 	return {type: FILTER_BOOKING, payload}
 }
 
-export function filterBookingsByGroup(type) {
-	state.bookingDetail.map(booking => {
-		console.log(booking)
-		const type = action.payload;
-		if (type === "hour") {
-			const hour = booking.start.slice(10);
-			console.log("hora", hour);
-		}
-	})
-	console.log(type)
-	return {type: FILTER_BOOKING_GROUP, payload: type}
+export function filterBookingsByGroup(data) {
+
+	const groups = groupBy(data, 'start');
+	console.log(groups)
+	return {type: FILTER_BOOKING_GROUP, payload: groups}
 }

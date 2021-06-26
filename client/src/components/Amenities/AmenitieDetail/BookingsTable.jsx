@@ -31,27 +31,42 @@ function BookingsTable(props) {
    console.log(props.amenitieId, "TABLE");
 
    const allComplaints = useSelector(state => state.bookingReducer.bookingDetail)
+   const bookingFilter = useSelector(state => state.bookingReducer.bookingFilter)
 
 
    useEffect(() => {
       dispatch(getBookingByAmenity(props.amenitieId))
    }, [dispatch])
 
-   const complaints = allComplaints?.map((booking) => {
-      let stateSpanish;
-      if (booking.status === "free") stateSpanish = "Libre";
-      if (booking.status === "cancelled") stateSpanish = "Cancelado";
-      if (booking.status === "booked") stateSpanish = "Reservado";
-      return {
-         id: booking.id,
-         start: moment(booking.start).format("DD/MM/YYYY -- h:mm"),
-         date: moment(booking.finish).format("DD/MM/YYYY -- h:mm"),
-         state: stateSpanish,
-      };
-   });
+   const [filter, setFilter] = useState(false);
 
-   const [filter, setFilter] = useState("hour");
+   let complaints = [];
 
+   let bookingUniques = [];
+
+   if(!filter){
+      complaints = allComplaints?.map((booking) => {
+         let stateSpanish;
+         if (booking.status === "free") stateSpanish = "Libre";
+         if (booking.status === "cancelled") stateSpanish = "Cancelado";
+         if (booking.status === "booked") stateSpanish = "Reservado";
+         return {
+            id: booking.id,
+            start: moment(booking.start).format("DD/MM/YYYY -- H:mm"),
+            date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
+            state: stateSpanish,
+         };
+      });
+   }else{
+      console.log(bookingFilter)
+
+      for (const groupBooking in bookingFilter) {
+         {
+            console.log('groupBooking', bookingFilter[groupBooking][0])
+            complaints.push(bookingFilter[groupBooking][0])
+         }
+      }
+   }
 
 
    const columns = [
@@ -61,12 +76,20 @@ function BookingsTable(props) {
       {
          field: "state", headerName: "Estado", flex: 1,
          renderCell: params => {
-            console.log(params, "rows")
-            return (
-               <Link onClick={(e) => handleEventClick(e, params.row)}>
-                  {params.row.state}
-               </Link>
-            );
+            if(!filter){
+               return (
+                  <Link onClick={(e) => handleEventClick(e, params.row)}>
+                     {params.row.state}
+                  </Link>
+               );
+            }else{
+               console.log(bookingFilter[params.row.date], "start", params.row.date)
+               return (
+                  <Link onClick={(e) => handleEventClickGroup(e, params.row.date)}>
+                     {params.row.state}
+                  </Link>
+               );
+            }
          },
       },
    ];
@@ -75,6 +98,21 @@ function BookingsTable(props) {
    const [alertProps, setAlertProps] = useState({});
 
    const handleEventClick = (clickInfo, data) => {
+      setAlertProps({
+         id: data.id,
+         title: data.concept,
+         amenity: props.amenitieId,
+         state: data.state,
+         start: data.start,
+         date: data.date,
+         state: data.state,
+      });
+      setDisplayPopUp(true);
+   };
+
+   const handleEventClickGroup = (clickInfo, date) => {
+      const data = bookingFilter[date]
+      console.log(data, "ESTA ES LA DATA", date)
       setAlertProps({
          id: data.id,
          title: data.concept,
@@ -115,13 +153,11 @@ function BookingsTable(props) {
       console.log(e.target.value)
 
       if(e.target.value === "All"){
-         setFilter("All");
+         setFilter(false);
       }else if(e.target.value === "Hour"){
-         setFilter("Hour");
-      }else{
-         setFilter("Day");
+         setFilter(true);
       }
-      dispatch(filterBookingsByGroup(filter))
+      dispatch(filterBookingsByGroup(complaints))
    }
 
    return (
@@ -143,9 +179,6 @@ function BookingsTable(props) {
             </MenuItem>
             <MenuItem value="Hour">
                <em>Hora</em>
-            </MenuItem>
-            <MenuItem value="Day">
-               <em>Dia</em>
             </MenuItem>
          </Select>
          <div style={{ display: "flex", height: "100%" }}>

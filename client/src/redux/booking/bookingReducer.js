@@ -13,7 +13,7 @@ const initialState = {
 	allBookings: [],
 	bookingDetail: [],
 	bookingDeleted: [],
-	bookingFilter: [],
+	bookingFilter: {},
 	putBooking: [],
 };
 
