@@ -12,7 +12,8 @@ const amenities = require('./amenities');
 const admin = require('./admin');
 const subscriptions = require('./subscriptions');
 const bookings = require('./bookings');
-
+const services = require('./services');
+const ratings = require('./ratings');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -37,5 +38,7 @@ router.use('/amenities', amenities);
 router.use('/admin', admin);
 router.use('/subscriptions', subscriptions);
 router.use('/bookings', bookings);
+router.use('/services', services);
+router.use('/ratings', ratings);
 
 module.exports = router;

@@ -142,6 +142,9 @@ conn.sync({force: true}).then(() => {
 		amount: 3700,
 	});
 
+	// let services1 = Services.create({
+
+	// })
 	let amenitie1 = Amenity.create({
 		amenity_type: 'Pileta',
 		quantity: '1',
