@@ -5,11 +5,13 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { putBooking } from '../../../redux/booking/bookingActions';
+import { getBookingByAmenity } from "../../../redux/booking/bookingActions";
 import styles from "./Styles.module.css";
 
 export default function PopUp(props) {
 
     const dispatch = useDispatch();
+    const setPop = props.setPop
 
    /*  const buildings = useSelector(state => state.buildingReducer.allBuildings);
     const dispatch = useDispatch();
@@ -30,14 +32,23 @@ export default function PopUp(props) {
 
     const freeBooking = (event) => {
         dispatch(putBooking(props.alertProps.id, {status: "free"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
     }
 
     const cancelBooking = (event) => {
         dispatch(putBooking(props.alertProps.id, {status: "cancelled"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
     }
 
     const takeBooking = (event) => {
         dispatch(putBooking(props.alertProps.id, {status: "booked"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
     }
 
     return (props.display) ? (

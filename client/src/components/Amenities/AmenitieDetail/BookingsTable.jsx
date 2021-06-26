@@ -25,7 +25,7 @@ import styles from "./Styles.module.css";
 
 function BookingsTable(props) {
 
-
+console.log("estoy renderizando bookingTable")
    const dispatch = useDispatch();
 
    console.log(props.amenitieId, "TABLE");
@@ -98,7 +98,7 @@ function BookingsTable(props) {
       setAlertProps({
          id: data.id,
          title: data.concept,
-         detail: data.detail,
+         amenity: props.amenitieId,
          state: data.state,
          start: data.start,
          date: data.date,
