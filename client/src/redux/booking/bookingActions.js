@@ -35,11 +35,11 @@ export function getBookingById(id) {
 	};
 }
 
-export function putBooking(id) {
+export function putBooking(id, body) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
 			`http://localhost:3001/bookings/${id}`
-		);
+		, body);
 		dispatch({type: PUT_BOOKING, payload: data});
 	};
 }
