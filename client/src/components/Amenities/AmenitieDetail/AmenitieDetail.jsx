@@ -12,7 +12,7 @@ const AmenitieDetail = (props) => {
 
   const { id } = useParams();
 
-  /* const allComplaints = useSelector(state => state.complaintsReducer.allComplaints) */
+  const Amenitie = useSelector(state => state.amenitiesReducer.amenityDetail)
   const dispatch = useDispatch();
 
   useEffect(() =>{

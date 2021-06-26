@@ -26,7 +26,7 @@ import styles from "./Styles.module.css";
 function BookingsTable(props) {
    /* const allComplaints = useSelector(state => state.bookingReducer.allBookings) */
 
-   const allComplaints = [
+/*    const allComplaints = [
       {
          id: 1,
          start: "2021-06-25T15:30:05.304Z",
@@ -67,21 +67,23 @@ function BookingsTable(props) {
          userId: null,
          amenityId: 1,
       },
-   ];
+   ]; */
 
    const dispatch = useDispatch();
 
    console.log(props.amenitieId, "TABLE");
 
+   const allComplaints = useSelector(state => state.bookingReducer.bookingDetail)
+
    const [compleints, setCompleints] = useState(allComplaints);
 
-     useEffect(() => {
-    dispatch(getAmenityById(props.amenitieId))
-  },[dispatch])
+   useEffect(() => {
+      dispatch(getBookingByAmenity(props.amenitieId))
+   }, [dispatch])
 
-/*      useEffect(() => {
-    setCompleints(allComplaints)
-  },[dispatch]) */
+   /*      useEffect(() => {
+       setCompleints(allComplaints)
+     },[dispatch]) */
 
    const complaints = allComplaints?.map((booking) => {
       let stateSpanish;
