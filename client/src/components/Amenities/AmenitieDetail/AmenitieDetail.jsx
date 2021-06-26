@@ -11,6 +11,7 @@ import { getAmenityById } from '../../../redux/amenities/amenitiesActions';
 const AmenitieDetail = (props) => {
 
   const { id } = useParams();
+  const { name } = useParams();
 
   const Amenitie = useSelector(state => state.amenitiesReducer.amenityDetail)
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const AmenitieDetail = (props) => {
     <div className='contExtAlerts'>
         <div className='componentHeaderAlertsList'>
             <h1 className='contExtAlerts'>
-                Amenitie:
+                {name}:
             </h1>
         </div>
         <div className='contAlertsTable'>

@@ -51,8 +51,9 @@ const ShowAmenities = () => {
 	const columns = [
 		{field: 'amenity_type', headerName: 'Tipo', width: 150,
 		renderCell: params => {
+			console.log(params)
 			return (
-					<Link to={`/AmenitieDetail/${params.id}`}>
+					<Link to={`/AmenitieDetail/${params.id}/${params.row.amenity_type}`}>
 						{params.row.amenity_type}
 					</Link>
 			);
