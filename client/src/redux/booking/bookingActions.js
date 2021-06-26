@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {groupBy} from '../../utils';
+
 export const CREATE_BOOKING = 'CREATE_BOOKING';
 export const ALL_BOOKINGS = 'ALL_BOOKINGS';
 export const GET_BOOKING_BY_ID = 'GET_BOOKING_BY_ID';
@@ -7,6 +9,7 @@ export const FILTER_BOOKING = 'FILTER_BOOKING';
 export const PUT_BOOKING = 'PUT_BOOKING';
 export const TAKE_BOOKING = 'TAKE_BOOKING';
 export const CANCEL_BOOKING = 'CANCEL_BOOKING';
+export const FILTER_BOOKING_GROUP = 'FILTER_BOOKING_GROUP';
 
 export function createBooking(booking) {
 	return async function (dispatch) {
@@ -25,7 +28,7 @@ export function getAllBookings() {
 export function getBookingByAmenity(amenityId) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://localhost:3001/bookings/${amenityId}`
+			`http://localhost:3001/bookings/byAmenity/${amenityId}`
 		);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
 	};
@@ -38,9 +41,12 @@ export function getBookingById(id) {
 	};
 }
 
-export function putBooking(id) {
+export function putBooking(id, body) {
 	return async function (dispatch) {
-		const {data} = await axios.put(`http://localhost:3001/bookings/${id}`);
+		const {data} = await axios.put(
+			`http://localhost:3001/bookings/${id}`,
+			body
+		);
 		dispatch({type: PUT_BOOKING, payload: data});
 	};
 }
@@ -67,4 +73,10 @@ export function cancelBooking(payload) {
 		);
 		dispatch({type: CANCEL_BOOKING, payload: data});
 	};
+}
+
+export function filterBookingsByGroup(data) {
+	const groups = groupBy(data, 'start');
+	console.log(groups);
+	return {type: FILTER_BOOKING_GROUP, payload: groups};
 }

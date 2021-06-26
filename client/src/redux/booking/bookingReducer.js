@@ -7,6 +7,7 @@ import {
 	PUT_BOOKING,
 	TAKE_BOOKING,
 	CANCEL_BOOKING,
+	FILTER_BOOKING_GROUP,
 } from './bookingActions';
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
 	allBookings: [],
 	bookingDetail: [],
 	bookingDeleted: [],
-	bookingFilter: [],
+	bookingFilter: {},
 	putBooking: [],
 	takedBookings: [],
 };
@@ -63,6 +64,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				takeBooking: action.payload,
+			};
+		case FILTER_BOOKING_GROUP:
+			return {
+				...state,
+				bookingFilter: action.payload,
 			};
 		default:
 			return state;

@@ -49,7 +49,15 @@ const ShowAmenities = () => {
 	 }
 
 	const columns = [
-		{field: 'amenity_type', headerName: 'Tipo', width: 150},
+		{field: 'amenity_type', headerName: 'Tipo', width: 150,
+		renderCell: params => {
+			return (
+					<Link to={`/AmenitieDetail/${params.id}/${params.row.amenity_type}`}>
+						{params.row.amenity_type}
+					</Link>
+			);
+		},
+	},
 		{field: 'quantity', headerName: 'Cantidad', width: 200},
 		{field: 'capacity', headerName: 'Capacidad', width: 150 },
 		{
