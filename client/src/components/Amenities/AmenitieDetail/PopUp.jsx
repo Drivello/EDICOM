@@ -30,22 +30,22 @@ export default function PopUp(props) {
     }
  */
 
-    const freeBooking = (event) => {
-        dispatch(putBooking(props.alertProps.id, {status: "free"}))
+    const freeBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "free"}))
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
     }
 
-    const cancelBooking = (event) => {
-        dispatch(putBooking(props.alertProps.id, {status: "cancelled"}))
+    const cancelBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "cancelled"}))
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
     }
 
-    const takeBooking = (event) => {
-        dispatch(putBooking(props.alertProps.id, {status: "booked"}))
+    const takeBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "booked"}))
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
