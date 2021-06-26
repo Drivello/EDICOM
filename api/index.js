@@ -141,6 +141,10 @@ conn.sync({force: true}).then(() => {
 		amount: 3700,
 	});
 
+	// let services1 = Services.create({
+
+	// })
+
 	// Mock Buildings Data
 	let buildingsDataStr = JSON.stringify(buildingsData);
 	let buildingsDataArray = JSON.parse(buildingsDataStr);
