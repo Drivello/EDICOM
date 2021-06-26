@@ -3,8 +3,9 @@ export const CREATE_BOOKING = 'CREATE_BOOKING';
 export const ALL_BOOKINGS = 'ALL_BOOKINGS';
 export const GET_BOOKING_BY_ID = 'GET_BOOKING_BY_ID';
 export const DELETE_BOOKING = 'DELETE_BOOKING';
-export const FILTER_BOOKING = 'FILTER_BOOKING'
+export const FILTER_BOOKING = 'FILTER_BOOKING';
 export const PUT_BOOKING = 'PUT_BOOKING';
+export const FILTER_BOOKING_GROUP = 'FILTER_BOOKING_GROUP'
 
 export function createBooking(booking) {
 	return async function (dispatch) {
@@ -22,7 +23,7 @@ export function getAllBookings() {
 
 export function getBookingByAmenity(amenityId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/bookings/${amenityId}`);
+		const {data} = await axios.get(`http://localhost:3001/bookings/byAmenity/${amenityId}`);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
 	};
 }
@@ -35,11 +36,11 @@ export function getBookingById(id) {
 	};
 }
 
-export function putBooking(id) {
+export function putBooking(id, body) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
 			`http://localhost:3001/bookings/${id}`
-		);
+		, body);
 		dispatch({type: PUT_BOOKING, payload: data});
 	};
 }
@@ -47,4 +48,17 @@ export function putBooking(id) {
 export function filterBookings(payload) {
 	console.log(payload)
 	return {type: FILTER_BOOKING, payload}
+}
+
+export function filterBookingsByGroup(type) {
+	state.bookingDetail.map(booking => {
+		console.log(booking)
+		const type = action.payload;
+		if (type === "hour") {
+			const hour = booking.start.slice(10);
+			console.log("hora", hour);
+		}
+	})
+	console.log(type)
+	return {type: FILTER_BOOKING_GROUP, payload: type}
 }

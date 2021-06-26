@@ -85,7 +85,7 @@ function App() {
 
 				{/* ----------------------------Crear Turnos para amenities----------------------------------- */}
 				<Route path="/createBookings" component={CreateBookings} />
-				<Route path="/AmenitieDetail/:id" component={AmenitieDetail} />
+				<Route path="/AmenitieDetail/:id/:name" component={AmenitieDetail} />
 				<Route path="/complaints" component={ComplaintsList} />
 				
 			</BrowserRouter>

@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
-import { putStateComplaint , getComplaints} from '../../../redux/complaints/complaintsActions';
+import { putBooking } from '../../../redux/booking/bookingActions';
+import { getBookingByAmenity } from "../../../redux/booking/bookingActions";
 import styles from "./Styles.module.css";
 
 export default function PopUp(props) {
+
+    const dispatch = useDispatch();
+    const setPop = props.setPop
 
    /*  const buildings = useSelector(state => state.buildingReducer.allBuildings);
     const dispatch = useDispatch();
@@ -25,40 +29,47 @@ export default function PopUp(props) {
         setPop(false)
     }
  */
+
+    const freeBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "free"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
+    }
+
+    const cancelBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "cancelled"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
+    }
+
+    const takeBooking = async (event) => {
+        await dispatch(putBooking(props.alertProps.id, {status: "booked"}))
+        console.log(props.alertProps)
+        dispatch(getBookingByAmenity(props.alertProps.amenity))
+        setPop(false)
+    }
+
     return (props.display) ? (
         <ThemeProvider theme={theme}>
             <div className='popUpAlert'>
-               {/*  <div className='popup-inner'>
+                <div className='popup-inner'>
                     <div className='btnX'>
                         <input className='XinputBtn' type="button" value="X" onClick={() => props.setDisplay(false)} />
                     </div>
                     <div className='contExtDetailAlert'>
-                        <h2>
-                            {props.alertProps.title}
-                        </h2>
-                        <h4>
-                            {props.alertProps.detail}
-                        </h4>
-                        <h5>
-                            Importancia: {props.alertProps.importance}
-                        </h5>
-                        <h4>
-                            Fecha: {props.alertProps.date}
-                        </h4>
-                        <h4>
-                            Edificio: {props.alertProps.building}
-                        </h4>
-                        <h4>
-                            Estado: {props.alertProps.state}
-                        </h4>
-                        <Button id={styles.button} onClick={handleClose} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
-                            Cerrar Reclamo
+                        <Button id={styles.button} onClick={freeBooking} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                            Liberar Turno
                         </Button>
-                        <Button id={styles.button} onClick={handleOpen} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
-                            Abrir Reclamo
+                        <Button id={styles.button} onClick={cancelBooking} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                            Cancelar Turno
+                        </Button>
+                        <Button id={styles.button} onClick={takeBooking} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                            Reservar Turno
                         </Button>
                     </div>
-                </div> */}
+                </div>
             </div>
         </ThemeProvider>
     ) : "";

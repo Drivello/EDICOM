@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import App from './components/App/App.js';
 import AppPublic from './components/App/AppPublic.js';
 import Logging from './components/App/Logging.js';
 import ResetPassword from './components/Logging/resetPassword.jsx';
+import { getIdUser } from './redux/logging/loggingActions';
 
 
 
@@ -17,9 +18,11 @@ const AppGlobal = () => {
 	// });
 
 	const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
+	const dispatch = useDispatch();
 
-	console.log('currentUser',currentUser)
-	
+	useEffect(() => {
+        dispatch(getIdUser(currentUser && currentUser.token))
+    }, [currentUser])
 	
 	
 	return (

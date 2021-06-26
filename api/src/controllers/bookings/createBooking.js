@@ -1,8 +1,8 @@
-const {Amenity, Booking} = require('../../db.js');
+const { Amenity, Booking } = require('../../db.js');
 
 module.exports = async (req, res, next) => {
 
-	let {idAmenity, dateStart, dateEnd, timeStart, timeEnd, duration} = req.body;
+	let { idAmenity, dateStart, dateEnd, timeStart, timeEnd, duration } = req.body;
 
 	dateStart = new Date(dateStart);
 	dateEnd = new Date(dateEnd);
@@ -73,7 +73,7 @@ module.exports = async (req, res, next) => {
 				}
 
 				bookingInit.setHours(
-					bookingInit.getHours() + duration / 60,	
+					bookingInit.getHours() + duration / 60,
 					bookingInit.getMinutes() + duration % 60
 				);
 				bookingEnd.setHours(
