@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {getAllAmenities, allAmenities} from '../../redux/amenities/amenitiesActions';
 import {makeStyles, Grid, Button, Container} from '@material-ui/core';
+import CreateBookings from './CreateBooking/CreateBookings';
 import AddIcon from '@material-ui/icons/Add';
 import {ThemeProvider} from '@material-ui/core/styles';
 import {DataGrid} from '@material-ui/data-grid';
@@ -30,6 +31,8 @@ const ShowAmenities = () => {
 	const classes = useStyles();
 
 	const [building, setBuilding] = useState({});
+	const [showCreateBooking, setShowCreateBooking] = useState(false)
+	const [idAmenity, setIdAmenity] = useState('')
 
 	useEffect(() => {
 		//dispatch(getBuildingDetail(id_building));
@@ -40,12 +43,39 @@ const ShowAmenities = () => {
         setBuilding(detailBuilding)
     }, [detailBuilding]);
 
+    const  toggleFormCreateBooking = (idAmenity)=>{ //toglee BookingForm
+		setIdAmenity(idAmenity)
+		setShowCreateBooking(!showCreateBooking)
+	 }
 
 	const columns = [
-		{field: 'id', headerName: '#', width: 90},
-		{field: 'amenity_type', headerName: 'Tipo', width: 200},
+		{field: 'amenity_type', headerName: 'Tipo', width: 150,
+		renderCell: params => {
+			return (
+					<Link to={`/AmenitieDetail/${params.id}/${params.row.amenity_type}`}>
+						{params.row.amenity_type}
+					</Link>
+			);
+		},
+	},
 		{field: 'quantity', headerName: 'Cantidad', width: 200},
-		{field: 'capacity', headerName: 'Capacidad', width: 200},
+		{field: 'capacity', headerName: 'Capacidad', width: 150 },
+		{
+			field: 'addBooking', headerName: 'Agregar Turnos', width: 200, sortable: false, renderCell: params => {
+				return (
+					<ThemeProvider theme={theme}>
+							<Button
+								style={{ fontWeight: 1000 }}
+								variant="contained"
+								color="secondary"
+								onClick={ () => toggleFormCreateBooking(params.row.id) }
+							>
+								AGREGAR TURNOS
+							</Button>
+					</ThemeProvider>
+				);
+			},
+		},
 		{
 			field: 'amenity_detail',
 			headerName: 'Detalles',
@@ -90,12 +120,26 @@ const ShowAmenities = () => {
                 			</Button>
             			</Link>
 					</div>
-					<Container style={{height: '400px', width: '900px'}}>
+					<Container style={{height: '400px', width: '1500px'}}>
 						<Container style={{display: 'flex', height: '100%', width:'900px'}}>
-							<DataGrid rows={Amenities} columns={columns} pageSize={5} />
+							<DataGrid rows={Amenities} columns={columns} pageSize={7} />
 						</Container>
 					</Container>
 				</Grid>
+				<div>
+				{
+                     showCreateBooking
+                     ?
+                     // <p>Mostrar generador de expesas</p>
+                     <CreateBookings 
+                        visibility={showCreateBooking} 
+                        changeVisibility={toggleFormCreateBooking}
+                        idAmenity={idAmenity}
+                     />
+                     :
+                     false
+                  }
+				</div>
 			</ThemeProvider>
 		</>
 	);

@@ -11,7 +11,8 @@ const {
 	User,
 	Amenity,
 	Complaints,
-	Admin
+	Admin,
+	Booking
 } = require('./src/db.js');
 
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
@@ -144,6 +145,50 @@ conn.sync({force: true}).then(() => {
 	// let services1 = Services.create({
 
 	// })
+	let amenitie1 = Amenity.create({
+		amenity_type: 'Pileta',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie2 = Amenity.create({
+		amenity_type: 'Gimnacio',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie3 = Amenity.create({
+		amenity_type: 'Parrilla',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Tripa gordaaa'
+	})
+
+	let booking1 = Booking.create({
+		idAmenity: 1,
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
+		status:"free",
+		duration: '08:00'
+	})
+
+	let booking2 = Booking.create({
+		idAmenity: 2,
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
+		duration: '08:00',
+		status:"free"
+	})
+
+	let booking3 = Booking.create({
+		idAmenity: 3,
+		start: '2021-06-24T10:30:00.000Z',
+		finish: '2021-06-30T10:30:00.000Z',
+		status:"free",
+		duration: '08:00'
+	})
 
 	// Mock Buildings Data
 	let buildingsDataStr = JSON.stringify(buildingsData);
@@ -193,7 +238,7 @@ conn.sync({force: true}).then(() => {
 		}
 	}
 
-
+	
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
 		[
@@ -209,22 +254,32 @@ conn.sync({force: true}).then(() => {
 			user1, //9
 			user2, //10
 			user3, //11
-		].concat(buildingsDataCreation) ////12.....23
+			amenitie1, //12
+			amenitie2, //13
+			amenitie1, //14
+			booking1, //15
+			booking2, //16
+			booking3, //17
+		].concat(buildingsDataCreation) ////18.....29
 		.concat([admin1])
+		.concat([amenitie1, amenitie2, amenitie3, booking1, booking2, booking3])
 	).then(
 		res => {
-			res[12].addSpendings([res[0], res[1], res[2]]);
-			res[12].addApartments([res[3], res[4], res[5]]);
+			res[15].setAmenity(res[12])
+			res[16].setAmenity(res[13])
+			res[17].setAmenity(res[14])
+			res[18].addSpendings([res[0], res[1], res[2]]);
+			res[18].addApartments([res[3], res[4], res[5]]);
 			res[3].addExpenses(res[6]);
 			res[3].addExpense(res[7]);
 			res[3].addExpense(res[8]);
-			res[3].setBuilding(res[12]);
-			res[4].setBuilding(res[12]);
-			res[5].setBuilding(res[12]);
+			res[3].setBuilding(res[18]);
+			res[4].setBuilding(res[18]);
+			res[5].setBuilding(res[18]);
 			res[9].setApartment(res[3]);
 			res[10].setApartment(res[4]);
 			res[11].setApartment(res[5]);
-			res[24].addBuilding(res[12]);
+			res[30].addBuilding(res[18]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
 			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
