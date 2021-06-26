@@ -38,19 +38,19 @@ export default function Sidebar(props) {
     const [userToken, setUserToken] = useState('');
     const [userId, setUserId] = useState('');
     
-    async function getToken() {
-        const sessionData = await JSON.parse(localStorage.getItem('profile'))
-        const newUserToken = sessionData.token
-        setUserToken(newUserToken)
-    }    
-    useEffect(() => {
-        getToken();
-    }, [])
+    // async function getToken() {
+    //     const sessionData = await JSON.parse(localStorage.getItem('profile'))
+    //     const newUserToken = sessionData.token
+    //     setUserToken(newUserToken)
+    //     return newUserToken;
+    // }    
+    // useEffect(() => {
+    //     getToken();
+    // }, [])
     
-    useEffect(() => {
-        dispatch(getIdUser(userToken))
-        setUserId(userInfo && userInfo.id)
-    }, [userToken])
+    // useEffect(() => {
+    //     dispatch(getIdUser(userToken))
+    // }, [userToken])
     
     useEffect(() => {
         dispatch(getComplaints())
@@ -59,8 +59,6 @@ export default function Sidebar(props) {
     useEffect(() => {
         setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
     }, [Notifications])
-
-
 
     const { authData } = useSelector(state => {
         return {
@@ -203,28 +201,28 @@ export default function Sidebar(props) {
 
                     <List>
 
-                        <Link to={`/public/${userId}`} className='link'>
+                        <Link to={`/public/${userInfo && userInfo.id}`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><HomeIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Inicio'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userId}/amenities`} className='link'>
+                        <Link to={`/public/${userInfo && userInfo.id}/amenities`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Amenities'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userId}/myExpenses`}>
+                        <Link to={`/public/${userInfo && userInfo.id}/myExpenses`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userId}/complaints`}>
+                        <Link to={`/public/${userInfo && userInfo.id}/complaints`}>
                             <ListItem button key={'Alertas'}>
                                 <ListItemIcon><AnnouncementIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Reclamos'} />
