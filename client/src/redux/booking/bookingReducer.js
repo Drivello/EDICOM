@@ -5,6 +5,7 @@ import {
 	DELETE_BOOKING,
 	FILTER_BOOKING,
 	PUT_BOOKING,
+	FILTER_BOOKING_GROUP
 } from './bookingActions';
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
 	allBookings: [],
 	bookingDetail: [],
 	bookingDeleted: [],
-	bookingFilter: [],
+	bookingFilter: {},
 	putBooking: [],
 };
 
@@ -43,6 +44,10 @@ const reducer = (state = initialState, action) => {
 				...state, bookingFilter: state.allBookings.filter(booking => {
 					return booking.date === action.payload.start
 				})
+			};
+		case FILTER_BOOKING_GROUP:
+			return {
+				...state, bookingFilter: action.payload
 			}
 		default:
 			return state;

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -52,28 +51,30 @@ export default function Row(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography variant="h6" gutterBottom component="div">
-                  History
+                  Expensas
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
                       <TableCell>Mes</TableCell>
                       <TableCell>Año</TableCell>
-                      <TableCell align="right">Importe</TableCell>
+                      <TableCell align="right">Importe [ $ ]</TableCell>
+                      <TableCell align="right">Estado</TableCell>
                       {/* <TableCell align="right">Total price ($)</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.expenses.map((expense) => (
                       <TableRow key={expense.id}>
-                        <TableCell component="th" scope="row">
-                          {expense.month}
-                        </TableCell>
-                        <TableCell>{expense.year}</TableCell>
-                        <TableCell align="right">{expense.amount}</TableCell>
-                        {/* <TableCell align="right">
-                          {Math.round(expense.amount * row.price * 100) / 100}
-                        </TableCell> */}
+                          <TableCell component="th" scope="row">
+                            {expense.month}
+                          </TableCell>
+                          <TableCell>{expense.year}</TableCell>
+                          <TableCell align="right">{expense.amount}</TableCell>
+                          <TableCell align="right">{expense.status}</TableCell>
+                          {/* <TableCell align="right">
+                            {Math.round(expense.amount * row.price * 100) / 100}
+                          </TableCell> */}
                       </TableRow>
                     ))}
                   </TableBody>
@@ -85,21 +86,3 @@ export default function Row(props) {
       </React.Fragment>
     );
   }
-  
-  Row.propTypes = {
-    row: PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbs: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      history: PropTypes.arrayOf(
-        PropTypes.shape({
-          amount: PropTypes.number.isRequired,
-          customerId: PropTypes.string.isRequired,
-          date: PropTypes.string.isRequired,
-        }),
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      protein: PropTypes.number.isRequired,
-    }).isRequired,
-  };
