@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Container } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import UserHome from "./UserHome/UserHome";
 import UserComplaints from "./UserComplaints/UserComplaints";
 import { getUser } from '../../../redux/users/userActions';
