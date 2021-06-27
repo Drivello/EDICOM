@@ -174,12 +174,13 @@ const handledateEndChange = (date)=>{
                 
 
                 </MuiPickersUtilsProvider>
-                <div align="right">
+            <div align="right">
                 <Button color="secondary"
                     onClick={(e) => handleCreateBooking()}
+                    onClick={() => changeVisibility(!visibility)}
                 > 
                 Generar 
-                </Button>
+                </Button> 
                 <Button
                     onClick={() => changeVisibility(!visibility)}
                 > 

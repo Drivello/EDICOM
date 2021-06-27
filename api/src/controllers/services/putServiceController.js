@@ -2,17 +2,11 @@ const { Services } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let {id, title, provider, enrollment, contact, detail, building} = req.body;
+    let {id} = req.body;
     try
     {
         let alert = await Services.update({
-            title,
-            provider,
-            enrollment: enrollment || null,
-            contact,
-            detail: detail || null,
-            buildingId: building,
-
+            accepted: true
         },
         { where: { id: id } });
 

@@ -21,16 +21,19 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    issueDate: {
-      type: DataTypes.DATE,
-      defaultValue: new Date(),
-    },
     status: {
       type: DataTypes.ENUM(
         {
           values: ['Pagada', 'Adeudada']
         }),
       defaultValue: 'Adeudada'
-    }
+    },
+    fullDate: {
+      type: DataTypes.VIRTUAL,
+      get: function()
+      {
+        return this.month + "-" + this.year;
+      }
+    },
   });
 };

@@ -32,6 +32,9 @@ import moment from "moment";
 import { numeroPositivo } from "../../utils/validations"
 import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { getInvoicedExpenses } from "../../redux/expenses/expensesActions";
+import { MONTHS } from "../../utils/constant";
+
 
 const Form = (props) => {
 
@@ -50,23 +53,21 @@ const Form = (props) => {
   const dispatch = useDispatch();
   //tendria que traer con un use selector el listado de edificios y con un use effect ejecutarlo
 
-  const { buildingArray, totalSpend } = useSelector(state => {
+  const { buildingArray, totalSpend, invoicedExpenses } = useSelector(state => {
     return {
       buildingArray: state.buildingReducer.allBuildings,
-      totalSpend: state.reducerSpending.totalSpending
-
+      totalSpend: state.reducerSpending.totalSpending,
+      invoicedExpenses: state.reducerExpenses.invoicedExpenses
     };
   });
 
   useEffect(() => {
     dispatch(getBuildings());
     dispatch(totalSpending());
+    dispatch(getInvoicedExpenses());
   }, [dispatch]);
 
-  let newSpending = {};
-  // var date1 = new Date(new Date());
-  // console.log("date1", moment(date1).format("L"))
-  
+  let newSpending = {};  
 
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
@@ -131,6 +132,7 @@ const Form = (props) => {
   };
 
   const handleInputChange = (e) => {
+    console.log(e)
     if (e.target.name === "amount") {
       if (numeroPositivo(e.target.value)) {
         setSpending({
@@ -149,6 +151,27 @@ const Form = (props) => {
       });
     }
   };
+
+  const handleValidationDate = (e) => {
+
+    const date = {
+      "month": MONTHS[e.getMonth()],
+      "year": e.getFullYear()
+    }
+
+    for (const elem of invoicedExpenses) {
+      if(date.year === elem.year && date.month === elem.month){
+        alert("No se puede cargar gastos en meses donde ya se liquidaron las expensas")
+        return;
+      }
+    }
+    
+    setSpending({
+      ...spending,
+      date: e,
+    })
+
+  }
 
   const handleUpdate = (e) => {
     console.log("despache")
@@ -180,9 +203,7 @@ const Form = (props) => {
     );
   };
 
-  console.log("newSpending", newSpending)
-  
-  console.log()
+
   return (
     <ThemeProvider theme={theme}>
       <div className="mainContainer">
@@ -254,7 +275,11 @@ const Form = (props) => {
                     id="date"
                     format="dd/MM/yyyy"
                     value={spending.date}
-                    onChange={handleInputChange}
+                    onChange= { (e) => {
+                        // handleInputChange(e)
+                        handleValidationDate(e)
+                      }
+                    }
                     KeyboardButtonProps={{
                         "aria-label": "change date",
                     }}
