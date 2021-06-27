@@ -110,6 +110,9 @@ export function EditApartmentForm(props) {
             history.push(`/buildingDetail/${apartmentDetail.buildingId}`)
         })
     }
+    function cancelHandle (){
+        history.goBack()
+    }
 
 	return (
         <ThemeProvider theme={theme}>
@@ -169,7 +172,15 @@ export function EditApartmentForm(props) {
                             style={{fontWeight: 1000}} variant="contained" color="secondary" 
                             onClick={(e) => handleDelete(e, id, apartment)}
                             style={{marginTop: '-90px', width:'165px'}} >Eliminar</Button>
-                </Link> 
+                </Link>
+                <Button
+                    style={{ fontWeight: 1000 }}
+                    color="secondary"
+                    variant="contained"
+                    onClick={cancelHandle}
+                >
+                    Cancelar
+                </Button>
             </FormControl>
 		</div>
         </ThemeProvider>

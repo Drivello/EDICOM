@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_EXPENSES = 'GET_EXPENSES';
 export const FILTER_EXPENSES = 'FILTER_EXPENSES';
 export const POST_EXPENSES = 'POST_EXPENSES';
-
+export const INVOICED_EXPENSES = 'INVOICED_EXPENSES';
 
 
 export const getExpenses = () =>  {
@@ -25,6 +25,21 @@ export const postExpenses = (idBuilding, month, year) =>  {
         dispatch({
           type: POST_EXPENSES,
           // payload: res.data
+        })
+      })
+  }
+}
+
+export const getInvoicedExpenses = () =>  {
+  console.log( 'despachando getInvoiceExpenses' )
+  return function (dispatch) {
+    console.log(" entré a la actionnnnn ")
+    return axios.get(`http://localhost:3001/expenses/invoicedExpenses`)
+      .then(res => {
+        console.log("res", res)
+        dispatch({
+          type: INVOICED_EXPENSES,
+          payload: res.data
         })
       })
   }
