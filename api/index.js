@@ -13,11 +13,13 @@ const {
 	Complaints,
 	Admin,
 	Booking,
+	Services
 } = require('./src/db.js');
 
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
 const complaintsData = require('../complaintsDataMock.json');
+const servicesData = require('../servicesDataMock.json');
 const bcrypt = require('bcryptjs');
 
 // Syncing all the models at once.
@@ -236,6 +238,23 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
+	let servicesDataStr = JSON.stringify(servicesData);
+	let servicesDataArray = JSON.parse(servicesDataStr);
+	let servicesDataCreation = async (array, Buildings, Services) => {
+		for (var i = 0; i < array.length; i++) {
+			var Building = await Buildings.findByPk(array[i].buildingId);
+			var Service = await Services.create({
+				title: array[i].title,
+				provider: array[i].provider,
+				enrollment: array[i].enrollment || null,
+				contact: array[i].contact,
+				detail: array[i].detail || null,
+			});
+			await Building.addService(Service);
+		}
+	};
+
+	
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
 		[
@@ -281,6 +300,7 @@ conn.sync({force: true}).then(() => {
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
 			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
+			servicesDataCreation(servicesDataArray,Buildings, Services)
 			console.log('todo listo');
 		},
 		err => {
