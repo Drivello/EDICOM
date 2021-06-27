@@ -11,6 +11,10 @@ import amenitiesReducer from './amenities/amenitiesReducer';
 import complaintsReducer from './complaints/complaintsReducer';
 import subscriptionsReducer from './subscriptions/subscriptionReducer';
 import bookingReducer from './booking/bookingReducer';
+import servicesReducer from './services/servicesReducer';
+import ratingReducer from './ratings/ratingReducer';
+
+
 export const reducers = combineReducers({
 	bookingReducer: bookingReducer,
 	userReducer: userReducer,
@@ -23,6 +27,8 @@ export const reducers = combineReducers({
 	amenitiesReducer: amenitiesReducer,
 	complaintsReducer: complaintsReducer,
 	subscriptionsReducer: subscriptionsReducer,
+	servicesReducer: servicesReducer,
+	ratingReducer: ratingReducer
 });
 
 export default reducers;
