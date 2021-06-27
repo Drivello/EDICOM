@@ -2,11 +2,11 @@ const { Services, Buildings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let { title, provider, enrollment, contact, detail, buildingID } = req.body;
+    let { title, provider, enrollment, contact, detail, buildingId } = req.body;
     
     try
     {
-        let Building = await Buildings.findByPk(buildingID);
+        let Building = await Buildings.findByPk(buildingId);
         let Service = await Services.create({
             title,
             provider,

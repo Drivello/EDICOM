@@ -51,7 +51,7 @@ export default function AlertsUser(props){
                     </Link>
         </div>
         <div className='PaginationAlertsUserView'>
-        <Button variant="contained" color ="secondary" onClick = {handlePreviuos} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginRight:"20px"}}>
+        <Button variant="contained" color ="secondary" onClick = {handlePreviuos} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginRight:"40px"}}>
             <NavigateBeforeIcon style={{ fontSize: 25, color: "#212121" }}/>
         </Button>
         <div className='contExtAlertsUserView'>
@@ -59,7 +59,7 @@ export default function AlertsUser(props){
                 current.map(alert => <Card key={alert.id} alert={alert}/>)
             }
             </div>
-            <Button variant="contained" color ="secondary" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:"20px"}}>
+            <Button variant="contained" color ="secondary" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:"40px"}}>
             <NavigateNextIcon style={{ fontSize: 25, color: "#212121" }}/>
             </Button>
             </div>

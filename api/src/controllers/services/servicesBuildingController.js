@@ -1,4 +1,4 @@
-const { Services, Buildings } = require("../../db.js");
+const { Services, Buildings, Ratings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 	const id = req.params.id
@@ -8,6 +8,9 @@ module.exports = async (req, res, next) => {
 			where: {
 				buildingId: buildingService.id
 			},
+			include: [{
+                model: Ratings,
+            }],
 			/* order: [['date', 'DESC']] */
 		});
 		return res.json(data);

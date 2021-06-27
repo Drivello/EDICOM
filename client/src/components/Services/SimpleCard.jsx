@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { ratingsByService } from '../../redux/ratings/ratingsAction';
-import { useSelector, useDispatch } from "react-redux";
-import GradeIcon from '@material-ui/icons/Grade';
+import React from 'react';
 import './Services.css';
+import GradeIcon from '@material-ui/icons/Grade';
 
-export default function ServiceCard({service}) {
 
-    const stars = (service.ratings.reduce((tot, acc, curr) => {
-        return tot + acc.rating
-      },0) / service.ratings.length) || 0
-    console.log([...Array(Math.round(stars))])
+export default function SimpleCard({service, stars}) {
 
-    return(
-        <div className='serviceCard'>
+  console.log(stars)
+  return (
+    <div className='serviceCard'>
             <h2>
                 {service.title.toUpperCase()}
             </h2>
@@ -30,9 +25,9 @@ export default function ServiceCard({service}) {
             </div>
             <div>
                 {
-                    [...Array(Math.round(stars))].map( star => <GradeIcon className='GradeIcon'/>)
+                    [...Array(Math.round(stars))].map( star => <GradeIcon/>)
                 }
             </div>
         </div>
-    )
+  );
 }
