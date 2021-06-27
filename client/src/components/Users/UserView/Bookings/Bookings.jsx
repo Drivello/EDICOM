@@ -89,7 +89,7 @@ const useStyles = makeStyles({
 const Bookings = () => {
 
     const dispatch = useDispatch();
-    const { allBookings, bookingFilter } = useSelector((state) => state.bookingReducer)
+    const { allBookings, bookingNoToquesMauriQueSeRompeFilter } = useSelector((state) => state.bookingReducer)
     const { Amenities } = useSelector(state => state.amenitiesReducer)
     const { userId } = useSelector(state => state.loggingReducer)
     const [date, setDate] = useState(new Date(new Date()))
@@ -98,7 +98,6 @@ const Bookings = () => {
         userId: ''
     })
 
-    console.log('BOOOKING FILTER', bookingFilter)
     console.log('AMENITIESSSSSS', Amenities)
     console.log('all boooooooooking', allBookings)
 
@@ -113,6 +112,7 @@ const Bookings = () => {
         dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
     }, [dispatch])
 
+    console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
 
     console.log('USER ID', userId?.id)
 
@@ -204,24 +204,24 @@ const Bookings = () => {
                                                         name={amenity.amenity_type}
                                                         onChange={handleChange}
                                                     >
-                                                        <MenuItem value="">
-                                                            <em>{amenity.name}</em>
-                                                        </MenuItem>
-                                                        {bookingFilter && bookingFilter?.map((booking, i) => {
-                                                            if (amenity.id === booking.amenityId && booking.status === 'free') {
-                                                                return (
-                                                                    <MenuItem
-                                                                        key={booking.id}
-                                                                        name={booking}
-                                                                        value={booking}
-                                                                        onChange={() => handleBookingChange()}
-                                                                    >{` ${amenity.id} ${moment(booking.start).format('LT')} ${booking.amenityId}`}
-                                                                    </MenuItem>
-
-                                                                )
-                                                            }
-                                                        })}
-                                                    </Select>
+                                                    <MenuItem value="">
+                                                        <em>{amenity.name}</em>
+                                                    </MenuItem>
+                                                            {bookingNoToquesMauriQueSeRompeFilter && bookingNoToquesMauriQueSeRompeFilter?.map((booking, i)=>{
+                                                                if(amenity.id === booking.amenityId && booking.status === 'free'){
+                                                                    return (
+                                                                        <MenuItem
+                                                                            key={booking.id}
+                                                                            name={ booking}
+                                                                            value={booking}
+                                                                            onChange={() => handleBookingChange()}
+                                                                        >{` ${amenity.id} ${moment(booking.start).format('LT')} ${booking.amenityId}`}
+                                                                        </MenuItem>
+                                                                                                                                              
+                                                                    )
+                                                                }
+                                                            })}
+                                                    </Select>                                                                                                            
                                                 </TableCell>
 
                                                 <TableCell align="right">
