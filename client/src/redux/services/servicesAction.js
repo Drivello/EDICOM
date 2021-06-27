@@ -49,10 +49,10 @@ export function getServicesBuilding(id) {
 }
 
 export function filterServices(data) {
-    return({
+    return{
         type: FILTER_SERVICES,
         payload: data
-    })
+    }
 }
 
 export function postService(body) {
