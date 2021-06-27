@@ -131,7 +131,7 @@ conn.sync({force: true}).then(() => {
 	});
 
 	let expense2 = Expenses.create({
-		month: 'feb',
+		month: 'jan',
 		year: 2021,
 		amount: 5200,
 	});
@@ -145,26 +145,6 @@ conn.sync({force: true}).then(() => {
 	// let services1 = Services.create({
 
 	// })
-	let amenitie1 = Amenity.create({
-		amenity_type: 'Pileta',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen'
-	})
-
-	let amenitie2 = Amenity.create({
-		amenity_type: 'Gimnacio',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen'
-	})
-
-	let amenitie3 = Amenity.create({
-		amenity_type: 'Parrilla',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Tripa gordaaa'
-	})
 
 	let booking1 = Booking.create({
 		idAmenity: 1,
@@ -221,6 +201,30 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
+	let amenitie1 = Amenity.create({
+		buildingId: 1,
+		amenity_type: 'Pileta',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie2 = Amenity.create({
+		buildingId: 1,
+		amenity_type: 'Gimnacio',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie3 = Amenity.create({
+		buildingId: 2,
+		amenity_type: 'Parrilla',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Tripa gordaaa'
+	})
+
 	// reclamos de prueba
 	let complaintsDataStr = JSON.stringify(complaintsData);
 	let complaintsDataArray = JSON.parse(complaintsDataStr);
@@ -271,7 +275,7 @@ conn.sync({force: true}).then(() => {
 			res[18].addSpendings([res[0], res[1], res[2]]);
 			res[18].addApartments([res[3], res[4], res[5]]);
 			res[3].addExpenses(res[6]);
-			res[3].addExpense(res[7]);
+			res[4].addExpense(res[7]);
 			res[3].addExpense(res[8]);
 			res[3].setBuilding(res[18]);
 			res[4].setBuilding(res[18]);

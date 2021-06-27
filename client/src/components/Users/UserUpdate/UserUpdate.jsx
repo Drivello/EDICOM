@@ -154,6 +154,11 @@ export function UserUpdate() {
 		}
 	}
 
+	function cancelHandle (){
+        history.goBack()
+    }
+
+
 	
 
     return(
@@ -237,6 +242,9 @@ export function UserUpdate() {
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
                         <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
+                    </Grid>
+					<Grid item>
+						<Button style={{ fontWeight: 1000 }} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
                     </Grid>
                 </Grid>
 			</Grid>

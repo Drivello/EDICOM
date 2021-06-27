@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {getAllAmenities, allAmenities} from '../../redux/amenities/amenitiesActions';
+import {getBuildings} from '../../redux/building/buildingActions';
 import {makeStyles, Grid, Button, Container} from '@material-ui/core';
 import CreateBookings from './CreateBooking/CreateBookings';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,18 +14,31 @@ import {Link} from 'react-router-dom';
 import './ShowAmenities.css';
 
 const ShowAmenities = () => {
+
 	const {detailBuilding} = useSelector(state => state.buildingReducer);
+	const {allBuildings} = useSelector(state => state.buildingReducer);
 	const {Amenities} = useSelector(state => state.amenitiesReducer);
+
+	
+	if(allBuildings.length>0){	 
+		Amenities.map(amenity =>{
+			amenity.nameBuilding =  allBuildings.filter(building => building.id === amenity.buildingId)[0].name
+		})
+	}
+
 
 	const dispatch = useDispatch();
 
 	const {id_building} = useParams();
+
+	
 
 	const useStyles = makeStyles(theme => ({
 		root: {
 			marginTop: 100,
 			marginBottom: 30,
 			border: 5,
+			width: '80px'
 		},
 	}));
 
@@ -37,6 +51,7 @@ const ShowAmenities = () => {
 	useEffect(() => {
 		//dispatch(getBuildingDetail(id_building));
 		dispatch(allAmenities());
+		dispatch(getBuildings())
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -49,6 +64,7 @@ const ShowAmenities = () => {
 	 }
 
 	const columns = [
+		{field: 'nameBuilding', headerName: 'Edificio', width: 200},
 		{field: 'amenity_type', headerName: 'Tipo', width: 150,
 		renderCell: params => {
 			return (

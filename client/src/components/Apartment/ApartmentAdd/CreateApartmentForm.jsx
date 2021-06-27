@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom';
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem, 
 	 RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme)=>({
 
 const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 	
-
+	const history = useHistory();
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [disableButton, setdisableButton] = useState(false)
@@ -124,7 +125,9 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 			state:event.target.value}
 		)
 	};
-	
+	function cancelHandle (){
+        history.goBack()
+    }
 
     return (
 		<ThemeProvider theme={theme}>
@@ -226,6 +229,12 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
                         <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" disabled={disableButton} onClick={handleSubmit} variant="contained">Agregar Depto</Button>
+                    </Grid>
+					<Grid item>
+                        <Button style={{ fontWeight: 1000 }}
+                                color="secondary"
+                                variant="contained"
+                                onClick={cancelHandle}> Cancelar </Button>
                     </Grid>
                 </Grid>
 			</Grid>

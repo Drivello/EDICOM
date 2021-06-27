@@ -18,6 +18,7 @@ import {getAllApartments} from '../../redux/apartments/apartmentsActions';
 import styles from './CreateAmenityForm.module.css';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -297,13 +298,27 @@ const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit}) => {
 								</Grid>
 							</div>
 						</div>
+
 						<Grid
 							container
 							direction="row"
 							justify="center"
 							alignItems="center"
 						>
-							<Grid item>
+							<Grid className={styles.item}>
+								<Link to={'./amenities'}>
+									<Button
+										style={{fontWeight: 1000, marginTop: 50}}
+										color="secondary"
+										variant="contained"
+										marginRigth= "5px"
+									>
+										Cancelar
+									</Button>
+								</Link>
+							</Grid>
+
+							<Grid >	
 								<Button
 									style={{fontWeight: 1000, marginTop: 50}}
 									color="secondary"
