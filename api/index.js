@@ -228,18 +228,20 @@ conn.sync({force: true}).then(() => {
 	// reclamos de prueba
 	let complaintsDataStr = JSON.stringify(complaintsData);
 	let complaintsDataArray = JSON.parse(complaintsDataStr);
-	let complaintsDataCreation = async (array, Buildings, Complaints) => {
-		for (var i = 0; i < array.length; i++) {
-			var Building = await Buildings.findByPk(array[i].building);
-			var Complaint = await Complaints.create({
-				date: array[i].date,
-				subject: array[i].subject,
-				details: array[i].details || null,
-				importance: array[i].importance,
-				image: array[i].image,
-			});
-			await Building.addComplaint(Complaint);
-		}
+	let complaintsDataCreation = async (array, Buildings, Complaints, User) => {
+		for(var i = 0; i < array.length; i++) {
+		var building = await Buildings.findByPk(array[i].building);
+		var user = await User.findByPk(array[i].user);
+		var complaint = await Complaints.create({
+			date: array[i].date,
+			subject: array[i].subject,
+			details: array[i].details || null,
+			importance: array[i].importance,
+			image: array[i].image
+		});
+		await building.addComplaint(complaint);
+		await user.addComplaint(complaint);
+		};
 	};
 
 	let servicesDataStr = JSON.stringify(servicesData);
@@ -303,7 +305,7 @@ conn.sync({force: true}).then(() => {
 			res[30].addBuilding(res[18]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
-			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
+			complaintsDataCreation(complaintsDataArray, Buildings, Complaints, User);
 			servicesDataCreation(servicesDataArray,Buildings, Services)
 			console.log('todo listo');
 		},

@@ -9,6 +9,7 @@ const complaintsBuilding = require('../controllers/complaints/complaintsBuilding
 const findComplaint = require('../controllers/complaints/findComplaintController');
 const seenComplaint = require('../controllers/complaints/seenComplaintController');
 const stateComplaint = require('../controllers/complaints/stateComplaintController');
+const userComplaints = require('../controllers/complaints/userComplaintsController');
 
 router.use(express.json());
 
@@ -20,6 +21,7 @@ router.put("/state/:id", stateComplaint);
 router.delete("/:id", deleteComplaint);
 router.get("/all/:id", complaintsBuilding);
 router.get("/:id", findComplaint);
+router.get('/user/:id', userComplaints);
 
 
 router.get('/', async function(req,res,next){       //      endPoint

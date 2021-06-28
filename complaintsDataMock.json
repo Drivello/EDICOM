@@ -13,7 +13,7 @@
         "subject":"El ascensor se para",
         "details":"Reunion de consorcio por Zoom a las 19hs",
         "building":1,
-        "user":1,
+        "user":2,
         "importance":"media",
         "image":"https://media-cdn.tripadvisor.com/media/photo-s/11/13/d9/e0/ascensor-roto-por-mas.jpg"
     },
@@ -22,7 +22,7 @@
         "subject":"Alguien tira basura en el hall del edificio",
         "details":"A partir de la semana que viene cambiamos la empresa prestadora de servicios de limpieza",
         "building":3,
-        "user":1,
+        "user":3,
         "importance":"baja",
         "image":"https://www.rokkina.com/wp-content/uploads/2020/01/IMG_0335_1-scaled.jpg"
     },
