@@ -5,47 +5,137 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { putBooking } from '../../../redux/booking/bookingActions';
-import { getBookingByAmenity } from "../../../redux/booking/bookingActions";
+import { getBookingByAmenity, filterBookingsByGroup } from "../../../redux/booking/bookingActions";
 import styles from "./Styles.module.css";
+import moment from "moment";
 
 export default function PopUp(props) {
 
     const dispatch = useDispatch();
     const setPop = props.setPop
 
-   /*  const buildings = useSelector(state => state.buildingReducer.allBuildings);
-    const dispatch = useDispatch();
-    const setPop = props.setPop
+    /*  const buildings = useSelector(state => state.buildingReducer.allBuildings);
+     const dispatch = useDispatch();
+     const setPop = props.setPop
+ 
+     const handleOpen = () => {
+         dispatch(putStateComplaint(props.alertProps.id, "opened"))
+         dispatch(getComplaints())
+         setPop(false)
+     }
+ 
+     const handleClose = () => {
+         dispatch(putStateComplaint(props.alertProps.id, "closed"))
+         dispatch(getComplaints())
+         setPop(false)
+     }
+  */
 
-    const handleOpen = () => {
-        dispatch(putStateComplaint(props.alertProps.id, "opened"))
-        dispatch(getComplaints())
-        setPop(false)
-    }
-
-    const handleClose = () => {
-        dispatch(putStateComplaint(props.alertProps.id, "closed"))
-        dispatch(getComplaints())
-        setPop(false)
-    }
- */
+    const allBookings = useSelector(state => state.bookingReducer.bookingDetail)
 
     const freeBooking = async (event) => {
-        await dispatch(putBooking(props.alertProps.id, {status: "free"}))
+        console.log("entra free booking")
+        if (!Array.isArray(props.alertProps.id)) {
+            console.log("modo individual")
+            await dispatch(putBooking(props.alertProps.id, { status: "free" }))
+        } else {
+            props.alertProps.id.map(async (booking) => {
+                await dispatch(putBooking(booking.id, { status: "free" }))
+                console.log(booking, "esto entra en el grupo", booking.id)
+            })
+            let bookings = await allBookings?.map((booking) => {
+                let stateSpanish;
+                console.log("changing state", moment(booking.start).format("DD/MM/YYYY -- H:mm"), props.alertProps.id[0].start)
+                if (moment(booking.start).format("DD/MM/YYYY -- H:mm") !== props.alertProps.id[0].start) {
+                    if (booking.status === "free") stateSpanish = "Libre";
+                    if (booking.status === "cancelled") stateSpanish = "Cancelado";
+                    if (booking.status === "booked") stateSpanish = "Reservado";
+                } else {
+                    stateSpanish = "Libre"
+                }
+                return {
+                    id: booking.id,
+                    start: moment(booking.start).format("DD/MM/YYYY -- H:mm"),
+                    date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
+                    state: stateSpanish,
+                };
+            });
+            console.log(bookings, "bookings a agrupar")
+            await dispatch(filterBookingsByGroup(bookings))
+            console.log("modo grupo")
+        }
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
     }
 
     const cancelBooking = async (event) => {
-        await dispatch(putBooking(props.alertProps.id, {status: "cancelled"}))
+        if (!Array.isArray(props.alertProps.id)) {
+            console.log("modo individual")
+            await dispatch(putBooking(props.alertProps.id, { status: "cancelled" }))
+        } else {
+            console.log("modo grupo")
+            props.alertProps.id.map(async (booking) => {
+                console.log(booking, "esto entra en el grupo", booking.id)
+                await dispatch(putBooking(booking.id, { status: "cancelled" }))
+            })
+            let bookings = await allBookings?.map((booking) => {
+                let stateSpanish;
+                console.log("changing state", moment(booking.start).format("DD/MM/YYYY -- H:mm"), props.alertProps.id[0].start)
+                if (moment(booking.start).format("DD/MM/YYYY -- H:mm") !== props.alertProps.id[0].start) {
+                    if (booking.status === "free") stateSpanish = "Libre";
+                    if (booking.status === "cancelled") stateSpanish = "Cancelado";
+                    if (booking.status === "booked") stateSpanish = "Reservado";
+                } else {
+                    stateSpanish = "Cancelado"
+                }
+                return {
+                    id: booking.id,
+                    start: moment(booking.start).format("DD/MM/YYYY -- H:mm"),
+                    date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
+                    state: stateSpanish,
+                };
+            });
+            console.log(bookings, "bookings a agrupar")
+            await dispatch(filterBookingsByGroup(bookings))
+            console.log("modo grupo")
+        }
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
     }
 
     const takeBooking = async (event) => {
-        await dispatch(putBooking(props.alertProps.id, {status: "booked"}))
+        if (!Array.isArray(props.alertProps.id)) {
+            console.log("modo individual")
+            await dispatch(putBooking(props.alertProps.id, { status: "booked" }))
+        } else {
+            console.log("modo grupo")
+            props.alertProps.id.map(async (booking) => {
+                console.log(booking, "esto entra en el grupo", booking.id)
+                await dispatch(putBooking(booking.id, { status: "booked" }))
+            })
+            let bookings = await allBookings?.map((booking) => {
+                let stateSpanish;
+                console.log("changing state", moment(booking.start).format("DD/MM/YYYY -- H:mm"), props.alertProps.id[0].start)
+                if (moment(booking.start).format("DD/MM/YYYY -- H:mm") !== props.alertProps.id[0].start) {
+                    if (booking.status === "free") stateSpanish = "Libre";
+                    if (booking.status === "cancelled") stateSpanish = "Cancelado";
+                    if (booking.status === "booked") stateSpanish = "Reservado";
+                } else {
+                    stateSpanish = "Reservado"
+                }
+                return {
+                    id: booking.id,
+                    start: moment(booking.start).format("DD/MM/YYYY -- H:mm"),
+                    date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
+                    state: stateSpanish,
+                };
+            });
+            console.log(bookings, "bookings a agrupar")
+            await dispatch(filterBookingsByGroup(bookings))
+            console.log("modo grupo")
+        }
         console.log(props.alertProps)
         dispatch(getBookingByAmenity(props.alertProps.amenity))
         setPop(false)
