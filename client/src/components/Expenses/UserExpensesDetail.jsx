@@ -74,15 +74,21 @@ function UserExpensesDetail(props) {
 
 
   const columns = [
-    { field: 'year', headerName: 'Año', flex: 1, hide: true },
+    { field: 'year', headerName: 'Año', flex: 1},
     { field: 'month', headerName: 'Mes', flex: 1 },
     { field: 'amount', headerName: 'Monto', flex: 1 },
     { field: 'status', headerName: 'Estado', flex: 1 },
-    { field: 'concept', headerName: 'Pagar', flex: 2,renderCell: (params) => (
-      <Link className={styles.detail} onClick={(e) => handleEventClick(e, params.row)}>
-        {params.formattedValue}
-      </Link>
-    ) },
+    { field: 'concept', headerName: 'Pagar', flex: 2,renderCell: (params) => {
+      if(params.row.status === "Adeudada")
+      return (
+      <Button color="primary" onClick={handleEventClick}>
+        {console.log(params.row.status)}
+        Pagar
+      </Button>)
+      else{
+        return <h4>Pagada</h4>
+      }
+     } },
   ]
 
   const [input, setInput] = useState({
@@ -94,16 +100,7 @@ function UserExpensesDetail(props) {
   const [alertProps, setAlertProps] = useState({});
 
   const handleEventClick = (clickInfo, data) => {
-    setAlertProps({
-        id: data.id,
-        title: data.concept,
-        detail: data.detail,
-        importance: data.importance,
-        building: data.building,
-        date: data.date,
-        state: data.state
-    })
-    setDisplayPopUp(true);
+    console.log("PAGAR")
 }
 
 
@@ -141,7 +138,6 @@ function UserExpensesDetail(props) {
     <ThemeProvider theme={theme}>
     <div style={{ height: 400, width: '100%' }}>
       <div className= {styles.contSelectsComplaintsTable}>
-{/*       <PopUp setPop={setDisplayPopUp} display={displayPopUp} setDisplay={setDisplayPopUp} alertProps = {alertProps}/> */}
 {/*       <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
         <FormControl style={{width: '200px'}}>
             <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
