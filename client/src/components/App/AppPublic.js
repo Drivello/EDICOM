@@ -15,6 +15,7 @@ import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 import Subscriptions from '../Users/UserView/Alerts/Subscriptions';
 import SearchBar from '../Services/SearchBar';
 import ServiceContainer from '../Services/ServiceContainer';
+import UserAddComplaints from '../Users/UserView/UserComplaints/UserAddComplaints';
 
 
 function AppPublic() {
@@ -32,6 +33,8 @@ function AppPublic() {
 				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
 				<Route exact path="/public/services" component={SearchBar}/>
 				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
+				<Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/>
+
 			</BrowserRouter>
 		</Container>
 	);
