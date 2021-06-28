@@ -26,18 +26,18 @@ _Tecnologías y Herramientas utilizadas_
 
 ## Autores ✒️
 
-* **A. Brian Lopez** - [LinkedIn](https://www.linkedin.com/in/alexis-brian-lopez/)
-* **Agustin Reynaud** - [LinkedIn](https://www.linkedin.com/in/agustinreynaud/)
-* **Gabriel Fresco** - [LinkedIn](https://www.linkedin.com/in/gabriel-fresco-dev/)
-* **Leopoldo Blanco** - [LinkedIn](https://www.linkedin.com/in/leopoldoblanco/)
-* **Marcelo Fernandez** - [LinkedIn](https://www.linkedin.com/in/marcelo-fernandez-fsd/)
-* **María Florencia Caballero** - [LinkedIn](https://www.linkedin.com/in/maria-florencia-caballero/)
-* **Mariano Guillon** - [LinkedIn](https://www.linkedin.com/in/mariano-guillon-95572770/)
-* **Mauricio Cuello** - [LinkedIn](https://www.linkedin.com/in/mauricio-adrian-cuello/)
-* **Nicolas Sanchez** - [LinkedIn](https://www.linkedin.com/in/sanchez-mario-nahuel-nicolas/)
+*   [A. Brian Lopez](https://www.linkedin.com/in/alexis-brian-lopez/)
+*   [Agustin Reynaud](https://www.linkedin.com/in/agustinreynaud/)
+*   [Gabriel Fresco](https://www.linkedin.com/in/gabriel-fresco-dev/)
+*   [Leopoldo Blanco](https://www.linkedin.com/in/leopoldoblanco/)
+*   [Marcelo Fernandez](https://www.linkedin.com/in/marcelo-fernandez-fsd/)
+*   [María Florencia Caballero](https://www.linkedin.com/in/maria-florencia-caballero/)
+*   [Mariano Guillon](https://www.linkedin.com/in/mariano-guillon-95572770/)
+*   [Mauricio Cuello](https://www.linkedin.com/in/mauricio-adrian-cuello/)
+*   [Nicolas Sanchez](https://www.linkedin.com/in/sanchez-mario-nahuel-nicolas/)
 
 ## Agradecimientos 🎁
 
-* A nuestro TL **Leandro Nicolau** [LinkedIn](https://www.linkedin.com/in/leandro-nicolau-8690141ba/) por su apoyo en todas las instancias del proyecto.
+* A nuestro TL [Leandro Nicolau](https://www.linkedin.com/in/leandro-nicolau-8690141ba/) por su apoyo en todas las instancias del proyecto.
 * A toda la comunidad de Henry, tanto profesores como estudiantes, quienes nos impulsaron en nuestro camino
 
