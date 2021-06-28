@@ -5,6 +5,9 @@ import {
 	DELETE_BOOKING,
 	FILTER_BOOKING,
 	PUT_BOOKING,
+	TAKE_BOOKING,
+	CANCEL_BOOKING,
+	FILTER_BOOKING_GROUP,
 } from './bookingActions';
 
 const initialState = {
@@ -12,8 +15,10 @@ const initialState = {
 	allBookings: [],
 	bookingDetail: [],
 	bookingDeleted: [],
-	bookingFilter: [],
+	bookingFilter: {},
 	putBooking: [],
+	takedBookings: [],
+	bookingNoToquesMauriQueSeRompeFilter:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,11 +44,33 @@ const reducer = (state = initialState, action) => {
 				putBooking: action.payload,
 			};
 		case FILTER_BOOKING:
+			console.log('El Payload del reducer!!!!!!!!!1', action.payload);
 			return {
-				...state, bookingFilter: state.allBookings.filter(booking => {
-					return booking.date === action.payload.start
-				})
-			}
+				...state,
+				bookingNoToquesMauriQueSeRompeFilter: state.allBookings.filter(booking => {
+					return (
+						`${new Date(booking.start).getDate()} ${new Date(
+							booking.start
+						).getMonth()}` ===
+						`${action.payload.getDate()} ${action.payload.getMonth()}`
+					);
+				}),
+			};
+		case TAKE_BOOKING:
+			return {
+				...state,
+				takedBookings: action.payload,
+			};
+		case CANCEL_BOOKING:
+			return {
+				...state,
+				takeBooking: action.payload,
+			};
+		case FILTER_BOOKING_GROUP:
+			return {
+				...state,
+				bookingFilter: action.payload,
+			};
 		default:
 			return state;
 	}

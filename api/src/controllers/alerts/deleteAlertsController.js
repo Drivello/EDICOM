@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        return res.json({succes: `Building deleted successfully`}).status(200);
+        return res.json({succes: `Alert deleted successfully`}).status(200);
     }
     catch(err){
         next(err);

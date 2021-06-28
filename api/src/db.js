@@ -40,7 +40,7 @@ sequelize.models = Object.fromEntries(capsEntries); //[Key, value]
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Spendings, Expenses, Apartment, Buildings, Alerts, User, Complaints, Admin, Amenity, Booking, Subscription } = sequelize.models; //ir agregando los modelos que se crean.
+const { Spendings, Expenses, Apartment, Buildings, Alerts, User, Complaints, Admin, Amenity, Booking, Subscription, Services, Ratings } = sequelize.models; //ir agregando los modelos que se crean.
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -83,6 +83,15 @@ Buildings.belongsTo(Admin);
 
 User.hasOne(Subscription);
 Subscription.belongsTo(User);
+
+Buildings.hasMany(Services);
+Services.belongsTo(Buildings);
+
+Services.hasMany(Ratings);
+Ratings.belongsTo(Services);
+
+User.hasMany(Ratings);
+Ratings.belongsTo(User);
 
 // ---------- Un gasto es de un edificio, a su vez el edificio tiene que liquidar expensas que se calculan
 // ---------- con los gastos de ESE edificio, CARGAR RELACIÓN CUANDO SE TENGA EL MODELO DE BUILDINGS

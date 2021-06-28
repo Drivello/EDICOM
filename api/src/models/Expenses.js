@@ -17,10 +17,23 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: 'complexUnique',  
     },
-
     amount: {                                   //al momento de crearla se calcula según los gastos cargados
-        type: DataTypes.FLOAT,
-        allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.ENUM(
+        {
+          values: ['Pagada', 'Adeudada']
+        }),
+      defaultValue: 'Adeudada'
+    },
+    fullDate: {
+      type: DataTypes.VIRTUAL,
+      get: function()
+      {
+        return this.month + "-" + this.year;
+      }
     },
   });
 };
