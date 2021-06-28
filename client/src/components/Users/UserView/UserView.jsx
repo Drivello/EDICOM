@@ -20,11 +20,11 @@ const UserView = (props) => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(getComplaintsByUser(userInfo && userInfo.id))
+        if(userInfo && userInfo.id) dispatch(getComplaintsByUser(userInfo.id))
     }, [userInfo]);
 
     useEffect(() => {
-        dispatch(getApartmentById(userDetail && userDetail.apartmentId))
+        if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
     }, [userDetail] );
 
     return (
@@ -40,15 +40,18 @@ const UserView = (props) => {
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path={`/public/:id`}>
-                        <UserHome user={userDetail && userDetail} />
-                    </Route>
-                    <Route exact path={`/public/:id/complaints`}>
-                        <UserComplaints complaints={userComplaints && userComplaints} />
-                    </Route>
-                    <Route exact path={`/public/:id/complaints`}>
-                        <UserComplaints complaints={userComplaints && userComplaints} />
-                    </Route>
+                    <Route 
+                        exact path={`/public/:id`}
+                        render={() => <UserHome user={userDetail && userDetail} />}
+                    />
+                    <Route 
+                        exact path={`/public/:id/complaints`}
+                        render={() => <UserComplaints complaints={userComplaints && userComplaints} />}
+                    />
+                    <Route 
+                        exact path={`/public/:id/complaints`}
+                        render={() => <UserComplaints complaints={userComplaints && userComplaints} />}
+                    />
                     <Route
                         path='/public/:id/complaintDetail/:id'
                         render={({match}) => <UserComplaintDetail match={match} complaints={userComplaints && userComplaints} />}

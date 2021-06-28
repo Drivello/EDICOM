@@ -28,7 +28,7 @@ const AppGlobal = () => {
     }, [currentUser])
 	
 	useEffect(() => {
-		if (userId) dispatch(getUser(userId.id))
+		if (userId && userId.id) dispatch(getUser(userId.id))
 	}, [userId])
 
 	return (
