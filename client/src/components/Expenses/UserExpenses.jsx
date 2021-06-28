@@ -1,160 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { getExpenses, filterExpenses } from "../../redux/expenses/expensesActions";
+import React , { useEffect }from "react";
+import { Link, useParams } from 'react-router-dom'
+import { Button } from '@material-ui/core';
+import UserExpensesDetail from './UserExpensesDetail';
 import { useSelector, useDispatch } from "react-redux";
+import { getExpensesApartmentNumber } from '../../redux/expenses/expensesActions';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import styles from "../Spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
-import UserExpensesDetail from './UserExpensesDetail'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, FormControl, InputLabel, Select } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 
+const UserExpenses = (props) => {
 
+    const { apartmentNumber } = useParams();
+    const dispatch = useDispatch();
+    const expenses = useSelector(state => state.reducerExpenses.userExpenses)
 
-//------------------------ MATERIAL UI
+    useEffect(() => {
+        dispatch(getExpensesApartmentNumber(apartmentNumber))
+    }, [dispatch])
 
-
-
-
-function createApartment(id, cata_apartment, number_apartment, mt2, state, expenses) {
-  return {
-      id,
-      cata_apartment,
-      number_apartment,
-      mt2,
-      state,
-      expenses: expenses.map( (expensa) => {
-         return expensa
-      })
-  };
+    return (
+        <ThemeProvider theme={theme}>
+            <div className='contExtAlerts'>
+                <div className='componentHeaderAlertsList'>
+                    <h1 className='contExtAlerts'>
+                        Expensas del departamento {apartmentNumber}:
+                    </h1>
+                </div>
+                <div className='contAlertsTable'>
+                    <UserExpensesDetail expenses={expenses} />
+                </div>
+            </div>
+        </ThemeProvider>
+    );
 }
 
-
-
-export default function ExpensesTable() {
-   
-   
-   const dispatch = useDispatch();
-
-   // No se si anda
-   /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
-   const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
-   const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
-   const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
-   
-   useEffect(() => {
-      dispatch(getExpenses());
-   }, [dispatch]);
-   
-
-   // ----------------------seleccion del edificio--------------------------
-
-   const [building, setBuilding] = useState({
-      building: "All",
-      apartment: "All"
-   });
-  
-   useEffect(() => {
-      dispatch(filterExpenses(building));
-   }, [building]);
-
-   function handleSelectBuilding (e){
-
-      var buildingId = ""
-
-      if(e.target.value!=="All"){
-         buildingId = allBuildings.filter(building => building.name === e.target.value)[0].id
-      }
-      else{
-         buildingId = "All"
-      }
-      setBuilding({ ...building, [e.target.name]: buildingId })
-      // dispatch(filterExpenses(building))
-   }
-   
-   function handleSelectApartment (e){
-      if(building.building==="All"){alert("No se puede elegir departamento sin selecciona edificio")}
-      else{
-         setBuilding({ ...building, [e.target.name]: e.target.value })
-      }
-   }
-
-   const rows = filterBuildings.map( (apartment) => {
-
-      return createApartment(apartment.id, 
-         apartment.cata_apartment, 
-         apartment.number_apartment, 
-         apartment.mt2, 
-         apartment.state,
-         apartment.Expenses
-         )
-   })
-
-  return (
-   <ThemeProvider theme={theme}>
-   <div className={styles.header}>
-      <h1>Expensas</h1>
-
-
-      <FormControl style={{ width: "200px" }}>
-         <InputLabel id="demo-controlled-open-select-label">
-            Edificio
-         </InputLabel>
-         <Select  name="building" onChange={handleSelectBuilding}>
-            <MenuItem value="All">
-               <em>All</em>
-            </MenuItem>
-
-            {allBuildings.map((building, index) => (
-               <MenuItem
-                  value={building.name}
-                  key={index}
-               >
-                  {building.name}
-               </MenuItem>
-            ))}
-         </Select>
-      </FormControl>
-
-
-      <FormControl style={{ width: "200px" }}>
-         <InputLabel id="demo-controlled-open-select-label">
-            Departamento
-         </InputLabel>
-         <Select name="apartment" onChange={handleSelectApartment}>
-            <MenuItem value="All">
-               <em>All</em>
-            </MenuItem>
-
-            {filterBuildings.map((apartment, index) => (
-               <MenuItem
-                  value={apartment.number_apartment}
-                  key={index}
-               >
-                  {apartment.number_apartment}
-               </MenuItem>
-            ))}
-         </Select>
-      </FormControl>
-
-      <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-         <TableHead>
-            <TableRow>
-               <TableCell />
-               <TableCell>Id</TableCell>
-               <TableCell align="right">Nº&nbsp;Catastral</TableCell>
-               <TableCell align="right">Nº&nbsp;Dpto</TableCell>
-               <TableCell align="right">Mt2</TableCell>
-               <TableCell align="right">State</TableCell>
-            </TableRow>
-         </TableHead>
-         <TableBody>
-            {rows.map((apartment) => (
-            <UserExpensesDetail key={apartment.id} row={apartment} />
-            ))}
-         </TableBody>
-      </Table>
-      </TableContainer>
-      </div>
-    </ThemeProvider>
-  );
-}
+export default UserExpenses;
