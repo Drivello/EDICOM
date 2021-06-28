@@ -5,7 +5,9 @@ module.exports = async (req, res, next) => {
 	let {building} = req.body;
 	try {
 		amenity = await Amenity.create(amenity);
-		amenity.setBuilding(building);
+		console.log("2. se creo el amenity")
+		amenity = await amenity.setBuilding(building);
+		console.log("3. se asigno el edificio al amenity")
 		return res.json(amenity).status(200);
 	} catch (err) {
 		res.json(err);

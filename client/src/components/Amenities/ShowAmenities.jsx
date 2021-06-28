@@ -19,6 +19,8 @@ const ShowAmenities = () => {
 	const {allBuildings} = useSelector(state => state.buildingReducer);
 	const {Amenities} = useSelector(state => state.amenitiesReducer);
 
+	console.log('allBuildings', allBuildings)
+	console.log('Amenities', Amenities)
 	
 	if(allBuildings.length>0){	 
 		Amenities.map(amenity =>{
@@ -30,8 +32,6 @@ const ShowAmenities = () => {
 	const dispatch = useDispatch();
 
 	const {id_building} = useParams();
-
-	
 
 	const useStyles = makeStyles(theme => ({
 		root: {
