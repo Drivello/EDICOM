@@ -6,11 +6,12 @@ import AppPublic from './components/App/AppPublic.js';
 import Logging from './components/App/Logging.js';
 import ResetPassword from './components/Logging/resetPassword.jsx';
 import { getIdUser } from './redux/logging/loggingActions';
+import { getUser } from './redux/users/userActions';
 
 
 
 const AppGlobal = () => {
-	
+	const userId = useSelector(state => state.loggingReducer.userId);
 	// const { authData } = useSelector(state => {
 	// 	return {
 	// 		authData: state.loggingReducer.authData,
@@ -21,10 +22,15 @@ const AppGlobal = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-        dispatch(getIdUser(currentUser && currentUser.token))
+		if (currentUser && currentUser.token) {
+			dispatch(getIdUser(currentUser.token));
+		}
     }, [currentUser])
 	
-	
+	useEffect(() => {
+		if (userId) dispatch(getUser(userId.id))
+	}, [userId])
+
 	return (
 		<BrowserRouter>
 
@@ -46,7 +52,7 @@ const AppGlobal = () => {
 							?
 							( <Redirect to="/" /> )
 							:
-							( <Redirect to="/public" /> )
+							( <Redirect to={`/public/${userId && userId.id}`} /> )
 						) 
 					)}
 				/>

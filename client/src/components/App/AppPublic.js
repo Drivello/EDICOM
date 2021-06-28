@@ -23,11 +23,11 @@ function AppPublic() {
 		<Container className="App">
 			<CssBaseline />
 			<BrowserRouter>
-				//Poner acá los route con los componentes de la vista del locatario		
+				{/* //Poner acá los route con los componentes de la vista del locatario		 */}
 				<Route path="/public/Bookings" component={Bookings} />
 				<Route exact path="/public/spendings/board" component={ApartmentBoard} />
 				<Route path="/public" component={SidebarUsers} />
-				{/* <Route path="/public" component={UserView} /> */}
+				<Route path="/public" component={UserView} />
 				<Route exact path="/public/:id/alerts" component={AlertsUser}/>
 				<Route exact path="/public/:id/calendar" component={CalendarUser}/>
 				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
