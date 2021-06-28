@@ -82,7 +82,6 @@ function UserExpensesDetail(props) {
       if(params.row.status === "Adeudada")
       return (
       <Button color="primary" onClick={handleEventClick}>
-        {console.log(params.row.status)}
         Pagar
       </Button>)
       else{
