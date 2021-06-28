@@ -1,9 +1,10 @@
-import { GET_EXPENSES, FILTER_EXPENSES, POST_EXPENSES } from '../expenses/expensesActions';
+import { GET_EXPENSES, FILTER_EXPENSES, POST_EXPENSES, INVOICED_EXPENSES } from '../expenses/expensesActions';
 
 
 const initialState = {
     expensesArray: [],
-    filterArray: []
+    filterArray: [],
+    invoicedExpenses: [],
 };
 
 
@@ -33,13 +34,15 @@ const expensesReducer = (state = initialState, action) => {
                 filterArray: state.expensesArray
                 .filter(b => b.buildingId === action.payload.building)};
             }
+        
+        case INVOICED_EXPENSES:
+            return { ...state, invoicedExpenses: action.payload}
 
         default:
             return state
                 
     }
 }
-
 
 
 export default expensesReducer;

@@ -1,11 +1,11 @@
-const { Rating } = require("../../db.js");
+const { Ratings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
     let { id, rating } = req.body;
     try
     {
-        let ratingChanged = await Rating.update({
+        let ratingChanged = await Ratings.update({
             rating
         },
         { where: { id: id } });

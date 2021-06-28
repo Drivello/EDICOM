@@ -13,11 +13,13 @@ const {
 	Complaints,
 	Admin,
 	Booking,
+	Services
 } = require('./src/db.js');
 
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
 const alertsData = require('../alertsDataMock.json');
 const complaintsData = require('../complaintsDataMock.json');
+const servicesData = require('../servicesDataMock.json');
 const bcrypt = require('bcryptjs');
 
 // Syncing all the models at once.
@@ -129,7 +131,7 @@ conn.sync({force: true}).then(() => {
 	});
 
 	let expense2 = Expenses.create({
-		month: 'feb',
+		month: 'jan',
 		year: 2021,
 		amount: 5200,
 	});
@@ -143,26 +145,6 @@ conn.sync({force: true}).then(() => {
 	// let services1 = Services.create({
 
 	// })
-	let amenitie1 = Amenity.create({
-		amenity_type: 'Pileta',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen',
-	});
-
-	let amenitie2 = Amenity.create({
-		amenity_type: 'GimnaSio',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen',
-	});
-
-	let amenitie3 = Amenity.create({
-		amenity_type: 'Parrilla',
-		quantity: '1',
-		capacity: '3',
-		amenity_detail: 'Tripa gordaaa',
-	});
 
 	let booking1 = Booking.create({
 		idAmenity: 1,
@@ -219,23 +201,66 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
+	let amenitie1 = Amenity.create({
+		buildingId: 1,
+		amenity_type: 'Pileta',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie2 = Amenity.create({
+		buildingId: 1,
+		amenity_type: 'Gimnacio',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Aca, en la pile, contesteeeen'
+	})
+
+	let amenitie3 = Amenity.create({
+		buildingId: 2,
+		amenity_type: 'Parrilla',
+		quantity: '1',
+		capacity: '3',
+		amenity_detail: 'Tripa gordaaa'
+	})
+
 	// reclamos de prueba
 	let complaintsDataStr = JSON.stringify(complaintsData);
 	let complaintsDataArray = JSON.parse(complaintsDataStr);
-	let complaintsDataCreation = async (array, Buildings, Complaints) => {
+	let complaintsDataCreation = async (array, Buildings, Complaints, User) => {
+		for(var i = 0; i < array.length; i++) {
+		var building = await Buildings.findByPk(array[i].building);
+		var user = await User.findByPk(array[i].user);
+		var complaint = await Complaints.create({
+			date: array[i].date,
+			subject: array[i].subject,
+			details: array[i].details || null,
+			importance: array[i].importance,
+			image: array[i].image
+		});
+		await building.addComplaint(complaint);
+		await user.addComplaint(complaint);
+		};
+	};
+
+	let servicesDataStr = JSON.stringify(servicesData);
+	let servicesDataArray = JSON.parse(servicesDataStr);
+	let servicesDataCreation = async (array, Buildings, Services) => {
 		for (var i = 0; i < array.length; i++) {
-			var Building = await Buildings.findByPk(array[i].building);
-			var Complaint = await Complaints.create({
-				date: array[i].date,
-				subject: array[i].subject,
-				details: array[i].details || null,
-				importance: array[i].importance,
-				image: array[i].image,
+			var Building = await Buildings.findByPk(array[i].buildingId);
+			var Service = await Services.create({
+				title: array[i].title,
+				provider: array[i].provider,
+				enrollment: array[i].enrollment || null,
+				contact: array[i].contact,
+				detail: array[i].detail || null,
 			});
-			await Building.addComplaint(Complaint);
+			await Building.addService(Service);
 		}
 	};
 
+	
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
 		[
@@ -269,7 +294,7 @@ conn.sync({force: true}).then(() => {
 			res[18].addSpendings([res[0], res[1], res[2]]);
 			res[18].addApartments([res[3], res[4], res[5]]);
 			res[3].addExpenses(res[6]);
-			res[3].addExpense(res[7]);
+			res[4].addExpense(res[7]);
 			res[3].addExpense(res[8]);
 			res[3].setBuilding(res[18]);
 			res[4].setBuilding(res[18]);
@@ -280,7 +305,8 @@ conn.sync({force: true}).then(() => {
 			res[30].addBuilding(res[18]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
-			complaintsDataCreation(complaintsDataArray, Buildings, Complaints);
+			complaintsDataCreation(complaintsDataArray, Buildings, Complaints, User);
+			servicesDataCreation(servicesDataArray,Buildings, Services)
 			console.log('todo listo');
 		},
 		err => {

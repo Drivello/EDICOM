@@ -1,10 +1,17 @@
-import { GET_ALL_COMPLAINTS, PUT_SEEN_COMPLAINT, PUT_STATE_COMPLAINT, FILTER_COMPLAINTS } from './complaintsActions';
+import { 
+    GET_ALL_COMPLAINTS, 
+    PUT_SEEN_COMPLAINT, 
+    PUT_STATE_COMPLAINT, 
+    FILTER_COMPLAINTS, 
+    GET_COMPLAINTS_BY_USER
+} from './complaintsActions';
 import { filterComplaints } from './utils';
 
 const initialState = {
     allComplaints: [],
     filteredComplaints: [],
-    seenStatus: 0
+    seenStatus: 0,
+    userComplaints: []
 }
 
 export default function buildingReducer(state = initialState, action) {
@@ -29,6 +36,11 @@ export default function buildingReducer(state = initialState, action) {
             return {
                 ...state,
                 filteredComplaints: filterComplaints(state.allComplaints, action.payload.building, action.payload.importance, action.payload.status)
+            }
+        case GET_COMPLAINTS_BY_USER:
+            return {
+                ...state,
+                userComplaints: action.payload.data
             }
 
         default:
