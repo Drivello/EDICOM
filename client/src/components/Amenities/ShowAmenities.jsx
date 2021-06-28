@@ -137,7 +137,7 @@ const ShowAmenities = () => {
             			</Link>
 					</div>
 					<Container style={{height: '400px', width: '1500px'}}>
-						<Container style={{display: 'flex', height: '100%', width:'900px'}}>
+						<Container style={{display: 'flex', height: '100%', width:'1070px'}}>
 							<DataGrid rows={Amenities} columns={columns} pageSize={7} />
 						</Container>
 					</Container>
