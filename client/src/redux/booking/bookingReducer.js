@@ -18,6 +18,7 @@ const initialState = {
 	bookingFilter: {},
 	putBooking: [],
 	takedBookings: [],
+	bookingNoToquesMauriQueSeRompeFilter:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,7 +47,7 @@ const reducer = (state = initialState, action) => {
 			console.log('El Payload del reducer!!!!!!!!!1', action.payload);
 			return {
 				...state,
-				bookingFilter: state.allBookings.filter(booking => {
+				bookingNoToquesMauriQueSeRompeFilter: state.allBookings.filter(booking => {
 					return (
 						`${new Date(booking.start).getDate()} ${new Date(
 							booking.start

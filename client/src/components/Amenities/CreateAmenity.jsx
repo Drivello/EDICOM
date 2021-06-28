@@ -32,7 +32,8 @@ const CreateAmenity = () => {
 			input.capacity !== '' &&
 			input.building !== ''
 		) {
-			dispatch(createAmenity(input));
+			dispatch(createAmenity(input))
+			.then(() => history.push('/amenities/'))
 			swal('Amenity creado exitosamente', 'Gracias!', 'success');
 			setInput({
 				amenity_type: '',
@@ -42,8 +43,8 @@ const CreateAmenity = () => {
 				building: '',
 			})
 			//this should redirect? where?
-			dispatch(allAmenities());
-			history.push('/amenities/')
+			// dispatch(allAmenities())
+			
 		} else {
 			swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
 		}

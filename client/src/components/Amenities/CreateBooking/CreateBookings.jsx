@@ -48,41 +48,44 @@ const CreateBookings = ({visibility, changeVisibility, idAmenity}) => {
 
 
 
-const initialData = {
-    idAmenity: idAmenity,
-    dateStart: new Date(),
-    dateEnd: new Date(),
-    timeStart: '07:30',
-    timeEnd: '21:30',
-    duration: '08:00'
-}
-const [input, setInput] = useState(initialData)
-const {bookingCreated} = useSelector(state => state.bookingReducer); 
-const dispatch = useDispatch();
-
-    console.log('ESTE ES EL ESTADO BOOKING DE REDUX', bookingCreated)
-const handleChange = (e) => {
-    setInput({
-        ...input,
-        [e.target.name]: e.target.value
-    })
-    console.log("InputGENERAL",input)
+    const initialData = {
+        idAmenity: idAmenity,
+        dateStart: new Date(),
+        dateEnd: new Date(),
+        timeStart: '07:30',
+        timeEnd: '21:30',
+        duration: '08:00'
     }
 
-const handledateStartChange = (date)=>{
-    setInput({...input,
-        dateStart: date
-        })
-        console.log("handleStartDateChaneg",input)
-}    
-const handledateEndChange = (date)=>{
-    setInput({...input,
-        dateEnd: date
-        })
-        console.log("handleStartDateChaneg",input)
-}    
+    const [input, setInput] = useState(initialData)
+    const {bookingCreated} = useSelector(state => state.bookingReducer); 
+    const dispatch = useDispatch();
+
+    console.log('ESTE ES EL ESTADO BOOKING DE REDUX', bookingCreated)
+
+    const handleChange = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+         })
+        console.log("InputGENERAL",input)
+    }
+
+    const handledateStartChange = (date)=>{
+        setInput({...input,
+            dateStart: date
+            })
+            console.log("handleStartDateChaneg",input)
+    }    
+    const handledateEndChange = (date)=>{
+        setInput({...input,
+            dateEnd: date
+            })
+            console.log("handleStartDateChaneg",input)
+    }    
     const handleCreateBooking = (e) => {
         console.log(input)
+        console.log("Mariano rompiste todooooooo")
         dispatch(createBooking(input))
         
     }    
@@ -176,15 +179,19 @@ const handledateEndChange = (date)=>{
                 </MuiPickersUtilsProvider>
             <div align="right">
                 <Button color="secondary"
-                    onClick={(e) => handleCreateBooking()}
-                    onClick={() => changeVisibility(!visibility)}
+                    onClick= {
+                        (e) => {
+                            changeVisibility(!visibility)
+                            handleCreateBooking(e)
+                        }
+                    }
                 > 
-                Generar 
+                    Generar 
                 </Button> 
                 <Button
                     onClick={() => changeVisibility(!visibility)}
                 > 
-                Cancelar 
+                    Cancelar 
                 </Button>
             </div>
             
