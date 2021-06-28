@@ -37,10 +37,11 @@ export function UpdateAmenity() {
     const classes = useStyles();
 	const history = useHistory();
 
-    
+	const [input, setInput] = useState({
+	})
+	
 
-	const [input, setInput] = useState({})
-	console.log('id culiado', id) // es el ID del amentitie URL
+	console.log('amenityDetail', amenityDetail)
 
 	// const [input, setInput] = useState({
 	// 	id: id,
@@ -57,14 +58,14 @@ export function UpdateAmenity() {
 	},[dispatch])
 
 	useEffect(() => {
-		
 		if (amenityDetail !== undefined) {
+			amenityDetail.filter(amenity => amenity.id === parseInt(id))
 			setInput({
             id,
-            amenity_type: amenityDetail.amenity_type,
-            quantity: amenityDetail.quantity,
-			capacity: amenityDetail.capacity,
-            amenity_detail: amenityDetail.amenity_detail
+            amenity_type: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].amenity_type,
+            quantity: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].quantity,
+			capacity: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].capacity,
+            amenity_detail: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].amenity_detail
 
         })
 		} else {
