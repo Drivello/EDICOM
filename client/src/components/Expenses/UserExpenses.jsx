@@ -8,6 +8,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import AddIcon from '@material-ui/icons/Add';
 
+
+
 const UserExpenses = (props) => {
 
     const { apartmentNumber, apartmentName } = useParams();
@@ -29,7 +31,7 @@ const UserExpenses = (props) => {
                         </h1>
                     </div>
                     <div className='contAlertsTable'>
-                        <UserExpensesDetail expenses={expenses} />
+                        <UserExpensesDetail apartment={apartmentName} expenses={expenses} />
                     </div>
                 </div>
             </ThemeProvider>

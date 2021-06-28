@@ -12,12 +12,17 @@ import filter from '../../utils/filter-remove.png';
 import styles from "./Styles.module.css";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
+import { addPayment } from "../../redux/payments/paymentsActions";
 
 
 
 function UserExpensesDetail(props) {
+
+  console.log(props)
+
   const filteredComplaints = useSelector(state => state.complaintsReducer.filteredComplaints)
   const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
+  const urlPayment = useSelector(state => state.paymentsReducer.urlPayment)
   const dispatch = useDispatch();
 
   let expenses = props?.expenses
@@ -79,11 +84,16 @@ function UserExpensesDetail(props) {
     { field: 'amount', headerName: 'Monto', flex: 1 },
     { field: 'status', headerName: 'Estado', flex: 1 },
     { field: 'concept', headerName: 'Pagar', flex: 1,renderCell: (params) => {
-      if(params.row.status === "Adeudada")
-      return (
-      <Button color="secondary" onClick={handleEventClick}>
-        Pagar
-      </Button>)
+      if(params.row.status === "Adeudada"){
+        console.log(params)
+        return (
+          <Button color="secondary" onClick={() => handleEventClick (
+            `${JSON.parse(localStorage.getItem('profile')).name} - Dpto: ${props.apartment}
+            ${params.row.month}-${params.row.year}`,
+             params.row.amount)}>
+            Pagar
+          </Button>)
+      }
       else{
         return <h4>Pagada</h4>
       }
@@ -98,9 +108,12 @@ function UserExpensesDetail(props) {
   const [displayPopUp, setDisplayPopUp] = useState(false);
   const [alertProps, setAlertProps] = useState({});
 
-  const handleEventClick = (clickInfo, data) => {
-    console.log("PAGAR")
-}
+  const handleEventClick = (title, amount) => {
+    
+    amount = parseInt(amount.slice(2));
+
+    dispatch(addPayment(title, amount));
+  }
 
 
   function handleSelect(e) {
@@ -119,6 +132,12 @@ function UserExpensesDetail(props) {
   useEffect(() => {
     dispatch(filterComplaints(input))
   },[input,setInput]);
+
+  useEffect(() => {
+    if(urlPayment){
+      window.open(urlPayment, '_blank').focus()
+    }
+  }, [urlPayment])
 
   const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,23 +1,24 @@
 const { Payment, Expenses } = require("../../db.js");
-
 const mercadopago = require ('mercadopago');
 
-mercadopago.configure({
-    access_token: 'APP_USR-7203165178727227-062815-d9bf402ccd3c1e6165d7662f180cbf25-782464864'   //
-  });
 
 // Path of this controller -->  http://localhost:3001/payment/add
 
 module.exports = async (req, res, next) => {
+    
+    let { title, quantity, price } = req.params;
+    console.log('paramsssss', req.params)
+  
+    mercadopago.configure({
+      access_token: 'APP_USR-7203165178727227-062815-d9bf402ccd3c1e6165d7662f180cbf25-782464864'   //
+    });
 
-    // let {date, concept, details, supplier, amount, expensesId} = req.body;
-    console.log(req.body)
 
     let preference = {
         items: [
           {
-            title:req.body.title,
-            unit_price: parseInt(req.body.price),
+            title: title,
+            unit_price: parseInt(price),
             quantity: 1,
           }
         ]
@@ -26,7 +27,10 @@ module.exports = async (req, res, next) => {
     mercadopago.preferences.create(preference)
     .then((response) =>
     {
-        res.redirect(response.body.init_point);
+        // console.log(response.body.init_point)
+        res.json(response.body.init_point);
+    },(err) => {
+      console.log('falló la creación del preference', err)
     })
     
     // try

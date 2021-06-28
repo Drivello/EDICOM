@@ -15,7 +15,7 @@ const addPayment = require('../controllers/payments/addPaymentController.js');
 
 router.use(express.json());
 
-router.post("/", addPayment);                               //      http://localhost:3001/payment
+router.post("/add/:title/:price/:quantity", addPayment);                               //      http://localhost:3001/payment
 // router.put("/", putPayment);                             //      http://localhost:3001/payment
 
 // router.get("/all", allPayment);                          //      http://localhost:3001/payment/all

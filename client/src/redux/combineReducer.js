@@ -13,6 +13,7 @@ import subscriptionsReducer from './subscriptions/subscriptionReducer';
 import bookingReducer from './booking/bookingReducer';
 import servicesReducer from './services/servicesReducer';
 import ratingReducer from './ratings/ratingReducer';
+import paymentsReducer from './payments/paymentsReducer';
 
 
 export const reducers = combineReducers({
@@ -28,7 +29,8 @@ export const reducers = combineReducers({
 	complaintsReducer: complaintsReducer,
 	subscriptionsReducer: subscriptionsReducer,
 	servicesReducer: servicesReducer,
-	ratingReducer: ratingReducer
+	ratingReducer: ratingReducer,
+	paymentsReducer: paymentsReducer,
 });
 
 export default reducers;
