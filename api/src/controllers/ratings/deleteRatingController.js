@@ -1,4 +1,4 @@
-const { Rating } = require("../../db.js");
+const { Ratings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
     
@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
     
     try
     {   
-        await Rating.destroy( {
+        await Ratings.destroy( {
             where: {
                 id: delId,
             }

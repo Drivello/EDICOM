@@ -301,6 +301,10 @@ function BuildingUpdate() {
         const latlng = await getLatLng(results[0])
         setInput({...input, lat: latlng.lat, lng: latlng.lng, address: sug.description})
     }
+    
+    function cancelHandle (){
+        history.goBack()
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -484,6 +488,14 @@ function BuildingUpdate() {
                                 onClick={deleteHandler}
                             >
                                 Borrar Edificio
+                            </Button>
+                            <Button
+                                style={{ fontWeight: 1000 }}
+                                color="secondary"
+                                variant="contained"
+                                onClick={cancelHandle}
+                            >
+                                Cancelar
                             </Button>
                         </div>
                     </div>

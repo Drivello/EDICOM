@@ -1,17 +1,29 @@
-const { Service, Rating } = require("../../db.js");
+const { Services, Ratings, User } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
 
-    let { rating, serviceId } = req.body;
+    let { rating, serviceId, userId } = req.body;
     
     try
     {
-        let service = await Service.findByPk( serviceId );
-        let newRating = await Service.create({
-            rating
-        });
-        await Service.addRating(newRating);
-        return res.status(200).json({succes: `Rating created successfully`});
+        let user = await User.findByPk( userId );
+        let service = await Services.findOne({where: {id: serviceId},
+			include: [{
+                model: Ratings,
+            }]});
+        if(service.dataValues.ratings.length === 0 || !service.dataValues.ratings.find(e => e.userId === userId)){
+            let newRating = await Ratings.create({
+                rating
+            });
+    
+            await service.addRating(newRating);
+            await user.addRating(newRating);
+    
+            return res.status(200).json(newRating);
+        }else{
+            return res.status(400).json({error: "usuario ya puntuo"})
+        }
+        
     }
     catch(err){
         next(err);

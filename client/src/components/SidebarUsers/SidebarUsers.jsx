@@ -115,7 +115,6 @@ export default function Sidebar(props) {
                     })}
                     >
                     <Toolbar className='navbar'>
-                        {noti ? <NotificationBar notifications={Notifications} id={classes.notiBox} quantity={notiNumb} /> : <div></div>}
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -143,19 +142,6 @@ export default function Sidebar(props) {
                               false
                             }
                         </Typography>
-                        <Link className='btnNavbar' to='/'>
-                          <HomeIcon style={{ fontSize: 35, color: "#00ff7f" }} />
-                        </Link>
-                        <Link className='btnNavbar' to={noti}>
-                            <div onClick={notiHandler}>
-                                <Badge badgeContent={notiNumb} color="secondary">
-                                    {notiNumb === 0 ?
-                                        <ErrorOutlineIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} /> :
-                                        <ErrorIcon id="noti" style={{ fontSize: 35, color: "#00ff7f" }} />
-                                    }
-                                </Badge>
-                            </div>
-                        </Link>
                         <Button className='btnNavbar' aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                           <AccountCircleIcon style={{ fontSize: 35, color: "#00ff7f" }} />
                         </Button>

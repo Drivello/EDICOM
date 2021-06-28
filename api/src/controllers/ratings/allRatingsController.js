@@ -1,8 +1,8 @@
-const { Rating, Services } = require('../../db');
+const { Ratings, Services } = require('../../db');
 
 module.exports = async (req, res, next) => {
 	try{
-		let data = await Rating.findAll({
+		let data = await Ratings.findAll({
 			include: [{
                 model: Services,
 				attributes: ['title']

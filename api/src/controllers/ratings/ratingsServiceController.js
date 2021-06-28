@@ -8,11 +8,11 @@ module.exports = async (req, res, next) => {
 		const ratingService = await Services.findOne({where: {id}})
 		let ratingList = await Ratings.findAll({
 			where: {
-				servicesId: ratingService.id
+				serviceId: ratingService.id
 			},
 			order: [['createdAt', 'DESC']]
 		});
-		return res.json(data);
+		return res.json(ratingList);
 	} catch (err) {
         next(err);
 		res.json(err);

@@ -17,11 +17,13 @@ export function getAllAmenities(id_building) {
 }
 
 export function createAmenity(amenity) {
+	console.log("1. el amenity que entra a la action", amenity)
 	return async function (dispatch) {
 		const {data} = await axios.post(
 			`http://localhost:3001/amenities/`,
 			amenity
 		);
+		console.log('4. la data que vuelve del endPoint', data)
 		dispatch({type: CREATE_AMENITY, payload: data});
 	};
 }
@@ -41,7 +43,7 @@ export function getAmenityById(id) {
 }
 
 export function updateAmenity(amenity) {
-	console.log(amenity);
+	console.log("update amenity", amenity);
 	return async function (dispatch) {
 		const {data} = await axios.put(
 			`http://localhost:3001/amenities/${amenity.id}`,
