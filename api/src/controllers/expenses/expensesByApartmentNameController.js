@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
 				model: Expenses
 			}],
 			where: {
-				number_apartment: id, //ver si van estos nombres
+				id: id, //ver si van estos nombres
 			},
 		});
 		return res.json(data)

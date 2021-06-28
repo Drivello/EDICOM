@@ -67,21 +67,21 @@ function UserExpensesDetail(props) {
     setCurrency(event.target.value);
   };
 
-  const importanceSelect = complaints.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
+  /* const importanceSelect = complaints.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
   const buildingSelect = complaints.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
   const statusSelect = complaints.map(element => element = element.state).filter((value, index, self) => self.indexOf(value) === index);
 
-
+ */
 
   const columns = [
     { field: 'year', headerName: 'Año', flex: 1},
     { field: 'month', headerName: 'Mes', flex: 1 },
     { field: 'amount', headerName: 'Monto', flex: 1 },
     { field: 'status', headerName: 'Estado', flex: 1 },
-    { field: 'concept', headerName: 'Pagar', flex: 2,renderCell: (params) => {
+    { field: 'concept', headerName: 'Pagar', flex: 1,renderCell: (params) => {
       if(params.row.status === "Adeudada")
       return (
-      <Button color="primary" onClick={handleEventClick}>
+      <Button color="secondary" onClick={handleEventClick}>
         Pagar
       </Button>)
       else{

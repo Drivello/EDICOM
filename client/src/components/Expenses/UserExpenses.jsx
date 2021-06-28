@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 const UserExpenses = (props) => {
 
-    const { apartmentNumber } = useParams();
+    const { apartmentNumber , apartmentName} = useParams();
     const dispatch = useDispatch();
     const expenses = useSelector(state => state.reducerExpenses.userExpenses)
 
@@ -23,7 +23,7 @@ const UserExpenses = (props) => {
             <div className='contExtAlerts'>
                 <div className='componentHeaderAlertsList'>
                     <h1 className='contExtAlerts'>
-                        Expensas del departamento {apartmentNumber}:
+                        Expensas del departamento {apartmentName}:
                     </h1>
                 </div>
                 <div className='contAlertsTable'>
