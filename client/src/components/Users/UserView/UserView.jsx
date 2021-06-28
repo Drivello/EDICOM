@@ -20,13 +20,13 @@ const UserView = (props) => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(getComplaintsByUser(userInfo && userInfo.id))
+        if(userInfo && userInfo.id) dispatch(getComplaintsByUser(userInfo.id))
     }, [userInfo]);
 
     useEffect(() => {
-        dispatch(getApartmentById(userDetail && userDetail.apartmentId))
+        if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
     }, [userDetail] );
-
+    
     return (
         <ThemeProvider theme={theme}>
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>

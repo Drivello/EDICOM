@@ -33,7 +33,7 @@ function AppPublic() {
 				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
 				<Route exact path="/public/services" component={SearchBar}/>
 				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
-				<Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/>
+				{/* <Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/> */}
 
 			</BrowserRouter>
 		</Container>
