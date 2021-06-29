@@ -5,7 +5,6 @@ import App from './components/App/App.js';
 import AppPublic from './components/App/AppPublic.js';
 import Logging from './components/App/Logging.js';
 import ResetPassword from './components/Logging/resetPassword.jsx';
-import { getIdUser } from './redux/logging/loggingActions';
 import { getUser } from './redux/users/userActions';
 
 
@@ -22,14 +21,10 @@ const AppGlobal = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (currentUser && currentUser.token) {
-			dispatch(getIdUser(currentUser.token));
+		if (currentUser && currentUser.id) {
+			dispatch(getUser(currentUser.id));
 		}
-    }, [currentUser])
-	
-	useEffect(() => {
-		if (userId && userId.id) dispatch(getUser(userId.id))
-	}, [userId])
+    }, [currentUser]);
 
 	return (
 		<BrowserRouter>
@@ -52,7 +47,7 @@ const AppGlobal = () => {
 							?
 							( <Redirect to="/" /> )
 							:
-							( <Redirect to={`/public/${userId && userId.id}`} /> )
+							( <Redirect to={`/public/${currentUser.id && currentUser.id}`} /> )
 						) 
 					)}
 				/>

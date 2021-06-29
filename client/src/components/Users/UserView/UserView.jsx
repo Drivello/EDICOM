@@ -26,7 +26,7 @@ const UserView = (props) => {
     useEffect(() => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
     }, [userDetail] );
-
+    
     return (
         <ThemeProvider theme={theme}>
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>
