@@ -98,7 +98,7 @@ const ApartmentBoard = (props) => {
          date: moment(spending.date).format("DD/MM/YY"),
          concept: spending.concept,
          details: spending.details,
-         amount: spending.amount,
+         amount: spending.amount
       };
    });
 

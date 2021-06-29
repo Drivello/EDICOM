@@ -155,6 +155,8 @@ const Form = (props) => {
 
   const handleValidationDate = (e) => {
 
+    if(e === null) return false
+
     const date = {
       "month": MONTHS[e.getMonth()],
       "year": e.getFullYear()
