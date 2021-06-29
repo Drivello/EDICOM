@@ -236,7 +236,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain fontSize="large"/>
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
                   <InputLabel htmlFor="select">Edificio</InputLabel>
@@ -268,7 +268,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain fontSize="large"/>
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
 
@@ -314,7 +314,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room fontSize="large"/>
+                  <Room fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -335,7 +335,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity fontSize="large"/>
+                  <LocationCity fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -359,29 +359,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Receipt fontSize="large"/>
-                </Grid>
-                <Grid item>
-                  <TextField
-                    variant="outlined"
-                    id="detalles"
-                    label="Detalles"
-                    defaultValue="Detalles"
-                    value={spending.details}
-                    onChange={handleInputChange}
-                    name="details"
-                    placeholder="details"
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                spacing={1}
-                alignItems="flex-end"
-                className="element"
-              >
-                <Grid item>
-                  <ListAlt fontSize="large"/>
+                  <ListAlt fontSize="large" />
                 </Grid>
                 <Grid item style={{ width: "80%" }}>
                   <TextField
@@ -397,6 +375,30 @@ const Form = (props) => {
                     name="amount"
                     error={error ? true : false}
                     helperText={error ? "No se puede ingresar numeros negativos" : ""}
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                spacing={1}
+                alignItems="flex-end"
+                className="element"
+              >
+                <Grid item>
+                  <Receipt fontSize="large" />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    multiline={true}
+                    rowsMax={4}
+                    variant="outlined"
+                    id="detalles"
+                    label="Detalles"
+                    defaultValue="Detalles"
+                    value={spending.details}
+                    onChange={handleInputChange}
+                    name="details"
+                    placeholder="details"
                   />
                 </Grid>
               </Grid>
