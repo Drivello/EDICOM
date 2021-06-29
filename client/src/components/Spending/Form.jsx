@@ -7,7 +7,7 @@ import {
   totalSpending,
 } from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
@@ -37,6 +37,7 @@ import { MONTHS } from "../../utils/constant";
 
 
 const Form = (props) => {
+  const history = useHistory();
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -173,10 +174,11 @@ const Form = (props) => {
 
   }
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     if (spending.concept !== "") {
-      dispatch(putSpending([parseInt(props.match.params.id), spending]));
+      await dispatch(putSpending([parseInt(props.match.params.id), spending]));
       swal("Gasto Editado!", "Gracias!", "success");
+      history.goBack()
     } else {
       swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
     }
@@ -187,14 +189,14 @@ const Form = (props) => {
     dispatch(deleteSpending(parseInt(props.match.params.id)));
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (spending.supplier === "")
       return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
     if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
     if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    dispatch(postSpending(spending));
-    swal("Gasto Agregado!", "Gracias!", "success");
+    await dispatch(postSpending(spending))
+    await swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(
       (newSpending = {
         date: moment(new Date(new Date())).format("L"),
@@ -204,8 +206,9 @@ const Form = (props) => {
         details: "",
         amount: 0,
       })
-    );
-  };
+      );
+      history.goBack();
+    };
 
 
   return (
