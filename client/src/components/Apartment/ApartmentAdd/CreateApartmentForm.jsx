@@ -1,5 +1,5 @@
 import {useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem, 
 	 RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
@@ -24,19 +24,19 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
+const CreateApartmentForm = ({input, setInput, error, setError, allBuildings, handleSubmit}) => {
 	
 	const history = useHistory();
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 	const [disableButton, setdisableButton] = useState(false)
 	
-	const [error, setError] = useState({//Control the error red border of the inputs
+	/* const [error, setError] = useState({//Control the error red border of the inputs
 		building: false,
         cata_apartment: false,
 		mt2: false,
 		number_apartment: false,
-    })
+    }) */
 	const [helperText, setHelperText] = useState({//Control the warning message
 		building: "Seleccione un Edificio",
         cata_apartment: "Certificacion Catastral",
@@ -101,8 +101,7 @@ const CreateApartmentForm = ({input, setInput, allBuildings, handleSubmit}) => {
 			default:
 				break;
 		}
-		// Object.values(error).every(x => x === false) && Object.values(helperText).every(x => x === "") ? setdisableButton(false) : setdisableButton(true) 
-		//(error.building && error.cata_apartment && error.mt2 && error.number_apartment) ? setdisableButton(false) : setdisableButton(true)
+		
 	}
 
 	const handleInputChange = function (e) {
