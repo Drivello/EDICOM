@@ -107,6 +107,10 @@ const AlertsAdd = (props) => {
         setInput({ ...input, [change]: e })
     }
 
+    const cancelHandler = () => {
+		history.goBack()
+	}
+
     return (
         <ThemeProvider theme={theme}>
             <div id={styles.cont}>
@@ -196,6 +200,15 @@ const AlertsAdd = (props) => {
                             onClick={saveHandler}
                         >
                             Crear alerta
+                        </Button>
+                        <Button 
+                            id={styles.submit}
+                            style={{ fontWeight: 1000, marginTop: 50 }}
+                            color="secondary"
+                            variant="contained"
+                            onClick={cancelHandler}
+                        >
+                            Cancelar
                         </Button>
                     </form>
                 </div>

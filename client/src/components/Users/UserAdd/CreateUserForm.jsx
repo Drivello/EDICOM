@@ -5,7 +5,7 @@ import { MeetingRoom, Person, Email, VpnKey, Phone } from '@material-ui/icons';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import {getAllApartments} from '../../../redux/apartments/apartmentsActions'
-
+import { useHistory, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -28,6 +28,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 	const { allApartments } = useSelector( state => state.apartmentReducer);
 	
 	const dispatch = useDispatch();
+	const history = useHistory();
 	
 	const classes = useStyles();
 	const [buildingOpen, setBuildingOpen] = useState(false);
@@ -139,6 +140,9 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 			...input,
 			[e.target.name]: e.target.value, 
 		});
+	}
+	const cancelHandler = () => {
+		history.goBack()
 	}
 	
     return (
@@ -271,6 +275,9 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
                         <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Agregar Usuario</Button>
+                    </Grid>
+					<Grid item>
+                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={cancelHandler} variant="contained">Cancelar</Button>
                     </Grid>
                 </Grid>
 			</Grid>

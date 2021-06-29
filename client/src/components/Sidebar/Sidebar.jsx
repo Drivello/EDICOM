@@ -26,6 +26,7 @@ import { getComplaints , putSeenComplaint} from "../../redux/complaints/complain
 import { getUser } from '../../redux/users/userActions';
 import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import BuildIcon from '@material-ui/icons/Build';
 
 
 
@@ -241,6 +242,13 @@ export default function Sidebar(props) {
               <ListItem button key={'Expensas'}>
                 <ListItemIcon><GroupIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                 <ListItemText className='fontColor' primary={'Usuarios'} />
+              </ListItem>
+            </Link>
+
+            <Link to="/services">
+              <ListItem button key={'Servicios Utiles'}>
+                <ListItemIcon><BuildIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                <ListItemText className='fontColor' primary={'Servicios Utiles'} />
               </ListItem>
             </Link>
 
