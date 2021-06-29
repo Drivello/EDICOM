@@ -236,7 +236,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large"/>
                 </Grid>
                 <Grid item>
                   <InputLabel htmlFor="select">Edificio</InputLabel>
@@ -268,7 +268,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large"/>
                 </Grid>
                 <Grid item>
 
@@ -314,7 +314,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room />
+                  <Room fontSize="large"/>
                 </Grid>
                 <Grid item>
                   <TextField
@@ -335,7 +335,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity />
+                  <LocationCity fontSize="large"/>
                 </Grid>
                 <Grid item>
                   <TextField
@@ -359,7 +359,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Receipt />
+                  <Receipt fontSize="large"/>
                 </Grid>
                 <Grid item>
                   <TextField
@@ -381,7 +381,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <ListAlt />
+                  <ListAlt fontSize="large"/>
                 </Grid>
                 <Grid item style={{ width: "80%" }}>
                   <TextField
