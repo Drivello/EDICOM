@@ -26,10 +26,6 @@ function UserComplaintDetail(props) {
         }
     }, [])
     
-    const imageClass = {
-        hasImage: 'hasImage',
-        noImage: 'noImage',
-    };
     function getImageAvailability(complaintImage) {
         if (complaintImage !== '') {
             return 'hasImage'
@@ -38,8 +34,6 @@ function UserComplaintDetail(props) {
         }
     };
     const imageDisplay = getImageAvailability(complaint[0].image);
-
-    console.log(imageClass[imageDisplay])
 
     return (
         <ThemeProvider theme={theme}>
@@ -59,7 +53,7 @@ function UserComplaintDetail(props) {
                     <img 
                         src={complaint[0].image} 
                         alt={complaint[0].subject} 
-                        className={imageClass[imageDisplay]}
+                        className={imageDisplay}
                     />
                 </div>
             </div>            

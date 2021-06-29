@@ -11,6 +11,7 @@ import UserComplaintDetail from './UserComplaints/UserComplaintDetail';
 import { getUser } from '../../../redux/users/userActions';
 import { getApartmentById } from '../../../redux/apartments/apartmentsActions';
 import { getComplaintsByUser } from '../../../redux/complaints/complaintsActions';
+import styles from './UserView.css';
 
 const UserView = (props) => {
     const currentUser = JSON.parse(localStorage.getItem('profile'));
@@ -32,10 +33,10 @@ const UserView = (props) => {
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>
                 <div className="componentHeader">
                     <div className="apartmentHeading">
-                        <h1>{apartmentDetail && apartmentDetail.number_apartment}</h1>
-                        <ul>
-                            <li>Nº Catastral: {apartmentDetail && apartmentDetail.cata_apartment}</li>
-                            <li>Superficie: {apartmentDetail && apartmentDetail.mt2} m2</li>
+                        <h1 className="apartmentNumber">{apartmentDetail && apartmentDetail.number_apartment}</h1>
+                        <ul className="apartmentInfo">
+                            <li><b>Nº Catastral:</b> {apartmentDetail && apartmentDetail.cata_apartment}</li>
+                            <li><b>Superficie:</b> {apartmentDetail && apartmentDetail.mt2} m2</li>
                         </ul>
                     </div>
                 </div>
