@@ -32,27 +32,40 @@ const useStyles = makeStyles((theme)=>({
 
 export function UpdateAmenity() {
 	const { amenityDetail } = useSelector( state => state.amenitiesReducer);
-    const {id} = useParams();
+    const {id} = useParams(); 
     const dispatch = useDispatch();
     const classes = useStyles();
 	const history = useHistory();
 
-    
+	const [input, setInput] = useState({
+	})
+	
 
-	const [input, setInput] = useState({})
+	console.log('amenityDetail', amenityDetail)
+
+	// const [input, setInput] = useState({
+	// 	id: id,
+	// 	amenity_type: amenityDetail.amenity_type,
+    //     quantity: amenityDetail.quantity,
+	// 	capacity: amenityDetail.capacity,
+    //     amenity_detail: amenityDetail.amenity_detail
+	// })
+
+	//-----------------------------------------------------------
 	
 	useEffect(() => {
 		dispatch(getAmenityById(id))
 	},[dispatch])
 
 	useEffect(() => {
-		
 		if (amenityDetail !== undefined) {
+			amenityDetail.filter(amenity => amenity.id === parseInt(id))
 			setInput({
             id,
-            amenity_type: amenityDetail.amenity_type,
-            quantity: amenityDetail.quantity,
-            amenity_detail: amenityDetail.amenity_detail
+            amenity_type: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].amenity_type,
+            quantity: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].quantity,
+			capacity: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].capacity,
+            amenity_detail: amenityDetail.filter(amenity => amenity.id === parseInt(id))[0].amenity_detail
 
         })
 		} else {
@@ -65,11 +78,13 @@ export function UpdateAmenity() {
     const [error, setError] = useState({//Control the error red border of the inputs
 		amenity_type: false,
         quantity: false,
+		capacity: false,
 		amenity_detail: false,
     })
 	const [helperText, setHelperText] = useState({//Control the warning message
 		amenity_type: "Ingrese un Amenity",
         quantity: "Ingrese la cantidad",
+		capacity: "Ingrese la capacidad",
         amenity_detail: "Ingrese un Detalle",
     })
     
@@ -94,6 +109,10 @@ export function UpdateAmenity() {
 		dispatch(deleteAmenity(id))
                 .then(swal("Se ha eliminado el amenity!", "Gracias!", "success"))
                 .then(history.goBack())
+	}
+
+	const cancelHandler = () => {
+		history.goBack()
 	}
 
 
@@ -181,6 +200,24 @@ export function UpdateAmenity() {
 							/>
                         </Grid>
                     </Grid>
+
+					<Grid container spacing={1} alignItems="center" justify="center">
+                        <Grid item>
+                            <Home />
+                        </Grid>
+                        <Grid item>
+                            <TextField
+								error={error["capacity"]}
+								helperText={[helperText["capacity"]]}  
+								id="capacity" 
+								label="Capacidad" 
+								name='capacity'
+								value={input.capacity || ''}
+								onChange={handleInputChange}
+							/>
+                        </Grid>
+                    </Grid>
+
                     <Grid container spacing={1} alignItems="center" justify="center">
                         <Grid item>
                             <Home />
@@ -201,15 +238,32 @@ export function UpdateAmenity() {
                 </Grid>
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
-								<Button id={ styles.submit} style={{ fontWeight: 1000, marginTop: 50 }} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
-								<Button
+						<Button 
+							id={ styles.submit} 
+							style={{ fontWeight: 1000, marginTop: 50 }} 
+							color="secondary" 
+							onClick={handleSubmit} 
+							variant="contained"
+						>
+							Guardar Cambios
+						</Button>
+						<Button
                             id={styles.submit}
                             style={{ fontWeight: 1000, marginTop: 50 }}
                             color="primary"
                             variant="contained"
                             onClick={deleteHandler}
                         >
-                            Eliminar alerta
+                            Eliminar Amenity
+                        </Button>
+						<Button
+                            id={styles.submit}
+                            style={{ fontWeight: 1000, marginTop: 50 }}
+                            color="primary"
+                            variant="contained"
+                            onClick={cancelHandler}
+                        >
+                            Cancelar
                         </Button>
                     </Grid>
                 </Grid>

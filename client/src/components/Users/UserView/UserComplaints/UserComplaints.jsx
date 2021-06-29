@@ -1,15 +1,20 @@
-import React from 'react';
-import {} from '../../../../redux/complaints/complaintsActions';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getComplaintsByUser } from '../../../../redux/complaints/complaintsActions';
+import UserComplaintsTable from './UserComplaintsTable';
 
 function UserComplaints({ user, apartment }) {
-    console.log('This is User Complaints')
-    console.log('Props ' + user)
+    const userComplaints = useSelector(state => state.complaintsReducer.userComplaints);
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(getComplaintsByUser(user.id))
+    }, [])
 
     return (
         <div>
             <h2>Mis reclamos</h2>
-            {user.name}
+            <UserComplaintsTable data={userComplaints && userComplaints} />
         </div>
     );
 }

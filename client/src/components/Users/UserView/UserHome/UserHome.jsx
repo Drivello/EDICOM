@@ -4,7 +4,7 @@ function UserHome({ user }) {
     console.log('This is User Home')
     return (
         <div>
-            <h2>{user.name}</h2>
+            {/* <h2>{user.name}</h2>
             <ul>
                 <li>Contacto: {user.contact}</li>
                 <li>Email: {user.email}</li>
@@ -18,7 +18,7 @@ function UserHome({ user }) {
                     Lista de notificaciones <br />
                     Lista de notificaciones 
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

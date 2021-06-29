@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {getBuildingDetail} from '../../redux/building/buildingActions';
 import {getAllAmenities, allAmenities} from '../../redux/amenities/amenitiesActions';
+import {getBuildings} from '../../redux/building/buildingActions';
 import {makeStyles, Grid, Button, Container} from '@material-ui/core';
 import CreateBookings from './CreateBooking/CreateBookings';
 import AddIcon from '@material-ui/icons/Add';
@@ -13,8 +14,20 @@ import {Link} from 'react-router-dom';
 import './ShowAmenities.css';
 
 const ShowAmenities = () => {
+
 	const {detailBuilding} = useSelector(state => state.buildingReducer);
+	const {allBuildings} = useSelector(state => state.buildingReducer);
 	const {Amenities} = useSelector(state => state.amenitiesReducer);
+
+	console.log('allBuildings', allBuildings)
+	console.log('Amenities', Amenities)
+	
+	if(allBuildings.length>0){	 
+		Amenities.map(amenity =>{
+			amenity.nameBuilding =  allBuildings.filter(building => building.id === amenity.buildingId)[0].name
+		})
+	}
+
 
 	const dispatch = useDispatch();
 
@@ -25,6 +38,7 @@ const ShowAmenities = () => {
 			marginTop: 100,
 			marginBottom: 30,
 			border: 5,
+			width: '80px'
 		},
 	}));
 
@@ -37,6 +51,7 @@ const ShowAmenities = () => {
 	useEffect(() => {
 		//dispatch(getBuildingDetail(id_building));
 		dispatch(allAmenities());
+		dispatch(getBuildings())
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -49,6 +64,7 @@ const ShowAmenities = () => {
 	 }
 
 	const columns = [
+		{field: 'nameBuilding', headerName: 'Edificio', width: 200},
 		{field: 'amenity_type', headerName: 'Tipo', width: 150,
 		renderCell: params => {
 			return (
@@ -121,7 +137,7 @@ const ShowAmenities = () => {
             			</Link>
 					</div>
 					<Container style={{height: '400px', width: '1500px'}}>
-						<Container style={{display: 'flex', height: '100%', width:'900px'}}>
+						<Container style={{display: 'flex', height: '100%', width:'1070px'}}>
 							<DataGrid rows={Amenities} columns={columns} pageSize={7} />
 						</Container>
 					</Container>

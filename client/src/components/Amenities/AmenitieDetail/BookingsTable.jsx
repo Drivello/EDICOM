@@ -25,10 +25,7 @@ import styles from "./Styles.module.css";
 
 function BookingsTable(props) {
 
-   console.log("estoy renderizando bookingTable")
    const dispatch = useDispatch();
-
-   console.log(props.amenitieId, "TABLE");
 
    const allComplaints = useSelector(state => state.bookingReducer.bookingDetail)
    const bookingFilter = useSelector(state => state.bookingReducer.bookingFilter)
@@ -41,8 +38,6 @@ function BookingsTable(props) {
    const [filter, setFilter] = useState(false);
 
    let complaints = [];
-
-   let bookingUniques = [];
 
    if(!filter){
       complaints = allComplaints?.map((booking) => {
@@ -62,7 +57,6 @@ function BookingsTable(props) {
 
       for (const groupBooking in bookingFilter) {
          {
-            console.log('groupBooking', bookingFilter[groupBooking][0])
             complaints.push(bookingFilter[groupBooking][0])
          }
       }
@@ -83,9 +77,9 @@ function BookingsTable(props) {
                   </Link>
                );
             }else{
-               console.log(bookingFilter[params.row.date], "start", params.row.date)
+               console.log(bookingFilter[params.row.date], "start", params.row.start)
                return (
-                  <Link onClick={(e) => handleEventClickGroup(e, params.row.date)}>
+                  <Link onClick={(e) => handleEventClickGroup(e, params.row.start)}>
                      {params.row.state}
                   </Link>
                );
@@ -96,6 +90,7 @@ function BookingsTable(props) {
 
    const [displayPopUp, setDisplayPopUp] = useState(false);
    const [alertProps, setAlertProps] = useState({});
+   const [inputFilter, sertInputFilter] = useState("All"); 
 
    const handleEventClick = (clickInfo, data) => {
       setAlertProps({
@@ -113,14 +108,10 @@ function BookingsTable(props) {
    const handleEventClickGroup = (clickInfo, date) => {
       const data = bookingFilter[date]
       console.log(data, "ESTA ES LA DATA", date)
+      
       setAlertProps({
-         id: data.id,
-         title: data.concept,
-         amenity: props.amenitieId,
-         state: data.state,
-         start: data.start,
-         date: data.date,
-         state: data.state,
+         id: data,
+         amenity: props.amenitieId
       });
       setDisplayPopUp(true);
    };
@@ -137,7 +128,7 @@ function BookingsTable(props) {
    }));
 
 
-   function handleSelectFilter(e) {
+   async function handleSelectFilter(e) {
 
       /* var buildingId = ""
 
@@ -154,10 +145,15 @@ function BookingsTable(props) {
 
       if(e.target.value === "All"){
          setFilter(false);
+         dispatch(getBookingByAmenity(props.amenitieId))
+         sertInputFilter("All");
+
       }else if(e.target.value === "Hour"){
          setFilter(true);
+         dispatch(getBookingByAmenity(props.amenitieId))
+         sertInputFilter("Hour")
       }
-      dispatch(filterBookingsByGroup(complaints))
+      await dispatch(filterBookingsByGroup(complaints))
    }
 
    return (
@@ -173,7 +169,7 @@ function BookingsTable(props) {
          <InputLabel id="demo-controlled-open-select-label">
             Filtrar
          </InputLabel>
-         <Select onChange={handleSelectFilter}>
+         <Select value={inputFilter} onChange={handleSelectFilter}>
             <MenuItem value="All">
                <em>Todos</em>
             </MenuItem>

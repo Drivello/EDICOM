@@ -10,9 +10,6 @@ module.exports = async (req, res, next) => {
 
     const {month, year} = req.params;
 
-    console.log('mes', month)
-    console.log('año', year)
-
     const t = await conn.transaction();
 
     try{

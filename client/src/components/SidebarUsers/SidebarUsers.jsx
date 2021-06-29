@@ -183,7 +183,7 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userInfo && userInfo.id}/myExpenses`}>
+                        <Link to={`/public/expenses/${userInfo && userInfo.apartment}/${userInfo && userInfo.aparment_name}`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />
