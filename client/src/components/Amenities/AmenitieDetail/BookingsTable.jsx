@@ -178,7 +178,13 @@ function BookingsTable(props) {
             </MenuItem>
          </Select>
          <div style={{ display: "flex", height: "100%" }}>
-            <DataGrid rows={complaints} columns={columns} pageSize={5} />
+            <DataGrid sortModel={[
+                           {
+                             field: 'start',
+                             sort: 'desc',
+                           },
+                         ]}
+                         rows={complaints} columns={columns} pageSize={5} />
          </div>
       </div>
    );
