@@ -1,4 +1,4 @@
-import { POST_PAYMENT  } from '../payments/paymentsActions';
+import { POST_PAYMENT, RESET_URL_PAYMENT  } from '../payments/paymentsActions';
 
 
 const initialState = {
@@ -11,6 +11,9 @@ const paymentsReducer = (state = initialState, action) => {
     switch (action.type) {
         case POST_PAYMENT:
             return {...state, urlPayment: action.payload};
+
+        case RESET_URL_PAYMENT:
+            return {...state, urlPayment: ''}
 
         default:
             return state

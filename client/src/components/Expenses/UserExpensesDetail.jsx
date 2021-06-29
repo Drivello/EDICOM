@@ -12,7 +12,7 @@ import filter from '../../utils/filter-remove.png';
 import styles from "./Styles.module.css";
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import { addPayment } from "../../redux/payments/paymentsActions";
+import { addPayment, resetUrlPayment } from "../../redux/payments/paymentsActions";
 
 
 
@@ -137,6 +137,11 @@ function UserExpensesDetail(props) {
     if(urlPayment){
       window.open(urlPayment, '_blank').focus()
     }
+    return(
+      () => {
+        dispatch(resetUrlPayment())
+      }
+    )
   }, [urlPayment])
 
   const useStyles = makeStyles((theme) => ({

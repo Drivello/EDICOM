@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
       access_token: 'APP_USR-7203165178727227-062815-d9bf402ccd3c1e6165d7662f180cbf25-782464864'   //
     });
 
-
     let preference = {
         items: [
           {
