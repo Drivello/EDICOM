@@ -1,9 +1,10 @@
-import { 
-    GET_ALL_COMPLAINTS, 
-    PUT_SEEN_COMPLAINT, 
-    PUT_STATE_COMPLAINT, 
-    FILTER_COMPLAINTS, 
-    GET_COMPLAINTS_BY_USER
+import {
+    GET_ALL_COMPLAINTS,
+    PUT_SEEN_COMPLAINT,
+    PUT_STATE_COMPLAINT,
+    FILTER_COMPLAINTS,
+    GET_COMPLAINTS_BY_USER,
+    CREATE_COMPLAINTS
 } from './complaintsActions';
 import { filterComplaints } from './utils';
 
@@ -42,6 +43,12 @@ export default function buildingReducer(state = initialState, action) {
                 ...state,
                 userComplaints: action.payload.data
             }
+        case CREATE_COMPLAINTS:
+           
+            return {
+                ...state,
+                userComplaints: action.payload,
+            };
 
         default:
             return state;

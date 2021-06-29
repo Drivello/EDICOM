@@ -25,8 +25,10 @@ export function deleteApartmentById(id) {
 }
 
 export function getAllApartments(buildingId) {
+	console.log("buildingId",buildingId)
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/apartments/all/${buildingId}`);
 		dispatch({type: ALL_APARTMENTS, payload: data});
+		console.log("data",data)
 	};
 }
