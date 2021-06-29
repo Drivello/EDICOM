@@ -7,6 +7,7 @@ module.exports = async (req, res, next) => {
                 model: Buildings,
 				attributes: ['name']
             }],
+			order: [['updatedAt', 'DESC']]
 		});
 		return res.json(data);
 	} 

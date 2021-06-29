@@ -48,7 +48,9 @@ module.exports = async (req, res, next) => {
 
         if (first_logging) {
 
-            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
+        if(first_logging){ 
+                   
+            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging,id:userRegistered.id, name: userRegistered.name });
 
             /*       if(userRegistered.password != password){ */
 
@@ -63,7 +65,7 @@ module.exports = async (req, res, next) => {
         /*  } */
         else {
 
-            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging, name: userRegistered.name });
+            res.status(201).json({ token, message: { message: "Ingreso Exitoso ", style: "red" }, first_logging,id:userRegistered.id, name: userRegistered.name });
         }
 
     }
