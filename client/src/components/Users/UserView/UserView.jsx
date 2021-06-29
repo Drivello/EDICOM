@@ -7,27 +7,26 @@ import theme from '../../themeStyle';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import UserHome from "./UserHome/UserHome";
 import UserComplaints from "./UserComplaints/UserComplaints";
+import UserComplaintDetail from './UserComplaints/UserComplaintDetail';
 import { getUser } from '../../../redux/users/userActions';
 import { getApartmentById } from '../../../redux/apartments/apartmentsActions';
-
+import { getComplaintsByUser } from '../../../redux/complaints/complaintsActions';
 
 const UserView = (props) => {
-    const [userInfo, setUserInfo] = useState('');
-    const currentUser = useSelector(state => state.loggingReducer.userId);
+    const userInfo = useSelector(state => state.loggingReducer.userId);
     const userDetail = useSelector(state => state.userReducer.userDetail);
     const apartmentDetail = useSelector(state => state.apartmentReducer.apartmentDetail);
-
-    useEffect(() => {
-        setUserInfo(currentUser);
-    }, [currentUser])
-    useEffect(() => {
-        dispatch(getUser(currentUser && currentUser.id));
-    }, [userInfo])
-    useEffect(() => {
-        dispatch(getApartmentById(userDetail && userDetail.apartmentId))
-    }, [userDetail])
-
+    const userComplaints = useSelector(state => state.complaintsReducer.userComplaints);
     const dispatch = useDispatch();
+    
+    useEffect(() => {
+        if(userInfo && userInfo.id) dispatch(getComplaintsByUser(userInfo.id))
+    }, [userInfo]);
+
+    useEffect(() => {
+        if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
+    }, [userDetail] );
+    
     return (
         <ThemeProvider theme={theme}>
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>
@@ -44,9 +43,16 @@ const UserView = (props) => {
                     <Route exact path={`/public/:id`}>
                         <UserHome user={userDetail && userDetail} />
                     </Route>
-                    <Route  path={`/public/:id/complaints`}>
-                        <UserComplaints user={userDetail && userDetail} apartment={apartmentDetail && apartmentDetail} />
+                    <Route exact path={`/public/:id/complaints`}>
+                        <UserComplaints complaints={userComplaints && userComplaints} />
                     </Route>
+                    <Route exact path={`/public/:id/complaints`}>
+                        <UserComplaints complaints={userComplaints && userComplaints} />
+                    </Route>
+                    <Route
+                        path='/public/:id/complaintDetail/:id'
+                        render={({match}) => <UserComplaintDetail match={match} complaints={userComplaints && userComplaints} />}
+                    />
                 </Switch>
             </Container>
         </ThemeProvider>

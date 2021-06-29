@@ -190,6 +190,10 @@ function BuildingAddForm() {
         setBuildingData({ ...buildingData, lat: latlng.lat, lng: latlng.lng, address: sug.description })
     }
 
+    function cancelHandle (){
+        history.goBack()
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <div className={styles.contUpdateB}>
@@ -316,6 +320,7 @@ function BuildingAddForm() {
                             <Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
                                 Confirmar
                             </Button>
+						    <Button style={{ fontWeight: 1000 }} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
                         </div>
                     </div>
                 </form>

@@ -14,6 +14,7 @@ const subscriptions = require('./subscriptions');
 const bookings = require('./bookings');
 const services = require('./services');
 const ratings = require('./ratings');
+const payments = require('./payments');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -40,5 +41,7 @@ router.use('/subscriptions', subscriptions);
 router.use('/bookings', bookings);
 router.use('/services', services);
 router.use('/ratings', ratings);
+router.use('/payment', payments);
+
 
 module.exports = router;

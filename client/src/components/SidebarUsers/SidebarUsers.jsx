@@ -13,31 +13,27 @@ import HomeIcon from '@material-ui/icons/Home';
 import './SidebarUsers.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Badge from '@material-ui/core/Badge';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, getIdUser } from '../../redux/logging/loggingActions';
-import NotificationBar from "../NotificationBar/NotificationBar"
-import { getComplaints , putSeenComplaint} from "../../redux/complaints/complaintsActions";
+import { getComplaints, putSeenComplaint } from "../../redux/complaints/complaintsActions";
 import { getUser } from '../../redux/users/userActions';
 import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 export default function Sidebar(props) {
 
-    const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
     const currentUserData = useSelector(state => state.userReducer.userDetail);
     const userInfo = useSelector(state => state.loggingReducer.userId);
     const dispatch = useDispatch();
     const classes = useStyles(theme);
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [noti, setNoti] = useState(false);
     const history = useHistory();
     const [notiNumb, setNotiNumb] = useState(0);
     const [userToken, setUserToken] = useState('');
     const [userId, setUserId] = useState('');
-    
+
     // async function getToken() {
     //     const sessionData = await JSON.parse(localStorage.getItem('profile'))
     //     const newUserToken = sessionData.token
@@ -47,18 +43,12 @@ export default function Sidebar(props) {
     // useEffect(() => {
     //     getToken();
     // }, [])
-    
+
     // useEffect(() => {
     //     dispatch(getIdUser(userToken))
     // }, [userToken])
     
-    useEffect(() => {
-        dispatch(getComplaints())
-    }, [dispatch])
 
-    useEffect(() => {
-        setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
-    }, [Notifications])
 
     const { authData } = useSelector(state => {
         return {
@@ -67,12 +57,12 @@ export default function Sidebar(props) {
     });
 
     const current = JSON.parse(localStorage.getItem('profile'))
-
+    
     const [currentUser, setCurrentUser] = useState(current);
 
     useEffect(() => {
         setCurrentUser(current)
-    }, [ authData ])
+    }, [authData])
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -96,13 +86,6 @@ export default function Sidebar(props) {
         window.location.href = 'http://localhost:3000/logging'
     }
 
-    const notiHandler = () => {
-        setNoti(!noti)
-        /*     if(notiNumb !== 0) setNotiNumb(notiNumb - 4); */
-        let notis = Notifications.filter(noti => { if (noti.seen === false) return true });
-        notis = notis.slice(notis.length - 4).map(noti => dispatch(putSeenComplaint(noti.id)))
-        dispatch(getComplaints())
-    }
     
     return (
         <ThemeProvider theme={theme}>
@@ -113,7 +96,7 @@ export default function Sidebar(props) {
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: open,
                     })}
-                    >
+                >
                     <Toolbar className='navbar'>
                         <IconButton
                             color="inherit"
@@ -121,7 +104,7 @@ export default function Sidebar(props) {
                             onClick={handleDrawerOpen}
                             edge="start"
                             className={clsx(classes.menuButton, {
-                              [classes.hide]: open,
+                                [classes.hide]: open,
                             })}
                         >
                             <MenuIcon style={{ color: "#00ff7f" }} />
@@ -135,31 +118,31 @@ export default function Sidebar(props) {
                     <div className='login'>
                         <Typography variant="h6" style={{ marginRight: 20 }}>
                             {
-                              currentUser?.name
-                              ?
-                              `Sesión de ${currentUser?.name}`
-                              :
-                              false
+                                currentUser?.name
+                                    ?
+                                    `Sesión de ${currentUser?.name}`
+                                    :
+                                    false
                             }
                         </Typography>
                         <Button className='btnNavbar' aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          <AccountCircleIcon style={{ fontSize: 35, color: "#00ff7f" }} />
+                            <AccountCircleIcon style={{ fontSize: 35, color: "#00ff7f" }} />
                         </Button>
                         <Menu
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
                         >
                             {
-                              currentUser?.name
-                              ?
-                              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                              :
-                              <Link className='btnNavbar' to='/logging'>
-                                <MenuItem onClick={handleClose}>Login</MenuItem>
-                              </Link>
+                                currentUser?.name
+                                    ?
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    :
+                                    <Link className='btnNavbar' to='/logging'>
+                                        <MenuItem onClick={handleClose}>Login</MenuItem>
+                                    </Link>
                             }
                         </Menu>
                     </div>
@@ -180,35 +163,35 @@ export default function Sidebar(props) {
 
                     <div className={classes.toolbar}>
                         <IconButton style={{ color: "#00ff7f" }} onClick={handleDrawerClose}>
-                           {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
                     </div>
                     <Divider />
 
                     <List>
 
-                        <Link to={`/public/${userInfo && userInfo.id}`} className='link'>
+                        <Link to={`/public/${currentUser.id}`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><HomeIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Inicio'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userInfo && userInfo.id}/amenities`} className='link'>
+                        <Link to={`/public/${currentUser.id}/amenities`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Amenities'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userInfo && userInfo.id}/myExpenses`}>
+                        <Link to={`/public/expenses/${userInfo && userInfo.apartment}/${userInfo && userInfo.aparment_name}`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${userInfo && userInfo.id}/complaints`}>
+                        <Link to={`/public/${currentUser.id}/complaints`}>
                             <ListItem button key={'Alertas'}>
                                 <ListItemIcon><AnnouncementIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Reclamos'} />
@@ -220,5 +203,5 @@ export default function Sidebar(props) {
 
             </div>
         </ThemeProvider>
-  );
+    );
 }

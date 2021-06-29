@@ -15,6 +15,8 @@ import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 import Subscriptions from '../Users/UserView/Alerts/Subscriptions';
 import SearchBar from '../Services/SearchBar';
 import ServiceContainer from '../Services/ServiceContainer';
+import UserExpenses from '../Expenses/UserExpenses';
+import UserAddComplaints from '../Users/UserView/UserComplaints/UserAddComplaints';
 
 
 function AppPublic() {
@@ -22,16 +24,19 @@ function AppPublic() {
 		<Container className="App">
 			<CssBaseline />
 			<BrowserRouter>
-				//Poner acá los route con los componentes de la vista del locatario		
+				{/* //Poner acá los route con los componentes de la vista del locatario		 */}
 				<Route path="/public/Bookings" component={Bookings} />
 				<Route exact path="/public/spendings/board" component={ApartmentBoard} />
 				<Route path="/public" component={SidebarUsers} />
-				{/* <Route path="/public" component={UserView} /> */}
+				<Route path="/public" component={UserView} />
 				<Route exact path="/public/:id/alerts" component={AlertsUser}/>
 				<Route exact path="/public/:id/calendar" component={CalendarUser}/>
 				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
 				<Route exact path="/public/services" component={SearchBar}/>
 				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
+				<Route exact path="/public/expenses/:apartmentNumber/:apartmentName" component={UserExpenses}/>
+				{/* <Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/> */}
+
 			</BrowserRouter>
 		</Container>
 	);
