@@ -8,7 +8,7 @@ import {
   totalSpending,
 } from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
@@ -17,7 +17,7 @@ import {
   Receipt,
   ListAlt,
 } from "@material-ui/icons";
-  import {
+import {
   InputLabel,
   NativeSelect,
   Grid,
@@ -31,13 +31,14 @@ import theme from "../themeStyle";
 import swal from "sweetalert";
 import moment from "moment";
 import { numeroPositivo } from "../../utils/validations"
-import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { getInvoicedExpenses } from "../../redux/expenses/expensesActions";
 import { MONTHS } from "../../utils/constant";
 
 
 const Form = (props) => {
+  const history = useHistory();
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -168,9 +169,9 @@ const Form = (props) => {
           [e.target.name]: parseInt(e.target.value),
         })
         setError(false)
-      }else {
+      } else {
         setError(true)
-        
+
       }
     } else {
       setSpending({
@@ -182,18 +183,20 @@ const Form = (props) => {
 
   const handleValidationDate = (e) => {
 
+    if(e === null) return false
+
     const date = {
       "month": MONTHS[e.getMonth()],
       "year": e.getFullYear()
     }
 
     for (const elem of invoicedExpenses) {
-      if(date.year === elem.year && date.month === elem.month){
+      if (date.year === elem.year && date.month === elem.month) {
         alert("No se puede cargar gastos en meses donde ya se liquidaron las expensas")
         return;
       }
     }
-    
+
     setSpending({
       ...spending,
       date: e,
@@ -201,46 +204,48 @@ const Form = (props) => {
 
   }
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-  
+  const handleUpdate = async (e) => {
     if( typeof(spending.building) === NaN || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
-      alert("Faltan Ingresar Datos")
-    }
-
-    else{
-      dispatch(putSpending([parseInt(props.match.params.id), spending]));
+      swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
+    } else {
+      await dispatch(putSpending([parseInt(props.match.params.id), spending]));
       swal("Gasto Editado!", "Gracias!", "success");
+      history.goBack()
     }
-
-  };
-
-  const handleDelete = (e) => {
-    //
-    dispatch(deleteSpending(parseInt(props.match.params.id)));
-  };
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    if(spending.building === "" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
-      alert("Faltan Ingresar Datos")
-    }
-
-    else{
-      console.log("entra en el ELSE de handleAdd")
-      dispatch(postSpending(spending));
-      swal("Gasto Agregado!", "Gracias!", "success");
-      setSpending(
-        (newSpending = {
-          date: "",
-          building: "",
-          concept: "",
-          supplier: "",
-          details: "",
-          amount: 0,
-      })
-    )}
   }
+
+  const handleDelete = async (e) => {
+    //
+    await dispatch(deleteSpending(parseInt(props.match.params.id)));
+    await swal("Gasto Eliminado!", "Gracias!", "success");
+    history.goBack();
+  };
+
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    if (spending.supplier === "")
+      return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
+    if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
+    if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
+    await dispatch(postSpending(spending));
+    await dispatch(totalSpending());
+    await swal("Gasto Agregado!", "Gracias!", "success");
+    setSpending(
+      (newSpending = {
+        date: moment(new Date(new Date())).format("L"),
+        building: "",
+        concept: "",
+        supplier: "",
+        details: "",
+        amount: 0,
+      })
+      );
+      history.goBack();
+    };
+
+    const back = () =>{
+      history.goBack();
+    }
 
 
   return (
@@ -271,7 +276,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
                   <InputLabel htmlFor="select">Edificio</InputLabel>
@@ -282,7 +287,7 @@ const Form = (props) => {
                     value={spending.building}
                   >
                     <option> Edificio </option>
-                      
+
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
                         return (
@@ -303,28 +308,29 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    name="date"
-                    margin="normal"
-                    id="date"
-                    format="dd/MM/yyyy"
-                    value={spending.date}
-                    onChange= { (e) => {
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      variant="outlined"
+                      name="date"
+                      margin="normal"
+                      id="date"
+                      format="dd/MM/yyyy"
+                      value={spending.date}
+                      onChange={(e) => {
                         // handleInputChange(e)
                         handleValidationDate(e)
                       }
-                    }
-                    KeyboardButtonProps={{
+                      }
+                      KeyboardButtonProps={{
                         "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>  
-                
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
+
                   {/* <TextField
                     input
                     type="date"
@@ -348,10 +354,11 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room />
+                  <Room fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
+                    variant="outlined"
                     id="concepto"
                     name="concept"
                     label="Concepto"
@@ -368,10 +375,11 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity />
+                  <LocationCity fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
+                    variant="outlined"
                     id="proveedor"
                     label="Proveedor"
                     value={spending.supplier}
@@ -391,17 +399,22 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Receipt />
+                  <ListAlt fontSize="large" />
                 </Grid>
-                <Grid item>
+                <Grid item style={{ width: "80%" }}>
                   <TextField
-                    id="detalles"
-                    label="Detalles"
-                    defaultValue="Detalles"
-                    value={spending.details}
+                    variant="outlined"
+                    width="80%"
+                    id="monto"
+                    type="number"
+                    label="Monto"
+                    defaultValue="1"
+                    value={spending.amount}
+                    min="1"
                     onChange={handleInputChange}
-                    name="details"
-                    placeholder="details"
+                    name="amount"
+                    error={error ? true : false}
+                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
                   />
                 </Grid>
               </Grid>
@@ -412,21 +425,20 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <ListAlt />
+                  <Receipt fontSize="large" />
                 </Grid>
-                <Grid item style={{ width: "80%" }}>
+                <Grid item>
                   <TextField
-                    width="80%"
-                    id="monto"
-                    type="number"
-                    label="Monto"
-                    defaultValue="1"
-                    value={spending.amount}
-                    min="1"
+                    multiline={true}
+                    rowsMax={4}
+                    variant="outlined"
+                    id="detalles"
+                    label="Detalles"
+                    defaultValue="Detalles"
+                    value={spending.details}
                     onChange={handleInputChange}
-                    name="amount"
-                    error ={error ? true:false}
-                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
+                    name="details"
+                    placeholder="details"
                   />
                 </Grid>
               </Grid>
@@ -471,37 +483,36 @@ const Form = (props) => {
                   </Link>
                 ) : (
                   <>
-                    <Link to={"../../board"}>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                        onClick={handleUpdate}
-                      >
-                        Actualizar
-                      </Button>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                        onClick={handleDelete}
-                      >
-                        Eliminar
-                      </Button>
-                    </Link>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={handleUpdate}
+                    >
+                      Actualizar
+                    </Button>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={back}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={handleDelete}
+                    >
+                      Eliminar
+                    </Button>
                   </>
                 )}
               </Grid>

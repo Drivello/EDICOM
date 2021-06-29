@@ -25,12 +25,31 @@ const CreateAmenity = () => {
 		building: '',
 	});
 
+	const [error, setError] = useState({
+		//Control the error red border of the inputs
+		amenity_type: false,
+		quantity: false,
+		capacity: false,
+		amenity_detail: false,
+	});
+	const [helperText, setHelperText] = useState({
+		//Control the warning message
+		amenity_type: 'Ingrese un tipo de amenity',
+		quantity: 'Ingrese la cantidad',
+		capacity: 'Cuantas personas pueden usarlo',
+		amenity_detail: 'Detalles del amenitie',
+	});
+
 	const handleSubmit = e => {
 		if (
-			input.amenity_type !== '' &&
+			(input.amenity_type !== '' &&
 			input.quantity !== '' &&
 			input.capacity !== '' &&
-			input.building !== ''
+			input.building !== '') &&
+			(!error.amenity_type && 
+				!error.quantity && 
+				!error.capacity && 
+				!error.amenity_detail)
 		) {
 			dispatch(createAmenity(input))
 			.then(() => history.push('/amenities/'))
@@ -57,6 +76,11 @@ const CreateAmenity = () => {
 				setInput={setInput}
 				allBuildings={allBuildings}
 				handleSubmit={handleSubmit}
+				errorIn={error}
+				helperTextIn={helperText}
+				setError={setError}
+				setHelperText={setHelperText}
+
 			/>
 		</>
 	);

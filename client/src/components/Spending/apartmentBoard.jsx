@@ -81,7 +81,7 @@ const ApartmentBoard = (props) => {
    const dispatch = useDispatch();
 
 
-   const { filterSpend, buildingArray } = useSelector((state) => {
+   const { filterSpend, buildingArray, totalSpend } = useSelector((state) => {
       return {
          filterSpend: state.reducerSpending.filterSpending,
          totalSpend: state.reducerSpending.totalSpending,
@@ -98,7 +98,7 @@ const ApartmentBoard = (props) => {
          date: moment(spending.date).format("DD/MM/YY"),
          concept: spending.concept,
          details: spending.details,
-         amount: spending.amount,
+         amount: spending.amount
       };
    });
 
@@ -106,7 +106,7 @@ const ApartmentBoard = (props) => {
       // envia a las acciones
       dispatch(totalSpending());
       dispatch(getBuildings());
-   }, [dispatch]);
+   }, [dispatch, totalSpend]);
 
    const date1 = new Date("2021-01-01T00:00:00");
    const date2 = new Date(new Date());
