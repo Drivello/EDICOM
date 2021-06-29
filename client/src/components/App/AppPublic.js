@@ -13,10 +13,10 @@ import CalendarUser from '../Users/UserView/Alerts/CalendarUser';
 import ApartmentBoard from '../Spending/apartmentBoard'
 import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 import Subscriptions from '../Users/UserView/Alerts/Subscriptions';
-import SearchBar from '../Services/SearchBar';
 import ServiceContainer from '../Services/ServiceContainer';
 import UserExpenses from '../Expenses/UserExpenses';
 import UserAddComplaints from '../Users/UserView/UserComplaints/UserAddComplaints';
+import ServiceForm from '../Services/ServiceForm';
 
 
 function AppPublic() {
@@ -32,7 +32,7 @@ function AppPublic() {
 				<Route exact path="/public/:id/alerts" component={AlertsUser}/>
 				<Route exact path="/public/:id/calendar" component={CalendarUser}/>
 				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
-				<Route exact path="/public/services" component={SearchBar}/>
+				<Route exact path="/public/services/:buildingId" component={ServiceForm}/>
 				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
 				<Route exact path="/public/expenses/:apartmentNumber/:apartmentName" component={UserExpenses}/>
 				{/* <Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/> */}
