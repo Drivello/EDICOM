@@ -35,8 +35,10 @@ function AppPublic() {
 				<Route exact path="/public/services/:buildingId" component={ServiceForm}/>
 				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
 				<Route exact path="/public/expenses/:apartmentNumber/:apartmentName" component={UserExpenses}/>
-				{/* <Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/> */}
-
+				<Route
+					exact path="/public/AddComplaints/:id"
+					render={({ match }) => <UserAddComplaints match={match} />}
+				/>
 			</BrowserRouter>
 		</Container>
 	);

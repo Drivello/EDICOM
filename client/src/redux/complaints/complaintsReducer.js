@@ -16,6 +16,7 @@ const initialState = {
 }
 
 export default function buildingReducer(state = initialState, action) {
+
     switch (action.type) {
         case GET_ALL_COMPLAINTS:
             return {
@@ -44,7 +45,6 @@ export default function buildingReducer(state = initialState, action) {
                 userComplaints: action.payload.data
             }
         case CREATE_COMPLAINTS:
-           
             return {
                 ...state,
                 userComplaints: action.payload,
