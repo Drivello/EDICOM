@@ -10,7 +10,8 @@ import {
 
 const initialState = {
 	users: [],
-	userDetail: undefined,				//se le está cargando los datos de un user agregandole el idBuilding
+	userDetail: undefined,
+	userUpdate: 0,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -31,9 +32,10 @@ const userReducer = (state = initialState, action) => {
 				userDetail: action.payload,
 			};
 		case UPDATE_USER:
+			console.log('ACTION ACA', action.payload);
 			return {
 				...state,
-				userDetail: action.payload,
+				userUpdate: action.payload.status,
 			};
 		case DELETE_USER:
 			return {

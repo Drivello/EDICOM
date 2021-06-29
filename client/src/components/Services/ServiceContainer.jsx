@@ -56,7 +56,7 @@ export default function ServiceContainer(props) {
                     <h1>
                         Servicios Utiles Recomendados
                     </h1>
-                    <Link className="link">
+                    <Link to={`/public/services/${user_detail && user_detail.apartment.buildingId}`} className="link">
                         <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
                             <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                         </Button>

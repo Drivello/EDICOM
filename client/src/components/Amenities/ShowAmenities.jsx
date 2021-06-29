@@ -24,7 +24,11 @@ const ShowAmenities = () => {
 	
 	if(allBuildings.length>0){	 
 		Amenities.map(amenity =>{
-			amenity.nameBuilding =  allBuildings.filter(building => building.id === amenity.buildingId)[0].name
+			allBuildings.map(building => {
+				if(building.id === amenity.buildingId){
+					amenity.nameBuilding = building?.name
+				}
+			})
 		})
 	}
 

@@ -25,7 +25,9 @@ const UserView = (props) => {
 
     useEffect(() => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
-    }, [userDetail] );
+    }, [userDetail]);
+    
+    console.log(userInfo)
     
     return (
         <ThemeProvider theme={theme}>

@@ -16,10 +16,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, getIdUser } from '../../redux/logging/loggingActions';
-import { getComplaints, putSeenComplaint } from "../../redux/complaints/complaintsActions";
 import { getUser } from '../../redux/users/userActions';
-import ErrorIcon from '@material-ui/icons/Error';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import BuildIcon from '@material-ui/icons/Build';
+import ApartmentIcon from '@material-ui/icons/Apartment';
 
 export default function Sidebar(props) {
 
@@ -161,6 +160,13 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
+                        <Link to={`/public/${currentUser.id}/calendar`} className='link'>
+                            <ListItem button key={'Calendar'} style={{ marginTop: '-20px' }} >
+                                <ListItemIcon><ApartmentIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                                <ListItemText className='fontColor' primary={'Mi Edificio'} />
+                            </ListItem>
+                        </Link>
+
                         <Link to={`/public/${currentUser.id}/amenities`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
@@ -179,6 +185,13 @@ export default function Sidebar(props) {
                             <ListItem button key={'Alertas'}>
                                 <ListItemIcon><AnnouncementIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Reclamos'} />
+                            </ListItem>
+                        </Link>
+
+                        <Link to={`/public/contservices/${currentUser.id}`}>
+                            <ListItem button key={'Servicios Utiles'}>
+                                <ListItemIcon><BuildIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
+                                <ListItemText className='fontColor' primary={'Servicios Utiles'} />
                             </ListItem>
                         </Link>
 
