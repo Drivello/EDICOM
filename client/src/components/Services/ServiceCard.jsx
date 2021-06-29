@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import { ratingsByService } from '../../redux/ratings/ratingsAction';
 import { useSelector, useDispatch } from "react-redux";
 import GradeIcon from '@material-ui/icons/Grade';
+import PopUp from './PopUp';
 import './Services.css';
 
-export default function ServiceCard({service}) {
+export default function ServiceCard({service, building}) {
 
     const stars = (service.ratings.reduce((tot, acc, curr) => {
         return tot + acc.rating
       },0) / service.ratings.length) || 0
-    console.log([...Array(Math.round(stars))])
+
+    const [displayPopUp, setDisplayPopUp] = useState(false);
+
+    const handleClick = () => {
+        setDisplayPopUp(true);
+    }
 
     return(
-        <div className='serviceCard'>
+        <>
+        <PopUp display={displayPopUp} setDisplay={setDisplayPopUp} service = {service} building= {building}/>
+        <div className='serviceCard' onClick={handleClick}>
             <h2>
                 {service.title.toUpperCase()}
             </h2>
@@ -34,5 +42,6 @@ export default function ServiceCard({service}) {
                 }
             </div>
         </div>
+        </>
     )
 }

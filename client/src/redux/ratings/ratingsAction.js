@@ -8,9 +8,9 @@ export const RATINGS_BY_SERVICE = 'RATINGS_BY_SERVICE';
 
 //http://localhost:3001/ratings
 
-export const addRating = () =>  {
+export const addRating = (body) =>  {
     return function (dispatch) {
-        return axios.get('http://localhost:3001/ratings')
+        return axios.post('http://localhost:3001/ratings', body)
         .then(res => {
             dispatch({
                 type: ADD_RATINGS,
@@ -23,9 +23,9 @@ export const addRating = () =>  {
     }
 }
 
-export function putRating(id) {
+export function putRating(body) {
     return function(dispatch) {
-        return axios.put(`http://localhost:3001/ratings/${id}`)
+        return axios.put(`http://localhost:3001/ratings`, body)
         .then(data => {
             dispatch({
                 type: PUT_RATINGS,
@@ -55,7 +55,7 @@ export function allRatings() {
 
 export function deleteRating(id) {
     return function(dispatch) {
-        return axios.delete(`http://localhost:3001/${id}`)
+        return axios.delete(`http://localhost:3001/ratings/${id}`)
         .then(data => {
             dispatch({
                 type: DELETE_RATINGS,
