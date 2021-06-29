@@ -15,7 +15,7 @@ const ServicesList = (props) => {
             <h1 className='contExtAlerts'>
                 Servicios Utiles Recomendados:
             </h1>
-            <Link to="/alertsAdd" >
+            <Link to="/services/form" >
                 <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '20px', marginTop: '30px'}}>
                     <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                 </Button>

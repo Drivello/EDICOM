@@ -98,10 +98,8 @@ export function getComplaintsByUser(id) {
     };
 };
 export function createComplaints(body) {
-    console.log("ENTRE ACTION" , body)
     return function(dispatch) {
-        console.log("DATA ACTION" , body)
-        return axios.get('http://localhost:3001/complaints/',body)
+        return axios.post('http://localhost:3001/complaints/',body)
         .then(data => {
             
             dispatch({

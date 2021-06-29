@@ -15,7 +15,6 @@ import {
 import {
     MuiPickersUtilsProvider, KeyboardDatePicker,
 } from "@material-ui/pickers";
-import styles from './AddComplaints.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../../themeStyleUser';
 import swal from "sweetalert";
@@ -24,12 +23,93 @@ import { getBuildings } from '../../../../redux/building/buildingActions';
 import { getAllUsersForList } from '../../../../redux/users/userActions';
 import { getAllApartments } from '../../../../redux/apartments/apartmentsActions';
 import moment from "moment";
+import { makeStyles } from '@material-ui/core';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import SubjectIcon from '@material-ui/icons/Subject';
+
+const useStyles = makeStyles((theme) => ({
+
+    contUpdateB:{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: '100px',
+        marginTop: '100px'
+    },
+    formCont :{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent:' space-between',
+        alignItems: 'center',
+        height: '500px',
+    },
+    form :{
+        marginTop: '20px',
+        minWidth: '500px',
+    },
+    button :{
+        maxHeight: '35px',
+        top: '10px',
+        marginLeft: '7px',
+    },
+    icon :{
+        margintop: '12px',
+        marginLeft: '12px',
+    },
+    img :{
+        height: '250px',
+        width: '400px',
+        borderRadius: '10px',
+        marginBottom: '20px',
+        marginLeft: '30px',
+    },
+    
+    item :{
+        minHeight: '80px',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '300px',
+    },
+    
+    
+    guardarCambios :{
+        marginTop: '20px',
+        fontWeight: '1000',
+    },
+    
+    right :{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '500px',
+    },
+    
+    location:{
+        width: '300px',
+    },
+    
+    dropdown:{
+        position: 'absolute',
+        zIndex: '1',
+        width: '250px',
+    },
+    select:{
+        width:'210px'
+    }
+    
+    
+    
+}))
 
 
+const UserAddComplaints = (props) => {
+    const classes = useStyles();
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-const UserAddComplaints = () => {
-
-    console.log(' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',complaints)
     //importancia
     const currencies = [
         {
@@ -54,45 +134,66 @@ const UserAddComplaints = () => {
             allApartments: state.apartmentReducer.allApartments
         };
     });
+    const [loading, setLoading] = useState(true)
+   
+    function fetchData() {
+        dispatch(getAllUsersForList())
+        dispatch(getBuildings())
+        dispatch(getAllApartments())
+    }
 
-    console.log('buildingArray', buildingArray)
-    console.log('usersArray', usersArray)
-    console.log('allApartments', allApartments)
 
     //traigo los datos
     useEffect(() => {
+        /*  if (loading) {
+             fetchData()
+             usersArray && buildingArray && allApartments && setLoading(false)
+         } else { */
+
         dispatch(getBuildings());
         dispatch(getAllUsersForList());
         dispatch(getAllApartments(1));
-    }, [dispatch]);
+    }
+        /*   } */
+        , [dispatch]);
 
+    function getNames() {
+        setComplaints({ ...complaints, id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0].name })
+        return (complaints.id_Buildings)
+    }
 
     const { id } = useParams()
+    currentUser.id = id
 
-    let newComplaints = ''
-    if (buildingArray && buildingArray?.length > 0 && usersArray && usersArray?.length > 0) {
+    const [complaints, setComplaints] = useState({
+        name:'',
+        id_Buildings: '',
+        apartment: '',
+        date: moment(new Date(new Date())).format("L"),
+        subject: '',
+        details: '',
+        importance: '',
+        image: '',
+        id_Users: id
+
+    });
+ 
+
+    if (loading && buildingArray && buildingArray?.length > 0 && usersArray && usersArray?.length > 0 && allApartments && allApartments?.length > 0) {
 
         let idApartment = usersArray?.filter(a => a.apartmentId === parseInt(id))[0].apartmentId
-    
-        newComplaints = {
-            id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0]?.name,
+
+        setComplaints({
+            id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0].id,
+            name: buildingArray?.filter(a => a.id === parseInt(id))[0].name,
+            /*  id_Buildings: '', */
             apartment: allApartments?.filter(a => a.id === parseInt(idApartment))[0].number_apartment,
-            date: moment(new Date(new Date())).format("L"),
-            subject: '',
-            details: '',
-            importance: '',
-            image: '',
-            id_Users: ''
 
-        }
+        })
+        setLoading(false)
     }
-    
-    console.log(newComplaints)
 
-    const [complaints, setComplaints] = useState(newComplaints);
-
-    console.log('complaints',complaints)
-
+   
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -130,27 +231,33 @@ const UserAddComplaints = () => {
 
     //funcion para mostrar la imagen precargada
     function renderImg() {
-        if (!complaints.image) return 'edificio';
+        if (!complaints.image) return PhotoCamera;
         else return URL.createObjectURL(complaints.image);
     }
 
     //despacho accion
     const handleSubmit = (e) => {
 
-        e.preventDefault();
-        const complaintsSend = {
+        const complaintsSend = JSON.stringify(  {
+            id_Buildings: complaints.id_Buildings,
+            apartment: complaints.apartment,
             date: complaints.date,
             subject: complaints.subject,
             details: complaints.details,
             importance: complaints.importance,
-            image: complaints.image,
-            id_Buildings: complaints.id_Buildings,
-            id_Users: complaints.id_Users,
+            id_Users: id,
 
-        };
-        dispatch(createComplaints(complaintsSend));
+        });
+        const formData = new FormData();
+        formData.append('image', complaints.image);
+        formData.append(
+            'body',complaintsSend)
+
+        e.preventDefault();
+
+        dispatch(createComplaints(formData ));
+        swal("Reclamo enviado correctamente!, pronto estaremos en contacto.", "Gracias!", "success")
         setComplaints(complaints)
-        alert('anduvo')
 
     };
 
@@ -158,33 +265,35 @@ const UserAddComplaints = () => {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <div className={styles.contUpdateB}>
-                    <h1 className='h1BuildingAddForm'>Crear edificio:</h1>
-                    <form action="" className={styles.formCont}>
-                        <div className={styles.form}>
-                            <div className={styles.item}>
+                <div className={classes.contUpdateB}>
+                    <h1 className='h1BuildingAddForm'>Crear Reclamo:</h1>
+                    <form action="" className={classes.formCont}>
+                        <div className={classes.form}>
+                            <div className={classes.item}>
                                 <Domain fontSize="large" />
+
                                 <TextField
                                     name="name"
                                     label="Nombre del edificio"
-                                    value={complaints.id_Buildings}
+                                    value={complaints.name}
                                     variant="outlined"
 
                                 />
+
                             </div>
-                            <div className={styles.item}>
+                            <div className={classes.item}>
                                 <Domain fontSize="large" />
                                 <TextField
                                     name="apartment"
-                                    label="Numero del edificio"
+                                    label="Departamento"
                                     value={complaints.apartment}
                                     variant="outlined"
 
                                 />
                             </div>
-                            <div className={styles.item}>
-                                <Receipt fontSize="large" />
-
+                            <div className={classes.item}>
+                               
+                                <CalendarTodayIcon/>
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <KeyboardDatePicker
                                         name="date"
@@ -205,8 +314,8 @@ const UserAddComplaints = () => {
                             </div>
 
 
-                            <div className={styles.item}>
-                                <Receipt fontSize="large" />
+                            <div className={classes.item}>
+                                <SubjectIcon/>
                                 <TextField
                                     name="subject"
                                     label="Asunto"
@@ -215,7 +324,7 @@ const UserAddComplaints = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className={styles.item}>
+                            <div className={classes.item}>
                                 <Receipt fontSize="large" />
                                 <TextField
                                     name="details"
@@ -225,18 +334,21 @@ const UserAddComplaints = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className={styles.item}>
+                            <div className={classes.item}>
                                 <Receipt fontSize="large" />
                                 <TextField
+                                className={classes.select}
+                                    select
                                     name="importance"
                                     label="Importancia"
                                     value={complaints.importance}
                                     variant="outlined"
+                                    defaultValue='Importancia'
                                     onChange={e => handleChange(e, "importance")}>
                                     {
-                                        currencies?.map((option) => {
+                                        currencies && currencies?.map((option) => {
                                             return (
-                                                <option key={option.id} value={option.id}>
+                                                <option key={option.value} value={option.value}  defaultValue='Importancia'>
                                                     {option.value}
                                                 </option>
                                             );
@@ -247,35 +359,12 @@ const UserAddComplaints = () => {
                                 </TextField>
 
                             </div>
-                            {/*  <div className={styles.item}>
-                                <ListAlt fontSize="large" />
-                                <TextField
-                                    error={error.floor}
-                                    helperText={warning.floor}
-                                    name="floor"
-                                    label="Pisos"
-                                    value={buildingData.floor}
-                                    variant="outlined"
-                                    onChange={handleChange}
-                                />
-                            </div> */}
-                            {/*  <div className={styles.item}>
-                                <MeetingRoom fontSize="large" />
-                                <TextField
-                                    error={error.cant_apartments}
-                                    helperText={warning.cant_apartments}
-                                    name="cant_apartments"
-                                    label="Departamentos"
-                                    value={buildingData.cant_apartments}
-                                    variant="outlined"
-                                    onChange={handleChange}
-                                />
-                            </div> */}
+
                         </div>
-                        <div className={styles.right}>
-                            <div className={styles.item}>
+                        <div className={classes.right}>
+                            <div className={classes.item}>
                                 <img
-                                    className={styles.img}
+                                    className={classes.img}
                                     alt="Building pic"
                                     src={renderImg()}
                                 />
@@ -291,7 +380,7 @@ const UserAddComplaints = () => {
                                     />
                                 </IconButton>
                             </div>
-                            <div className={styles.guardarCambios}>
+                            <div className={classes.guardarCambios}>
                                 <Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
                                     Confirmar
                                 </Button>

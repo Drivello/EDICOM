@@ -32,6 +32,7 @@ import CreateBookings from '../Amenities/CreateBooking/CreateBookings';
 import AmenitieDetail from '../Amenities/AmenitieDetail/AmenitieDetail';
 import ComplaintsList from '../Complaints/ComplaintsList';
 import ServicesList from '../Services/Admin/ServicesList';
+import ServiceFormAdmin from '../Services/Admin/ServiceFormAdmin';
 
 function App() {
 	return (
@@ -73,6 +74,7 @@ function App() {
 
 				{/*--------------------Services--------------------------------------------------*/}
 				<Route exact path="/services" component={ServicesList} />
+				<Route exact path="/services/form" component={ServiceFormAdmin} />
 				{/* ----------------------------User----------------------------------- */}
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />

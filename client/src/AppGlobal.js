@@ -11,6 +11,7 @@ import { getUser } from './redux/users/userActions';
 
 const AppGlobal = () => {
 	const userId = useSelector(state => state.loggingReducer.userId);
+	
 	// const { authData } = useSelector(state => {
 	// 	return {
 	// 		authData: state.loggingReducer.authData,
@@ -18,6 +19,8 @@ const AppGlobal = () => {
 	// });
 
 	const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
+	
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {

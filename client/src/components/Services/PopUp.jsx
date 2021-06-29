@@ -10,17 +10,17 @@ import './Services.css';
 
 export default function PopUp(props) {
 
-    const userInfo = useSelector(state => state.loggingReducer.userId);
+    //const userInfo = useSelector(state => state.loggingReducer.userId);
     const dispatch = useDispatch();
     const [rating,setRating] = useState(null);
     const [hover, setHover] = useState(null);
-
+    const userInfo = {id: 1}
     const current = JSON.parse(localStorage.getItem('profile')).token;
     const Rating = props.service.ratings.find(e => e.userId === userInfo.id)
 
-    useEffect(() => {
+    /* useEffect(() => {
         dispatch(getIdUser(current))
-    }, [dispatch])
+    }, [dispatch]) */
 
     const handleScore = () => {
         dispatch(addRating({rating: rating, serviceId: props.service.id, userId: userInfo.id}))
