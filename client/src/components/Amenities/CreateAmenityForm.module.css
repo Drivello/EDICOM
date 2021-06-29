@@ -8,3 +8,7 @@
 .form {
 	display: flex;
 }
+
+.button{
+	margin-right: 50px;
+}

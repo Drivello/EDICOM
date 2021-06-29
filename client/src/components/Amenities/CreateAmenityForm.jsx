@@ -292,18 +292,18 @@ const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit, errorIn
 							justify="center"
 							alignItems="center"
 						>
-							<Grid className={styles.item}>	
+							<Grid className={styles.button}>	
 								<Button
 									style={{fontWeight: 1000, marginTop: 50}}
 									color="secondary"
-									onClick={handleSubmit}
 									variant="contained"
+									onClick={handleSubmit}
 								>
 									Agregar Amenity
 								</Button>
 							</Grid>
 
-							<Grid className={styles.item}>
+							<Grid className={styles.button}>
 								<Link to={'./amenities'}>
 									<Button
 										style={{fontWeight: 1000, marginTop: 50}}
