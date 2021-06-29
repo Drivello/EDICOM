@@ -28,7 +28,7 @@ const AppGlobal = () => {
 			dispatch(getUser(currentUser.id));			//carga en userReducer.userDetail los datos del usuario logueado
 			// dispatch(getIdUser())
 		}
-    }, [currentUser])
+    }, [currentUser]);
 
 	
 	return (

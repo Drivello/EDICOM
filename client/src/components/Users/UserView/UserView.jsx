@@ -11,17 +11,18 @@ import UserComplaintDetail from './UserComplaints/UserComplaintDetail';
 import { getUser } from '../../../redux/users/userActions';
 import { getApartmentById } from '../../../redux/apartments/apartmentsActions';
 import { getComplaintsByUser } from '../../../redux/complaints/complaintsActions';
+import styles from './UserView.css';
 
 const UserView = (props) => {
-    const userInfo = useSelector(state => state.loggingReducer.userId);
+    const currentUser = JSON.parse(localStorage.getItem('profile'));
     const userDetail = useSelector(state => state.userReducer.userDetail);
     const apartmentDetail = useSelector(state => state.apartmentReducer.apartmentDetail);
     const userComplaints = useSelector(state => state.complaintsReducer.userComplaints);
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if(userInfo && userInfo.id) dispatch(getComplaintsByUser(userInfo.id))
-    }, [userInfo]);
+        if(currentUser && currentUser.id) dispatch(getComplaintsByUser(currentUser.id))
+    }, []);
 
     useEffect(() => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
@@ -34,23 +35,26 @@ const UserView = (props) => {
             <Container style={{display: "flex", flexDirection: "column", justifyContent: "center",  marginLeft: "35px"}}>
                 <div className="componentHeader">
                     <div className="apartmentHeading">
-                        <h1>{apartmentDetail && apartmentDetail.number_apartment}</h1>
-                        <ul>
-                            <li>Nº Catastral: {apartmentDetail && apartmentDetail.cata_apartment}</li>
-                            <li>Superficie: {apartmentDetail && apartmentDetail.mt2} m2</li>
+                        <h1 className="apartmentNumber">{apartmentDetail && apartmentDetail.number_apartment}</h1>
+                        <ul className="apartmentInfo">
+                            <li><b>Nº Catastral:</b> {apartmentDetail && apartmentDetail.cata_apartment}</li>
+                            <li><b>Superficie:</b> {apartmentDetail && apartmentDetail.mt2} m2</li>
                         </ul>
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path={`/public/:id`}>
-                        <UserHome user={userDetail && userDetail} />
-                    </Route>
-                    <Route exact path={`/public/:id/complaints`}>
-                        <UserComplaints complaints={userComplaints && userComplaints} />
-                    </Route>
-                    <Route exact path={`/public/:id/complaints`}>
-                        <UserComplaints complaints={userComplaints && userComplaints} />
-                    </Route>
+                    <Route 
+                        exact path={`/public/:id`}
+                        render={() => <UserHome user={userDetail && userDetail} />}
+                    />
+                    <Route 
+                        exact path={`/public/:id/complaints`}
+                        render={() => <UserComplaints complaints={userComplaints && userComplaints} />}
+                    />
+                    <Route 
+                        exact path={`/public/:id/complaints`}
+                        render={() => <UserComplaints complaints={userComplaints && userComplaints} />}
+                    />
                     <Route
                         path='/public/:id/complaintDetail/:id'
                         render={({match}) => <UserComplaintDetail match={match} complaints={userComplaints && userComplaints} />}
