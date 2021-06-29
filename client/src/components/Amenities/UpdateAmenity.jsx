@@ -42,10 +42,13 @@ export function UpdateAmenity() {
 	const reg = new RegExp('^[0-9]+$'); //just numbers test
 
 	const [input, setInput] = useState({
+		amenity_type: "",
+		quantity: "",
+		capacity: "",
+		amenity_detail: ""
 	})
 
 
-	console.log('amenityDetail', amenityDetail)
 
 	// const [input, setInput] = useState({
 	// 	id: id,
@@ -62,7 +65,8 @@ export function UpdateAmenity() {
 	}, [dispatch])
 
 	useEffect(() => {
-		if (amenityDetail !== undefined) {
+		console.log('amenityDetail', amenityDetail)
+		if (amenityDetail !== undefined && Array.isArray(amenityDetail)) {
 			amenityDetail.filter(amenity => amenity.id === parseInt(id))
 			setInput({
 				id,
@@ -128,11 +132,14 @@ export function UpdateAmenity() {
 	}
 
 	const handleSubmit = e => {
-		dispatch(updateAmenity(input));
-		swal('Amenity actualizado exitosamente', "Gracias!", "success");
-		//add redirect
-		//history.push('/userDetail')
-		history.goBack()
+
+		if(input.amenity_type !== "" && input.quantity !== "" && input.capacity !== ""){
+			dispatch(updateAmenity(input));
+			swal('Amenity actualizado exitosamente', "Gracias!", "success");
+			history.goBack()
+		}else{
+			swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
+		}
 	};
 
 	const deleteHandler = () => {
