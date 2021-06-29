@@ -6,6 +6,7 @@ import theme from '../themeStyle';
 import styles from "../Spending/board.module.css"         //AGREGAR UN CSS PROPIO DE ESTE COMPONENTE!
 import ExpensesDetail from './ExpensesDetail'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, FormControl, InputLabel, Select } from "@material-ui/core";
+import { getBuildings } from "../../redux/building/buildingActions";
 
 
 
@@ -39,9 +40,11 @@ export default function ExpensesTable() {
    const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
    const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
+   const statusChanged = useSelector((state) => state.reducerExpenses.statusChanged);
    
    useEffect(() => {
       dispatch(getExpenses());
+      dispatch(getBuildings());
    }, [dispatch]);
    
 
@@ -144,12 +147,12 @@ export default function ExpensesTable() {
                <TableCell align="right">Nº&nbsp;Catastral</TableCell>
                <TableCell align="right">Nº&nbsp;Dpto</TableCell>
                <TableCell align="right">Mt2</TableCell>
-               <TableCell align="right">State</TableCell>
+               {/* <TableCell align="right">State</TableCell> */}
             </TableRow>
          </TableHead>
          <TableBody>
             {rows.map((apartment) => (
-            <ExpensesDetail key={apartment.id} row={apartment} />
+            <ExpensesDetail key={apartment.id} row={apartment} statusChanged={statusChanged}/>
             ))}
          </TableBody>
       </Table>

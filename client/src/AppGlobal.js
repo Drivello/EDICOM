@@ -22,12 +22,12 @@ const AppGlobal = () => {
 
 	useEffect(() => {
 		if (currentUser && currentUser.id) {
-			dispatch(getUser(currentUser.id));
+			dispatch(getUser(currentUser.id));			//carga en userReducer.userDetail los datos del usuario logueado
+			// dispatch(getIdUser())
 		}
     }, [currentUser])
-																																																
 
-
+	
 	return (
 		<BrowserRouter>
 
@@ -45,7 +45,7 @@ const AppGlobal = () => {
 						( <Logging { ...props } /> )
 						:
 						(
-							currentUser.name === "the admin" 
+							currentUser.name === "the admin" 		//Cambiar esto para hacer una validación robusta
 							?
 							( <Redirect to="/" /> )
 							:

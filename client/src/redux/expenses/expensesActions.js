@@ -5,6 +5,7 @@ export const FILTER_EXPENSES = 'FILTER_EXPENSES';
 export const POST_EXPENSES = 'POST_EXPENSES';
 export const INVOICED_EXPENSES = 'INVOICED_EXPENSES';
 export const GET_EXPENSES_APARTMENT_NUMBER = 'GET_EXPENSES_APARTMENT_NUMBER';
+export const CHANGE_STATUS = 'CHANGE_STATUS';
 
 
 export const getExpenses = () =>  {
@@ -56,6 +57,18 @@ export const getExpensesApartmentNumber = (number_apartment) =>  {
       .then(res => {
         dispatch({
           type: GET_EXPENSES_APARTMENT_NUMBER,
+          payload: res.data
+        })
+      })
+  }
+}
+
+export const changeStatus = (id) =>  {
+  return function (dispatch) {
+    return axios.put(`http://localhost:3001/expenses/changeStatus/${id}`)
+      .then(res => {
+        dispatch({
+          type: CHANGE_STATUS,
           payload: res.data
         })
       })

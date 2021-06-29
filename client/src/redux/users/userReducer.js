@@ -10,7 +10,7 @@ import {
 
 const initialState = {
 	users: [],
-	userDetail: undefined,
+	userDetail: undefined,				//se le está cargando los datos de un user agregandole el idBuilding
 };
 
 const userReducer = (state = initialState, action) => {
