@@ -1,8 +1,9 @@
 const { Complaints, User } = require('../../db');
 
 module.exports = async (req, res, next) => {
-    const id = req.params.id;
 	try{
+		const id = req.params.id;
+		console.log("sadasdfasdfasdfsdfasdfasdfasdfs", id)
 		let data = await Complaints.findAll({
 			include: [{
                 model: User,

@@ -7,6 +7,8 @@ export const DELETE_SERVICE = 'DELETE_SERVICE';
 export const FIND_SERVICE = 'FIND_SERVICE';
 export const GET_SERVICES_BUILDING = 'GET_SERVICES_BUILDING';
 export const FILTER_SERVICES = 'FILTER_SERVICES';
+export const SORT_SERVICES = 'SORT_SERVICES';
+export const FILTER_SERVICES_ADMIN = 'FILTER_SERVICES_ADMIN';
 
 export function getServices() {
     return function(dispatch) {
@@ -51,6 +53,20 @@ export function getServicesBuilding(id) {
 export function filterServices(data) {
     return{
         type: FILTER_SERVICES,
+        payload: data
+    }
+}
+
+export function filterServicesAdmin(data) {
+    return{
+        type: FILTER_SERVICES_ADMIN,
+        payload: data
+    }
+}
+
+export function sortServices(data) {
+    return{
+        type: SORT_SERVICES,
         payload: data
     }
 }
