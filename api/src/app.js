@@ -25,6 +25,8 @@ server.use((req, res, next) => {
   next();
 });
 
+// Configuración del token de mercado pago para el cobrador
+
 
 server.use('/', routes);
 

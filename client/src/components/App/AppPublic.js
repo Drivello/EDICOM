@@ -15,6 +15,7 @@ import AlertsUser from '../Users/UserView/Alerts/AlertsUser';
 import Subscriptions from '../Users/UserView/Alerts/Subscriptions';
 import SearchBar from '../Services/SearchBar';
 import ServiceContainer from '../Services/ServiceContainer';
+import UserExpenses from '../Expenses/UserExpenses';
 import UserAddComplaints from '../Users/UserView/UserComplaints/UserAddComplaints';
 
 

@@ -13,11 +13,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import './SidebarUsers.css';
 import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Badge from '@material-ui/core/Badge';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, getIdUser } from '../../redux/logging/loggingActions';
-import NotificationBar from "../NotificationBar/NotificationBar"
 import { getComplaints, putSeenComplaint } from "../../redux/complaints/complaintsActions";
 import { getUser } from '../../redux/users/userActions';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -25,14 +23,12 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 export default function Sidebar(props) {
 
-    const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
     const currentUserData = useSelector(state => state.userReducer.userDetail);
     const userInfo = useSelector(state => state.loggingReducer.userId);
     const dispatch = useDispatch();
     const classes = useStyles(theme);
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [noti, setNoti] = useState(false);
     const history = useHistory();
     const [notiNumb, setNotiNumb] = useState(0);
     const [userToken, setUserToken] = useState('');
@@ -51,14 +47,8 @@ export default function Sidebar(props) {
     // useEffect(() => {
     //     dispatch(getIdUser(userToken))
     // }, [userToken])
+    
 
-    useEffect(() => {
-        dispatch(getComplaints())
-    }, [dispatch])
-
-    useEffect(() => {
-        setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
-    }, [Notifications])
 
     const { authData } = useSelector(state => {
         return {
@@ -96,14 +86,7 @@ export default function Sidebar(props) {
         window.location.href = 'http://localhost:3000/logging'
     }
 
-    const notiHandler = () => {
-        setNoti(!noti)
-        /*     if(notiNumb !== 0) setNotiNumb(notiNumb - 4); */
-        let notis = Notifications?.filter(noti => { if (noti.seen === false) return true });
-        notis = notis.slice(notis.length - 4).map(noti => dispatch(putSeenComplaint(noti.id)))
-        dispatch(getComplaints())
-    }
-
+    
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
@@ -201,7 +184,7 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${currentUser.id}/myExpenses`}>
+                        <Link to={`/public/expenses/${userInfo && userInfo.apartment}/${userInfo && userInfo.aparment_name}`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />

@@ -30,7 +30,8 @@ import ResetPassword from '../Logging/resetPassword';
 import RegisterAdmin from '../Admin/RegisterAdmin';
 import CreateBookings from '../Amenities/CreateBooking/CreateBookings';
 import AmenitieDetail from '../Amenities/AmenitieDetail/AmenitieDetail';
-import ComplaintsList from "../Complaints/ComplaintsList"
+import ComplaintsList from "../Complaints/ComplaintsList";
+import ServicesList from '../Services/Admin/ServicesList';
 
 
 
@@ -72,6 +73,8 @@ function App() {
 					render={({match}) => <Form match={match} />}
 				/>
 
+				{/*--------------------Services--------------------------------------------------*/}
+				<Route exact path="/services" component={ServicesList} />
 				{/* ----------------------------User----------------------------------- */}
 				<Route path="/userCreate" component={CreateUser} />
 				<Route path="/userDetail" component={UserList} />
