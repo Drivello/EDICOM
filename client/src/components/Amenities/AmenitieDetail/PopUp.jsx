@@ -14,23 +14,6 @@ export default function PopUp(props) {
     const dispatch = useDispatch();
     const setPop = props.setPop
 
-    /*  const buildings = useSelector(state => state.buildingReducer.allBuildings);
-     const dispatch = useDispatch();
-     const setPop = props.setPop
- 
-     const handleOpen = () => {
-         dispatch(putStateComplaint(props.alertProps.id, "opened"))
-         dispatch(getComplaints())
-         setPop(false)
-     }
- 
-     const handleClose = () => {
-         dispatch(putStateComplaint(props.alertProps.id, "closed"))
-         dispatch(getComplaints())
-         setPop(false)
-     }
-  */
-
     const allBookings = useSelector(state => state.bookingReducer.bookingDetail)
 
     const freeBooking = async (event) => {

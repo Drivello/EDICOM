@@ -10,7 +10,7 @@ import {
    Select,
 } from "@material-ui/core";
 import { getAmenityById } from "../../../redux/amenities/amenitiesActions";
-import { getBookingByAmenity, filterBookingsByGroup} from "../../../redux/booking/bookingActions";
+import { getBookingByAmenity, filterBookingsByGroup } from "../../../redux/booking/bookingActions";
 import { DataGrid } from "@material-ui/data-grid";
 import {
    MuiPickersUtilsProvider,
@@ -39,7 +39,7 @@ function BookingsTable(props) {
 
    let complaints = [];
 
-   if(!filter){
+   if (!filter) {
       complaints = allComplaints?.map((booking) => {
          let stateSpanish;
          if (booking.status === "free") stateSpanish = "Libre";
@@ -52,7 +52,7 @@ function BookingsTable(props) {
             state: stateSpanish,
          };
       });
-   }else{
+   } else {
       console.log(bookingFilter)
 
       for (const groupBooking in bookingFilter) {
@@ -70,13 +70,13 @@ function BookingsTable(props) {
       {
          field: "state", headerName: "Estado", flex: 1,
          renderCell: params => {
-            if(!filter){
+            if (!filter) {
                return (
                   <Link onClick={(e) => handleEventClick(e, params.row)}>
                      {params.row.state}
                   </Link>
                );
-            }else{
+            } else {
                console.log(bookingFilter[params.row.date], "start", params.row.start)
                return (
                   <Link onClick={(e) => handleEventClickGroup(e, params.row.start)}>
@@ -90,7 +90,7 @@ function BookingsTable(props) {
 
    const [displayPopUp, setDisplayPopUp] = useState(false);
    const [alertProps, setAlertProps] = useState({});
-   const [inputFilter, sertInputFilter] = useState("All"); 
+   const [inputFilter, sertInputFilter] = useState("All");
 
    const handleEventClick = (clickInfo, data) => {
       setAlertProps({
@@ -108,7 +108,7 @@ function BookingsTable(props) {
    const handleEventClickGroup = (clickInfo, date) => {
       const data = bookingFilter[date]
       console.log(data, "ESTA ES LA DATA", date)
-      
+
       setAlertProps({
          id: data,
          amenity: props.amenitieId
@@ -130,25 +130,15 @@ function BookingsTable(props) {
 
    async function handleSelectFilter(e) {
 
-      /* var buildingId = ""
-
-      if(e.target.value!=="All"){
-         buildingId = allBuildings.filter(building => building.name === e.target.value)[0].id
-      }
-      else{
-         buildingId = "All"
-      }
-      setBuilding({ ...building, [e.target.name]: buildingId }) */
-      // dispatch(filterExpenses(building))
 
       console.log(e.target.value)
 
-      if(e.target.value === "All"){
+      if (e.target.value === "All") {
          setFilter(false);
          dispatch(getBookingByAmenity(props.amenitieId))
          sertInputFilter("All");
 
-      }else if(e.target.value === "Hour"){
+      } else if (e.target.value === "Hour") {
          setFilter(true);
          dispatch(getBookingByAmenity(props.amenitieId))
          sertInputFilter("Hour")
@@ -179,12 +169,12 @@ function BookingsTable(props) {
          </Select>
          <div style={{ display: "flex", height: "100%" }}>
             <DataGrid sortModel={[
-                           {
-                             field: 'start',
-                             sort: 'desc',
-                           },
-                         ]}
-                         rows={complaints} columns={columns} pageSize={5} />
+               {
+                  field: 'start',
+                  sort: 'desc',
+               },
+            ]}
+               rows={complaints} columns={columns} pageSize={5} />
          </div>
       </div>
    );
