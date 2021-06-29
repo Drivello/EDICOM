@@ -1,3 +1,9 @@
+.contExtAllServiceContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
 .contExtCardsandIconsPaginate{
     display: flex;
     flex-direction: row;
@@ -10,8 +16,8 @@
     flex-direction: row;
     flex-wrap: wrap; 
     justify-content: space-between;
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     width: 55%;
 }
 
@@ -53,4 +59,14 @@
 }
 .GradeIcon{
     color: #00ff7f;
+}
+.contExtSearchBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 450px;
+}
+.radioBtnPopUp{
+    display: none;
 }

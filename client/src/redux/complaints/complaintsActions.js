@@ -4,7 +4,8 @@ import {
     GET_ALL_COMPLAINTS_URL, 
     PUT_SEEN_COMPLAINT_URL, 
     PUT_STATE_COMPLAINT_URL, 
-    GET_COMPLAINTS_BY_USER_URL 
+    GET_COMPLAINTS_BY_USER_URL ,
+    ADD_COMPLAINTS
 } from './utils';
 
 export const GET_ALL_COMPLAINTS = 'GET_ALL_COMPLAINTS';
@@ -12,6 +13,7 @@ export const PUT_SEEN_COMPLAINT = 'PUT_SEEN_COMPLAINT';
 export const PUT_STATE_COMPLAINT = 'PUT_STATE_COMPLAINT'; 
 export const FILTER_COMPLAINTS = 'FILTER_COMPLAINTS';
 export const GET_COMPLAINTS_BY_USER = 'GET_COMPLAINTS_BY_USER';
+export const CREATE_COMPLAINTS = 'CREATE_COMPLAINTS';
 
 export function getComplaints() {
     return function(dispatch) {
@@ -95,3 +97,26 @@ export function getComplaintsByUser(id) {
         })
     };
 };
+export function createComplaints(body) {
+    console.log("ENTRE ACTION" , body)
+    return function(dispatch) {
+        console.log("DATA ACTION" , body)
+        return axios.get('http://localhost:3001/complaints/',body)
+        .then(data => {
+            
+            dispatch({
+                type: CREATE_COMPLAINTS,
+                payload: data
+            })
+            
+        })
+        .catch(err => {
+            dispatch({
+                type: CREATE_COMPLAINTS,
+                payload: {
+                    data: "error"
+                }
+            })
+        })
+    }
+}
