@@ -13,15 +13,15 @@ export default function PopUp(props) {
     const dispatch = useDispatch();
     const setPop = props.setPop
 
-    const handleOpen = () => {
-        dispatch(putStateComplaint(props.alertProps.id, "opened"))
-        dispatch(getComplaints())
+    const handleOpen = async () => {
+        await dispatch(putStateComplaint(props.alertProps.id, "opened"))
+        await dispatch(getComplaints())
         setPop(false)
     }
 
-    const handleClose = () => {
-        dispatch(putStateComplaint(props.alertProps.id, "closed"))
-        dispatch(getComplaints())
+    const handleClose = async () => {
+        await dispatch(putStateComplaint(props.alertProps.id, "closed"))
+        await dispatch(getComplaints())
         setPop(false)
     }
 
