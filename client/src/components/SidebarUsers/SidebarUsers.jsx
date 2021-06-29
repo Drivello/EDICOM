@@ -33,22 +33,6 @@ export default function Sidebar(props) {
     const [userToken, setUserToken] = useState('');
     const [userId, setUserId] = useState('');
 
-    // async function getToken() {
-    //     const sessionData = await JSON.parse(localStorage.getItem('profile'))
-    //     const newUserToken = sessionData.token
-    //     setUserToken(newUserToken)
-    //     return newUserToken;
-    // }    
-    // useEffect(() => {
-    //     getToken();
-    // }, [])
-
-    // useEffect(() => {
-    //     dispatch(getIdUser(userToken))
-    // }, [userToken])
-    
-
-
     const { authData } = useSelector(state => {
         return {
             authData: state.loggingReducer.authData,
@@ -190,7 +174,7 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/expenses/${userInfo && userInfo.apartment}/${userInfo && userInfo.aparment_name}`}>
+                        <Link to={`/public/expenses/${currentUserData?.apartmentId}/${currentUserData?.apartment.number_apartment}`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />

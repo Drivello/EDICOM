@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
 		where: {id},
 		include: [{
 			model: Apartment,
-			attributes: ['buildingId']
+			attributes: ['buildingId', 'number_apartment']
 		}]
 	});
 		/* const apartment = await Apartment.findOne({where: {id: user.apartmentId}}); */

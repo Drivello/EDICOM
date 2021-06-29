@@ -28,3 +28,17 @@ export const SPANISH_MONTHS = {
     11: 'Diciembre',
 }
 
+export const ENGLISH_TO_SPANISH_MONTH = {
+    'jan': "Enero",
+    'feb': "Febrero",
+    'mar': "Marzo",
+    'apr': "Abril",
+    'may': "Mayo",
+    'jun': "Junio",
+    'jul': "Julio",
+    'aug': "Agosto",
+    'sep': "Sepiembre",
+    'oct': "Octubre",
+    'nov': "Noviembre",
+    'dec': "Deciembre",
+}

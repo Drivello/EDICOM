@@ -16,12 +16,13 @@ const UserExpenses = (props) => {
     const dispatch = useDispatch();
     const expenses = useSelector(state => state.reducerExpenses.userExpenses);
     const userInfo = useSelector(state => state.loggingReducer.userId);
+    const currentUserData = useSelector(state => state.userReducer.userDetail);
 
     useEffect(() => {
         dispatch(getExpensesApartmentNumber(apartmentNumber))
     }, [dispatch])
 
-    if (userInfo && (userInfo.apartment == (apartmentNumber + ""))) {
+    if (currentUserData && (currentUserData.apartmentId == (apartmentNumber + ""))) {
         return (
             <ThemeProvider theme={theme}>
                 <div className='contExtAlerts'>

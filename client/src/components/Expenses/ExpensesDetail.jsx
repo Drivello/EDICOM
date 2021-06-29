@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import { ENGLISH_TO_SPANISH_MONTH } from "../../utils/constant";
 
 import {
    Box,
+   Button,
    Collapse,
    IconButton,
    Table,
@@ -14,10 +16,14 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { useDispatch, useSelector } from "react-redux";
+import { StatusExpenses } from "./StatusExpenses";
 
 
-export default function Row(props) {
 
+
+export default function ExpensesDetail(props) {
+  
     const useRowStyles = makeStyles({
         root: {
            '& > *': {
@@ -26,7 +32,7 @@ export default function Row(props) {
         },
      });
 
-    const { row } = props;
+    const [ row, setRow ] = useState(props.row);
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
   
@@ -44,7 +50,7 @@ export default function Row(props) {
           <TableCell align="right">{row.cata_apartment}</TableCell>
           <TableCell align="right">{row.number_apartment}</TableCell>
           <TableCell align="right">{row.mt2}</TableCell>
-          <TableCell align="right">{row.state}</TableCell>
+          {/* <TableCell align="right">{row.state}</TableCell> */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -67,11 +73,17 @@ export default function Row(props) {
                     {row.expenses.map((expense) => (
                       <TableRow key={expense.id}>
                           <TableCell component="th" scope="row">
-                            {expense.month}
+                            {ENGLISH_TO_SPANISH_MONTH[expense.month]}
                           </TableCell>
                           <TableCell>{expense.year}</TableCell>
-                          <TableCell align="right">{expense.amount}</TableCell>
-                          <TableCell align="right">{expense.status}</TableCell>
+                          <TableCell align="right">
+                            {new Intl.NumberFormat('es-AR', {currency: 'ARS', style: 'currency'}).format(expense.amount)}
+                          </TableCell>
+                          <TableCell align="right">
+                            <StatusExpenses
+                              expense={expense}
+                            />
+                          </TableCell>
                           {/* <TableCell align="right">
                             {Math.round(expense.amount * row.price * 100) / 100}
                           </TableCell> */}
