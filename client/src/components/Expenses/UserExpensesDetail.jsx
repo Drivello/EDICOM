@@ -71,13 +71,6 @@ function UserExpensesDetail(props) {
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-
-  /* const importanceSelect = complaints.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
-  const buildingSelect = complaints.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
-  const statusSelect = complaints.map(element => element = element.state).filter((value, index, self) => self.indexOf(value) === index);
-
- */
-
   const columns = [
     { field: 'year', headerName: 'Año', flex: 1},
     { field: 'month', headerName: 'Mes', flex: 1 },
@@ -161,51 +154,6 @@ function UserExpensesDetail(props) {
     <ThemeProvider theme={theme}>
     <div style={{ height: 400, width: '100%' }}>
       <div className= {styles.contSelectsComplaintsTable}>
-{/*       <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
-        <FormControl style={{width: '200px'}}>
-            <InputLabel id="demo-controlled-open-select-label">Edificio</InputLabel>
-            <Select name="building" onChange={handleSelect} value={input.building}>
-            <MenuItem value="All">
-              <em>All</em>
-            </MenuItem >
-            
-            {buildingSelect.map((building, index) =>
-              <MenuItem value={building} key={index}>{building}</MenuItem>
-            )}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
-        <FormControl style={{ width: '200px' }}>
-          <InputLabel id="demo-controlled-open-select-label">Importancia</InputLabel>
-          <Select name="importance" onChange={handleSelect} value={input.importance}>
-            <MenuItem value="All">
-              <em>All</em>
-            </MenuItem >
-
-            {importanceSelect.map((importance, index) =>
-              <MenuItem value={importance} key={index}>{importance}</MenuItem>
-            )}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid container justify="flex-start" alignItems="center" className={classes.paper} item xs={6} sm={3}>
-        <FormControl style={{ width: '200px' }}>
-          <InputLabel id="demo-controlled-open-select-label">Estado</InputLabel>
-          <Select name="status" onChange={handleSelect} value={input.status}>
-            <MenuItem value="All">
-              <em>All</em>
-            </MenuItem >
-
-            {statusSelect.map((status, index) =>
-              <MenuItem value={status} key={index}>{status}</MenuItem>
-            )}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginTop: "13px"}} onClick={handleSelectAll}>
-          <img style={{width: "25px", height:"25px"}} src={filter}></img>
-      </Button> */}
       </div>
       <div style={{ display: 'flex', height: '100%' }}>
         <DataGrid rows={complaints} columns={columns} pageSize={5} />

@@ -2,7 +2,7 @@ const {Spendings} = require('../../db.js');
 
 // Path of this controller --> Put(http://localhost:3001/spendings/add)
 module.exports = async (req, res, next) => {
-	let [id, {concept, details, supplier, amount, building}] = req.body;
+	let [id, {concept, details, supplier, amount, building, date}] = req.body;
 
 	// console.log(req.user);
 
@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
 				supplier: supplier,
 				amount: amount,
 				buildingId: building,
+				date: date
 			},
 			{
 				where: {

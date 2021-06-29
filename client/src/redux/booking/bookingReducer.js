@@ -18,7 +18,7 @@ const initialState = {
 	bookingFilter: {},
 	putBooking: [],
 	takedBookings: [],
-	bookingNoToquesMauriQueSeRompeFilter:[]
+	bookingNoToquesMauriQueSeRompeFilter: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -47,14 +47,16 @@ const reducer = (state = initialState, action) => {
 			console.log('El Payload del reducer!!!!!!!!!1', action.payload);
 			return {
 				...state,
-				bookingNoToquesMauriQueSeRompeFilter: state.allBookings.filter(booking => {
-					return (
-						`${new Date(booking.start).getDate()} ${new Date(
-							booking.start
-						).getMonth()}` ===
-						`${action.payload.getDate()} ${action.payload.getMonth()}`
-					);
-				}),
+				bookingNoToquesMauriQueSeRompeFilter: state.allBookings.filter(
+					booking => {
+						return (
+							`${new Date(booking.start).getDate()} ${new Date(
+								booking.start
+							).getMonth()}` ===
+							`${action.payload.getDate()} ${action.payload.getMonth()}`
+						);
+					}
+				),
 			};
 		case TAKE_BOOKING:
 			return {
@@ -64,7 +66,7 @@ const reducer = (state = initialState, action) => {
 		case CANCEL_BOOKING:
 			return {
 				...state,
-				takeBooking: action.payload,
+				takedBookings: action.payload,
 			};
 		case FILTER_BOOKING_GROUP:
 			return {

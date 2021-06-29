@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from 'react-router';
 import {
   postSpending,
   putSpending,
@@ -7,7 +8,7 @@ import {
   totalSpending,
 } from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
@@ -16,7 +17,7 @@ import {
   Receipt,
   ListAlt,
 } from "@material-ui/icons";
-  import {
+import {
   InputLabel,
   NativeSelect,
   Grid,
@@ -30,13 +31,14 @@ import theme from "../themeStyle";
 import swal from "sweetalert";
 import moment from "moment";
 import { numeroPositivo } from "../../utils/validations"
-import {MuiPickersUtilsProvider, KeyboardDatePicker} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { getInvoicedExpenses } from "../../redux/expenses/expensesActions";
 import { MONTHS } from "../../utils/constant";
 
 
 const Form = (props) => {
+  const history = useHistory();
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,6 +63,11 @@ const Form = (props) => {
     };
   });
 
+  console.log("-----------------------------------------------------")
+  console.log("totalSpend", totalSpend)
+  console.log("buildingArray", buildingArray  )
+  console.log("-----------------------------------------------------")
+
   useEffect(() => {
     dispatch(getBuildings());
     dispatch(totalSpending());
@@ -68,53 +75,75 @@ const Form = (props) => {
   }, [dispatch]);
 
   let newSpending = {};  
+  const { id } = useParams()
 
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
       date: moment(new Date(new Date())).format("L"),
-      building: 1,
+      building: "",
       concept: "",
       supplier: "",
       details: "",
       amount: 0,
     };
   } else {
-    newSpending = {
-      date: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].date),
-      // date: moment(new Date(new Date())).format("L"),
-      building: 1,
-      concept: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].concept),
-      supplier: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].supplier),
-      details: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].details),
-      amount: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].amount),
-    };
+    if(totalSpend){
+      newSpending = {
+        date: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].date),
+
+        // date: moment(new Date(new Date())).format("L"),
+        
+        // totalSpend.filter(ts => ts.id === parseInt(id))[0].buildingId
+  
+        building: totalSpend && (totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0] && totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0].buildingId),
+  
+        // building: totalSpend && (totalSpend.filter(
+        //   (elem) => elem.id === parseInt(id)
+        // )[0] && totalSpend.filter(
+        //   (elem) => elem.id === parseInt(id)
+        // )[0].name),
+  
+        concept: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].concept),
+  
+        supplier: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].supplier),
+  
+        details: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].details),
+  
+        amount: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].amount),
+      };
+    }
+    
   }
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
   const [selectedBuild, setSelectedBuild] = useState({ id: [] });
 
-  console.log("spending", spending)
+  console.log('spending', spending)
 
   const handleSelect = (e) => {
     let select = document.getElementById("building");
@@ -140,9 +169,9 @@ const Form = (props) => {
           [e.target.name]: parseInt(e.target.value),
         })
         setError(false)
-      }else {
+      } else {
         setError(true)
-        
+
       }
     } else {
       setSpending({
@@ -154,18 +183,20 @@ const Form = (props) => {
 
   const handleValidationDate = (e) => {
 
+    if(e === null) return false
+
     const date = {
       "month": MONTHS[e.getMonth()],
       "year": e.getFullYear()
     }
 
     for (const elem of invoicedExpenses) {
-      if(date.year === elem.year && date.month === elem.month){
+      if (date.year === elem.year && date.month === elem.month) {
         alert("No se puede cargar gastos en meses donde ya se liquidaron las expensas")
         return;
       }
     }
-    
+
     setSpending({
       ...spending,
       date: e,
@@ -173,35 +204,48 @@ const Form = (props) => {
 
   }
 
-  const handleUpdate = (e) => {
-    console.log("despache")
-    dispatch(putSpending([parseInt(props.match.params.id), spending]));
-    swal("Gasto Editado!", "Gracias!", "success");
-  };
+  const handleUpdate = async (e) => {
+    if( typeof(spending.building) === NaN || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
+      swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
+    } else {
+      await dispatch(putSpending([parseInt(props.match.params.id), spending]));
+      swal("Gasto Editado!", "Gracias!", "success");
+      history.goBack()
+    }
+  }
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     //
-    dispatch(deleteSpending(parseInt(props.match.params.id)));
+    await dispatch(deleteSpending(parseInt(props.match.params.id)));
+    await swal("Gasto Eliminado!", "Gracias!", "success");
+    history.goBack();
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (spending.supplier === "")
-      return alert("El campo proveedor no puede ser vacío");
-    if (spending.amount === "") return alert("El campo concepto no puede ser vacío");
-    dispatch(postSpending(spending));
-    swal("Gasto Agregado!", "Gracias!", "success");
+      return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
+    if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
+    if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
+    await dispatch(postSpending(spending));
+    await dispatch(totalSpending());
+    await swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(
       (newSpending = {
-        date: "",
+        date: moment(new Date(new Date())).format("L"),
         building: "",
         concept: "",
         supplier: "",
         details: "",
         amount: 0,
       })
-    );
-  };
+      );
+      history.goBack();
+    };
+
+    const back = () =>{
+      history.goBack();
+    }
 
 
   return (
@@ -232,7 +276,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
                   <InputLabel htmlFor="select">Edificio</InputLabel>
@@ -243,7 +287,7 @@ const Form = (props) => {
                     value={spending.building}
                   >
                     <option> Edificio </option>
-                      
+
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
                         return (
@@ -264,28 +308,29 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain />
+                  <Domain fontSize="large" />
                 </Grid>
                 <Grid item>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    name="date"
-                    margin="normal"
-                    id="date"
-                    format="dd/MM/yyyy"
-                    value={spending.date}
-                    onChange= { (e) => {
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      variant="outlined"
+                      name="date"
+                      margin="normal"
+                      id="date"
+                      format="dd/MM/yyyy"
+                      value={spending.date}
+                      onChange={(e) => {
                         // handleInputChange(e)
                         handleValidationDate(e)
                       }
-                    }
-                    KeyboardButtonProps={{
+                      }
+                      KeyboardButtonProps={{
                         "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>  
-                
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
+
                   {/* <TextField
                     input
                     type="date"
@@ -309,10 +354,11 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room />
+                  <Room fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
+                    variant="outlined"
                     id="concepto"
                     name="concept"
                     label="Concepto"
@@ -329,10 +375,11 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity />
+                  <LocationCity fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
+                    variant="outlined"
                     id="proveedor"
                     label="Proveedor"
                     value={spending.supplier}
@@ -352,17 +399,22 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Receipt />
+                  <ListAlt fontSize="large" />
                 </Grid>
-                <Grid item>
+                <Grid item style={{ width: "80%" }}>
                   <TextField
-                    id="detalles"
-                    label="Detalles"
-                    defaultValue="Detalles"
-                    value={spending.details}
+                    variant="outlined"
+                    width="80%"
+                    id="monto"
+                    type="number"
+                    label="Monto"
+                    defaultValue="1"
+                    value={spending.amount}
+                    min="1"
                     onChange={handleInputChange}
-                    name="details"
-                    placeholder="details"
+                    name="amount"
+                    error={error ? true : false}
+                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
                   />
                 </Grid>
               </Grid>
@@ -373,21 +425,20 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <ListAlt />
+                  <Receipt fontSize="large" />
                 </Grid>
-                <Grid item style={{ width: "80%" }}>
+                <Grid item>
                   <TextField
-                    width="80%"
-                    id="monto"
-                    type="number"
-                    label="Monto"
-                    defaultValue="1"
-                    value={spending.amount}
-                    min="1"
+                    multiline={true}
+                    rowsMax={4}
+                    variant="outlined"
+                    id="detalles"
+                    label="Detalles"
+                    defaultValue="Detalles"
+                    value={spending.details}
                     onChange={handleInputChange}
-                    name="amount"
-                    error ={error ? true:false}
-                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
+                    name="details"
+                    placeholder="details"
                   />
                 </Grid>
               </Grid>
@@ -432,37 +483,36 @@ const Form = (props) => {
                   </Link>
                 ) : (
                   <>
-                    <Link to={"../../board"}>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                        onClick={handleUpdate}
-                      >
-                        Actualizar
-                      </Button>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        className={classes.margin}
-                        variant="contained"
-                        color="secondary"
-                        type="button"
-                        style={{ fontWeight: 1000 }}
-                        onClick={handleDelete}
-                      >
-                        Eliminar
-                      </Button>
-                    </Link>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={handleUpdate}
+                    >
+                      Actualizar
+                    </Button>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={back}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      className={classes.margin}
+                      variant="contained"
+                      color="secondary"
+                      type="button"
+                      style={{ fontWeight: 1000 }}
+                      onClick={handleDelete}
+                    >
+                      Eliminar
+                    </Button>
                   </>
                 )}
               </Grid>

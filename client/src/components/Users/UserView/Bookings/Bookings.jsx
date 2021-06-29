@@ -8,19 +8,22 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBookings, filterBookings, takeBooking, cancelBooking } from '../../../../redux/booking/bookingActions';
-import {getIdUser} from '../../../../redux/logging/loggingActions'
+import { getIdUser } from '../../../../redux/logging/loggingActions'
+import { getApartmentById } from '../../../../redux/apartments/apartmentsActions'
+import {getUser} from '../../../../redux/users/userActions'
 import DateFnsUtils from "@date-io/date-fns";
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { Grid, Select, MenuItem} from "@material-ui/core";
+import { Grid, Select, MenuItem } from "@material-ui/core";
 import { allAmenities } from '../../../../redux/amenities/amenitiesActions';
 import moment from "moment";
 import swal from "sweetalert";
-
+import 'moment/locale/es';
 
 const useStyles = makeStyles({
     div: {
@@ -82,47 +85,69 @@ const useStyles = makeStyles({
 
         marginTop: '90px',
         marginLeft: '20px'
+    },
+    select: {
+        width: 250,
     }
+
 });
 
 
 const Bookings = () => {
 
     const dispatch = useDispatch();
-    const { allBookings, bookingNoToquesMauriQueSeRompeFilter } = useSelector((state) => state.bookingReducer)
+    const { allBookings, bookingNoToquesMauriQueSeRompeFilter, takedBookings } = useSelector((state) => state.bookingReducer)
     const { Amenities } = useSelector(state => state.amenitiesReducer)
-    const {userId} = useSelector(state => state.loggingReducer)
+    const { userId } = useSelector(state => state.loggingReducer)
+    const { apartmentDetail } = useSelector(state => state.apartmentReducer)
+    const {userDetail} = useSelector(state => state.userReducer)
     const [date, setDate] = useState(new Date(new Date()))
     const [input, setInput] = useState({
         bookingId: '',
-        userId: ''
+        userId: '',
+        bookingStart:''
     })
 
+    // console.log('AMENITIESSSSSS', Amenities)
+    // console.log('all boooooooooking', allBookings)
 
 
     //const date2 = new Date(new Date());  
     /*      const bookings = bookings.map((booking) => {
             return {}
         }); */
+        
     useEffect(() => {
         dispatch(getAllBookings())
         dispatch(allAmenities())
-        dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
+        // dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
     }, [dispatch])
 
-    console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
+    // useEffect(() => {
+    //     dispatch(getUser(userId?.id))
+    // }, [dispatch, userId])
 
-    console.log('USER ID', userId?.id)
+    // useEffect(()=>{
+    //     dispatch(getApartmentById(userDetail?.apartmentId))
+    // },[dispatch, userDetail])
 
-    const idUsuarioLogeado = userId?.id
+    /* console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
 
     
+
+    console.log('apartmentDetailt aca ', apartmentDetail)
+ */
+    console.log('USER ID', userId)  
+    const idUsuarioLogeado = userId?.id
+
+
     const handleChange = (event) => {
         console.log('EVENT ACA', event)
         setInput({
-            bookingId: event.target.value.id,
-            userId: idUsuarioLogeado
+            bookingId: event.target.value,
+            userId: idUsuarioLogeado,
         })
+        console.log(input)
     };
 
 
@@ -130,18 +155,17 @@ const Bookings = () => {
         setDate(date)
         dispatch(filterBookings(date))
     }
-    
-    const handleBookingChange = (e) => {
-        console.log('ESTO VALE CUANDO PIDO UN TURNO', e.target)
-    }
-
 
     const handleBooking = (e) => {
         dispatch(takeBooking(input))
+        setInput({
+            ...input,
+            bookingId: null
+        })
     }
     const handleCancelBooking = (bookingId) => {
-        swal("de re chupete la cancelaste", 'Success', "error")
-        
+        swal("El turno se ha cancelado", '', "error")
+
         dispatch(cancelBooking(bookingId))
     }
     const classes = useStyles();
@@ -185,48 +209,50 @@ const Bookings = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
-
                                 {
                                     Amenities && Amenities?.map((amenity, i) => {
-                                        return(
-                                            <TableRow>
-                                                <TableCell component="th" scope="row">
-                                                    {amenity.amenity_type}
-                                                </TableCell>
+                                        if(apartmentDetail?.buildingId === amenity.buildingId){
+                                            return (
+                                                <TableRow>
+                                                    <TableCell component="th" scope="row">
+                                                        {amenity.amenity_type}
+                                                    </TableCell>
                                                     <TableCell align="right">
-                                                    <Select
-                                                        labelId={amenity.id}
-                                                        id={i}
-                                                        value={amenity}
-                                                        name={ amenity.amenity_type}
-                                                        onChange={handleChange}
-                                                    >
-                                                    <MenuItem value="">
-                                                        <em>{amenity.name}</em>
-                                                    </MenuItem>
-                                                            {bookingNoToquesMauriQueSeRompeFilter && bookingNoToquesMauriQueSeRompeFilter?.map((booking, i)=>{
-                                                                if(amenity.id === booking.amenityId && booking.status === 'free'){
-                                                                    return (
-                                                                        <MenuItem
-                                                                            key={booking.id}
-                                                                            name={ booking}
-                                                                            value={booking}
-                                                                            onChange={() => handleBookingChange()}
-                                                                        >{` ${amenity.id} ${moment(booking.start).format('LT')} ${booking.amenityId}`}
-                                                                        </MenuItem>
-                                                                                                                                              
-                                                                    )
-                                                                }
-                                                            })}
-                                                    </Select>                                                                                                            
-                                                </TableCell>
-
-                                                <TableCell align="right">
-                                                    <Button variant="contained" onClick={handleBooking}>Reservar</Button>
-                                                </TableCell>
-                                            </TableRow> 
-                                        )
+                                                    <InputLabel id="demo-controlled-open-select-label">Seleccionar Turno</InputLabel>
+                                                        <Select
+                                                            className={classes.select}
+                                                            labelId={amenity.amenity_type}
+                                                            value={input.bookingId}
+                                                            name={input.bookingId}
+                                                            onChange={handleChange}
+                                                        >
+                                                        <MenuItem value="">
+                                                            <em>{amenity.name}</em>
+                                                        </MenuItem>
+                                                                {bookingNoToquesMauriQueSeRompeFilter && bookingNoToquesMauriQueSeRompeFilter?.map((booking, i)=>{
+                                                                    console.log("DENTRODELMENUITEM")
+                                                                
+                                                                    if(amenity.id === booking.amenityId && booking.status === 'free'){
+                                                                        return (
+                                                                            <MenuItem
+                                                                                key={booking.id}
+                                                                                name={booking.id}
+                                                                                value={booking.id}
+                                                                            >{` ${amenity.id} ${moment(booking.start).format('LLL')} ${booking.amenityId}`}
+                                                                            </MenuItem>
+                                                                                                                                                  
+                                                                        )
+                                                                    }
+                                                                })}
+                                                        </Select>                                                                                                            
+                                                    </TableCell>
+    
+                                                    <TableCell align="right">
+                                                        <Button variant="contained" onClick={handleBooking}>Reservar</Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        }
                                     })
                                 }
 
@@ -258,7 +284,7 @@ const Bookings = () => {
 
 
 
-{/* allBookings && allBookings?.map((booking, i) => {
+                                {/* allBookings && allBookings?.map((booking, i) => {
                                         if(booking.userId === idUsuarioLogeado) */}
 
 
@@ -286,29 +312,29 @@ const Bookings = () => {
                                 {/* {rows.map((row) => ( */}
                                 {
                                     allBookings && allBookings?.map((booking, i) => {
-                                        if(booking.userId === idUsuarioLogeado){
-                                            return(
+                                        if (booking.userId === idUsuarioLogeado) {
+                                            return (
                                                 <TableRow>
                                                     <TableCell component="th" scope="row">
-                                                        {Amenities && Amenities?.map((amenity)=>{
-                                                           return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
+                                                        {Amenities && Amenities?.map((amenity) => {
+                                                            return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
                                                         })
-                                                        
+
                                                         }
                                                     </TableCell>
                                                     <TableCell align="right">
-                                                     {moment(booking.start).format('LT')}                                                                                                       
+                                                        {moment(booking.start).format('LLL')}
                                                     </TableCell>
                                                     <TableCell align="right">
                                                         <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
                                                     </TableCell>
-                                                </TableRow> 
+                                                </TableRow>
                                             )
                                         }
                                     })
 
-                                    }
-                               {/*  <TableRow >
+                                }
+                                {/*  <TableRow >
                                     <TableCell component="th" scope="row">
                                         Pileta
                                     </TableCell>
@@ -320,7 +346,7 @@ const Bookings = () => {
                         </Table>
                     </TableContainer>
                 </div>
-                </div>
+            </div>
 
             <div className={classes.reglamento}>
                 <h4>Reglamento </h4>

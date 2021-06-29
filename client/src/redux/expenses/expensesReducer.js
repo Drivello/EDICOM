@@ -1,11 +1,12 @@
-import { GET_EXPENSES, FILTER_EXPENSES, POST_EXPENSES, INVOICED_EXPENSES, GET_EXPENSES_APARTMENT_NUMBER } from '../expenses/expensesActions';
+import { GET_EXPENSES, FILTER_EXPENSES, POST_EXPENSES, INVOICED_EXPENSES, GET_EXPENSES_APARTMENT_NUMBER, CHANGE_STATUS } from '../expenses/expensesActions';
 
 
 const initialState = {
     expensesArray: [],
     filterArray: [],
     invoicedExpenses: [],
-    userExpenses:[]
+    userExpenses:[],
+    statusChanged: null
 };
 
 
@@ -41,8 +42,12 @@ const expensesReducer = (state = initialState, action) => {
 
         case INVOICED_EXPENSES:
             return { ...state, invoicedExpenses: action.payload }
+
         case GET_EXPENSES_APARTMENT_NUMBER:
             return { ...state, userExpenses: action.payload }
+
+        case CHANGE_STATUS:
+            return { ...state, statusChanged: action.payload }
 
         default:
             return state

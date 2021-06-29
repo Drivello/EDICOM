@@ -98,7 +98,7 @@ const Board = (props) => {
          date: moment(spending.date).format("DD/MM/YY"),
          concept: spending.concept,
          details: spending.details,
-         amount: spending.amount,
+         amount: `$${spending.amount}`,
       };
    });
 
@@ -302,6 +302,12 @@ const Board = (props) => {
                   <Container style={{ height: 400, width: "100%" }}>
                      <Container style={{ display: "flex", height: "100%", width: "100%"}}>
                         <DataGrid
+                        sortModel={[
+                           {
+                             field: 'date',
+                             sort: 'desc',
+                           },
+                         ]}
                            rows={spendings}
                            columns={columns}
                            pageSize={5}
