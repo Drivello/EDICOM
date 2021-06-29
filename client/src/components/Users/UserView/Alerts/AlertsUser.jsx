@@ -13,7 +13,7 @@ import theme from '../../../themeStyle';
 import './AlertsUser.css';
 
 export default function AlertsUser(props){
-    const id = props.match.params.id;
+    const id = props.id;
     const user_detail = useSelector(state => state.userReducer.userDetail);
     const alerts_building = useSelector(state => state.alertsReducer.findAlertsBuilding);
     const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export default function AlertsUser(props){
         <ThemeProvider theme={theme}>
         <div className="contTitleAlertsUserView">
                     <h1>
-                        Notificaciones
+                        Novedades más recientes
                     </h1>
                     <Link to ={`/public/${id}/subscriptions`}>
                         <Button variant="contained" color ="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:'20px'}}>
@@ -62,7 +62,9 @@ export default function AlertsUser(props){
             <Button variant="contained" color ="secondary" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:"40px"}}>
             <NavigateNextIcon style={{ fontSize: 25, color: "#212121" }}/>
             </Button>
+
             </div>
+            <br/><br/><br/>
         </ThemeProvider>
     )
 }

@@ -1,7 +1,10 @@
 import React from 'react';
+import AlertsUser from '../Alerts/AlertsUser';
+
+
 
 function UserHome({ user }) {
-    console.log('This is User Home')
+    console.log('This is User Home', user)
     return (
         <div>
             <h2>{user && user.name}</h2>
@@ -11,9 +14,8 @@ function UserHome({ user }) {
             </ul>
             [ Boton editar mis datos ]
             <div>
-                <h3>Estas son las novedades más recientes</h3>
                 <div>
-                    ...
+                    <AlertsUser id={ user.id }/>
                 </div>
             </div>
         </div>

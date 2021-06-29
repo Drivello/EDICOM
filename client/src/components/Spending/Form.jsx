@@ -8,7 +8,7 @@ import {
   totalSpending,
 } from "../../redux/spending/spendingActions";
 import { getBuildings } from "../../redux/building/buildingActions";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
@@ -205,7 +205,7 @@ const Form = (props) => {
   }
 
   const handleUpdate = async (e) => {
-    if( typeof(spending.building) === NaN || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
+    if( (spending.building) === "Edificio" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
       swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
     } else {
       await dispatch(putSpending([parseInt(props.match.params.id), spending]));
@@ -286,7 +286,10 @@ const Form = (props) => {
                     id="building"
                     value={spending.building}
                   >
-                    <option> Edificio </option>
+                    <option
+                      disabled
+                      selected
+                    > Edificio </option>
 
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
