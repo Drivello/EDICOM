@@ -28,13 +28,15 @@ function AppPublic() {
 				<Route exact path="/public/spendings/board" component={ApartmentBoard} />
 				<Route path="/public" component={SidebarUsers} />
 				<Route path="/public" component={UserView} />
-				<Route exact path="/public/:id/alerts" component={AlertsUser}/>
-				<Route exact path="/public/:id/calendar" component={CalendarUser}/>
-				<Route exact path="/public/:id/subscriptions" component={Subscriptions}/>
-				<Route exact path="/public/services" component={SearchBar}/>
-				<Route exact path="/public/contservices/:id" component={ServiceContainer}/>
-				{/* <Route exact path="/public/AddComplaints/:id" component={UserAddComplaints}/> */}
-
+				<Route exact path="/public/:id/alerts" component={AlertsUser} />
+				<Route exact path="/public/:id/calendar" component={CalendarUser} />
+				<Route exact path="/public/:id/subscriptions" component={Subscriptions} />
+				<Route exact path="/public/services" component={SearchBar} />
+				<Route exact path="/public/contservices/:id" component={ServiceContainer} />
+				<Route
+					exact path="/public/AddComplaints/:id"
+					render={({ match }) => <UserAddComplaints match={match} />}
+				/>
 			</BrowserRouter>
 		</Container>
 	);
