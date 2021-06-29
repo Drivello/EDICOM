@@ -184,9 +184,11 @@ const Form = (props) => {
     }
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     //
-    dispatch(deleteSpending(parseInt(props.match.params.id)));
+    await dispatch(deleteSpending(parseInt(props.match.params.id)));
+    await swal("Gasto Eliminado!", "Gracias!", "success");
+    history.goBack();
   };
 
   const handleAdd = async (e) => {
@@ -195,7 +197,8 @@ const Form = (props) => {
       return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
     if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
     if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    await dispatch(postSpending(spending))
+    await dispatch(postSpending(spending));
+    await dispatch(totalSpending());
     await swal("Gasto Agregado!", "Gracias!", "success");
     setSpending(
       (newSpending = {
@@ -209,6 +212,10 @@ const Form = (props) => {
       );
       history.goBack();
     };
+
+    const back = () =>{
+      history.goBack();
+    }
 
 
   return (
@@ -462,6 +469,7 @@ const Form = (props) => {
                       color="secondary"
                       type="button"
                       style={{ fontWeight: 1000 }}
+                      onClick={back}
                     >
                       Cancel
                     </Button>
