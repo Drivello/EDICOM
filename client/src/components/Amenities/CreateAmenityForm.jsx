@@ -36,7 +36,9 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit}) => {
+const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit, errorIn, setError, setHelperText,  helperTextIn}) => {
+	const error = errorIn;
+	const helperText = helperTextIn;
 	const {allApartments} = useSelector(state => state.apartmentReducer);
 	const reg = new RegExp('^[0-9]+$'); //just numbers test
 
@@ -44,21 +46,6 @@ const CreateAmenityForm = ({input, setInput, allBuildings, handleSubmit}) => {
 
 	const classes = useStyles();
 	const [buildingOpen, setBuildingOpen] = useState(false);
-
-	const [error, setError] = useState({
-		//Control the error red border of the inputs
-		amenity_type: false,
-		quantity: false,
-		capacity: false,
-		amenity_detail: false,
-	});
-	const [helperText, setHelperText] = useState({
-		//Control the warning message
-		amenity_type: 'Ingrese un tipo de amenity',
-		quantity: 'Ingrese la cantidad',
-		capacity: 'Cuantas personas pueden usarlo',
-		amenity_detail: 'Detalles del amenitie',
-	});
 
 	useEffect(() => {
 		Validate('amenity_type');
