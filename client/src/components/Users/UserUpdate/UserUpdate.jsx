@@ -45,7 +45,6 @@ export function UserUpdate() {
                 id: id,
                 name : userDetail.name,
                 email : userDetail.email,
-                password : userDetail.password,
                 contact : userDetail.contact,
                 isDeleted : userDetail.isDeleted
             })
@@ -64,14 +63,12 @@ export function UserUpdate() {
     const [error, setError] = useState({//Control the error red border of the inputs
 		name: false,
         email: false,
-		password: false,
 		contact: false,
         isDeleted:false
     })
 	const [helperText, setHelperText] = useState({//Control the warning message
 		name: "Ingrese un Nombre",
         email: "Ingrese un Correo",
-        password: "Ingrese un Password",
 		contact: "Numero de Telefono",
         isDeleted:"Ingrese un is deleted"
     })
@@ -85,13 +82,38 @@ export function UserUpdate() {
         })
     }
 
-    const handleSubmit = e => {
-		dispatch(updateUser(input));
-        swal('Usuario actualizado exitosamente', "Gracias!", "success");
+	const handleSubmit = e => {
+		if (input.name !== "" && input.email !== "" && input.contact !== "") {
+			setError({
+				name: false,
+				email: false,
+				contact: false,
+				isDeleted: false
+			})
+			let body = {
+				id: input.id,
+				name: input.name,
+				email: input.email,
+				password: input.password,
+				contact: input.contact,
+				isDeleted: input.isDeleted
+
+			}
+			dispatch(updateUser(body));
+		swal('Usuario actualizado exitosamente', "Gracias!", "success");
 		//add redirect
 		//history.push('/userDetail')
 		history.goBack()
-	};
+		
+		} else {
+			if (input.name === "") setError({ ...error, name: true });
+            if (input.email === "") setError({ ...error, email: true });
+            if (input.contact === "") setError({ ...error, contact: true });
+            swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
+		
+		}
+		
+	} 
 
     const handleRadio = function (e) {
         setInput({
@@ -196,22 +218,6 @@ export function UserUpdate() {
 								label="Correo" 
 								name='email'
 								value={input.email || ''}
-								onChange={handleInputChange}
-							/>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} alignItems="center" justify="center">
-                        <Grid item>
-							<VpnKey />
-                        </Grid>
-                        <Grid item>
-                            <TextField
-								error={error["password"]}
-								helperText={[helperText["password"]]}  
-								id="password" 
-								label="Contraseña" 
-								name='password'
-								value={input.password || ''}
 								onChange={handleInputChange}
 							/>
                         </Grid>

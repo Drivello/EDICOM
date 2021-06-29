@@ -108,35 +108,36 @@ const Bookings = () => {
         bookingStart:''
     })
 
-    console.log('AMENITIESSSSSS', Amenities)
-    console.log('all boooooooooking', allBookings)
+    // console.log('AMENITIESSSSSS', Amenities)
+    // console.log('all boooooooooking', allBookings)
 
 
     //const date2 = new Date(new Date());  
     /*      const bookings = bookings.map((booking) => {
             return {}
         }); */
+        
     useEffect(() => {
         dispatch(getAllBookings())
         dispatch(allAmenities())
-        dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
-    }, [dispatch, takedBookings])
+        // dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
+    }, [dispatch])
 
-    useEffect(() => {
-        dispatch(getUser(userId?.id))
-    }, [dispatch, userId])
+    // useEffect(() => {
+    //     dispatch(getUser(userId?.id))
+    // }, [dispatch, userId])
 
-    useEffect(()=>{
-        dispatch(getApartmentById(userDetail?.apartmentId))
-    },[dispatch, userDetail])
+    // useEffect(()=>{
+    //     dispatch(getApartmentById(userDetail?.apartmentId))
+    // },[dispatch, userDetail])
 
-    console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
+    /* console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
 
-    console.log('USER ID', userId)
+    
 
     console.log('apartmentDetailt aca ', apartmentDetail)
-
-
+ */
+    console.log('USER ID', userId)  
     const idUsuarioLogeado = userId?.id
 
 

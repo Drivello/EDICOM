@@ -38,6 +38,7 @@ const UserList = () => {
 	const [buildingOpen, setBuildingOpen] = useState(false);
 	const [apartmentOpen, setApartmentOpen] = useState(false);
 
+	console.log(users)
 
     const [input, setInput] = useState({
         apartment:'',
@@ -47,6 +48,10 @@ const UserList = () => {
 	useEffect(() => {
         dispatch(getBuildings())
     }, [dispatch])
+	
+	useEffect(() => {
+        dispatch(getAllUsersForList())
+	}, [dispatch])
 	
 	useEffect(() => {
         dispatch(getAllUsersForList())
