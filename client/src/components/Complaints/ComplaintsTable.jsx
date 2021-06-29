@@ -177,7 +177,13 @@ function AlertsTable(props) {
       </Button>
       </div>
       <div style={{ display: 'flex', height: '100%' }}>
-        <DataGrid rows={complaints} columns={columns} pageSize={5} />
+        <DataGrid sortModel={[
+    {
+      field: 'date',
+      sort: 'desc',
+    },
+  ]}
+  rows={complaints} columns={columns} pageSize={5} />
       </div>
     </div>
     </ThemeProvider>
