@@ -13,15 +13,15 @@ import { getApartmentById } from '../../../redux/apartments/apartmentsActions';
 import { getComplaintsByUser } from '../../../redux/complaints/complaintsActions';
 
 const UserView = (props) => {
-    const userInfo = useSelector(state => state.loggingReducer.userId);
+    const currentUser = JSON.parse(localStorage.getItem('profile'));
     const userDetail = useSelector(state => state.userReducer.userDetail);
     const apartmentDetail = useSelector(state => state.apartmentReducer.apartmentDetail);
     const userComplaints = useSelector(state => state.complaintsReducer.userComplaints);
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if(userInfo && userInfo.id) dispatch(getComplaintsByUser(userInfo.id))
-    }, [userInfo]);
+        if(currentUser && currentUser.id) dispatch(getComplaintsByUser(currentUser.id))
+    }, []);
 
     useEffect(() => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
