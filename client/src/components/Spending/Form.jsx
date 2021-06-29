@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from 'react-router';
 import {
   postSpending,
   putSpending,
@@ -62,60 +63,87 @@ const Form = (props) => {
     };
   });
 
+  console.log("-----------------------------------------------------")
+  console.log("totalSpend", totalSpend)
+  console.log("buildingArray", buildingArray  )
+  console.log("-----------------------------------------------------")
+
   useEffect(() => {
     dispatch(getBuildings());
     dispatch(totalSpending());
     dispatch(getInvoicedExpenses());
   }, [dispatch]);
 
-  let newSpending = {};
+  let newSpending = {};  
+  const { id } = useParams()
 
   if (props.match.path === "/spendings/newSpending") {
     newSpending = {
       date: moment(new Date(new Date())).format("L"),
-      building: 1,
+      building: "",
       concept: "",
       supplier: "",
       details: "",
       amount: 0,
     };
   } else {
-    newSpending = {
-      date: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].date),
-      // date: moment(new Date(new Date())).format("L"),
-      building: 1,
-      concept: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].concept),
-      supplier: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].supplier),
-      details: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].details),
-      amount: totalSpend && (totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0] && totalSpend.filter(
-        (elem) => elem.id === parseInt(props.match.params.id)
-      )[0].amount),
-    };
+    if(totalSpend){
+      newSpending = {
+        date: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].date),
+
+        // date: moment(new Date(new Date())).format("L"),
+        
+        // totalSpend.filter(ts => ts.id === parseInt(id))[0].buildingId
+  
+        building: totalSpend && (totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0] && totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0].buildingId),
+  
+        // building: totalSpend && (totalSpend.filter(
+        //   (elem) => elem.id === parseInt(id)
+        // )[0] && totalSpend.filter(
+        //   (elem) => elem.id === parseInt(id)
+        // )[0].name),
+  
+        concept: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].concept),
+  
+        supplier: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].supplier),
+  
+        details: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].details),
+  
+        amount: totalSpend && (totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0] && totalSpend.filter(
+          (elem) => elem.id === parseInt(id)
+        )[0].amount),
+      };
+    }
+    
   }
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
   const [selectedBuild, setSelectedBuild] = useState({ id: [] });
 
-  console.log("spending", spending)
+  console.log('spending', spending)
 
   const handleSelect = (e) => {
     let select = document.getElementById("building");
@@ -177,14 +205,14 @@ const Form = (props) => {
   }
 
   const handleUpdate = async (e) => {
-    if (spending.concept !== "") {
+    if( typeof(spending.building) === NaN || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
+      swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
+    } else {
       await dispatch(putSpending([parseInt(props.match.params.id), spending]));
       swal("Gasto Editado!", "Gracias!", "success");
       history.goBack()
-    } else {
-      swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
     }
-  };
+  }
 
   const handleDelete = async (e) => {
     //

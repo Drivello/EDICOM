@@ -13,10 +13,12 @@ const {
 	Complaints,
 	Admin,
 	Booking,
-	Services
+	Services,
 } = require('./src/db.js');
 
 const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
+const apartmentData = require('../apartmentDataMock.json');
+const amenityData = require('../amenityDataMock.json');
 const alertsData = require('../alertsDataMock.json');
 const complaintsData = require('../complaintsDataMock.json');
 const servicesData = require('../servicesDataMock.json');
@@ -56,6 +58,17 @@ conn.sync({force: true}).then(() => {
 	});
 
 	// --- Creamos unos departamentos de prueba
+	let apartmentDataStr = JSON.stringify(apartmentData);
+	let apartmentDataArray = JSON.parse(apartmentDataStr);
+	let apartmentDataCreation = apartmentDataArray.map(apartment => {
+		return Apartment.create({
+			cata_apartment: apartment.cata_apartment,
+			number_apartment: apartment.number_apartment,
+			mt2: apartment.mt2,
+			state: apartment.state,
+			buildingId: apartment.buildingId,
+		});
+	});
 
 	let apartment1 = Apartment.create({
 		cata_apartment: 'AK12347',
@@ -200,48 +213,55 @@ conn.sync({force: true}).then(() => {
 			await Building.addAlert(Alert);
 		}
 	};
-
+	// --- Creamos unos Amenities de prueba
+	let amenityDataStr = JSON.stringify(amenityData);
+	let amenityDataArray = JSON.parse(amenityDataStr);
+	let amenityDataCreation = amenityDataArray.map(amenity => {
+		return Amenity.create({
+			amenity_type: amenity.amenity_type,
+			quantity: amenity.quantity,
+			capacity: amenity.capacity,
+			amenity_detail: amenity.amenity_detail,
+		});
+	});
 	let amenitie1 = Amenity.create({
-		buildingId: 1,
 		amenity_type: 'Pileta',
 		quantity: '1',
 		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen'
-	})
+		amenity_detail: 'Aca, en la pile, contesteeeen',
+	});
 
 	let amenitie2 = Amenity.create({
-		buildingId: 1,
 		amenity_type: 'Gimnacio',
 		quantity: '1',
 		capacity: '3',
-		amenity_detail: 'Aca, en la pile, contesteeeen'
-	})
+		amenity_detail: 'Aca, en la pile, contesteeeen',
+	});
 
 	let amenitie3 = Amenity.create({
-		buildingId: 2,
 		amenity_type: 'Parrilla',
 		quantity: '1',
 		capacity: '3',
-		amenity_detail: 'Tripa gordaaa'
-	})
+		amenity_detail: 'Tripa gordaaa',
+	});
 
 	// reclamos de prueba
 	let complaintsDataStr = JSON.stringify(complaintsData);
 	let complaintsDataArray = JSON.parse(complaintsDataStr);
 	let complaintsDataCreation = async (array, Buildings, Complaints, User) => {
-		for(var i = 0; i < array.length; i++) {
-		var building = await Buildings.findByPk(array[i].building);
-		var user = await User.findByPk(array[i].user);
-		var complaint = await Complaints.create({
-			date: array[i].date,
-			subject: array[i].subject,
-			details: array[i].details || null,
-			importance: array[i].importance,
-			image: array[i].image
-		});
-		await building.addComplaint(complaint);
-		await user.addComplaint(complaint);
-		};
+		for (var i = 0; i < array.length; i++) {
+			var building = await Buildings.findByPk(array[i].building);
+			var user = await User.findByPk(array[i].user);
+			var complaint = await Complaints.create({
+				date: array[i].date,
+				subject: array[i].subject,
+				details: array[i].details || null,
+				importance: array[i].importance,
+				image: array[i].image,
+			});
+			await building.addComplaint(complaint);
+			await user.addComplaint(complaint);
+		}
 	};
 
 	let servicesDataStr = JSON.stringify(servicesData);
@@ -260,7 +280,6 @@ conn.sync({force: true}).then(() => {
 		}
 	};
 
-	
 	// ---              0         1           2         3           4           5           6       7           8       9      10    11
 	Promise.all(
 		[
@@ -278,14 +297,15 @@ conn.sync({force: true}).then(() => {
 			user3, //11
 			amenitie1, //12
 			amenitie2, //13
-			amenitie1, //14
+			amenitie3, //14
 			booking1, //15
 			booking2, //16
 			booking3, //17
 		]
 			.concat(buildingsDataCreation) ////18.....29
-			.concat([admin1])
-			.concat([amenitie1, amenitie2, amenitie3, booking1, booking2, booking3])
+			.concat([admin1]) //30
+			.concat(apartmentDataCreation) //31 .... 55
+			.concat(amenityDataCreation) //56 .. 70
 	).then(
 		res => {
 			res[15].setAmenity(res[12]);
@@ -302,11 +322,46 @@ conn.sync({force: true}).then(() => {
 			res[9].setApartment(res[3]);
 			res[10].setApartment(res[4]);
 			res[11].setApartment(res[5]);
+			res[12].setBuilding(res[18]);
+			res[13].setBuilding(res[18]);
+			res[14].setBuilding(res[18]);
 			res[30].addBuilding(res[18]);
+			res[18].setApartments([
+				res[31],
+				res[32],
+				res[33],
+				res[34],
+				res[35],
+				res[36],
+				res[37],
+				res[38],
+				res[39],
+				res[40],
+				res[41],
+				res[42],
+				res[43],
+				res[44],
+				res[45],
+			]);
+			res[19].setApartments([
+				res[46],
+				res[47],
+				res[48],
+				res[49],
+				res[50],
+				res[51],
+				res[52],
+				res[53],
+				res[54],
+				res[55],
+			]);
+			res[18].setAmenities([res[56], res[57], res[58], res[59], res[60]]);
+			res[19].setAmenities([res[61], res[62], res[63], res[64], res[65]]);
+			res[20].setAmenities([res[66], res[67], res[68], res[69], res[70]]);
 			console.log('datos de prueba cargados');
 			alertDataCreation(alertsDataArray, Buildings, Alerts);
 			complaintsDataCreation(complaintsDataArray, Buildings, Complaints, User);
-			servicesDataCreation(servicesDataArray,Buildings, Services)
+			servicesDataCreation(servicesDataArray, Buildings, Services);
 			console.log('todo listo');
 		},
 		err => {

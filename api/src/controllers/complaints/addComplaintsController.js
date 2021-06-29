@@ -6,15 +6,15 @@ module.exports = async (req, res, next) => {
     {
         const file = req.files && req.files.image
         file && file.mv(path.resolve(`../client/public/uploads/${file.name}`));
-        var complaint = JSON.parse(req.body.body);
-        var buildingCurrent = await Buildings.findByPk(complaint.building);
-        var userCurrent = await User.findByPk(complaint.user);
+        var complaint = JSON.parse(req.body.body); 
+        var buildingCurrent = await Buildings.findByPk(complaint.id_Buildings);
+        var userCurrent = await User.findByPk(complaint.id_Users);
         var complaint = await Complaints.create({
             date: complaint.date,
             subject: complaint.subject,
             details: complaint.details,
             importance: complaint.importance,
-            image: file && `../../../uploads/${file.name}`
+            image: (file && `../../../uploads/${file.name}`) || "../../../uploads/office_building.png"
         });
         await buildingCurrent.addComplaint(complaint);
         await userCurrent.addComplaint(complaint);
