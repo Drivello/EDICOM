@@ -8,16 +8,19 @@ export const DELETE_USER = 'DELETE_USER';
 export const GET_ALL_USERS_FOR_LIST = 'GET_ALL_USERS_FOR_LIST';
 export const GET_ALL_USERS_BY_BUILDING = 'GET_ALL_USERS_BY_BUILDING';
 
-
 export function getUserByApartment(id_apartment) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/users/all/${id_apartment}`);
+		const {data} = await axios.get(
+			`http://localhost:3001/users/all/${id_apartment}`
+		);
 		dispatch({type: GET_ALL_USERS, payload: data});
 	};
 }
 export function getUsersByBuilding(id_building) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/users/allByBuilding/${id_building}`);
+		const {data} = await axios.get(
+			`http://localhost:3001/users/allByBuilding/${id_building}`
+		);
 		dispatch({type: GET_ALL_USERS_BY_BUILDING, payload: data});
 	};
 }
@@ -35,7 +38,6 @@ export function createUser(user) {
 	};
 }
 
-
 export function getUser(id) {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/users/${id}`);
@@ -44,12 +46,13 @@ export function getUser(id) {
 }
 
 export function updateUser(user) {
+	console.log('ESTO LLEGA EN EL USER DE ACTION', user);
 	return async function (dispatch) {
-		const {data} = await axios.put(
+		const {status} = await axios.put(
 			`http://localhost:3001/users/${user.id}`,
 			user
 		);
-		dispatch({type: UPDATE_USER, payload: data});
+		dispatch({type: UPDATE_USER, payload: status});
 	};
 }
 

@@ -16,7 +16,15 @@ const CreateUser = () => {
 
 	useEffect(() => {
         dispatch(getBuildings())
-    },[dispatch])
+	}, [dispatch])
+	
+	const [error, setError] = useState({//Control the error red border of the inputs
+		name: false,
+		email: false,
+		password: false,
+		contact: false,
+        isDeleted:false
+    })
 
 	
 	const [input, setInput] = useState({
@@ -29,10 +37,43 @@ const CreateUser = () => {
 	});
 
 	const handleSubmit = e => {
-		dispatch(createUser(input));
-		swal('Usuario creado exitosamente', "Gracias!", "success");
-		//this should redirect? where? to /userDetail
-		history.goBack()
+		if (input.name !== "" && input.password !== "" && input.email !== "" && input.contact !== "" && input.apartment !== "" && input.building !== "") {
+
+
+
+			setError({
+				name: false,
+				email: false,
+				password: false,
+				contact: false,
+				isDeleted: false,
+				apartment: false,
+				building: false,
+			})
+			let body = {
+				name: input.name,
+				email: input.email,
+				password: input.password,
+				contact: input.contact,
+				isDeleted: input.isDeleted,
+				apartment: input.apartment,
+				building: input.building
+
+			}
+			dispatch(createUser(body));
+			swal('Usuario creado exitosamente', "Gracias!", "success");
+			//this should redirect? where? to /userDetail
+			history.goBack()
+			
+		} else {
+			if (input.name === "") setError({ ...error, name: true });
+			if (input.email === "") setError({ ...error, email: true });
+			if (input.password === "") setError({ ...error, password: true });
+			if (input.contact === "") setError({ ...error, contact: true });
+			if (input.apartment === "") setError({ ...error, apartment: true });
+			if (input.building === "") setError({ ...error, building: true });
+            swal("Debe completar todos los campos", "Por favor revise los datos!", "warning");
+		 }
 	};
 
 	return (

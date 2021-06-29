@@ -30,11 +30,9 @@ import ResetPassword from '../Logging/resetPassword';
 import RegisterAdmin from '../Admin/RegisterAdmin';
 import CreateBookings from '../Amenities/CreateBooking/CreateBookings';
 import AmenitieDetail from '../Amenities/AmenitieDetail/AmenitieDetail';
-import ComplaintsList from "../Complaints/ComplaintsList";
+import ComplaintsList from '../Complaints/ComplaintsList';
 import ServicesList from '../Services/Admin/ServicesList';
 import ServiceFormAdmin from '../Services/Admin/ServiceFormAdmin';
-
-
 
 function App() {
 	return (
@@ -53,7 +51,7 @@ function App() {
 				<Route path="/amenityUpdate/:id" component={UpdateAmenity} />
 
 				{/* ----------------------------apartments----------------------------------- */}
-				<Route path="/apartmentadd" component={CreateApartment} />
+				<Route path="/apartmentadd/:buildingId" component={CreateApartment} />
 				<Route path="/apartment/:id" component={EditApartmentForm} />
 
 				{/* ----------------------------buildings----------------------------------- */}
@@ -92,7 +90,6 @@ function App() {
 				<Route path="/createBookings" component={CreateBookings} />
 				<Route path="/AmenitieDetail/:id/:name" component={AmenitieDetail} />
 				<Route path="/complaints" component={ComplaintsList} />
-				
 			</BrowserRouter>
 		</Container>
 	);

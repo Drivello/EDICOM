@@ -128,7 +128,7 @@ export function EditApartmentForm(props) {
                         name="cata_apartment" 
                         value={apartment.cata_apartment} 
                         onChange={handleInputChange} 
-                        error={!/^[A-Za-z ,.'-]{3,20}$/.test(apartment.cata_apartment)} 
+                        error={!/^[A-Za-z ,.'-]{2,20}$/.test(apartment.cata_apartment)} 
                     />
                 </FormControl><br/>
                 <FormControl>
