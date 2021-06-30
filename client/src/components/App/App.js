@@ -42,6 +42,7 @@ function App() {
 				{/* ----------------------------Alertas----------------------------------- */}
 				<Route exact path="/alerts" component={Alerts} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
+				<Route exact path="/alertsAdd/:buildingId" component={AlertsAdd} />
 				<Route exact path="/alertsUpdate/:id" component={AlertsUpdate} />
 
 				{/* ----------------------------amenities----------------------------------- */}
@@ -67,6 +68,7 @@ function App() {
 				<Route exact path="/spendings/board" component={Board} />
 				<Route exact path="/ExpensesTable" component={Expenses} />
 				<Route exact path="/spendings/newSpending" component={Form} />
+				<Route exact path="/spendings/newSpending/:buildingId" component={Form} />
 				<Route
 					path="/spendings/board/:id/edit"
 					render={({match}) => <Form match={match} />}

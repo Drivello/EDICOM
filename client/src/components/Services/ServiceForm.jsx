@@ -33,6 +33,63 @@ const ServiceForm = (props) => {
         contact: false,
     });
 
+    const [warning, setWarning] = useState({
+        //Control the warning message
+        title: "",
+        provider: "",
+        enrollment: "",
+        contact: "",
+        detail: ""
+    });
+
+    function handleChange(e, change) {
+        var text = e.target.value;
+        if(change === 'enrollment' && !numeroPositivoEntero(text)){
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: 'Solo puedes ingresar numeros!',
+            });
+            return setError({
+                //set the error of that input in true
+                ...error,
+                [change]: true,
+            });
+        }else if(change === 'contact' && (!numeroPositivoEntero(text) && !correoElectronico(text))){
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: 'El contacto debe ser un numero o un email!',
+            });
+            setError({
+                //set the error of that input in true
+                ...error,
+                [change]: true,
+            });
+            setInput({
+                ...input,
+                [change]: text,
+            });
+        }
+        else {
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: '',
+            });
+            setError({
+                //set the error of that input in true
+                ...error,
+                [change]: false,
+            });
+            setInput({
+                ...input,
+                [change]: text,
+            });
+        }
+        
+    }
+
     const saveHandler = () => {
         if (input.title !== "" && input.provider !== "" && input.contact !== "" && (numeroPositivoEntero(input.enrollment) || input.enrollment === "") && (numeroPositivoEntero(input.contact) || correoElectronico(input.contact))) {
             setError({
@@ -70,14 +127,7 @@ const ServiceForm = (props) => {
                     contact: true,});
                 return swal("Debe completar el título, el proveedor y el contacto", "Por favor revise los datos!", "warning");
             }
-            if(!numeroPositivoEntero(input.enrollment)){
-                setError({title: false,
-                    provider: false,
-                    detail: false,
-                    enrollment: true,
-                    contact: false,});
-                return swal("El campo ingresado en matricula debe ser un número", "Por favor revise los datos!", "warning");
-            } 
+            
             if(!numeroPositivoEntero(input.contact) && !correoElectronico(input.contact)) {
                 setError({ title: false,
                     provider: false,
@@ -89,10 +139,10 @@ const ServiceForm = (props) => {
         }
     }
 
-    const handleChange = (e, change) => {
+    /* const handleChange = (e, change) => {
         if (change !== "date") e = e.target.value;
         setInput({ ...input, [change]: e })
-    }
+    } */
 
     const cancelHandler = () => {
 		history.goBack()
@@ -134,6 +184,7 @@ const ServiceForm = (props) => {
                                     label="Matrícula"
                                     value={input.enrollment}
                                     error={error.enrollment}
+                                    helperText={warning.enrollment}
                                     onChange={e => handleChange(e, "enrollment")} />
                             </div>
                             <div>
@@ -142,6 +193,7 @@ const ServiceForm = (props) => {
                                     label="Contacto"
                                     value={input.contact}
                                     error={error.contact}
+                                    helperText={warning.contact}
                                     onChange={e => handleChange(e, "contact")} />
                             </div>
                         </div>

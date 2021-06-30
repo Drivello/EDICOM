@@ -167,7 +167,7 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/${currentUser.id}/amenities`} className='link'>
+                        <Link to={`/public/${currentUser.id}/Bookings`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><OutdoorGrillIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Amenities'} />
