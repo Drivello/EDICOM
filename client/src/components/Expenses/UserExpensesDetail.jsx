@@ -80,7 +80,7 @@ function UserExpensesDetail(props) {
       if(params.row.status === "Adeudada"){
         console.log(params)
         return (
-          <Button color="secondary" onClick={() => handleEventClick (
+          <Button variant="contained" color="secondary" onClick={() => handleEventClick (
             `${JSON.parse(localStorage.getItem('profile')).name} - Dpto: ${props.apartment}
             ${params.row.month}-${params.row.year}`,
              params.row.amount)}>
