@@ -10,8 +10,10 @@ export const CHANGE_STATUS = 'CHANGE_STATUS';
 
 export const getExpenses = () =>  {
   return function (dispatch) {
+    console.log("entró a la action de getExpenses")
     return axios.get('http://localhost:3001/expenses/allByApartments')
       .then(res => {
+        console.log("Se resolvió la busqueda de las expensas", new Date());
         dispatch({
           type: GET_EXPENSES,
           payload: res.data
@@ -65,8 +67,10 @@ export const getExpensesApartmentNumber = (number_apartment) =>  {
 
 export const changeStatus = (id) =>  {
   return function (dispatch) {
+    console.log("Entró al changeStatus", new Date())
     return axios.put(`http://localhost:3001/expenses/changeStatus/${id}`)
       .then(res => {
+        console.log("volvió del changeStatus", new Date())
         dispatch({
           type: CHANGE_STATUS,
           payload: res.data

@@ -50,7 +50,7 @@ function UserExpensesDetail(props) {
       id: expense.id,
       month: monthSpanish || expense.moth,
       year: expense.year,
-      amount: `$ ${expense.amount}`,
+      amount: `${new Intl.NumberFormat('es-AR', {currency: 'ARS', style: 'currency'}).format(expense.amount)}`,
       status: expense.status
     }
   })

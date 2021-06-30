@@ -20,8 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { StatusExpenses } from "./StatusExpenses";
 
 
-
-
 export default function ExpensesDetail(props) {
   
     const useRowStyles = makeStyles({
@@ -32,8 +30,9 @@ export default function ExpensesDetail(props) {
         },
      });
 
-    const [ row, setRow ] = useState(props.row);
-    const [open, setOpen] = React.useState(false);
+    // const [ row, setRow ] = useState(props.row);
+    const [ open, setOpen ] = React.useState(false);
+
     const classes = useRowStyles();
   
     return (
@@ -45,11 +44,11 @@ export default function ExpensesDetail(props) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.id}
+            {props.row.id}
           </TableCell>
-          <TableCell align="right">{row.cata_apartment}</TableCell>
-          <TableCell align="right">{row.number_apartment}</TableCell>
-          <TableCell align="right">{row.mt2}</TableCell>
+          <TableCell align="right">{props.row.cata_apartment}</TableCell>
+          <TableCell align="right">{props.row.number_apartment}</TableCell>
+          <TableCell align="right">{props.row.mt2}</TableCell>
           {/* <TableCell align="right">{row.state}</TableCell> */}
         </TableRow>
         <TableRow>
@@ -70,7 +69,7 @@ export default function ExpensesDetail(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {row.expenses.map((expense) => (
+                    {props.row.expenses.map((expense) => (
                       <TableRow key={expense.id}>
                           <TableCell component="th" scope="row">
                             {ENGLISH_TO_SPANISH_MONTH[expense.month]}
