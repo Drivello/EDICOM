@@ -21,7 +21,7 @@ export default function AlertsUser(props){
     const [alertsPerPage] = useState(4);
     const indexOfLast = currentPage * alertsPerPage;
     const indexOfFirst = indexOfLast - alertsPerPage;
-    const current = alerts_building.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear()).slice(indexOfFirst,indexOfLast);
+    const current = alerts_building?.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear()).slice(indexOfFirst,indexOfLast);
 
     const handleNext = () => {
         if(indexOfLast <= alerts_building.length -1)  setCurrentPage(currentPage + 1)
@@ -35,7 +35,7 @@ export default function AlertsUser(props){
     }, [dispatch])
 
     useEffect(() => {
-        user_detail && dispatch(findAlertsBuilding(user_detail.apartment.buildingId))
+        user_detail && dispatch(findAlertsBuilding(user_detail.apartment?.buildingId))
     }, [dispatch, user_detail])
 
     return(
@@ -56,7 +56,7 @@ export default function AlertsUser(props){
         </Button>
         <div className='contExtAlertsUserView'>
             {
-                current.map(alert => <Card key={alert.id} alert={alert}/>)
+                current?.map(alert => <Card key={alert.id} alert={alert}/>)
             }
             </div>
             <Button variant="contained" color ="secondary" onClick = {handleNext} style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft:"40px"}}>
