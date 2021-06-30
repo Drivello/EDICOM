@@ -29,7 +29,7 @@ import logoEdicom2 from '../../utils/logo-Edicom.png';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
+import swal from "sweetalert";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -202,7 +202,7 @@ export const Header = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!correoElectronico(user.email)) {
-            alert("El correo electronico es incorrecto")
+            swal("El correo electronico es incorrecto ", "Por favor revise los datos!", "warning");
         }
         else {
             console.log("despache")
@@ -214,7 +214,7 @@ export const Header = () => {
     function handleEmail() {
         var email = prompt("Introduzca su correo:", "");
         if (!correoElectronico(email)) {
-            alert("no se introdujo un correo electrónico valido")
+            swal("El correo electronico es invalido ", "Por favor revise los datos!", "warning");
         }
         else {
             dispatch(handleSendEmail(email))
@@ -302,11 +302,8 @@ export const Header = () => {
                                             }
                                             }
                                         />
-                                        <FormControlLabel
-                                            control={<Checkbox value="remember" color="primary" />}
-                                            label="Recuerdame"
-
-                                        />
+                                       
+                                        
                                         <Button
                                             type="submit"
                                             fullWidth
@@ -323,12 +320,7 @@ export const Header = () => {
                                                     Olvidaste la constraseña?
                                                 </Link>
                                             </Grid>
-                                            <Grid item>
-                                                <Link href="#" variant="body2" className={classes.boton}>
-
-                                                    {"Registrate"}
-                                                </Link>
-                                            </Grid>
+                                            
                                         </Grid>
                                     </form>
                                 </div>

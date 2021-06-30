@@ -45,13 +45,13 @@ module.exports = async (req, res, next) => {
 
       /*       if(userRegistered.password != password){ */
                 
-                await User.update({
-                    firstLogging: false,
-                }, {
-                    where: {
-                        id: userRegistered.id
-                    }
-                });
+                // await User.update({
+                //     firstLogging: false,
+                // }, {
+                //     where: {
+                //         id: userRegistered.id
+                //     }
+                // });
             }
            /*  } */
         else{

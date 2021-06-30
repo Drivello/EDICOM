@@ -37,10 +37,8 @@ const CreateUser = () => {
 	});
 
 	const handleSubmit = e => {
-		if (input.name !== "" && input.password !== "" && input.email !== "" && input.contact !== "" && input.apartment !== "" && input.building !== "") {
 
-
-
+		if (Object.values(input).every(field => field !== '') && Object.values(error).every(value => value === false)) {
 			setError({
 				name: false,
 				email: false,
@@ -60,6 +58,7 @@ const CreateUser = () => {
 				building: input.building
 
 			}
+
 			const actionCreateUser = dispatch(createUser(body));
 
 			actionCreateUser.then((res) =>

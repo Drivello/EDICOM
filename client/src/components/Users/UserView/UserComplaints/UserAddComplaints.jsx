@@ -99,6 +99,10 @@ const useStyles = makeStyles((theme) => ({
     },
     select:{
         width:'210px'
+    },
+    boton:{
+        color:'#212121',
+        background: '#00ff7f'
     }
     
     
@@ -106,9 +110,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const UserAddComplaints = (props) => {
+const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTextIn}) => {
+
+    const error = errorIn;
+    const helperText = helperTextIn;
     const classes = useStyles();
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+
+    
 
     //importancia
     const currencies = [
@@ -126,6 +136,8 @@ const UserAddComplaints = (props) => {
         }
     ];
 
+
+   
     //traigo edificio , usuarios y departamentos
     const { buildingArray, usersArray, allApartments } = useSelector(state => {
         return {
@@ -145,16 +157,11 @@ const UserAddComplaints = (props) => {
 
     //traigo los datos
     useEffect(() => {
-        /*  if (loading) {
-             fetchData()
-             usersArray && buildingArray && allApartments && setLoading(false)
-         } else { */
 
         dispatch(getBuildings());
         dispatch(getAllUsersForList());
         dispatch(getAllApartments(1));
     }
-        /*   } */
         , [dispatch]);
 
     function getNames() {
@@ -169,7 +176,7 @@ const UserAddComplaints = (props) => {
         name:'',
         id_Buildings: '',
         apartment: '',
-        date: moment(new Date(new Date())).format("L"),
+        date:  new Date(new Date()),
         subject: '',
         details: '',
         importance: '',
@@ -186,9 +193,9 @@ const UserAddComplaints = (props) => {
         let idApartment = usersArray?.filter(a => a.id === parseInt(id))[0].apartmentId
 
         setComplaints({
+            ...complaints,
             id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0].id,
             name: buildingArray?.filter(a => a.id === parseInt(id))[0].name,
-            /*  id_Buildings: '', */
             apartment: allApartments?.filter(a => a.id === parseInt(idApartment))[0].number_apartment,
 
         })
@@ -217,6 +224,8 @@ const UserAddComplaints = (props) => {
             ...complaints,
             [e.target.name]: e.target.value,
         });
+        
+        
     };
 
     //funcion para cargar imagen
@@ -236,11 +245,14 @@ const UserAddComplaints = (props) => {
         if (!complaints.image) return PhotoCamera;
         else return URL.createObjectURL(complaints.image);
     }
-
+    
+    function cancelHandle (){
+        history.goBack()
+    }
     //despacho accion
     const handleSubmit = (e) => {
-
-        const complaintsSend = JSON.stringify(  {
+       
+         const complaintsSend = JSON.stringify(  {
             id_Buildings: complaints.id_Buildings,
             apartment: complaints.apartment,
             date: complaints.date,
@@ -248,18 +260,26 @@ const UserAddComplaints = (props) => {
             details: complaints.details,
             importance: complaints.importance,
             id_Users: id,
-
+            
         });
-        const formData = new FormData();
-        formData.append('image', complaints.image);
-        formData.append(
-            'body',complaintsSend)
-
-        e.preventDefault();
-
-        dispatch(createComplaints(formData ));
-        swal("Reclamo enviado correctamente!, pronto estaremos en contacto.", "Gracias!", "success")
-        setComplaints(complaints)
+       
+        if(complaints.subject === ''  || complaints.importance ==='' || complaints.details ==='' || complaints.date === '' ){
+            console.log("ENTRA IF ")
+            return swal("Debe completar el concepto, la importancia y el edificio", "Por favor revise los datos!", "warning");
+        }else{
+            
+            const formData = new FormData();
+            formData.append('image', complaints.image);
+            formData.append(
+                'body',complaintsSend)
+    
+            e.preventDefault();
+                console.log(formData)
+            dispatch(createComplaints(formData ));
+            swal("Reclamo enviado correctamente!, pronto estaremos en contacto.", "Gracias!", "success")
+            setComplaints(complaints)
+        }
+    
 
     };
 
@@ -303,6 +323,7 @@ const UserAddComplaints = (props) => {
                                         id="date"
                                         format="dd/MM/yyyy"
                                         value={complaints.date}
+                                        variant="outlined"
                                         onChange={(e) => {
                                             // handleInputChange(e)
                                             handleValidationDate(e)
@@ -383,9 +404,11 @@ const UserAddComplaints = (props) => {
                                 </IconButton>
                             </div>
                             <div className={classes.guardarCambios}>
-                                <Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
+                                <Button variant="contained" color="#00ff7f" onClick={handleSubmit} style={{ fontWeight: 1000, background:'#00ff7f'  }}>
                                     Confirmar
                                 </Button>
+                               
+						    <Button style={{ fontWeight: 1000 }} color="black" variant="contained" onClick={cancelHandle} style={{ fontWeight: 1000, background:'#00ff7f', marginLeft:'10px'}} >Cancelar</Button>
                             </div>
                         </div>
                     </form>

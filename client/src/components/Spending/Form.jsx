@@ -64,10 +64,10 @@ const Form = (props) => {
     };
   });
 
-  console.log("-----------------------------------------------------")
-  console.log("totalSpend", totalSpend)
-  console.log("buildingArray", buildingArray  )
-  console.log("-----------------------------------------------------")
+  // console.log("-----------------------------------------------------")
+  // console.log("totalSpend", totalSpend)
+  // console.log("buildingArray", buildingArray  )
+  // console.log("-----------------------------------------------------")
 
 
   useEffect(() => {
@@ -104,35 +104,20 @@ const Form = (props) => {
             (elem) => elem.id === parseInt(id)
           )[0].buildingId),
   
-        // building: totalSpend && (totalSpend.filter(
-        //   (elem) => elem.id === parseInt(id)
-        // )[0] && totalSpend.filter(
-        //   (elem) => elem.id === parseInt(id)
-        // )[0].name),
+        date: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
+        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].date),
+        
+        concept: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
+        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].concept),
   
-        concept: totalSpend && (totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0] && totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0].concept),
+        supplier: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
+        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].supplier),
   
-        supplier: totalSpend && (totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0] && totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0].supplier),
+        details: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
+        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].details),
   
-        details: totalSpend && (totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0] && totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0].details),
-  
-        amount: totalSpend && (totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0] && totalSpend.filter(
-          (elem) => elem.id === parseInt(id)
-        )[0].amount),
+        amount: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
+        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].amount),
       };
     }
   }
@@ -141,12 +126,13 @@ const Form = (props) => {
   const [spending, setSpending] = useState(newSpending);
   const [selectedBuild, setSelectedBuild] = useState({ id: buildingId || [] });
 
-  console.log('spending', spending)
+  // console.log('----------------------------------')
+  // console.log('spending', spending) 
+  // console.log('----------------------------------')
 
   const handleSelect = (e) => {
     let select = document.getElementById("building");
-
-    if (select) {
+    if (select!==0) {
       let selectValue = select.options[select.selectedIndex].value;
       let selectedBuildName = select.options[select.selectedIndex].innerText;
       setSelectedBuild({
@@ -156,22 +142,20 @@ const Form = (props) => {
       /*  let selectBuild = spending.bulding.push(selectValue); */
       setSpending({ ...spending, building: parseInt(selectValue) });
     }
+ 
   };
 
   const handleInputChange = (e) => {
-    console.log(e)
     if (e.target.name === "amount") {
-      if (numeroPositivo(e.target.value)) {
-        setSpending({
-          ...spending,
-          [e.target.name]: parseInt(e.target.value),
-        })
+      if (numeroPositivo(e.target.value) && e.target.value) {
+        setSpending({...spending,[e.target.name]: parseInt(e.target.value)})
         setError(false)
-      } else {
+      } 
+      else {
         setError(true)
-
       }
-    } else {
+    } 
+    else {
       setSpending({
         ...spending,
         [e.target.name]: e.target.value,
@@ -203,9 +187,10 @@ const Form = (props) => {
   }
 
   const handleUpdate = async (e) => {
-    if( (spending.building) === "Edificio" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0){
+    if(spending.building === 0 || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || spending.amount === NaN){
       swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
-    } else {
+    } 
+    else {
       await dispatch(putSpending([parseInt(props.match.params.id), spending]));
       swal("Gasto Editado!", "Gracias!", "success");
       history.goBack()
@@ -221,14 +206,30 @@ const Form = (props) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (spending.supplier === "")
-      return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
-    if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    await dispatch(postSpending(spending));
-    await dispatch(totalSpending());
-    await swal("Gasto Agregado!", "Gracias!", "success");
-    setSpending(
+    if( spending.building === null || spending.building === "" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || spending.amount === NaN){
+      return swal('Faltan agregar datos', 'Por favor revise los campos!', 'warning');
+    }
+    // if (spending.supplier === "")
+    //   return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
+    // if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
+    // if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
+      
+        await dispatch(postSpending(spending));
+        await dispatch(totalSpending());
+        await swal("Gasto Agregado!", "Gracias!", "success");
+        setSpending(
+          (newSpending = {
+            date: moment(new Date(new Date())).format("L"),
+            building: "",
+            concept: "",
+            supplier: "",
+            details: "",
+            amount: 0,
+          })
+        );
+        history.goBack();    await dispatch(postSpending(spending));
+      await swal("Gasto Agregado!", "Gracias!", "success");
+  setSpending(
       (newSpending = {
         date: moment(new Date(new Date())).format("L"),
         building: "",
@@ -336,20 +337,6 @@ const Form = (props) => {
                     />
                   </MuiPickersUtilsProvider>
 
-                  {/* <TextField
-                    input
-                    type="date"
-                    format="dd/MM/yyyy"
-                    id="date"
-                    name="date"
-                    value={spending.date}
-                    onChange={(e) =>
-                      setSpending({
-                        ...spending,
-                        date: new Date(e.target.value)
-                      })
-                    }
-                  /> */}
                 </Grid>
               </Grid>
               <Grid
@@ -419,7 +406,7 @@ const Form = (props) => {
                     onChange={handleInputChange}
                     name="amount"
                     error={error ? true : false}
-                    helperText={error ? "No se puede ingresar numeros negativos" : ""}
+                    helperText={error ? "No se puede ingresar numeros negativos/borrar este campo" : ""}
                   />
                 </Grid>
               </Grid>

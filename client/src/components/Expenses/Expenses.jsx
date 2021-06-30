@@ -151,7 +151,6 @@ export default function ExpensesTable() {
             </TableRow>
          </TableHead>
          <TableBody>
-            {console.log("rows...........",rows)}
             {rows.map((apartment) => (
             <ExpensesDetail key={apartment.id} row={apartment} statusChanged={statusChanged}/>
             ))}

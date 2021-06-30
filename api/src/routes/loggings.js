@@ -11,12 +11,12 @@ const getUserId = require("../controllers/loggings/getUserIdController");
 
 
 router.use(express.json());
-router.post("/loggingIn", loggingIn);                   //      http://localhost:3001/loggings/loggingIn
-router.put("/changepassword", changePassword);
-router.post("/sendEmail", sendEmail);
-router.post("/tokenToEmail", tokenToEmail);
-router.post("/emailToToken", emailToToken);
-router.get("/userId/:token", getUserId);
+router.post("/loggingIn", loggingIn);                       //      http://localhost:3001/loggings/loggingIn
+router.put("/changepassword", changePassword);              //      http://localhost:3001/loggings/changepassword
+router.post("/sendEmail", sendEmail);                       //      http://localhost:3001/loggings/sendEmail
+router.post("/tokenToEmail", tokenToEmail);                 //      http://localhost:3001/loggings/tokenToEmail
+router.post("/emailToToken", emailToToken);                 //      http://localhost:3001/loggings/emailToToken
+router.get("/userId/:token", getUserId);                    //      http://localhost:3001/loggings/getUserId
 
 
 

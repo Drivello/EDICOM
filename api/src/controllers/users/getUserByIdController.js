@@ -1,8 +1,8 @@
 const {User, Buildings, Apartment} = require('../../db');
 
 module.exports = async (req, res, next) => {
-	const {id} = req.params;
 	try {
+		const {id} = req.params;
 		const user = await User.findOne({
 		where: {id},
 		include: [{
@@ -14,7 +14,8 @@ module.exports = async (req, res, next) => {
 
 		return res.json(user);
 	} catch (err) {
-		res.json(err);
-		return console.log(err);
+		// res.json(err);
+		// return 
+		console.log(err);
 	}
 };
