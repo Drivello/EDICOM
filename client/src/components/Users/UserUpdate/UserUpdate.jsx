@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
-import { Person, Home, MeetingRoom, Email, VpnKey, Phone } from '@material-ui/icons';
+import { Person, Email, Phone } from '@material-ui/icons';
 import { getUser, updateUser } from '../../../redux/users/userActions';
 import { Link, useHistory } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -35,6 +35,8 @@ export function UserUpdate() {
     const dispatch = useDispatch();
     const classes = useStyles();
 	const history = useHistory();
+	const regOnlyNumbers = new RegExp('^[0-9]+$'); //just numbers test
+	const regOnlyletters = new RegExp(/^[a-zA-Z\s]+$/)
 
 
     const [input, setInput] = useState({})
@@ -70,20 +72,59 @@ export function UserUpdate() {
 		name: "Ingrese un Nombre",
         email: "Ingrese un Correo",
 		contact: "Numero de Telefono",
-        isDeleted:"Ingrese un is deleted"
+        isDeleted:""
     })
     
 
-    const handleInputChange = e => {
-        Validate(e.target)
-        setInput({
-            ...input,
-            [e.target.name]:e.target.value
-        })
-    }
-
+	const handleInputChange = function (e, change) {
+		if (change === 'contact') { //only numbers
+			if (regOnlyNumbers.test(e.target.value) || e.target.value === '') {
+				setError({...error, [change]: false});
+				setHelperText({
+					...helperText,
+					[change]: '',
+				});
+				setInput({
+					...input,
+					[e.target.name]: e.target.value,
+				});
+			} else {
+				setError({...error, [change]: true});
+				setHelperText({
+					...helperText,
+					[change]: 'Solo puede ingresar numeros!',
+				});
+			}
+		}else if(change === 'name'){
+			if (regOnlyletters.test(e.target.value) || e.target.value === '') {
+				setError({...error, [change]: false});
+				setHelperText({
+					...helperText,
+					[change]: '',
+				});
+				setInput({
+					...input,
+					[e.target.name]: e.target.value,
+				});
+			} else {
+				setError({...error, [change]: true});
+				setHelperText({
+					...helperText,
+					[change]: 'Solo puede ingresar letras!',
+				});
+			}	
+		}else{
+			setInput({
+				...input,
+				[e.target.name]: e.target.value,
+			});
+			Validate(e.target);
+		}
+	
+	};
 	const handleSubmit = e => {
-		if (input.name !== "" && input.email !== "" && input.contact !== "") {
+
+		if (Object.values(input).every(field => field !== '') && Object.values(error).every(value => value === false)) {
 			setError({
 				name: false,
 				email: false,
@@ -94,7 +135,32 @@ export function UserUpdate() {
 				id: input.id,
 				name: input.name,
 				email: input.email,
-				password: input.password,
+				contact: input.contact,
+				isDeleted: input.isDeleted
+
+			}
+			dispatch(updateUser(body));
+			swal('Usuario actualizado exitosamente', "Gracias!", "success");
+			history.goBack()
+		} else {
+			if (input.name === "") setError({ ...error, name: true });
+            if (input.email === "") setError({ ...error, email: true });
+            if (input.contact === "") setError({ ...error, contact: true });
+            swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
+		}
+
+
+		/* if (input.name !== "" && input.email !== "" && input.contact !== "") {
+			setError({
+				name: false,
+				email: false,
+				contact: false,
+				isDeleted: false
+			})
+			let body = {
+				id: input.id,
+				name: input.name,
+				email: input.email,
 				contact: input.contact,
 				isDeleted: input.isDeleted
 
@@ -111,7 +177,7 @@ export function UserUpdate() {
             if (input.contact === "") setError({ ...error, contact: true });
             swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
 		
-		}
+		} */
 		
 	} 
 
@@ -147,20 +213,8 @@ export function UserUpdate() {
 					setHelperText({...helperText, email: ""})
 				}
 				break;
-			case "password":
-				if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,60}$/.test(field.value)) {
-					setError({...error, password: true})
-					if(field.value.length < 8) {setHelperText({...helperText, password: "Es muy corto"})}
-					else if(field.value.length > 60) {setHelperText({...helperText, password: "Es muy largo"})}
-					else{setHelperText({...helperText, password: "1 nro, 1 mayus y 1 min"})}
-				}
-				else{
-					setError({...error, password: false})
-					setHelperText({...helperText, password: ""})
-				}
-				break;
 			case "contact":
-				if(!/^[+0-9-]{8,20}$/.test(field.value)) {
+				if(!/^([0-9])*$/.test(field.value)) {
 					setError({...error, contact: true})
 					if(field.value.length < 8) {setHelperText({...helperText, contact: "Es muy corto"})}
 					else if(field.value.length > 20) {setHelperText({...helperText, contact: "Es muy largo"})}
@@ -180,9 +234,6 @@ export function UserUpdate() {
         history.goBack()
     }
 
-
-	
-
     return(
 		<ThemeProvider theme={theme}>
         <>
@@ -201,7 +252,7 @@ export function UserUpdate() {
 								label="Nombre" 
 								name="name"
 								value={input.name || ''}
-								onChange={handleInputChange} 
+								onChange={e => handleInputChange(e, 'name')}
 							/>
                         </Grid>
                     </Grid>
@@ -234,7 +285,7 @@ export function UserUpdate() {
 								name="contact"
 								label="Nº Telefono" 
 								value={input.contact || ''}
-								onChange={handleInputChange}
+								onChange={e => handleInputChange(e, 'contact')}
 							/>
                         </Grid>
                     </Grid>
