@@ -41,6 +41,7 @@ function BookingsTable(props) {
 
    if (!filter) {
       complaints = allComplaints?.map((booking) => {
+         console.log(booking, "booking")
          let stateSpanish;
          if (booking.status === "free") stateSpanish = "Libre";
          if (booking.status === "cancelled") stateSpanish = "Cancelado";
@@ -50,6 +51,7 @@ function BookingsTable(props) {
             start: moment(booking.start).format("DD/MM/YYYY -- H:mm"),
             date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
             state: stateSpanish,
+            createdAt: booking.createdAt,
          };
       });
    } else {
@@ -65,6 +67,7 @@ function BookingsTable(props) {
 
    const columns = [
       { field: "id", headerName: "ID", flex: 1.5, hide: true },
+      { field: "createdAt", headerName: "createdAt", flex: 1.5, hide: true },
       { field: "start", headerName: "Comienzo", flex: 1 },
       { field: "date", headerName: "Fin", flex: 1 },
       {
@@ -170,8 +173,8 @@ function BookingsTable(props) {
          <div style={{ display: "flex", height: "100%" }}>
             <DataGrid sortModel={[
                {
-                  field: 'start',
-                  sort: 'desc',
+                  field: 'createdAt',
+                  sort: 'asce',
                },
             ]}
                rows={complaints} columns={columns} pageSize={5} />
