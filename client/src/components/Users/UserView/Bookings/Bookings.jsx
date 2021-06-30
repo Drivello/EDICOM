@@ -108,39 +108,25 @@ const Bookings = () => {
         bookingStart:''
     })
 
-    console.log('userDetail', userDetail);
 
-
-    // console.log('AMENITIESSSSSS', Amenities)
-    // console.log('all boooooooooking', allBookings)
-
-
-    //const date2 = new Date(new Date());  
-    /*      const bookings = bookings.map((booking) => {
-            return {}
-        }); */
-    
-    
     useEffect(() => {
         dispatch(getAllBookings())
         dispatch(allAmenities())
-        // dispatch(getApartmentById(userDetail?.apartmentId))
-        // dispatch(getIdUser(JSON.parse(localStorage.getItem('profile')).token))
     }, [dispatch])
 
-    // useEffect(() => {
-    //     dispatch(getUser(userId?.id))
-    // }, [dispatch, userId])
+    useEffect(() => {
+        dispatch(getUser(currentUserData?.id))
+    }, [dispatch, userId])
 
     // useEffect(()=>{
     // },[dispatch, userDetail])
 
-    /* console.log('BOOKINGS FILTRADOS', bookingNoToquesMauriQueSeRompeFilter)
+    console.log('USERRRRRRRRRRRRRRRRRRRR FILTRADOS', currentUserData)
 
     
 
     console.log('apartmentDetailt aca ', apartmentDetail)
- */
+ 
     // console.log('USER ID', userId)  
     // const idUsuarioLogeado = userId?.id
 

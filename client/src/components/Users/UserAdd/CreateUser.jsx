@@ -90,7 +90,7 @@ const CreateUser = () => {
 
 	return (
 		<>
-			<CreateUserForm input={input} setInput={setInput} allBuildings={allBuildings} handleSubmit={handleSubmit} />
+			<CreateUserForm error={error} setError={setError} input={input} setInput={setInput} allBuildings={allBuildings} handleSubmit={handleSubmit} />
 		</>
 	);
 };
