@@ -60,10 +60,23 @@ const CreateUser = () => {
 				building: input.building
 
 			}
-			dispatch(createUser(body));
-			swal('Usuario creado exitosamente', "Gracias!", "success");
+			const actionCreateUser = dispatch(createUser(body));
+
+			actionCreateUser.then((res) =>
+			{ 
+				if(res instanceof Error) {
+					swal('El mail ya está registrado en nuestra BBDD', 'Use otro email', 'warning')					
+				}
+				else{
+					swal('Usuario creado exitosamente', "Gracias!", "success")
+					history.goBack()
+				}
+			},
+			(err) => {
+				console.log(err)
+				swal('El mail ya existe', 'Use otro email', 'warning')
+			})
 			//this should redirect? where? to /userDetail
-			history.goBack()
 			
 		} else {
 			if (input.name === "") setError({ ...error, name: true });

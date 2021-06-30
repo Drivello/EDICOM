@@ -22,9 +22,7 @@ function createApartment(id, cata_apartment, number_apartment, mt2, state, expen
       number_apartment,
       mt2,
       state,
-      expenses: expenses.map( (expensa) => {
-         return expensa
-      })
+      expenses
   };
 }
 
@@ -34,13 +32,14 @@ export default function ExpensesTable() {
    
    
    const dispatch = useDispatch();
-
+   
    // No se si anda
    /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
    const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
-   const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
+   const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
    const statusChanged = useSelector((state) => state.reducerExpenses.statusChanged);
+   
    
    useEffect(() => {
       dispatch(getExpenses());
@@ -74,6 +73,7 @@ export default function ExpensesTable() {
    }
    
    function handleSelectApartment (e){
+      console.log(e.target.name)
       if(building.building==="All"){alert("No se puede elegir departamento sin selecciona edificio")}
       else{
          setBuilding({ ...building, [e.target.name]: e.target.value })
@@ -151,6 +151,7 @@ export default function ExpensesTable() {
             </TableRow>
          </TableHead>
          <TableBody>
+            {console.log("rows...........",rows)}
             {rows.map((apartment) => (
             <ExpensesDetail key={apartment.id} row={apartment} statusChanged={statusChanged}/>
             ))}

@@ -181,7 +181,9 @@ const UserAddComplaints = (props) => {
 
     if (loading && buildingArray && buildingArray?.length > 0 && usersArray && usersArray?.length > 0 && allApartments && allApartments?.length > 0) {
 
-        let idApartment = usersArray?.filter(a => a.apartmentId === parseInt(id))[0].apartmentId
+        console.log('userArray', usersArray)
+
+        let idApartment = usersArray?.filter(a => a.id === parseInt(id))[0].apartmentId
 
         setComplaints({
             id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0].id,

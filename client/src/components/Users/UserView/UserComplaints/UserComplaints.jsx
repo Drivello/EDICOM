@@ -34,7 +34,7 @@ function UserComplaints({ complaints }) {
         },
     ]
 
-    const complaintsData = complaints && complaints.map(complaint => {
+    const complaintsData = complaints && complaints?.map(complaint => {
         return {
             id: complaint.id,
             date: complaint.date,

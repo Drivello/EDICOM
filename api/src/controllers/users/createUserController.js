@@ -10,7 +10,10 @@ module.exports = async (req, res, next) => {
 		user.setApartment(apartment);
 		return res.json(user).status(200);
 	} catch (err) {
-		res.json(err);
-		return console.log(err);
+		console.log('el error en el controllerrrrr', err);
+		// return res.status(400).json(new Error(err));
+		res.status(403).json(new Error("Email ya existe en la BBDD"))
 	}
 };
+
+// res.status(500).json(new Error("Error creating the alert"))

@@ -7,6 +7,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_ALL_USERS_FOR_LIST = 'GET_ALL_USERS_FOR_LIST';
 export const GET_ALL_USERS_BY_BUILDING = 'GET_ALL_USERS_BY_BUILDING';
+export const ERR_CREATE_USER = 'ERR_CREATE_USER';
 
 export function getUserByApartment(id_apartment) {
 	return async function (dispatch) {
@@ -31,10 +32,26 @@ export function getAllUsersForList() {
 	};
 }
 
+// export function createUser(user) {
+// 	return async function (dispatch) {
+// 		const {data} = await axios.post(`http://localhost:3001/users/`, user);
+// 		dispatch({type: CREATE_USER, payload: data});
+// 	};
+// }
+
 export function createUser(user) {
-	return async function (dispatch) {
-		const {data} = await axios.post(`http://localhost:3001/users/`, user);
-		dispatch({type: CREATE_USER, payload: data});
+	return function (dispatch) {
+		return axios
+			.post(`http://localhost:3001/users/`, user)
+			.then(res => {
+				console.log('respuesta exitosa', res)
+				dispatch({type: CREATE_USER, payload: res.data});
+			},
+			err => {
+				return new Error(err)
+				console.log('err.response', err.response)
+				dispatch({type: ERR_CREATE_USER})
+			});
 	};
 }
 

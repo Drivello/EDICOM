@@ -14,7 +14,8 @@ export default function PopUp(props) {
     const dispatch = useDispatch();
     const [rating,setRating] = useState(null);
     const [hover, setHover] = useState(null);
-    const userInfo = {id: 1}
+    const userDetail = useSelector(state => state.userReducer.userDetail);
+    const userInfo = {id: userDetail.id}
     const current = JSON.parse(localStorage.getItem('profile')).token;
     const Rating = props.service.ratings.find(e => e.userId === userInfo.id)
 

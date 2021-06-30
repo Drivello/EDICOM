@@ -28,7 +28,6 @@ const UserView = (props) => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
     }, [userDetail]);
     
-
     
     return (
         <ThemeProvider theme={theme}>

@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeStatus } from "../../redux/expenses/expensesActions";
+import { changeStatus, filterExpenses, getExpenses } from "../../redux/expenses/expensesActions";
 import swal from "sweetalert";
 
 
@@ -10,16 +10,18 @@ export const StatusExpenses = ({ expense }) => {
     const dispatch = useDispatch();
 
     const statusChanged = useSelector((state) => state.reducerExpenses.statusChanged);
-    const [state, setState] = useState(expense)
+    // const [state, setState] = useState(expense)
 
     function handleChangeStatus (id) {
         const confirmMessage = swal("Vas a cambiar el estado de este pago, estás seguro?", {
-            buttons: ["Cancelar", "Yep"],
+            buttons: ["Cancelar", "Confirmar"],
           });
 
         confirmMessage.then( res => {    
-            console.log(res)
-            dispatch(changeStatus(id));
+            dispatch(changeStatus(id))
+            .then(() => {
+                dispatch(getExpenses())
+            })
         })
     }
 
@@ -30,16 +32,9 @@ export const StatusExpenses = ({ expense }) => {
             color="primary"
             variant="contained"
             name="changeStatus"
-            onClick={(e) => handleChangeStatus(state.id)}
+            onClick={(e) => handleChangeStatus(expense.id)}
         >
-            {state.status}
-            {!statusChanged
-            ? "Hola":
-            statusChanged === state.id
-            ?
-            " Chau":
-            " Hola"
-            }
+            {expense.status}
         </Button>
     )
 }
