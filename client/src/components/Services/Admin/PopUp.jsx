@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -6,25 +6,31 @@ import theme from '../../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { getServices, putService, deleteService } from '../../../redux/services/servicesAction';
 import styles from "./Styles.module.css";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function PopUp(props) {
 
     const buildings = useSelector(state => state.buildingReducer.allBuildings);
     const dispatch = useDispatch();
-    const setPop = props.setPop
+    const setPop = props.setPop;
+    const[loading, setLoading] = useState(false)
 
     const handleOpen = () => {
+        setLoading(true)
         dispatch(putService({id: props.alertProps.id}))
         setTimeout(()=>{
             dispatch(getServices())
+            setLoading(false)
             setPop(false)
         }, 2000)
     }
 
     const handleClose = () => {
+        setLoading(true)
         dispatch(deleteService(props.alertProps.id))
         setTimeout(()=>{
             dispatch(getServices())
+            setLoading(false)
             setPop(false)
         }, 2000)
     }
@@ -61,12 +67,20 @@ export default function PopUp(props) {
                         <h4>
                             Estado: {props.alertProps.state}
                         </h4>
-                        <Button id={styles.button} onClick={handleOpen} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
-                            Aceptar
-                        </Button>
-                        <Button id={styles.button} onClick={handleClose} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
-                            Eliminar
-                        </Button>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginLeft: 20}}>
+                        {
+                            loading ? <CircularProgress color="secondary" /> :
+                            <div>
+                                <Button id={styles.button} onClick={handleOpen} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                                 Aceptar
+                                </Button>
+                                
+                                <Button id={styles.button} onClick={handleClose} style={{ fontWeight: 1000 }} variant="contained" color="secondary" size="small" >
+                                    Eliminar
+                                </Button>
+                            </div>
+                        }
+                        </div>
                     </div>
                 </div>
             </div>

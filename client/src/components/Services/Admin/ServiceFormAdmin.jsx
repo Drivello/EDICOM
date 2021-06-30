@@ -41,6 +41,16 @@ const ServiceFormAdmin = (props) => {
         building: false
     });
 
+    const [warning, setWarning] = useState({
+        //Control the warning message
+        title: "",
+        provider: "",
+        enrollment: "",
+        contact: "",
+        detail: "",
+        building: ""
+    });
+
     const handleBuildingClose = () => {
 		setBuildingOpen(false);
         
@@ -50,12 +60,60 @@ const ServiceFormAdmin = (props) => {
 		setBuildingOpen(true);
 	}; 
 
-    const handleBuildingChange =  (e) => {
+    function handleChange(e, change) {
+        var text = e.target.value;
+        if(change === 'enrollment' && !numeroPositivoEntero(text)){
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: 'Solo puedes ingresar numeros!',
+            });
+            return setError({
+                //set the error of that input in true
+                ...error,
+                [change]: true,
+            });
+        }else if(change === 'contact' && (!numeroPositivoEntero(text) && !correoElectronico(text))){
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: 'El contacto debe ser un numero o un email!',
+            });
+            setError({
+                //set the error of that input in true
+                ...error,
+                [change]: true,
+            });
+            setInput({
+                ...input,
+                [change]: text,
+            });
+        }
+        else {
+            setWarning({
+                //set warning msg
+                ...warning,
+                [change]: '',
+            });
+            setError({
+                //set the error of that input in true
+                ...error,
+                [change]: false,
+            });
+            setInput({
+                ...input,
+                [change]: text,
+            });
+        }
+        
+    }
+
+    /* const handleBuildingChange =  (e) => {
 		setInput({
 			...input,
 			building: e.target.value, 
 		});
-	}
+	} */
 
     const saveHandler = () => {
         if (input.title !== "" && input.provider !== "" && input.contact !== "" && input.building !== "" && (numeroPositivoEntero(input.enrollment) || input.enrollment === "") && (numeroPositivoEntero(input.contact) || correoElectronico(input.contact))) {
@@ -68,6 +126,14 @@ const ServiceFormAdmin = (props) => {
                 building: false
             });
             setInput({
+                title: "",
+                provider: "",
+                enrollment: "",
+                contact: "",
+                detail: "",
+                building: ""
+            })
+            setWarning({
                 title: "",
                 provider: "",
                 enrollment: "",
@@ -88,6 +154,29 @@ const ServiceFormAdmin = (props) => {
             history.goBack()
                 
         } else {
+            if (input.title === "" || input.provider === "" || input.contact === "" || input.building === ""){
+            setError({
+                title: true,
+                provider: true,
+                detail: false,
+                enrollment: false,
+                contact: false,
+                building: true
+            });
+            return swal("Debe completar el título, el proveedor, el contacto y el edificio", "Por favor revise los datos!", "warning");
+            }
+            if(!numeroPositivoEntero(input.contact) && !correoElectronico(input.contact)) {
+                setError({ title: false,
+                    provider: false,
+                    detail: false,
+                    enrollment: false,
+                    contact: true,
+                    building: false
+                });
+                return swal("El campo ingresado en contacto debe ser un número o un email", "Por favor revise los datos!", "warning");
+            }
+        }
+        /* else {
             if (input.title === "" || input.provider === "" || input.contact === "" || input.building === "") {
                 setError({title: true,
                     provider: true,
@@ -108,23 +197,14 @@ const ServiceFormAdmin = (props) => {
                 });
                 return swal("El campo ingresado en matricula debe ser un número", "Por favor revise los datos!", "warning");
             } 
-            if(!numeroPositivoEntero(input.contact) && !correoElectronico(input.contact)) {
-                setError({ title: false,
-                    provider: false,
-                    detail: false,
-                    enrollment: false,
-                    contact: true,
-                    building: false
-                });
-                return swal("El campo ingresado en contacto debe ser un número o un email", "Por favor revise los datos!", "warning");
-            }
-        }
+            
+        } */
     }
 
-    const handleChange = (e, change) => {
+    /* const handleChange = (e, change) => {
         if (change !== "date") e = e.target.value;
         setInput({ ...input, [change]: e })
-    }
+    } */
 
     const cancelHandler = () => {
 		history.goBack()
@@ -150,7 +230,7 @@ const ServiceFormAdmin = (props) => {
 							onClose={handleBuildingClose}
 							onOpen={handleBuildingOpen}
 							value={input.building}
-							onChange={handleBuildingChange}
+							onChange={e => handleChange(e, "building")}
                             error={error.building}
 						>
 						<MenuItem value="">
@@ -170,6 +250,7 @@ const ServiceFormAdmin = (props) => {
                             <TextField variant="outlined"
                                 style={{margin: 10, width: 300}}
                                 label="Título"
+                                name='title'
                                 value={input.title}
                                 error={error.title}
                                 onChange={e => handleChange(e, "title")} />
@@ -179,6 +260,7 @@ const ServiceFormAdmin = (props) => {
                                 style={{margin: 10, width: 300}}
                                 label="Proveedor"
                                 //multiline
+                                name='provider'
                                 value={input.provider}
                                 error={error.provider}
                                 onChange={e => handleChange(e, "provider")} />
@@ -189,16 +271,20 @@ const ServiceFormAdmin = (props) => {
                                 <TextField variant="outlined"
                                     style={{margin: 10, width: 300}}
                                     label="Matrícula"
+                                    name='enrollment'
                                     value={input.enrollment}
                                     error={error.enrollment}
+                                    helperText={warning.enrollment}
                                     onChange={e => handleChange(e, "enrollment")} />
                             </div>
                             <div>
                                 <TextField variant="outlined"
                                     style={{margin: 10, width: 300}}
                                     label="Contacto"
+                                    name='contact'
                                     value={input.contact}
                                     error={error.contact}
+                                    helperText={warning.contact}
                                     onChange={e => handleChange(e, "contact")} />
                             </div>
                         </div>
@@ -208,6 +294,7 @@ const ServiceFormAdmin = (props) => {
                             style={{margin: 10, width: 620}}
                             label="Detalle"
                             multiline
+                            name='detail'
                             value={input.detail}
                             onChange={e => handleChange(e, "detail")} />
                     </div>
