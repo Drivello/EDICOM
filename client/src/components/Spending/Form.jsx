@@ -75,7 +75,8 @@ const Form = (props) => {
     dispatch(totalSpending());
     dispatch(getInvoicedExpenses());
   }, [dispatch]);
-
+  
+ 
   let newSpending = {date: new Date(),
   building: buildingId || "",
   concept: "",

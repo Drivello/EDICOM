@@ -73,6 +73,7 @@ function App() {
 					path="/spendings/board/:id/edit"
 					render={({match}) => <Form match={match} />}
 				/>
+				<Route exact path="/spendings/newSpending/:buildingId" component={Form} />
 
 				{/*--------------------Services--------------------------------------------------*/}
 				<Route exact path="/services" component={ServicesList} />

@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         width: "80%",
         cursor: "pointer",
         margin: '0 auto',
+        
 
     },
     appbarTitle: {

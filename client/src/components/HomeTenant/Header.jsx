@@ -100,7 +100,8 @@ const useStyles = makeStyles((theme) => ({
     bottonIngresar: {
         display: 'flex',
         flexWrap: 'no-wrap',
-        textAlign: 'center'
+        textAlign: 'center',
+        
     },
     form: {
         color: 'black',
@@ -117,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#00ff7f',
         width: '19rem'
+        
     },
     root2: {
         height: '80vh',
@@ -140,6 +142,9 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         color: 'white'
     },
+    texto:{
+        marginTop:'12px'
+    }
 }));
 
 
@@ -244,7 +249,7 @@ export const Header = () => {
                                 <LockOutlinedIcon />
                             </Avatar>
 
-                            <Typography component="h1" variant="h5" onClick={handleOpen}>
+                            <Typography component="h1" variant="h5" className={classes.texto} onClick={handleOpen}>
                                 Ingresar
                             </Typography>
                         </div>
