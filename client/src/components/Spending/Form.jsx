@@ -12,10 +12,11 @@ import { Link } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
-  Room,
-  LocationCity,
   Receipt,
   ListAlt,
+  Event,
+  Loyalty,
+  AttachMoney,
 } from "@material-ui/icons";
 import {
   InputLabel,
@@ -223,9 +224,10 @@ const Form = (props) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    if (spending.building === "") return swal('Debe seleccionar un edificio');
     if (spending.supplier === "")
       return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
+    if (spending.amount === 0 || isNaN(spending.amount)) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
     if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
     await dispatch(postSpending(spending));
     await dispatch(totalSpending());
@@ -247,7 +249,6 @@ const Form = (props) => {
       history.goBack();
     }
 
-
   return (
     <ThemeProvider theme={theme}>
       <div className="mainContainer">
@@ -255,7 +256,7 @@ const Form = (props) => {
           <Container>
             <div className="componentHeading1">
               <h1>
-                Agregar o Modificar Gasto:
+              {props.match.path === "/spendings/newSpending" ? 'Agregar gasto' : 'Modificar gasto'}
               </h1>
             </div>
           </Container>
@@ -286,10 +287,9 @@ const Form = (props) => {
                     id="building"
                     value={spending.building}
                   >
-                    <option
-                      disabled
-                      selected
-                    > Edificio </option>
+                    <option disabled value="">
+                      Seleccione un edificio
+                    </option>
 
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
@@ -311,7 +311,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain fontSize="large" />
+                  <Event fontSize="large" />
                 </Grid>
                 <Grid item>
 
@@ -357,7 +357,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room fontSize="large" />
+                  <ListAlt fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -378,7 +378,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity fontSize="large" />
+                  <Loyalty fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -402,7 +402,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <ListAlt fontSize="large" />
+                  <AttachMoney fontSize="large" />
                 </Grid>
                 <Grid item style={{ width: "80%" }}>
                   <TextField
@@ -472,7 +472,7 @@ const Form = (props) => {
                       color="secondary"
                       type="button"
                     >
-                      Cancel
+                      Cancelar
                     </Button>
                     <Button
                       style={{ fontWeight: 1000 }}
@@ -504,7 +504,7 @@ const Form = (props) => {
                       style={{ fontWeight: 1000 }}
                       onClick={back}
                     >
-                      Cancel
+                      Cancelar
                     </Button>
                     <Button
                       className={classes.margin}
