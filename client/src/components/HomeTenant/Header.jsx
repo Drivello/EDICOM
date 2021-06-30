@@ -29,7 +29,7 @@ import logoEdicom2 from '../../utils/logo-Edicom.png';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
+import swal from "sweetalert";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +100,8 @@ const useStyles = makeStyles((theme) => ({
     bottonIngresar: {
         display: 'flex',
         flexWrap: 'no-wrap',
-        textAlign: 'center'
+        textAlign: 'center',
+        
     },
     form: {
         color: 'black',
@@ -117,6 +118,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#00ff7f',
         width: '19rem'
+        
     },
     root2: {
         height: '80vh',
@@ -140,6 +142,9 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         color: 'white'
     },
+    texto:{
+        marginTop:'12px'
+    }
 }));
 
 
@@ -202,7 +207,7 @@ export const Header = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!correoElectronico(user.email)) {
-            alert("El correo electronico es incorrecto")
+            swal("El correo electronico es incorrecto ", "Por favor revise los datos!", "warning");
         }
         else {
             console.log("despache")
@@ -214,7 +219,7 @@ export const Header = () => {
     function handleEmail() {
         var email = prompt("Introduzca su correo:", "");
         if (!correoElectronico(email)) {
-            alert("no se introdujo un correo electrónico valido")
+            swal("El correo electronico es invalido ", "Por favor revise los datos!", "warning");
         }
         else {
             dispatch(handleSendEmail(email))
@@ -244,7 +249,7 @@ export const Header = () => {
                                 <LockOutlinedIcon />
                             </Avatar>
 
-                            <Typography component="h1" variant="h5" onClick={handleOpen}>
+                            <Typography component="h1" variant="h5" className={classes.texto} onClick={handleOpen}>
                                 Ingresar
                             </Typography>
                         </div>
@@ -302,11 +307,8 @@ export const Header = () => {
                                             }
                                             }
                                         />
-                                        <FormControlLabel
-                                            control={<Checkbox value="remember" color="primary" />}
-                                            label="Recuerdame"
-
-                                        />
+                                       
+                                        
                                         <Button
                                             type="submit"
                                             fullWidth
@@ -323,12 +325,7 @@ export const Header = () => {
                                                     Olvidaste la constraseña?
                                                 </Link>
                                             </Grid>
-                                            <Grid item>
-                                                <Link href="#" variant="body2" className={classes.boton}>
-
-                                                    {"Registrate"}
-                                                </Link>
-                                            </Grid>
+                                            
                                         </Grid>
                                     </form>
                                 </div>

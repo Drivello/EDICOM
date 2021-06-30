@@ -7,7 +7,7 @@ import { TextField, Button, MenuItem } from '@material-ui/core';
 import swal from "sweetalert";
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
     postAlert, sendEmail
 } from '../../redux/alerts/alertActions';
@@ -23,7 +23,7 @@ const AlertsAdd = (props) => {
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
     const subscriptions = useSelector(state => state.subscriptionsReducer.buildingSubscriptions);
-
+    const {buildingId} = useParams();
 
     useEffect(() => {
         dispatch(getBuildings())
@@ -50,7 +50,7 @@ const AlertsAdd = (props) => {
         concept: "",
         detail: "",
         important: "",
-        building: ""
+        building: buildingId || ""
     })
 
 
