@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   postSpending,
   putSpending,
@@ -40,6 +39,7 @@ import { MONTHS } from "../../utils/constant";
 
 const Form = (props) => {
   const history = useHistory();
+  const {buildingId} = useParams()
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,25 +69,23 @@ const Form = (props) => {
   console.log("buildingArray", buildingArray  )
   console.log("-----------------------------------------------------")
 
+
   useEffect(() => {
     dispatch(getBuildings());
     dispatch(totalSpending());
     dispatch(getInvoicedExpenses());
   }, [dispatch]);
 
-  let newSpending = {};  
+  let newSpending = {date: new Date(),
+  building: buildingId || "",
+  concept: "",
+  supplier: "",
+  details: "",
+  amount: 0,};  
+
   const { id } = useParams()
 
-  if (props.match.path === "/spendings/newSpending") {
-    newSpending = {
-      date: moment(new Date(new Date())).format("L"),
-      building: "",
-      concept: "",
-      supplier: "",
-      details: "",
-      amount: 0,
-    };
-  } else {
+  if (!props.match.path === "/spendings/newSpending" && !buildingId) {
     if(totalSpend){
       newSpending = {
         date: totalSpend && (totalSpend.filter(
@@ -95,7 +93,7 @@ const Form = (props) => {
         )[0] && totalSpend.filter(
           (elem) => elem.id === parseInt(id)
         )[0].date),
-
+  
         // date: moment(new Date(new Date())).format("L"),
         
         // totalSpend.filter(ts => ts.id === parseInt(id))[0].buildingId
@@ -137,12 +135,11 @@ const Form = (props) => {
         )[0].amount),
       };
     }
-    
   }
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
-  const [selectedBuild, setSelectedBuild] = useState({ id: [] });
+  const [selectedBuild, setSelectedBuild] = useState({ id: buildingId || [] });
 
   console.log('spending', spending)
 
@@ -287,10 +284,14 @@ const Form = (props) => {
                     id="building"
                     value={spending.building}
                   >
-                    <option
+                    {
+                      !buildingId ? "" :
+                      <option
                       disabled
                       selected
                     > Edificio </option>
+                    }
+                    
 
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
@@ -454,7 +455,7 @@ const Form = (props) => {
               alignItems="flex-start"
             >
               <Grid item>
-                {props.match.path === "/spendings/newSpending" ? (
+                {(props.match.path === "/spendings/newSpending" || buildingId) ? (
                   <Link to={"./board"}>
                     <Button
                       style={{ fontWeight: 1000 }}
