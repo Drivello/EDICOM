@@ -33,6 +33,8 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 	const classes = useStyles();
 	const [buildingOpen, setBuildingOpen] = useState(false);
 	const [apartmentOpen, setApartmentOpen] = useState(false);
+	const regOnlyNumbers = new RegExp('^[0-9]+$'); //just numbers test
+	const regOnlyletters = new RegExp(/^[a-zA-Z\s]+$/)
 
 	const [error, setError] = useState({//Control the error red border of the inputs
 		name: false,
@@ -110,12 +112,51 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 				break;
 		}
 	}
-	const handleInputChange = function (e) {
-		setInput({
-			...input,
-			[e.target.name]: e.target.value, 
-		});
-		Validate(e.target)
+	const handleInputChange = function (e, change) {
+		if (change === 'contact') { //only numbers
+			if (regOnlyNumbers.test(e.target.value) || e.target.value === '') {
+				setError({...error, [change]: false});
+				setHelperText({
+					...helperText,
+					[change]: '',
+				});
+				setInput({
+					...input,
+					[e.target.name]: e.target.value,
+				});
+			} else {
+				setError({...error, [change]: true});
+				setHelperText({
+					...helperText,
+					[change]: 'Solo puede ingresar numeros!',
+				});
+			}
+		}else if(change === 'name'){
+			if (regOnlyletters.test(e.target.value) || e.target.value === '') {
+				setError({...error, [change]: false});
+				setHelperText({
+					...helperText,
+					[change]: '',
+				});
+				setInput({
+					...input,
+					[e.target.name]: e.target.value,
+				});
+			} else {
+				setError({...error, [change]: true});
+				setHelperText({
+					...helperText,
+					[change]: 'Solo puede ingresar letras!',
+				});
+			}	
+		}else{
+			setInput({
+				...input,
+				[e.target.name]: e.target.value,
+			});
+			Validate(e.target);
+		}
+	
 	};
 	
 	const handleBuildingClose = () => {
@@ -218,7 +259,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 								label="Nombre" 
 								name="name"
 								value={input.name}
-								onChange={handleInputChange} 
+								onChange={e => handleInputChange(e, 'name')} 
 							/>
                         </Grid>
                     </Grid>
@@ -267,7 +308,7 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 								name="contact"
 								label="Nº Telefono" 
 								value={input.contact}
-								onChange={handleInputChange}
+								onChange={e => handleInputChange(e, 'contact')}
 							/>
                         </Grid>
                     </Grid>

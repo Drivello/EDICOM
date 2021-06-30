@@ -35,8 +35,8 @@ export function UserUpdate() {
     const dispatch = useDispatch();
     const classes = useStyles();
 	const history = useHistory();
-	const reg = new RegExp('^[0-9]+$'); //just numbers test
-	const regOnlyletters = new RegExp('[a-zA-Z]')
+	const regOnlyNumbers = new RegExp('^[0-9]+$'); //just numbers test
+	const regOnlyletters = new RegExp(/^[a-zA-Z\s]+$/)
 
 
     const [input, setInput] = useState({})
@@ -72,13 +72,13 @@ export function UserUpdate() {
 		name: "Ingrese un Nombre",
         email: "Ingrese un Correo",
 		contact: "Numero de Telefono",
-        isDeleted:"Ingrese un is deleted"
+        isDeleted:""
     })
     
 
 	const handleInputChange = function (e, change) {
-		if (change === 'contact') {
-			if (reg.test(e.target.value) || e.target.value === '') {
+		if (change === 'contact') { //only numbers
+			if (regOnlyNumbers.test(e.target.value) || e.target.value === '') {
 				setError({...error, [change]: false});
 				setHelperText({
 					...helperText,
@@ -95,8 +95,8 @@ export function UserUpdate() {
 					[change]: 'Solo puede ingresar numeros!',
 				});
 			}
-			if (change === 'name') {
-				if (regOnlyletters.test(e.target.value) || e.target.value === '') {
+		}else if(change === 'name'){
+			if (regOnlyletters.test(e.target.value) || e.target.value === '') {
 				setError({...error, [change]: false});
 				setHelperText({
 					...helperText,
@@ -112,27 +112,45 @@ export function UserUpdate() {
 					...helperText,
 					[change]: 'Solo puede ingresar letras!',
 				});
-			}
-			}
-		} else {
+			}	
+		}else{
 			setInput({
 				...input,
 				[e.target.name]: e.target.value,
 			});
 			Validate(e.target);
 		}
+	
 	};
-
-    // const handleInputChange = e => {
-    //     Validate(e.target)
-    //     setInput({
-    //         ...input,
-    //         [e.target.name]:e.target.value
-    //     })
-    // }
-
 	const handleSubmit = e => {
-		if (input.name !== "" && input.email !== "" && input.contact !== "") {
+
+		if (Object.values(input).every(field => field !== '') && Object.values(error).every(value => value === false)) {
+			setError({
+				name: false,
+				email: false,
+				contact: false,
+				isDeleted: false
+			})
+			let body = {
+				id: input.id,
+				name: input.name,
+				email: input.email,
+				contact: input.contact,
+				isDeleted: input.isDeleted
+
+			}
+			dispatch(updateUser(body));
+			swal('Usuario actualizado exitosamente', "Gracias!", "success");
+			history.goBack()
+		} else {
+			if (input.name === "") setError({ ...error, name: true });
+            if (input.email === "") setError({ ...error, email: true });
+            if (input.contact === "") setError({ ...error, contact: true });
+            swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
+		}
+
+
+		/* if (input.name !== "" && input.email !== "" && input.contact !== "") {
 			setError({
 				name: false,
 				email: false,
@@ -159,7 +177,7 @@ export function UserUpdate() {
             if (input.contact === "") setError({ ...error, contact: true });
             swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
 		
-		}
+		} */
 		
 	} 
 
@@ -215,9 +233,6 @@ export function UserUpdate() {
 	function cancelHandle (){
         history.goBack()
     }
-
-
-	
 
     return(
 		<ThemeProvider theme={theme}>
