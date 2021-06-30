@@ -6,12 +6,14 @@ import {
 	UPDATE_USER,
 	GET_ALL_USERS_FOR_LIST,
 	GET_ALL_USERS_BY_BUILDING,
+	ERR_CREATE_USER
 } from '../users/userActions';
 
 const initialState = {
 	users: [],
 	userDetail: undefined,
 	userUpdate: 0,
+	errCreateUser: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -26,6 +28,11 @@ const userReducer = (state = initialState, action) => {
 				...state,
 				userDetail: action.payload,
 			};
+		case ERR_CREATE_USER:
+			return { 
+				...state,
+				errCreateUser: !state.errCreateUser
+			}
 		case GET_USER:
 			return {
 				...state,
