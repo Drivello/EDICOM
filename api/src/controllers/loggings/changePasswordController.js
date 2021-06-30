@@ -5,7 +5,7 @@ const secret = 'test';
 const { transporter } = require("../../../mailer");
 
 
-// Path of this controller --> Put(http://localhost:3001/spendings/add)
+// Path of this controller --> Put(http://localhost:3001/loggings/changepassword)
 module.exports = async (req, res, next) => {
 
     let {newPass, email} = req.body;
@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
             await User.update(
                 {
                     password: newPassHashed,
+                    firstLogging: false,
                 }, 
                 {
                     where: {
