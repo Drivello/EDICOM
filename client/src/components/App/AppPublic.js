@@ -25,7 +25,7 @@ function AppPublic() {
 			<CssBaseline />
 			<BrowserRouter>
 				{/* //Poner acá los route con los componentes de la vista del locatario		 */}
-				<Route path="/public/Bookings" component={Bookings} />
+				<Route exact path="/public/:id/Bookings" component={Bookings} />
 				<Route exact path="/public/spendings/board" component={ApartmentBoard} />
 				<Route path="/public" component={SidebarUsers} />
 				<Route path="/public" component={UserView} />
