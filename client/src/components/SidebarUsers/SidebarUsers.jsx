@@ -174,7 +174,7 @@ export default function Sidebar(props) {
                             </ListItem>
                         </Link>
 
-                        <Link to={`/public/expenses/${currentUserData?.apartmentId}/${currentUserData?.apartment.number_apartment}`}>
+                        <Link to={`/public/expenses/${currentUserData?.apartmentId}/${currentUserData?.apartment?.number_apartment}`}>
                             <ListItem button key={'Expensas'}>
                                 <ListItemIcon><MonetizationOnIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Mis expensas'} />
