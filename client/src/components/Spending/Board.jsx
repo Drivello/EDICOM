@@ -30,6 +30,7 @@ import moment from "moment";
 import AddIcon from '@material-ui/icons/Add';
 import filter from '../../utils/filter-remove.png';
 import { ExpensesGenerator } from "./ExpensesGenerator/ExpensesGenerator.jsx";
+import swal from "sweetalert";
 
 
 const Board = (props) => {
@@ -98,7 +99,7 @@ const Board = (props) => {
          date: moment(spending.date).format("DD/MM/YY"),
          concept: spending.concept,
          details: spending.details,
-         amount: `$${spending.amount}`,
+         amount: new Intl.NumberFormat('es-AR', {currency: 'ARS', style: 'currency'}).format(spending.amount),
       };
    });
 
@@ -170,7 +171,12 @@ const Board = (props) => {
    }
 
    function toggleFormExpensesGenerator(){
-      setShowedExpensesGenerator(!showedExpensesGenerator)
+      if(input.buildingId !== 'All'){
+         setShowedExpensesGenerator(!showedExpensesGenerator)
+      }
+      else{
+         swal("Primero debe filtrar por el edificio al que le quiere generar las expensas", "Filtre y vuelva a intentar", "info");
+      }
    }
 
    return (

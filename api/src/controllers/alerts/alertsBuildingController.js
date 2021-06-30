@@ -1,8 +1,8 @@
 const { Alerts, Buildings } = require("../../db.js");
 
 module.exports = async (req, res, next) => {
-	const id = req.params.id
 	try {
+		const id = req.params.id
 		const buildingAlert = await Buildings.findOne({where: {id}})
 		let data = await Alerts.findAll({
 			where: {
