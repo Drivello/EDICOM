@@ -58,7 +58,7 @@ const CreateUser = () => {
 				building: input.building
 
 			}
-			
+
 			const actionCreateUser = dispatch(createUser(body));
 
 			actionCreateUser.then((res) =>
