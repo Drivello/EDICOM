@@ -116,6 +116,7 @@ export function UserUpdate() {
 	} 
 
     const handleRadio = function (e) {
+		console.log(e.target.value)
         setInput({
             ...input,
             isDeleted: e.target.value === "BANNED" ? true : false,

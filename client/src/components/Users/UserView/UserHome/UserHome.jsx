@@ -15,7 +15,7 @@ function UserHome({ user }) {
             [ Boton editar mis datos ]
             <div>
                 <div>
-                    <AlertsUser id={ user.id }/>
+                    <AlertsUser id={user.id}/>
                 </div>
             </div>
         </div>
