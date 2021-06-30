@@ -241,6 +241,7 @@ export function UserUpdate() {
             <form noValidate autoComplete="off" >
 			<Grid container direction="row" justify="space-around" alignItems="center" className={`componentDataBox ${classes.root}`} spacing={1}>
                 <Grid item xs={6}>
+					<h1>Editar usuario</h1>
                     <Grid container spacing={1} alignItems="center" justify="center">
                         <Grid>
                             <Person />
@@ -299,10 +300,10 @@ export function UserUpdate() {
                 </Grid>
                 <Grid container direction="row" justify="center" alignItems="center">
                     <Grid item>
-                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
+                        <Button style={{fontWeight: 1000, marginTop: 50, marginRight: 10}} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
                     </Grid>
 					<Grid item>
-						<Button style={{ fontWeight: 1000 }} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
+						<Button style={{ fontWeight: 1000, marginTop: 50}} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
                     </Grid>
                 </Grid>
 			</Grid>
