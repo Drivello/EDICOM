@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
    Button,
@@ -26,6 +26,7 @@ import styles from "./Styles.module.css";
 function BookingsTable(props) {
 
    const dispatch = useDispatch();
+   const history = useHistory();
 
    const allComplaints = useSelector(state => state.bookingReducer.bookingDetail)
    const bookingFilter = useSelector(state => state.bookingReducer.bookingFilter)
@@ -179,6 +180,7 @@ function BookingsTable(props) {
             ]}
                rows={complaints} columns={columns} pageSize={5} />
          </div>
+            <Button onClick={() => history.goBack()} id={styles.buttonBack} variant="contained" color="secondary" >Volver</Button>
       </div>
    );
 }
