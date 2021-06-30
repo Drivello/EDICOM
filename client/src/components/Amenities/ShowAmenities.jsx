@@ -68,8 +68,8 @@ const ShowAmenities = () => {
 	 }
 
 	const columns = [
-		{field: 'nameBuilding', headerName: 'Edificio', width: 200},
-		{field: 'amenity_type', headerName: 'Tipo', width: 150,
+		{field: 'nameBuilding', headerName: 'Edificio', flex: 3.5},
+		{field: 'amenity_type', headerName: 'Tipo', flex: 3,
 		renderCell: params => {
 			return (
 					<Link to={`/AmenitieDetail/${params.id}/${params.row.amenity_type}`}>
@@ -78,10 +78,10 @@ const ShowAmenities = () => {
 			);
 		},
 	},
-		{field: 'quantity', headerName: 'Cantidad', width: 200},
-		{field: 'capacity', headerName: 'Capacidad', width: 150 },
+		{field: 'quantity', headerName: 'Cantidad', flex: 2.5},
+		{field: 'capacity', headerName: 'Capacidad', flex: 2.5},
 		{
-			field: 'addBooking', headerName: 'Agregar Turnos', width: 200, sortable: false, renderCell: params => {
+			field: 'addBooking', headerName: 'Agregar Turnos', flex: 3, sortable: false, renderCell: params => {
 				return (
 					<ThemeProvider theme={theme}>
 							<Button
@@ -100,7 +100,7 @@ const ShowAmenities = () => {
 			field: 'amenity_detail',
 			headerName: 'Detalles',
 			sortable: false,
-			width: 120,
+			flex: 2,
 			disableClickEventBubbling: true,
 			renderCell: params => {
 				return (
@@ -140,9 +140,9 @@ const ShowAmenities = () => {
                 			</Button>
             			</Link>
 					</div>
-					<Container style={{height: '400px', width: '1500px'}}>
-						<Container style={{display: 'flex', height: '100%', width:'1070px'}}>
-							<DataGrid rows={Amenities} columns={columns} pageSize={7} />
+					<Container style={{height: '400px', width:'1200px', marginLeft:'60px'}}>
+						<Container style={{display: 'flex', height: '100%', width:'100%'}}>
+							<DataGrid rows={Amenities} columns={columns} pageSize={5} />
 						</Container>
 					</Container>
 				</Grid>

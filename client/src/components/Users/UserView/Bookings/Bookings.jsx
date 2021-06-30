@@ -24,6 +24,8 @@ import { allAmenities } from '../../../../redux/amenities/amenitiesActions';
 import moment from "moment";
 import swal from "sweetalert";
 import 'moment/locale/es';
+import { BookingsDone } from './BookingsDone';
+
 
 const useStyles = makeStyles({
     div: {
@@ -98,10 +100,7 @@ const Bookings = () => {
     const dispatch = useDispatch();
     const { allBookings, bookingNoToquesMauriQueSeRompeFilter, takedBookings } = useSelector((state) => state.bookingReducer)
     const { Amenities } = useSelector(state => state.amenitiesReducer)
-    const currentUserData = useSelector(state => state.userReducer.userDetail);
-    const { userId } = useSelector(state => state.loggingReducer)
-    const { apartmentDetail } = useSelector(state => state.apartmentReducer)
-    const {userDetail} = useSelector(state => state.userReducer)
+    const { userDetail } = useSelector(state => state.userReducer)
     const [date, setDate] = useState(new Date(new Date()))
     const [input, setInput] = useState({
         bookingId: '',
@@ -119,24 +118,24 @@ const Bookings = () => {
         dispatch(getUser(currentUserData?.id))
     }, [dispatch, userId])
 
-    useEffect(()=>{
-        dispatch(getApartmentById(userDetail?.apartmentId))
-    },[dispatch, userDetail])
+    // useEffect(()=>{
+    // },[dispatch, userDetail])
 
     console.log('USERRRRRRRRRRRRRRRRRRRR FILTRADOS', currentUserData)
 
     
 
     console.log('apartmentDetailt aca ', apartmentDetail)
-    console.log('USER ID', userId)  
-    const idUsuarioLogeado = userId?.id
+ 
+    // console.log('USER ID', userId)  
+    // const idUsuarioLogeado = userId?.id
 
 
     const handleChange = (event) => {
         console.log('EVENT ACA', event)
         setInput({
             bookingId: event.target.value,
-            userId: idUsuarioLogeado,
+            userId: userDetail.id,
         })
         console.log(input)
     };
@@ -144,7 +143,7 @@ const Bookings = () => {
 
     const handleDateChange = (date) => {
         setDate(date)
-        dispatch(filterBookings(date))
+        dispatch(filterBookings(date))          // cambia el bookingNoToquesMauriQueSeRompeFilter
     }
 
     const handleBooking = (e) => {
@@ -202,7 +201,7 @@ const Bookings = () => {
                             <TableBody>
                                 {
                                     Amenities && Amenities?.map((amenity, i) => {
-                                        if(apartmentDetail?.buildingId === amenity.buildingId){
+                                        if(userDetail?.apartment.buildingId === amenity.buildingId){
                                             return (
                                                 <TableRow>
                                                     <TableCell component="th" scope="row">
@@ -286,57 +285,9 @@ const Bookings = () => {
                 </div>
 
                 {/* SEGUNDA TABLA  */}
-                <div>
-                    <div className={classes.title}>
-                        <h2 >Mis reservas</h2>
-                    </div>
-                    <TableContainer component={Paper} className={classes.tableContainer}>
-                        <Table className={classes.table} aria-label="caption table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Amenitie</TableCell>
-                                    <TableCell align="right">Fecha</TableCell>
-                                    <TableCell align="right"></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {/* {rows.map((row) => ( */}
-                                {
-                                    allBookings && allBookings?.map((booking, i) => {
-                                        if (booking.userId === idUsuarioLogeado) {
-                                            return (
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        {Amenities && Amenities?.map((amenity) => {
-                                                            return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
-                                                        })
-
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        {moment(booking.start).format('LLL')}
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        }
-                                    })
-
-                                }
-                                {/*  <TableRow >
-                                    <TableCell component="th" scope="row">
-                                        Pileta
-                                    </TableCell>
-                                    <TableCell align="right">26/06/2021</TableCell>
-                                    <TableCell align="right"><Button variant="contained">Cancelar</Button></TableCell>
-                                </TableRow> */}
-
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
+                <BookingsDone
+                    handleCancelBooking={handleCancelBooking}
+                />
             </div>
 
             <div className={classes.reglamento}>

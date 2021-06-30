@@ -20,8 +20,6 @@ function UserExpensesDetail(props) {
 
   console.log(props)
 
-  const filteredComplaints = useSelector(state => state.complaintsReducer.filteredComplaints)
-  const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
   const urlPayment = useSelector(state => state.paymentsReducer.urlPayment)
   const dispatch = useDispatch();
 
@@ -51,7 +49,8 @@ function UserExpensesDetail(props) {
       month: monthSpanish || expense.moth,
       year: expense.year,
       amount: `${new Intl.NumberFormat('es-AR', {currency: 'ARS', style: 'currency'}).format(expense.amount)}`,
-      status: expense.status
+      status: expense.status,
+      createdAt: expense.createdAt
     }
   })
 
@@ -73,6 +72,7 @@ function UserExpensesDetail(props) {
   };
   const columns = [
     { field: 'year', headerName: 'Año', flex: 1},
+    { field: 'createdAt', headerName: 'createdAt', flex: 1, hide: true},
     { field: 'month', headerName: 'Mes', flex: 1 },
     { field: 'amount', headerName: 'Monto', flex: 1 },
     { field: 'status', headerName: 'Estado', flex: 1 },
@@ -80,7 +80,7 @@ function UserExpensesDetail(props) {
       if(params.row.status === "Adeudada"){
         console.log(params)
         return (
-          <Button color="secondary" onClick={() => handleEventClick (
+          <Button variant="contained" color="secondary" onClick={() => handleEventClick (
             `${JSON.parse(localStorage.getItem('profile')).name} - Dpto: ${props.apartment}
             ${params.row.month}-${params.row.year}`,
              params.row.amount)}>
@@ -156,7 +156,13 @@ function UserExpensesDetail(props) {
       <div className= {styles.contSelectsComplaintsTable}>
       </div>
       <div style={{ display: 'flex', height: '100%' }}>
-        <DataGrid rows={complaints} columns={columns} pageSize={5} />
+        <DataGrid sortModel={[
+    {
+      field: 'createdAt',
+      sort: 'desc',
+    },
+  ]}
+  rows={complaints} columns={columns} pageSize={5} />
       </div>
     </div>
     </ThemeProvider>

@@ -26,6 +26,7 @@ import moment from "moment";
 import { makeStyles } from '@material-ui/core';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SubjectIcon from '@material-ui/icons/Subject';
+import reclamos from '../../../../utils/reclamo.jpg'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -242,7 +243,7 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
 
     //funcion para mostrar la imagen precargada
     function renderImg() {
-        if (!complaints.image) return PhotoCamera;
+        if (!complaints.image) return reclamos;
         else return URL.createObjectURL(complaints.image);
     }
     
@@ -387,8 +388,9 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
                         <div className={classes.right}>
                             <div className={classes.item}>
                                 <img
+                                    
                                     className={classes.img}
-                                    alt="Building pic"
+                                    alt="Reclamos"
                                     src={renderImg()}
                                 />
                                 <IconButton color="primary" variant="contained" component="label">
@@ -414,7 +416,7 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
                     </form>
                 </div>
             </ThemeProvider>
-            );
+            
 
 
         </div>

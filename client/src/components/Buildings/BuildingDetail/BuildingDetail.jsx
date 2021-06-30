@@ -32,7 +32,7 @@ function BuildingDetail(props) {
                     <h1>
                         Gastos
                     </h1>
-                    <Link to="/spendings/board" className="link">
+                    <Link to={`/spendings/newSpending/${buildingId}`} className="link">
                         <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
                             <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                         </Button>
@@ -96,7 +96,7 @@ function BuildingDetail(props) {
                     <h1>
                         Calendario Alertas
                     </h1>
-                    <Link to="/alerts" className="link">
+                    <Link to={`/alertsAdd/${buildingId}`} className="link">
                         <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px'}}>
                             <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                         </Button>

@@ -76,7 +76,7 @@ const ApartmentList = ({buildingId}) => {
 			</div>
 			<Container style={{height: 400, width: '100%'}}>
 				<Container style={{display: 'flex', height: '100%'}}>
-					<DataGrid style={{border: " 4px solid black", width:'100%'}}rows={apartments} columns={columns} />
+					<DataGrid style={{border: " 4px solid black", width:'100%'}}rows={apartments} columns={columns} pageSize={5}/>
 				</Container>
 			</Container>
 		</div>

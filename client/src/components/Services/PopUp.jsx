@@ -5,6 +5,7 @@ import { getIdUser } from '../../redux/logging/loggingActions';
 import { addRating, putRating, deleteRating } from '../../redux/ratings/ratingsAction';
 import { getServicesBuilding } from '../../redux/services/servicesAction';
 import { Button } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Services.css';
 
 
@@ -18,34 +19,41 @@ export default function PopUp(props) {
     const userInfo = {id: userDetail.id}
     const current = JSON.parse(localStorage.getItem('profile')).token;
     const Rating = props.service.ratings.find(e => e.userId === userInfo.id)
+    const[loading, setLoading] = useState(false)
 
     /* useEffect(() => {
         dispatch(getIdUser(current))
     }, [dispatch]) */
 
     const handleScore = () => {
+        setLoading(true)
         dispatch(addRating({rating: rating, serviceId: props.service.id, userId: userInfo.id}))
         setTimeout(() => {
             dispatch(getServicesBuilding(props.building))
+            setLoading(false)
             props.setDisplay(false)
         }, 2000)
     }
 
     const handleEdit = () => {
+        setLoading(true)
         dispatch(putRating({
             id: Rating.id,
             rating: rating
         }))
         setTimeout(() => {
             dispatch(getServicesBuilding(props.building))
+            setLoading(false)
             props.setDisplay(false)
         }, 2000)
     }
 
     const handleDelete = () => {
+        setLoading(true)
         dispatch(deleteRating(Rating.id))
         setTimeout(() => {
             dispatch(getServicesBuilding(props.building))
+            setLoading(false)
             props.setDisplay(false)
         }, 2000)
     }
@@ -99,11 +107,17 @@ export default function PopUp(props) {
                 {
                     (props.service.ratings.length === 0 || !Rating) ?
                     (<div>
-                        <Button style={{fontWeight: 1000, marginTop: 25, marginBottom: 25}} color="secondary" onClick={handleScore} variant="contained">Puntuar</Button>
+                        {loading ? <CircularProgress style={{marginTop:10}} color="secondary" /> :
+                        <Button style={{fontWeight: 1000, marginTop: 25, marginBottom: 25}} color="secondary" onClick={handleScore} variant="contained">Puntuar</Button>}
                     </div>) :
                     (<div>
+                        {
+                        loading ? <CircularProgress style={{marginTop:10}} color="secondary" /> :
+                         <>
                         <Button style={{fontWeight: 1000, marginTop: 25, marginBottom: 25}} color="secondary" onClick={handleEdit} variant="contained">Editar</Button>
                         <Button style={{fontWeight: 1000, marginTop: 25, marginBottom: 25, marginLeft: 30}} color="secondary" onClick={handleDelete} variant="contained">Eliminar</Button>
+                        </>
+                        }
                     </div>)
                 }
             </div>

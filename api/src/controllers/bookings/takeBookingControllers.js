@@ -17,7 +17,14 @@ module.exports = async (req, res, next) => {
 				},
 			}
 		);
-		return res.json(booking).status(200);
+
+		const bookingsList = await Booking.findAll({ 
+			where: {
+				userId: userId
+			}
+		})
+
+		return res.json(bookingsList).status(200);
 	} catch (err) {
 		/*  console.error(err); */
 		next(err);

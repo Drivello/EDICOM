@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   postSpending,
   putSpending,
@@ -13,10 +12,11 @@ import { Link } from "react-router-dom";
 import "./form.css";
 import {
   Domain,
-  Room,
-  LocationCity,
   Receipt,
   ListAlt,
+  Event,
+  Loyalty,
+  AttachMoney,
 } from "@material-ui/icons";
 import {
   InputLabel,
@@ -40,6 +40,7 @@ import { MONTHS } from "../../utils/constant";
 
 const Form = (props) => {
   const history = useHistory();
+  const {buildingId} = useParams()
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,31 +70,31 @@ const Form = (props) => {
   // console.log("buildingArray", buildingArray  )
   // console.log("-----------------------------------------------------")
 
+
   useEffect(() => {
     dispatch(getBuildings());
     dispatch(totalSpending());
     dispatch(getInvoicedExpenses());
   }, [dispatch]);
+  
+ 
+  let newSpending = {date: new Date(),
+  building: buildingId || "",
+  concept: "",
+  supplier: "",
+  details: "",
+  amount: 0,};  
 
-  let newSpending = {};  
   const { id } = useParams()
 
-  if (props.match.path === "/spendings/newSpending") {
-    newSpending = {
-      date: new Date(new Date()),
-      // date: moment(new Date(new Date())).format("L"),
-      building: "",
-      concept: "",
-      supplier: "",
-      details: "",
-      amount: 0,
-    };
-  } else {
+  if (!props.match.path === "/spendings/newSpending" && !buildingId) {
     if(totalSpend){
       newSpending = {
-
-        building: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
-        && totalSpend.filter((elem) => elem.id === parseInt(id))[0].buildingId),
+        building: totalSpend && (totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0] && totalSpend.filter(
+            (elem) => elem.id === parseInt(id)
+          )[0].buildingId),
   
         date: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
         && totalSpend.filter((elem) => elem.id === parseInt(id))[0].date),
@@ -111,12 +112,11 @@ const Form = (props) => {
         && totalSpend.filter((elem) => elem.id === parseInt(id))[0].amount),
       };
     }
-    
   }
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
-  const [selectedBuild, setSelectedBuild] = useState({ id: [] });
+  const [selectedBuild, setSelectedBuild] = useState({ id: buildingId || [] });
 
   // console.log('----------------------------------')
   // console.log('spending', spending) 
@@ -179,7 +179,7 @@ const Form = (props) => {
   }
 
   const handleUpdate = async (e) => {
-    if(spending.building === 0 || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || spending.amount === NaN){
+    if(spending.building === 0 || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || isNaN(spending.amount)){
       swal('Debe llenar todos los campos', 'Por favor reviselos!', 'warning');
     } 
     else {
@@ -198,7 +198,7 @@ const Form = (props) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if( spending.building === null || spending.building === "" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || spending.amount === NaN){
+    if( spending.building === null || spending.building === "" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || isNaN(spending.amount)){
       return swal('Faltan agregar datos', 'Por favor revise los campos!', 'warning');
     }
     // if (spending.supplier === "")
@@ -238,7 +238,6 @@ const Form = (props) => {
       history.goBack();
     }
 
-
   return (
     <ThemeProvider theme={theme}>
       <div className="mainContainer">
@@ -246,7 +245,7 @@ const Form = (props) => {
           <Container>
             <div className="componentHeading1">
               <h1>
-                Agregar o Modificar Gasto:
+              {props.match.path === "/spendings/newSpending" ? 'Agregar gasto' : 'Modificar gasto'}
               </h1>
             </div>
           </Container>
@@ -277,7 +276,9 @@ const Form = (props) => {
                     id="building"
                     value={spending.building}
                   >
-                    <option value="0"> Edificio </option>
+                    <option disabled value="">
+                      Seleccione un edificio
+                    </option>
 
                     {buildingArray && buildingArray.length > 0
                       ? buildingArray.map((building) => {
@@ -299,7 +300,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Domain fontSize="large" />
+                  <Event fontSize="large" />
                 </Grid>
                 <Grid item>
 
@@ -331,7 +332,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <Room fontSize="large" />
+                  <ListAlt fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -352,7 +353,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <LocationCity fontSize="large" />
+                  <Loyalty fontSize="large" />
                 </Grid>
                 <Grid item>
                   <TextField
@@ -376,7 +377,7 @@ const Form = (props) => {
                 className="element"
               >
                 <Grid item>
-                  <ListAlt fontSize="large" />
+                  <AttachMoney fontSize="large" />
                 </Grid>
                 <Grid item style={{ width: "80%" }}>
                   <TextField
@@ -427,7 +428,7 @@ const Form = (props) => {
               alignItems="flex-start"
             >
               <Grid item>
-                {props.match.path === "/spendings/newSpending" ? (
+                {(props.match.path === "/spendings/newSpending" || buildingId) ? (
                   <Link to={"./board"}>
                     <Button
                       style={{ fontWeight: 1000 }}
@@ -446,7 +447,7 @@ const Form = (props) => {
                       color="secondary"
                       type="button"
                     >
-                      Cancel
+                      Cancelar
                     </Button>
                     <Button
                       style={{ fontWeight: 1000 }}
@@ -478,7 +479,7 @@ const Form = (props) => {
                       style={{ fontWeight: 1000 }}
                       onClick={back}
                     >
-                      Cancel
+                      Cancelar
                     </Button>
                     <Button
                       className={classes.margin}
