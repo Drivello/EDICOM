@@ -49,7 +49,7 @@ function UserComplaints({ complaints }) {
     return (
         <ThemeProvider theme={theme}>
             <h2>Mis reclamos</h2>
-            <Link to={`/public/AddComplaints/${currentUserData.id}`}>
+            <Link to={`/public/AddComplaints/${currentUserData?.id}`}>
                 <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '140px',marginBottom:'60px',marginTop:'-50px'}}>
                     <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
                 </Button>

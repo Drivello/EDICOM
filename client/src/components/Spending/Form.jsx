@@ -77,18 +77,20 @@ const Form = (props) => {
 
   let newSpending = {};  
   const { id } = useParams()
+  const {buildingId} = useParams()
 
-  if (props.match.path === "/spendings/newSpending") {
+  if (props.match.path === "/spendings/newSpending" || buildingId) {
     newSpending = {
       date: new Date(new Date()),
       // date: moment(new Date(new Date())).format("L"),
-      building: "",
+      building: buildingId || "",
       concept: "",
       supplier: "",
       details: "",
       amount: 0,
     };
-  } else {
+  } 
+  else {
     if(totalSpend){
       newSpending = {
 
@@ -427,7 +429,7 @@ const Form = (props) => {
               alignItems="flex-start"
             >
               <Grid item>
-                {props.match.path === "/spendings/newSpending" ? (
+                {(props.match.path === "/spendings/newSpending" || buildingId)? (
                   <Link to={"./board"}>
                     <Button
                       style={{ fontWeight: 1000 }}

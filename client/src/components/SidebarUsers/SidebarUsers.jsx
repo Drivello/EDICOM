@@ -40,7 +40,7 @@ export default function Sidebar(props) {
     });
 
     const current = JSON.parse(localStorage.getItem('profile'))
-    
+    const userLogged = useSelector(state => state.userReducer.userDetail);
     const [currentUser, setCurrentUser] = useState(current);
 
     useEffect(() => {
@@ -92,7 +92,7 @@ export default function Sidebar(props) {
                         >
                             <MenuIcon style={{ color: "#00ff7f" }} />
                         </IconButton>
-                        <Link to="/public">
+                        <Link to={`/public/${currentUserData?.id}`}>
                             <h1 className="edicomLogoContainer">
                                 <img src={`${window.location.origin}/assets/logo-Edicom-negative.png`} alt="Edicom" className="edicomLogo" />
                             </h1>
@@ -153,7 +153,7 @@ export default function Sidebar(props) {
 
                     <List>
 
-                        <Link to={`/public/${currentUser.id}`} className='link'>
+                        <Link to={`/public/${userLogged?.id}`} className='link'>
                             <ListItem button key={'Amenities'} style={{ marginTop: '-20px' }} >
                                 <ListItemIcon><HomeIcon style={{ color: "#00ff7f" }} /></ListItemIcon>
                                 <ListItemText className='fontColor' primary={'Inicio'} />
