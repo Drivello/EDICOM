@@ -36,15 +36,16 @@ const ApartmentList = ({buildingId}) => {
 	});
 
 	const columns = [
-		{field: 'id', headerName: '#', width: 90},
-		{field: 'buildingName', headerName: 'Edificio', width: 150},
-		{field: 'cata_apartment', headerName: 'Un Catastral', width: 150},
-		{field: 'number_apartment', headerName: 'N° Departamento', width: 150},
-		{field: 'mt2', headerName: 'Mts2', width: 150},
-		{field: 'state', headerName: 'Estado', width: 150},
+		{field: 'id', headerName: '#', flex: 1.5, hide: true},
+		{field: 'buildingName', headerName: 'Edificio', flex: 3},
+		{field: 'cata_apartment', headerName: 'Un Catastral', flex:2},
+		{field: 'number_apartment', headerName: 'N° Departamento', flex: 2},
+		{field: 'mt2', headerName: 'Mts2', flex: 2},
+		{field: 'state', headerName: 'Estado', flex: 2},
 		{
 			field: 'Editar',
 			headerName: 'EDITAR',
+			flex: 1.5,
 			sortable: false,
 			width: 100,
 			disableClickEventBubbling: true,
@@ -73,9 +74,9 @@ const ApartmentList = ({buildingId}) => {
 					</Button>
 				</Link>
 			</div>
-			<Container style={{height: 400, width: '80%'}}>
+			<Container style={{height: 400, width: '100%'}}>
 				<Container style={{display: 'flex', height: '100%'}}>
-					<DataGrid style={{border: " 4px solid black", width:'100%'}}rows={apartments} columns={columns} />
+					<DataGrid style={{border: " 4px solid black", width:'100%'}}rows={apartments} columns={columns} pageSize={5}/>
 				</Container>
 			</Container>
 		</div>

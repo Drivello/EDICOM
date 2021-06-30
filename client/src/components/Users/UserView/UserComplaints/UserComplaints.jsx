@@ -6,6 +6,7 @@ import { DataGrid, GridRowParams } from '@material-ui/data-grid';
 import { Button, Box } from '@material-ui/core';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import theme from '../../../themeStyle';
+import AddIcon from '@material-ui/icons/Add';
 
 function UserComplaints({ complaints }) {
     console.log(complaints)
@@ -43,9 +44,16 @@ function UserComplaints({ complaints }) {
         }
     })
 
+    const currentUserData = useSelector(state => state.userReducer.userDetail);
+
     return (
         <ThemeProvider theme={theme}>
             <h2>Mis reclamos</h2>
+            <Link to={`/public/AddComplaints/${currentUserData?.id}`}>
+                <Button variant="contained" color="secondary" style={{minWidth:'30px',maxWidth:'30px',minHeight:'30px',maxHeight:'30px', marginLeft: '140px',marginBottom:'60px',marginTop:'-50px'}}>
+                    <AddIcon style={{ fontSize: 25, color: "#212121" }}/>
+                </Button>
+            </Link>
             <div style={{ height: 400, width: '100%' }}>
                 <Box display="flex" justifyContent="center" height="100%" border={0}>
                     <DataGrid columns={columns} rows={complaintsData} pageSize={5} />

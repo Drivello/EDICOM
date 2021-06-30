@@ -41,17 +41,17 @@ export function getAllUsersForList() {
 
 export function createUser(user) {
 	return function (dispatch) {
-		return axios
-			.post(`http://localhost:3001/users/`, user)
-			.then(res => {
-				console.log('respuesta exitosa', res)
+		return axios.post(`http://localhost:3001/users/`, user).then(
+			res => {
+				console.log('respuesta exitosa', res);
 				dispatch({type: CREATE_USER, payload: res.data});
 			},
 			err => {
-				return new Error(err)
-				console.log('err.response', err.response)
-				dispatch({type: ERR_CREATE_USER})
-			});
+				return new Error(err);
+				console.log('err.response', err.response);
+				dispatch({type: ERR_CREATE_USER});
+			}
+		);
 	};
 }
 
