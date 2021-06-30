@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {makeStyles, Grid, Button, TextField, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
-import { MeetingRoom, Person, Email, VpnKey, Phone } from '@material-ui/icons';
+import { Person, Email, VpnKey, Phone } from '@material-ui/icons';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import {getAllApartments} from '../../../redux/apartments/apartmentsActions'
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme)=>({
 	}
 }));
 
-const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
+const CreateUserForm = ({ error, setError, input, setInput, allBuildings, handleSubmit }) => {
 	const { allApartments } = useSelector( state => state.apartmentReducer);
 	
 	const dispatch = useDispatch();
@@ -36,20 +36,14 @@ const CreateUserForm = ({ input, setInput, allBuildings, handleSubmit }) => {
 	const regOnlyNumbers = new RegExp('^[0-9]+$'); //just numbers test
 	const regOnlyletters = new RegExp(/^[a-zA-Z\s]+$/)
 
-	const [error, setError] = useState({//Control the error red border of the inputs
-		name: false,
-        email: false,
-		password: false,
-		contact: false,
-        isDeleted:false
-    })
+
 	const [helperText, setHelperText] = useState({//Control the warning message
 		name: "Ingrese un Nombre",
         email: "Ingrese un Correo",
         password: "Ingrese un Password",
 		contact: "Numero de Telefono",
         isDeleted:"Ingrese un is deleted"
-    })
+    }) 
 
 	useEffect(() => {
 		Validate("name")

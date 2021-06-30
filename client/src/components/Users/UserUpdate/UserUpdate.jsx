@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Button, TextField, makeStyles,Grid, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { Person, Email, Phone } from '@material-ui/icons';
 import { getUser, updateUser } from '../../../redux/users/userActions';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 
@@ -57,7 +57,7 @@ export function UserUpdate() {
 
 	useEffect(() => {
 		dispatch(getUser(id))
-	},[])
+	},[dispatch])
     useEffect(() => {
 
     },[input,setInput])
@@ -149,40 +149,9 @@ export function UserUpdate() {
             swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
 		}
 
-
-		/* if (input.name !== "" && input.email !== "" && input.contact !== "") {
-			setError({
-				name: false,
-				email: false,
-				contact: false,
-				isDeleted: false
-			})
-			let body = {
-				id: input.id,
-				name: input.name,
-				email: input.email,
-				contact: input.contact,
-				isDeleted: input.isDeleted
-
-			}
-			dispatch(updateUser(body));
-		swal('Usuario actualizado exitosamente', "Gracias!", "success");
-		//add redirect
-		//history.push('/userDetail')
-		history.goBack()
-		
-		} else {
-			if (input.name === "") setError({ ...error, name: true });
-            if (input.email === "") setError({ ...error, email: true });
-            if (input.contact === "") setError({ ...error, contact: true });
-            swal("Debe completar el nombre, email y numero de contacto", "Por favor revise los datos!", "warning");
-		
-		} */
-		
 	} 
 
     const handleRadio = function (e) {
-		console.log(e.target.value)
         setInput({
             ...input,
             isDeleted: e.target.value === "BANNED" ? true : false,
