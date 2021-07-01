@@ -16,9 +16,12 @@ import moment from 'moment';
 
 export const BookingsDone = ( {handleCancelBooking} ) => {
     
+    const { takedBookings } = useSelector(state => state.bookingReducer)
     const { allBookings } = useSelector((state) => state.bookingReducer)
     const { Amenities } = useSelector(state => state.amenitiesReducer)
     const { userDetail } = useSelector(state => state.userReducer)
+
+    console.log('takedBookings', takedBookings)
 
     const classes = useStyles();
 
@@ -39,26 +42,23 @@ export const BookingsDone = ( {handleCancelBooking} ) => {
                     <TableBody>
                         {/* {rows.map((row) => ( */}
                         {
-                            allBookings && allBookings?.map((booking, i) => {
-                                if (booking.userId === userDetail?.id) {
-                                    return (
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">
-                                                {Amenities && Amenities?.map((amenity) => {
-                                                    return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
+                            takedBookings?.map((booking, i) => {
+                                return (
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            {Amenities && Amenities?.map((amenity) => {
+                                                return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
                                                 })
-
-                                                }
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {moment(booking.start).format('LLL')}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                }
+                                            }
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {moment(booking.start).format('LLL')}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
+                                        </TableCell>
+                                    </TableRow>
+                                )
                             })
 
                         }
