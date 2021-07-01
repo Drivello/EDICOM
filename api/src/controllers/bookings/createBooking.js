@@ -35,7 +35,6 @@ module.exports = async (req, res, next) => {
 
 		const bookingPerDay = Math.floor((timeEnd - timeStart) / (duration));
 
-		console.log('bookingPerDay',bookingPerDay);
 		// day.setDate(day.getDate() + 1);
 		let bookingInit = dateStart;
 
@@ -53,15 +52,10 @@ module.exports = async (req, res, next) => {
 		let newBooking;
 
 		for (let i = 0; i < totalDays; i++) {
-			console.log('entro al primeerrrrr FORRRRRRRRR');
 
 			for (let j = 0; j < bookingPerDay; j++) {
 
 				for(let k = 0; k < quota ; k++){
-
-					console.log(
-						'-------------------- estoy creando un nuevo booking ------------------------'
-					);
 	
 					newBooking = await Booking.create({
 						start: bookingInit,
@@ -69,7 +63,6 @@ module.exports = async (req, res, next) => {
 					});
 					await newBooking.setAmenity(amenity);
 	
-					console.log('booking', newBooking);
 				}
 
 				bookingInit.setHours(

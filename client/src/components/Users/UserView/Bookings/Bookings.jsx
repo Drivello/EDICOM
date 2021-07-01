@@ -154,9 +154,8 @@ const Bookings = () => {
         })
     }
     const handleCancelBooking = (bookingId) => {
-        swal("El turno se ha cancelado", '', "error")
-
         dispatch(cancelBooking(bookingId))
+        swal("El turno se ha cancelado", '', "error")
     }
     const classes = useStyles();
 
@@ -245,39 +244,6 @@ const Bookings = () => {
                                         }
                                     })
                                 }
-
-                                {/*
-                                    Amenities && Amenities?.map((amenity, i) => {
-                                        
-                                        return (
-                                            <TableRow >
-                                                <TableCell component="th" scope="row">
-                                                    {amenity.amenity_type}
-                                                </TableCell>
-                                                <TableCell align="right">{
-                                                    allBookings && allBookings?.map((booking, idx) => { 
-                                                    return (
-                                                        <select name="menu">
-                                                            <option>{moment(booking.start).format('LT')}</option>
-                                                        </select>                                                                                                            
-                                                    )
-                                                })
-                                                }</TableCell>
-                                                <TableCell align="right">
-                                                    <Button variant="contained">Reservar</Button>
-
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    })
-                                */}
-
-
-
-                                {/* allBookings && allBookings?.map((booking, i) => {
-                                        if(booking.userId === idUsuarioLogeado) */}
-
-
                             </TableBody>
                         </Table>
                     </TableContainer>
