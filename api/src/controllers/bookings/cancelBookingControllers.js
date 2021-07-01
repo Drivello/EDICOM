@@ -22,15 +22,12 @@ module.exports = async (req, res, next) => {
 			},
 		)
 
-		console.log('booking', booking)
-
 		const bookingsList = await Booking.findAll({ 
 			where: {
 				userId: user
 			}
 		})
 
-		console.log('bookingsList', bookingsList)
 
 		return res.json(bookingsList).status(200);
 	} catch (err) {

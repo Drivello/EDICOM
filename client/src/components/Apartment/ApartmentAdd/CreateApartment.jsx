@@ -38,8 +38,27 @@ const CreateApartment = () => {
 	const handleSubmit = e => {
 
 		if (Object.values(input).every(field => field !== '') && Object.values(error).every(value => value === false)) {
-			swal('Departamento Agregado Exitosamente')
-			dispatch(createApartment(input));
+			// swal('Departamento Agregado Exitosamente')
+			const actionCreateApartment = dispatch(createApartment(input));
+
+			actionCreateApartment.then((res) => {
+				
+				console.log(res);
+
+				if(res instanceof Error) {
+					swal('No se cargó el dpto', 'Revise que ese numero de dpto no esté creado previamente', 'warning')					
+				}
+				else{
+					console.log("Creo el dpto bien")
+					swal('Departamento creado exitosamente', "Gracias!", "success")
+					history.goBack()
+				}
+			},
+			(err) => {
+				console.log(err)
+				swal('Creación fallida', 'Revise que ese numero de dpto no esté creado previamente', 'warning')
+			})
+
 			history.goBack()
 		} else {
 			swal('DEBE COMPLETAR TODOS \n LOS CAMPOS CORRECTAMENTE','','error')

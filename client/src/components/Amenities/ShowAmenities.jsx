@@ -68,7 +68,7 @@ const ShowAmenities = () => {
 	 }
 
 	const columns = [
-		{field: 'nameBuilding', headerName: 'Edificio', flex: 3.5},
+		{field: 'nameBuilding', headerName: 'Edificio', flex: 3.0},
 		{field: 'amenity_type', headerName: 'Tipo', flex: 3,
 		renderCell: params => {
 			return (
@@ -78,8 +78,7 @@ const ShowAmenities = () => {
 			);
 		},
 	},
-		{field: 'quantity', headerName: 'Cantidad', flex: 2.5},
-		{field: 'capacity', headerName: 'Capacidad', flex: 2.5},
+		{field: 'capacity', headerName: 'Turnos disponibles', flex: 3.0},
 		{
 			field: 'addBooking', headerName: 'Agregar Turnos', flex: 3, sortable: false, renderCell: params => {
 				return (

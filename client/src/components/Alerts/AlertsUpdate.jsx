@@ -16,7 +16,7 @@ import {
     getBuildings
 } from '../../redux/building/buildingActions';
 import { findAlert, deleteAlert } from "../../redux/alerts/alertActions"
-
+import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
 
 const AlertsUpdate = (props) => {
     const date = new Date;
@@ -108,8 +108,9 @@ const AlertsUpdate = (props) => {
                 concept: input.concept,
                 details: input.detail,
                 importance: input.important}})))
-            .then(subscriptions !== null ? swal("Se ha modificado la alerta!", "Gracias!", "success") : swal("Alerta no creada!", "Intente de nuevo!", "warning"))
+            .then(subscriptions !== null ? swal("Se ha modificado la alerta!", "Gracias!", "success") : swal("Alerta no modificada!", "Intente de nuevo!", "warning"))
             .then(subscriptions !== null && history.goBack())
+            dispatch(getAlerts());
         } else {
             if (input.building === "") setError({ ...error, building: true });
             if (input.important === "") setError({ ...error, important: true });
@@ -122,6 +123,7 @@ const AlertsUpdate = (props) => {
         dispatch(deleteAlert(id))
                 .then(swal("Se ha eliminado la alerta!", "Gracias!", "success"))
                 .then(history.goBack())
+                dispatch(getAlerts());
     }
 
     const handleChange = (e, change) => {

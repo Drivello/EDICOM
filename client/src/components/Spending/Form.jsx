@@ -78,23 +78,23 @@ const Form = (props) => {
   }, [dispatch]);
   
  
-  let newSpending = {date: new Date(),
-  building: buildingId || "",
-  concept: "",
-  supplier: "",
-  details: "",
-  amount: 0,};  
+  let newSpending = {
+    date: new Date(),
+    building: buildingId || "",
+    concept: "",
+    supplier: "",
+    details: "",
+    amount: 0
+  }  
 
   const { id } = useParams()
 
-  if (!props.match.path === "/spendings/newSpending" && !buildingId) {
+  if (!props.match.path === "/spendings/newSpending") { //&& !buildingId
+    console.log("entra en no newSpending  ")
     if(totalSpend){
       newSpending = {
-        building: totalSpend && (totalSpend.filter(
-            (elem) => elem.id === parseInt(id)
-          )[0] && totalSpend.filter(
-            (elem) => elem.id === parseInt(id)
-          )[0].buildingId),
+        building: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] && totalSpend
+          .filter((elem) => elem.id === parseInt(id))[0].buildingId),
   
         date: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
         && totalSpend.filter((elem) => elem.id === parseInt(id))[0].date),
@@ -113,6 +113,9 @@ const Form = (props) => {
       };
     }
   }
+
+  console.log('++++++++++++++++++++++++++++++++++++')
+  console.log('newSpending', newSpending)
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);

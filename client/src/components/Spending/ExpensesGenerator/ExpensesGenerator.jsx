@@ -4,7 +4,7 @@ import { SPANISH_MONTHS } from '../../../utils/constant'
 import ControlledOpenSelect from './ControlledOpenedSelect'
 import { useDispatch } from 'react-redux'
 import { postExpenses } from '../../../redux/expenses/expensesActions'
-
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -45,7 +45,7 @@ export const ExpensesGenerator = ({visibility, changeVisibility, idBuildings, na
     const handleGenerateExpenses = (e) => {
 
         dispatch(postExpenses(data.idBuildings, data.month, data.year))
-        alert("expensas generadas")
+        swal('Expensas generadas correctamente', "Gracias!", "success");
         changeVisibility(!visibility)
     }
 

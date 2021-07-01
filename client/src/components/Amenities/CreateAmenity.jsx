@@ -19,7 +19,7 @@ const CreateAmenity = () => {
 
 	const [input, setInput] = useState({
 		amenity_type: '',
-		quantity: '',
+		quantity: '1',
 		capacity: '',
 		amenity_detail: '',
 		building: '',

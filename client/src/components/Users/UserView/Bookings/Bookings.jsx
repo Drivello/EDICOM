@@ -207,7 +207,7 @@ const Bookings = () => {
                                                         {amenity.amenity_type}
                                                     </TableCell>
                                                     <TableCell align="right">
-                                                    <InputLabel id="demo-controlled-open-select-label">Seleccionar Turno</InputLabel>
+                                                    <InputLabel id="demo-controlled-open-select-label"></InputLabel>
                                                         <Select
                                                             className={classes.select}
                                                             labelId={amenity.amenity_type}
@@ -227,7 +227,7 @@ const Bookings = () => {
                                                                                 key={booking.id}
                                                                                 name={booking.id}
                                                                                 value={booking.id}
-                                                                            >{` ${amenity.id} ${moment(booking.start).format('LLL')} ${booking.amenityId}`}
+                                                                            >{`${moment(booking.start).format('LLL')}`}
                                                                             </MenuItem>
                                                                                                                                                   
                                                                         )

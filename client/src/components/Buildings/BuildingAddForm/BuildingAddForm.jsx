@@ -169,6 +169,7 @@ function BuildingAddForm() {
             image: '',
         });
         dispatch(postBuilding(formData))
+        .then(dispatch(getBuildings()))
         .then(swal("Edificio Creado!", "Gracias!", "success"))
         .then(history.goBack())
     }
@@ -320,7 +321,7 @@ function BuildingAddForm() {
                             <Button variant="contained" color="secondary" onClick={handleSubmit} style={{ fontWeight: 1000 }}>
                                 Confirmar
                             </Button>
-						    <Button style={{ fontWeight: 1000 }} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
+						    <Button style={{ fontWeight: 1000, marginLeft: 20 }} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
                         </div>
                     </div>
                 </form>

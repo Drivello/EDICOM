@@ -72,22 +72,22 @@ conn.sync({force: true}).then(() => {
 
 	let apartment1 = Apartment.create({
 		cata_apartment: 'AK12347',
-		number_apartment: 'A1',
+		number_apartment: 'PB1',
 		mt2: 300,
 		state: 1,
 	});
 
 	let apartment2 = Apartment.create({
 		cata_apartment: 'CDMIL31',
-		number_apartment: 'A2',
-		mt2: 3010,
+		number_apartment: 'PB2',
+		mt2: 150,
 		state: 1,
 	});
 
 	let apartment3 = Apartment.create({
 		cata_apartment: 'BK5T533T80Y',
-		number_apartment: 'A3',
-		mt2: 10010,
+		number_apartment: 'PB3',
+		mt2: 1000,
 		state: 1,
 	});
 

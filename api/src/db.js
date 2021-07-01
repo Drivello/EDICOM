@@ -45,7 +45,11 @@ const { Spendings, Expenses, Apartment, Buildings, Alerts, User, Complaints, Adm
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Buildings.hasMany(Apartment);
-Apartment.belongsTo(Buildings);
+Apartment.belongsTo(Buildings, {
+	foreignKey: {
+		unique: 'compUnique',						//No se puede poner un mismo nro de dpto para un mismo edificio
+	}
+});
 
 Buildings.hasMany(Alerts);
 Alerts.belongsTo(Buildings);

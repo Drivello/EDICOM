@@ -15,7 +15,7 @@ import { getSubscriptionsBuilding } from '../../redux/subscriptions/subscription
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
-
+import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
 
 const AlertsAdd = (props) => {
     const date = new Date;
@@ -93,6 +93,7 @@ const AlertsAdd = (props) => {
                     importance: input.important}})))
                 .then(subscriptions !== null ? swal("Se ha creado la alerta!", "Gracias!", "success") : swal("Alerta no creada!", "Intente de nuevo!", "warning"))
                 .then(subscriptions !== null && history.goBack())
+                dispatch(getAlerts());
                 
         } else {
             if (input.building === "") setError({ ...error, building: true });
@@ -192,6 +193,7 @@ const AlertsAdd = (props) => {
                                 </div>
                             </div>
                         </div>
+                        <div style={{marginLeft: -100}}>
                         <Button
                             id={styles.submit}
                             style={{ fontWeight: 1000 }}
@@ -203,13 +205,14 @@ const AlertsAdd = (props) => {
                         </Button>
                         <Button 
                             id={styles.submit}
-                            style={{ fontWeight: 1000, marginTop: 50 }}
+                            style={{ fontWeight: 1000, marginLeft:20 }}
                             color="secondary"
                             variant="contained"
                             onClick={cancelHandler}
                         >
                             Cancelar
                         </Button>
+                        </div>
                     </form>
                 </div>
             </div>

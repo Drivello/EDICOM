@@ -7,6 +7,7 @@ import styles from "../Spending/board.module.css"         //AGREGAR UN CSS PROPI
 import ExpensesDetail from './ExpensesDetail'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, MenuItem, FormControl, InputLabel, Select } from "@material-ui/core";
 import { getBuildings } from "../../redux/building/buildingActions";
+import swal from 'sweetalert';
 
 
 
@@ -74,7 +75,8 @@ export default function ExpensesTable() {
    
    function handleSelectApartment (e){
       console.log(e.target.name)
-      if(building.building==="All"){alert("No se puede elegir departamento sin selecciona edificio")}
+      if(building.building==="All"){swal("No se puede elegir departamento sin selecciona edificio", "Por favor revise los datos!", "warning")}
+      
       else{
          setBuilding({ ...building, [e.target.name]: e.target.value })
       }

@@ -272,7 +272,7 @@ export function UserUpdate() {
                         <Button style={{fontWeight: 1000, marginTop: 50, marginRight: 10}} color="secondary" onClick={handleSubmit} variant="contained">Guardar Cambios</Button>
                     </Grid>
 					<Grid item>
-						<Button style={{ fontWeight: 1000, marginTop: 50}} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
+						<Button style={{ fontWeight: 1000, marginTop: 50, marginLeft: 20}} color="secondary" variant="contained" onClick={cancelHandle}>Cancelar</Button>
                     </Grid>
                 </Grid>
 			</Grid>

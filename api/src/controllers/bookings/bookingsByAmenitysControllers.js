@@ -1,25 +1,24 @@
-const { Booking } = require('../../db');
-
+const { Booking, User } = require("../../db");
 
 module.exports = async (req, res, next) => {
+   console.log(req.params);
+   const { idAmenity } = req.params;
 
-	console.log(req.params)
-	const {idAmenity} = req.params;
-
-	
-    try {
-		const bookings = await Booking.findAll(
+   try {
+      const bookings = await Booking.findAll({
+         where: {
+            amenityId: parseInt(idAmenity),
+         },
+         include: [
             {
-		    	where: {
-                    amenityId: parseInt(idAmenity)
-                },
-		    }
-        );
-		return res.json(bookings);
-	}
-    catch (error) 
-    {
-		next(error);
-		return res.json(error);
-	}
+               // Notice `include` takes an ARRAY
+               model: User,
+            },
+         ],
+      });
+      return res.json(bookings);
+   } catch (error) {
+      next(error);
+      return res.json(error);
+   }
 };

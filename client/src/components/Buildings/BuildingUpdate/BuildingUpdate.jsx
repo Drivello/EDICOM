@@ -3,7 +3,8 @@ import { useEffect, useState, React } from 'react';
 import {
     getBuildingDetail,
     putBuilding,
-    deleteBuilding
+    deleteBuilding,
+    getBuildings
 } from '../../../redux/building/buildingActions';
 import { useParams, useHistory } from 'react-router-dom';
 import { Button, TextField, Grid, IconButton } from '@material-ui/core';
@@ -286,6 +287,7 @@ function BuildingUpdate() {
 
     const deleteHandler = () => {
         dispatch(deleteBuilding(parseInt(id)))
+        .then(dispatch(getBuildings()))
         .then(swal("Edificio borrado con exito!", "Gracias!", "success"))
         .then(history.goBack())
     }
@@ -490,7 +492,7 @@ function BuildingUpdate() {
                                 Borrar Edificio
                             </Button>
                             <Button
-                                style={{ fontWeight: 1000 }}
+                                style={{ fontWeight: 1000, marginLeft: 15 }}
                                 color="secondary"
                                 variant="contained"
                                 onClick={cancelHandle}

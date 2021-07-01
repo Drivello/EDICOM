@@ -43,7 +43,7 @@ export function UpdateAmenity() {
 
 	const [input, setInput] = useState({
 		amenity_type: "",
-		quantity: "",
+		quantity: "1",
 		capacity: "",
 		amenity_detail: ""
 	})
@@ -92,14 +92,14 @@ export function UpdateAmenity() {
 	const [helperText, setHelperText] = useState({//Control the warning message
 		amenity_type: "Ingrese un Amenity",
 		quantity: "Ingrese la cantidad",
-		capacity: "Ingrese la capacidad",
+		capacity: "Cuantas personas pueden usarlo",
 		amenity_detail: "Ingrese un Detalle",
 	})
 
 	const helperInit = {
 		amenity_type: "Ingrese un Amenity",
 		quantity: "Ingrese la cantidad",
-		capacity: "Ingrese la capacidad",
+		capacity: "Cuantas personas pueden usarlo",
 		amenity_detail: "Ingrese un Detalle",
 	}
 
@@ -174,33 +174,20 @@ export function UpdateAmenity() {
 								/>
 							</div>
 							<div className={styles.item}>
-								<FormatListNumberedIcon fontSize="large" />
-								<TextField
-									variant="outlined"
-									error={error["quantity"]}
-									helperText={[helperText["quantity"]]}
-									id="quantity"
-									label="Cantidad"
-									name='quantity'
-									value={input.quantity || ''}
-									onChange={(e) => handleInputChange(e, "quantity")}
-								/>
-							</div>
-						</div>
-						<div className={styles.left}>
-							<div className={styles.item}>
 								<PeopleAltIcon fontSize="large" />
 								<TextField
 									variant="outlined"
 									error={error["capacity"]}
 									helperText={[helperText["capacity"]]}
 									id="capacity"
-									label="Capacidad"
+									label="Turnos disponibles"
 									name='capacity'
 									value={input.capacity || ''}
 									onChange={(e) => handleInputChange(e, "capacity")}
 								/>
 							</div>
+						</div>
+						<div className={styles.left}>
 							<div className={styles.item}>
 								<AssignmentIcon fontSize="large" />
 								<TextField

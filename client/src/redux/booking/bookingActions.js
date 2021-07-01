@@ -77,6 +77,6 @@ export function cancelBooking(payload) {
 
 export function filterBookingsByGroup(data) {
 	const groups = groupBy(data, 'start');
-	console.log(groups);
+	console.log(groups, "FILTER");
 	return {type: FILTER_BOOKING_GROUP, payload: groups};
 }

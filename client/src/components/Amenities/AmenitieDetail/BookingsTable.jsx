@@ -53,6 +53,7 @@ function BookingsTable(props) {
             date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
             state: stateSpanish,
             createdAt: booking.createdAt,
+            user: booking.user?.name || "Sin asignar."
          };
       });
    } else {
@@ -60,7 +61,8 @@ function BookingsTable(props) {
 
       for (const groupBooking in bookingFilter) {
          {
-            complaints.push(bookingFilter[groupBooking][0])
+            console.log({...bookingFilter[groupBooking][0], user:"Varios"}, "PUSHEO ESTO")
+            complaints.push({...bookingFilter[groupBooking][0], user:"Varios", state:"Cambiar estado"})
          }
       }
    }
@@ -71,6 +73,7 @@ function BookingsTable(props) {
       { field: "createdAt", headerName: "createdAt", flex: 1.5, hide: true },
       { field: "start", headerName: "Comienzo", flex: 1 },
       { field: "date", headerName: "Fin", flex: 1 },
+      { field: "user", headerName: "Usuario", flex: 1 },
       {
          field: "state", headerName: "Estado", flex: 1,
          renderCell: params => {

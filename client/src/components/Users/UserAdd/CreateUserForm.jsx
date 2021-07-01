@@ -312,7 +312,7 @@ const CreateUserForm = ({ error, setError, input, setInput, allBuildings, handle
                         <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={handleSubmit} variant="contained">Agregar Usuario</Button>
                     </Grid>
 					<Grid item>
-                        <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" onClick={cancelHandler} variant="contained">Cancelar</Button>
+                        <Button style={{fontWeight: 1000, marginTop: 50, marginLeft: 20}} color="secondary" onClick={cancelHandler} variant="contained">Cancelar</Button>
                     </Grid>
                 </Grid>
 			</Grid>

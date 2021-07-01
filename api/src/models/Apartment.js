@@ -15,6 +15,7 @@ module.exports = sequelize => {
 		},
 		number_apartment: {
 			type: DataTypes.STRING(20),
+			unique: 'compUnique',  
 		},
 		mt2: {
 			type: DataTypes.INTEGER,

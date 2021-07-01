@@ -42,6 +42,7 @@ export default function PopUp(props) {
                     date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
                     state: stateSpanish,
                     createdAt: booking.createdAt,
+                    user: booking.user?.name || "Sin asignar."
                 };
             });
             console.log(bookings, "bookings a agrupar")
@@ -79,6 +80,7 @@ export default function PopUp(props) {
                     date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
                     state: stateSpanish,
                     createdAt: booking.createdAt,
+                    user: booking.user?.name || "Sin asignar."
                 };
             });
             console.log(bookings, "bookings a agrupar")
@@ -116,6 +118,7 @@ export default function PopUp(props) {
                     date: moment(booking.finish).format("DD/MM/YYYY -- H:mm"),
                     state: stateSpanish,
                     createdAt: booking.createdAt,
+                    user: booking.user?.name || "Sin asignar."
                 };
             });
             console.log(bookings, "bookings a agrupar")

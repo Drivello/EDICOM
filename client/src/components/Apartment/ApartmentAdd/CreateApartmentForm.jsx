@@ -230,7 +230,7 @@ const CreateApartmentForm = ({input, setInput, error, setError, allBuildings, ha
                         <Button style={{fontWeight: 1000, marginTop: 50}} color="secondary" disabled={disableButton} onClick={handleSubmit} variant="contained">Agregar Depto</Button>
                     </Grid>
 					<Grid item>
-                        <Button style={{ fontWeight: 1000 }}
+                        <Button style={{ fontWeight: 1000, marginTop: 50, marginLeft:5 }}
                                 color="secondary"
                                 variant="contained"
                                 onClick={cancelHandle}> Cancelar </Button>

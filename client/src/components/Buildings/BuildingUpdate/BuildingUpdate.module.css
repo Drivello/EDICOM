@@ -54,6 +54,11 @@
 	margin-top: 20px;
 	font-weight: 1000;
 	margin-left: -15px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width:100%
 }
 
 .right {

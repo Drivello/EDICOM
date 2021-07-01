@@ -101,7 +101,12 @@ export function EditApartmentForm(props) {
             .then(r => {
                 swal("Departamento Modificado Exitosamente", "success")
                 history.push(`/buildingDetail/${r.data.buildingId}`)
-             } ) 
+             },
+             err => {
+                 console.log(err.response)
+                 swal("Error al modificar el dpto", "si cambia el nro de dpto verifique que elija uno desocupado", "error")
+             }
+             ) 
     }
     const handleDelete = (e, id, data) => {
         dispatch(deleteApartmentById(id))

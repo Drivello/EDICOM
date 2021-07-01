@@ -30,6 +30,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import swal from "sweetalert";
+import {ThemeProvider} from '@material-ui/core/styles';
+import theme from '../themeStyle';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         // border: 'black 2px solid'
     },
     appbar: {
-        background: 'black',
+        background: '#212121',
         border: 'black 2px solid',
         fontcolor: 'white',
         height: '70px'
@@ -76,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         /*      marginLeft:'160px', */
-        color: '#000000',
+        color: '#212121',
         fontSize: '100px',
     },
     goDown: {
@@ -102,6 +104,7 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'no-wrap',
         textAlign: 'center',
         
+        
     },
     form: {
         color: 'black',
@@ -117,7 +120,8 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#00ff7f',
-        width: '19rem'
+        width: '19rem',
+        
         
     },
     root2: {
@@ -235,6 +239,7 @@ export const Header = () => {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <div className={classes.root} id="header">
 
             <AppBar className={classes.appbar} elevation={0}>
@@ -358,5 +363,6 @@ export const Header = () => {
             </div>
 
         </div>
+        </ThemeProvider>
     )
 }
