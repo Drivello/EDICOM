@@ -18,7 +18,7 @@ import {
 import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
 
 const AlertsAdd = (props) => {
-    const date = new Date;
+    const date = new Date();
     const history = useHistory();
     const dispatch = useDispatch(); //dispatch setup
     const buildings = useSelector(state => state.buildingReducer);
@@ -63,6 +63,7 @@ const AlertsAdd = (props) => {
     });
 
     const saveHandler = () => {
+        alert(input.date === date)
         if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date >= new Date()) {
             setError({
                 date: false,
@@ -100,7 +101,7 @@ const AlertsAdd = (props) => {
             if (input.important === "") setError({ ...error, important: true });
             if (input.concept === "") setError({ ...error, concept: true });
             swal("Debe completar el concepto, la importancia y el edificio", "Por favor revise los datos!", "warning");
-            if(!(input.date >= new Date())) swal("La fecha ingresada no puede ser antes que la fecha de hoy", "Por favor revise los datos!", "warning");
+            if(input.date < new Date()) swal("La fecha ingresada no puede ser antes que la fecha de hoy", "Por favor revise los datos!", "warning");
         }
     }
 

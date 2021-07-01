@@ -97,8 +97,7 @@ export default function ExpensesTable() {
    <ThemeProvider theme={theme}>
    <div className={styles.header}>
       <h1>Expensas</h1>
-
-
+      <div id={styles.filters}>
       <FormControl style={{ width: "200px" }}>
          <InputLabel id="demo-controlled-open-select-label">
             Edificio
@@ -138,7 +137,7 @@ export default function ExpensesTable() {
                </MenuItem>
             ))}
          </Select>
-      </FormControl>
+      </FormControl></div>
 
       <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
