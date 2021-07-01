@@ -73,20 +73,23 @@ const useStyles = makeStyles((theme) => ({
         color: '#00ff7f'
     },
     container: {
-        textAlign: 'center',
-        padding: '150px'
+        padding: '150px',
     },
     title: {
         /*      marginLeft:'160px', */
         color: '#212121',
-        fontSize: '100px',
+        fontSize: '60px',
+        fontWeight: '900',
     },
     goDown: {
         color: '#00ff7f',
         fontSize: '4rem',
 
     },
-
+    flexCenter: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
     paper: {
         margin: theme.spacing(2, 3),
         display: 'flex',
@@ -98,13 +101,13 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: '#00ff7f',
+        color: '#212121',
     },
     bottonIngresar: {
         display: 'flex',
         flexWrap: 'no-wrap',
         textAlign: 'center',
-        
-        
+        alignItems: 'center',
     },
     form: {
         color: 'black',
@@ -115,14 +118,11 @@ const useStyles = makeStyles((theme) => ({
         // Fix IE 11 issue.
         // marginTop: theme.spacing(1),
         marginTop: '100px',
-        marginLeft: '1050px'
+        marginLeft: '70%'
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
         backgroundColor: '#00ff7f',
-        width: '19rem',
-        
-        
     },
     root2: {
         height: '80vh',
@@ -146,9 +146,9 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         color: 'white'
     },
-    texto:{
-        marginTop:'12px'
-    }
+    // texto:{
+    //     marginTop:'12px'
+    // }
 }));
 
 
@@ -244,20 +244,21 @@ export const Header = () => {
 
             <AppBar className={classes.appbar} elevation={0}>
                 <Toolbar className={classes.appbarWrapper}>
-                    <h2 className={classes.appbarTitle}>Edi<span className={classes.colorText}>com.</span></h2>
-            
+                    {/* <h2 className={classes.appbarTitle}>Edi<span className={classes.colorText}>com.</span></h2> */}
                     <CssBaseline />
-
-                    <div className={classes.paper}>
+                    <div className="homeHeaderBar">
+                        <h1 className="edicomLogoContainer">
+                            <img src={`${window.location.origin}/assets/logo-Edicom-negative.png`} alt="Edicom" className="edicomLogo" />
+                        </h1>
                         <div className={classes.bottonIngresar}>
                             <Avatar className={classes.avatar} onClick={handleOpen}>
                                 <LockOutlinedIcon />
                             </Avatar>
-
-                            <Typography component="h1" variant="h5" className={classes.texto} onClick={handleOpen}>
-                                Ingresar
-                            </Typography>
+                            <span onClick={handleOpen}>Ingresar</span>
                         </div>
+                    </div>
+
+                    <div className={classes.paper}>
 
 
                         <Modal
@@ -316,9 +317,8 @@ export const Header = () => {
                                         
                                         <Button
                                             type="submit"
-                                            fullWidth
                                             variant="contained"
-                                            color="primary"
+                                            color="secondary"
                                             className={classes.submit}
 
                                         >
@@ -347,15 +347,17 @@ export const Header = () => {
                     collapsedHeight={10}
                 >
                     <div className={classes.container}>
-                        <h1 className={classes.title}>Bienvenido<br />
-                            {/*  Edi<span className={classes.colorText}>com.</span> */}
-                            <img src={logoEdicom2} alt='Logo Edicom' width="400" height="145" ></img>
-                        </h1>
-                        <Scroll to='Text' smooth={true}>
-                            <IconButton>
-                                <ExpandMoreIcon className={classes.goDown} />
-                            </IconButton>
-                        </Scroll>
+                        <h2 className={classes.title}>
+                            Administrar edificios,<br />
+                            ahora es más fácil.
+                        </h2>
+                        <div className={classes.flexCenter}>
+                            <Scroll to='Text' smooth={true}>
+                                <IconButton>
+                                    <ExpandMoreIcon className={classes.goDown} />
+                                </IconButton>
+                            </Scroll>
+                        </div>
                     </div>
 
                 </Collapse>

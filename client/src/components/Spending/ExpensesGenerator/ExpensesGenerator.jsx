@@ -44,9 +44,22 @@ export const ExpensesGenerator = ({visibility, changeVisibility, idBuildings, na
 
     const handleGenerateExpenses = (e) => {
 
-        dispatch(postExpenses(data.idBuildings, data.month, data.year))
-        swal('Expensas generadas correctamente', "Gracias!", "success");
-        changeVisibility(!visibility)
+        const actionPostExpenses = dispatch(postExpenses(data.idBuildings, data.month, data.year))
+        actionPostExpenses.then((res) => {
+            if(res instanceof Error) {
+                console.log(res)
+                swal('El mes ya tiene las expensas liquidadas!', "Verifique el mes", "error");
+            }
+            else{
+                console.log(res)
+                swal('Expensas generadas correctamente', "Gracias!", "success");
+                changeVisibility(!visibility)
+            }
+
+        }, err => {
+            console.log(err);
+            swal('Expensas ya estaban liquidadas!', "Verifique el mes", "error");
+        })
     }
 
     const handleChange = (e) => {
@@ -58,7 +71,6 @@ export const ExpensesGenerator = ({visibility, changeVisibility, idBuildings, na
     }
 
     
-
     const body = (
 
         <form className={styles.modal}>

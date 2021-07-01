@@ -48,8 +48,6 @@ export function createUser(user) {
 			},
 			err => {
 				return new Error(err);
-				// console.log('err.response', err.response);
-				// dispatch({type: ERR_CREATE_USER});
 			}
 		);
 	};

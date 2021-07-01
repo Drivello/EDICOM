@@ -99,7 +99,7 @@ export function EditApartmentForm(props) {
                 headers: {'Content-Type': 'application/json'},
             })
             .then(r => {
-                swal("Departamento Modificado Exitosamente", "success")
+                swal("Departamento modificado exitosamente!", "Gracias!", "success");
                 history.push(`/buildingDetail/${r.data.buildingId}`)
              },
              err => {
@@ -133,7 +133,7 @@ export function EditApartmentForm(props) {
                         name="cata_apartment" 
                         value={apartment.cata_apartment} 
                         onChange={handleInputChange} 
-                        error={!/^[A-Za-z ,.'-]{2,20}$/.test(apartment.cata_apartment)} 
+                        error={!/^[A-Za-z0-9,.'-]{2,20}$/.test(apartment.cata_apartment)} 
                     />
                 </FormControl><br/>
                 <FormControl>

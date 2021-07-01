@@ -70,35 +70,31 @@ module.exports = async (req, res, next) => {
                     i++;                    
                 }
                 Promise.all(arrAsignedExpenses)
-                    .then(() => {
+                    .then(async () => {
                         // console.log('Segundo PromiseAll')
-                        t.commit()
-                    })
-            })
+                        await t.commit()
+                        console.log('antes de devolver un 200 de expensas generadas')
+                        return res.json(`Expensas para el mes ${MONTHS[month]} cargadas`)
+                    },
+                    async err => {
+                        await t.rollback()
+                        console.log(err)
+                        return res.status(403).json(err)
+                    }
+                    )
+            },
+                async err => {
+                    await t.rollback()
+                    console.log(err)
+                    return res.status(403).json(err)
+                }
+            )
 
-        
-        // for (const apartment of arrApartments) {
-            
-        //     Expenses.create({
-        //         month: MONTHS[month],
-        //         year: year,
-        //         amount: expenseAmount,
-        //     }, { transaction: t })
-        //     .then((expense) => {
-
-        //         apartment.addExpense(expense, { transaction: t })
-
-        //     })
-        // }
-
-        // t.commit()
-
-        return res.json(`Expensas para el mes ${MONTHS[month]} cargadas`)
     } 
     catch(err){
         await t.rollback()
-        res.json(err)
-        return console.log(err)
+        console.log(err)
+        return res.status(403).json(err)
     }
     
     // axios.get("http://localhost:3001/spendings/all")     // se puede ver de reutilizar este endpoint

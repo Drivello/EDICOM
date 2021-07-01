@@ -1,4 +1,4 @@
-const { User } = require("../../db.js");
+const { User,Admin } = require("../../db.js");
 const bcrypt = require('bcryptjs');
 
 const secret = 'test';
@@ -9,13 +9,28 @@ const { transporter } = require("../../../mailer");
 module.exports = async (req, res, next) => {
 
     let {newPass, email} = req.body;
+
+    console.log('email', email);
     
     try
     {
+        let userRegistered = await User.findOne(
+            { 
+                where: { email } 
+            }
+        );
+        if(!userRegistered){
+
+            userRegistered = await Admin.findOne(
+                { 
+                    where: { email } 
+                }
+            );
+        }     
         const hashedPassword = bcrypt.hash(newPass, 12)
         hashedPassword.then(async (newPassHashed) => {
-
-            await User.update(
+            console.log('DATOS contra ' , newPass)
+            await userRegistered.update(
                 {
                     password: newPassHashed,
                     firstLogging: false,
@@ -26,7 +41,10 @@ module.exports = async (req, res, next) => {
                     }
                 }
             );
-                
+
+           
+
+            
             return res.status(200);
         })
     }

@@ -34,11 +34,16 @@ import ComplaintsList from '../Complaints/ComplaintsList';
 import ServicesList from '../Services/Admin/ServicesList';
 import ServiceFormAdmin from '../Services/Admin/ServiceFormAdmin';
 
+
+
 function App() {
 	return (
 		<Container className="App">
 			<CssBaseline />
 			<BrowserRouter>
+
+				{/* ----------------------------Home----------------------------------- */}
+				<Route exact path="/" component={Home} />
 				{/* ----------------------------Alertas----------------------------------- */}
 				<Route exact path="/alerts" component={Alerts} />
 				<Route exact path="/alertsAdd" component={AlertsAdd} />
@@ -69,11 +74,11 @@ function App() {
 				<Route exact path="/ExpensesTable" component={Expenses} />
 				<Route exact path="/spendings/newSpending" component={Form} />
 				<Route exact path="/spendings/newSpending/:buildingId" component={Form} />
+
 				<Route
 					path="/spendings/board/:id/edit"
 					render={({match}) => <Form match={match} />}
 				/>
-				<Route exact path="/spendings/newSpending/:buildingId" component={Form} />
 
 				{/*--------------------Services--------------------------------------------------*/}
 				<Route exact path="/services" component={ServicesList} />

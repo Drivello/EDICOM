@@ -41,6 +41,7 @@ import { MONTHS } from "../../utils/constant";
 const Form = (props) => {
   const history = useHistory();
   const {buildingId} = useParams()
+  console.log('buildingId', buildingId)
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,11 +66,6 @@ const Form = (props) => {
     };
   });
 
-  // console.log("-----------------------------------------------------")
-  // console.log("totalSpend", totalSpend)
-  // console.log("buildingArray", buildingArray  )
-  // console.log("-----------------------------------------------------")
-
 
   useEffect(() => {
     dispatch(getBuildings());
@@ -89,12 +85,12 @@ const Form = (props) => {
 
   const { id } = useParams()
 
-  if (!props.match.path === "/spendings/newSpending") { //&& !buildingId
-    console.log("entra en no newSpending  ")
+  if (props.match.path !== "/spendings/newSpending" && !buildingId) {
+
     if(totalSpend){
       newSpending = {
-        building: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] && totalSpend
-          .filter((elem) => elem.id === parseInt(id))[0].buildingId),
+        building: totalSpend && totalSpend.filter((elem) => elem.id === parseInt(id))[0] && totalSpend
+          .filter((elem) => elem.id === parseInt(id))[0].buildingId,
   
         date: totalSpend && (totalSpend.filter((elem) => elem.id === parseInt(id))[0] 
         && totalSpend.filter((elem) => elem.id === parseInt(id))[0].date),
@@ -114,16 +110,12 @@ const Form = (props) => {
     }
   }
 
-  console.log('++++++++++++++++++++++++++++++++++++')
-  console.log('newSpending', newSpending)
+  
 
   //con este estado tomo el valor seleccionado
   const [spending, setSpending] = useState(newSpending);
   const [selectedBuild, setSelectedBuild] = useState({ id: buildingId || [] });
 
-  // console.log('----------------------------------')
-  // console.log('spending', spending) 
-  // console.log('----------------------------------')
 
   const handleSelect = (e) => {
     let select = document.getElementById("building");
@@ -142,7 +134,7 @@ const Form = (props) => {
 
   const handleInputChange = (e) => {
     if (e.target.name === "amount") {
-      if (numeroPositivo(e.target.value) && e.target.value) {
+      if (numeroPositivo(e.target.value)) {
         setSpending({...spending,[e.target.name]: parseInt(e.target.value)})
         setError(false)
       } 
@@ -169,7 +161,7 @@ const Form = (props) => {
 
     for (const elem of invoicedExpenses) {
       if (date.year === elem.year && date.month === elem.month) {
-        alert("No se puede cargar gastos en meses donde ya se liquidaron las expensas")
+        swal('"No se puede cargar gastos en meses donde ya se liquidaron las expensas', 'warning');
         return;
       }
     }
@@ -204,27 +196,11 @@ const Form = (props) => {
     if( spending.building === null || spending.building === "" || spending.concept=== "" || spending.supplier === "" || spending.details === "" || spending.amount <= 0 || isNaN(spending.amount)){
       return swal('Faltan agregar datos', 'Por favor revise los campos!', 'warning');
     }
-    // if (spending.supplier === "")
-    //   return swal('El campo proveedor no puede ser vacío', 'Por favor revise los campos!', 'warning');
-    // if (spending.amount === 0) return swal('El monto debe ser superior a cero', 'Por favor revise los campos!', 'warning');
-    // if (spending.concept === "") return swal('El campo concepto no puede ser vacío', 'Por favor revise los campos!', 'warning');
-      
-        await dispatch(postSpending(spending));
-        await dispatch(totalSpending());
-        await swal("Gasto Agregado!", "Gracias!", "success");
-        setSpending(
-          (newSpending = {
-            date: moment(new Date(new Date())).format("L"),
-            building: "",
-            concept: "",
-            supplier: "",
-            details: "",
-            amount: 0,
-          })
-        );
-        history.goBack();    await dispatch(postSpending(spending));
-      await swal("Gasto Agregado!", "Gracias!", "success");
-  setSpending(
+  
+    await dispatch(postSpending(spending));
+    await dispatch(totalSpending());
+    await swal("Gasto Agregado!", "Gracias!", "success");
+    setSpending(
       (newSpending = {
         date: moment(new Date(new Date())).format("L"),
         building: "",
@@ -233,13 +209,14 @@ const Form = (props) => {
         details: "",
         amount: 0,
       })
-      );
-      history.goBack();
-    };
+    );
 
-    const back = () =>{
-      history.goBack();
-    }
+    history.goBack();    
+  };
+
+  const back = () =>{
+    history.goBack();
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -395,7 +372,7 @@ const Form = (props) => {
                     onChange={handleInputChange}
                     name="amount"
                     error={error ? true : false}
-                    helperText={error ? "No se puede ingresar numeros negativos/borrar este campo" : ""}
+                    helperText={error ? "No se puede ingresar numeros negativos " : ""}
                   />
                 </Grid>
               </Grid>

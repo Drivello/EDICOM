@@ -29,6 +29,9 @@ export const postExpenses = (idBuilding, month, year) =>  {
         dispatch({
           type: POST_EXPENSES,
           // payload: res.data
+        },
+        err => {
+          return new Error(err);
         })
       })
   }
