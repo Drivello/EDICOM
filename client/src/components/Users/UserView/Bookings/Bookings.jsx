@@ -114,18 +114,18 @@ const Bookings = () => {
         dispatch(allAmenities())
     }, [dispatch])
 
-    useEffect(() => {
-        dispatch(getUser(currentUserData?.id))
-    }, [dispatch, userId])
+    // useEffect(() => {
+    //     dispatch(getUser(currentUserData?.id))
+    // }, [dispatch, userId])
 
     // useEffect(()=>{
     // },[dispatch, userDetail])
 
-    console.log('USERRRRRRRRRRRRRRRRRRRR FILTRADOS', currentUserData)
+    // console.log('USERRRRRRRRRRRRRRRRRRRR FILTRADOS', currentUserData)
 
     
 
-    console.log('apartmentDetailt aca ', apartmentDetail)
+    // console.log('apartmentDetailt aca ', apartmentDetail)
  
     // console.log('USER ID', userId)  
     // const idUsuarioLogeado = userId?.id
