@@ -9,6 +9,7 @@ const addBooking = require('../controllers/bookings/createBooking');
 const deleteBooking = require('../controllers/bookings/deleteBookingControllers');
 const takeBooking = require('../controllers/bookings/takeBookingControllers');
 const cancelBooking = require('../controllers/bookings/cancelBookingControllers');
+const takedBookings = require('../controllers/bookings/takedBookingControllers');
 
 router.use(express.json());
 
@@ -19,5 +20,6 @@ router.put('/:id', putBooking); //      get -> localhost3001/bookings/:id
 router.post('/', addBooking);
 router.put('/takeBooking/:bookingId/:userId', takeBooking);
 router.put('/cancelBooking/:bookingId', cancelBooking); //      post -> localhost3001/bookings
+router.get('/taked/:userId', takedBookings);
 
 module.exports = router;

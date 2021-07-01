@@ -145,7 +145,7 @@ export default function ExpensesTable() {
          <TableHead>
             <TableRow>
                <TableCell />
-               <TableCell>Id</TableCell>
+{/*                <TableCell>Id</TableCell> */}
                <TableCell align="right">Nº&nbsp;Catastral</TableCell>
                <TableCell align="right">Nº&nbsp;Dpto</TableCell>
                <TableCell align="right">Mt2</TableCell>

@@ -42,7 +42,7 @@ export function EditApartmentForm(props) {
 
     const [apartment, setApartment] = useState({
         cata_apartment: "",
-        mt2: "",
+        mt2: 0, //si no llega a andar se modifico esto, se puso 0 en vez de string vacio
 		number_apartment: "",
         state: 0
     })
@@ -52,13 +52,17 @@ export function EditApartmentForm(props) {
     },[dispatch, id])
 
     useEffect(() => {
-        let {cata_apartment, mt2, number_apartment, state} = apartmentDetail;
-        setApartment({
-            cata_apartment: cata_apartment, 
-            mt2: mt2,
-            number_apartment: number_apartment,
-            state: state
-        })
+        if(apartmentDetail) {
+            
+            var {cata_apartment, mt2, number_apartment, state} = apartmentDetail
+            
+            setApartment({
+                cata_apartment: cata_apartment, 
+                mt2: mt2,
+                number_apartment: number_apartment,
+                state: state
+            })
+        }
     },[apartmentDetail])
 
     const handleInputChange = function (e) {
@@ -70,6 +74,7 @@ export function EditApartmentForm(props) {
                 })
                 break;
             case "mt2":
+                //FALTA VALIDAR ACA NUMEROS NEGATIVOS
                 setApartment({
                     ...apartment,
                     mt2: e.target.value,
@@ -103,7 +108,7 @@ export function EditApartmentForm(props) {
                 history.push(`/buildingDetail/${r.data.buildingId}`)
              },
              err => {
-                 console.log(err.response)
+                 console.log(err.response) 
                  swal("Error al modificar el dpto", "si cambia el nro de dpto verifique que elija uno desocupado", "error")
              }
              ) 
@@ -111,8 +116,8 @@ export function EditApartmentForm(props) {
     const handleDelete = (e, id, data) => {
         dispatch(deleteApartmentById(id))
         .then(() =>{
-            swal("Departamento Eliminado Exitosamente", `Apartamento ${apartmentDetail.cata_apartment} Eliminado`)
-            history.push(`/buildingDetail/${apartmentDetail.buildingId}`)
+            swal("Departamento Eliminado Exitosamente", `Apartamento ${apartmentDetail?.cata_apartment} Eliminado`)
+            history.push(`/buildingDetail/${apartmentDetail?.buildingId}`)
         })
     }
     function cancelHandle (){
@@ -122,7 +127,7 @@ export function EditApartmentForm(props) {
 	return (
         <ThemeProvider theme={theme}>
 		<div className= 'extContCAF'>
-            <h1>Departamento Nº {apartmentDetail.number_apartment || ""}</h1>
+            <h1>Departamento Nº {apartmentDetail?.number_apartment || ""}</h1>
 			<FormControl className={classes.root}>
             <Grid container direction="row" justify="space-between" alignItems="center">
                 <Grid style={{marginRigth:'50px'}}>
@@ -141,6 +146,7 @@ export function EditApartmentForm(props) {
                         variant="outlined" 
                         label= "Mt2:" 
                         name="mt2" 
+                        type="number"
                         value={apartment.mt2} 
                         onChange={handleInputChange} 
                         error={!/^[+]*[-\s/0-9]{3,20}$/.test(apartment.mt2)} 

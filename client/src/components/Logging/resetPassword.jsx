@@ -67,7 +67,7 @@ const ResetPasword = () => {
          newPassword.confirmPassword.length < 6
       ) {
          return swal(
-            "Las contraseña debe tener mas de 3 caracteres.",
+            "Las contraseña debe tener mas de 6 caracteres.",
             "",
             "error"
          );
@@ -96,7 +96,7 @@ const ResetPasword = () => {
                      className={classes.paper}
                   >
                      <TextField
-                        /*  variant="outlined" */
+                        /* variant="outlined" */
                         className={(classes.margin, classes.textField)}
                         id="email"
                         name="email"
@@ -110,6 +110,7 @@ const ResetPasword = () => {
 
                   <Grid>
                      <TextField
+                        variant="outlined"
                         className={classes.margin}
                         id="newPass"
                         name="newPass"
@@ -124,6 +125,7 @@ const ResetPasword = () => {
 
                   <Grid>
                      <TextField
+                        variant="outlined"
                         className={classes.margin}
                         id="confirmPassword"
                         name="confirmPassword"

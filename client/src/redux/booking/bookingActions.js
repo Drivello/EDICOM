@@ -10,6 +10,7 @@ export const PUT_BOOKING = 'PUT_BOOKING';
 export const TAKE_BOOKING = 'TAKE_BOOKING';
 export const CANCEL_BOOKING = 'CANCEL_BOOKING';
 export const FILTER_BOOKING_GROUP = 'FILTER_BOOKING_GROUP';
+export const GET_TAKED_BOOKING_BY_ID = 'GET_TAKED_BOOKING_BY_ID';
 
 export function createBooking(booking) {
 	return async function (dispatch) {
@@ -38,6 +39,14 @@ export function getBookingById(id) {
 	return async function (dispatch) {
 		const {data} = await axios.get(`http://localhost:3001/bookings/${id}`);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
+	};
+}
+
+
+export function getTakedBookings(userId) {
+	return async function (dispatch) {
+		const {data} = await axios.get(`http://localhost:3001/bookings/taked/${userId}`);
+		dispatch({type: GET_TAKED_BOOKING_BY_ID, payload: data});
 	};
 }
 

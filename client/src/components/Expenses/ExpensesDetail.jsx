@@ -43,9 +43,9 @@ export default function ExpensesDetail(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">
+{/*           <TableCell component="th" scope="row">
             {props.row.id}
-          </TableCell>
+          </TableCell> */}
           <TableCell align="right">{props.row.cata_apartment}</TableCell>
           <TableCell align="right">{props.row.number_apartment}</TableCell>
           <TableCell align="right">{props.row.mt2}</TableCell>

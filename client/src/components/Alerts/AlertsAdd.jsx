@@ -63,7 +63,7 @@ const AlertsAdd = (props) => {
     });
 
     const saveHandler = () => {
-        if (input.concept !== "" && input.important !== "" && input.building !== "") {
+        if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date >= new Date()) {
             setError({
                 date: false,
                 concept: false,
@@ -100,6 +100,7 @@ const AlertsAdd = (props) => {
             if (input.important === "") setError({ ...error, important: true });
             if (input.concept === "") setError({ ...error, concept: true });
             swal("Debe completar el concepto, la importancia y el edificio", "Por favor revise los datos!", "warning");
+            if(!(input.date >= new Date())) swal("La fecha ingresada no puede ser antes que la fecha de hoy", "Por favor revise los datos!", "warning");
         }
     }
 

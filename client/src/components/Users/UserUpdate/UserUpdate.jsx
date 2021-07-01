@@ -217,6 +217,7 @@ export function UserUpdate() {
                         </Grid>
                         <Grid item>
                             <TextField 
+							variant="outlined"
 								error={error["name"]}
 								helperText={[helperText["name"]]}
 								id="name" 
@@ -234,6 +235,7 @@ export function UserUpdate() {
                         </Grid>
                         <Grid item>
                             <TextField
+							variant="outlined"
 								error={error["email"]}
 								helperText={[helperText["email"]]}  
 								id="email" 
@@ -250,6 +252,7 @@ export function UserUpdate() {
                         </Grid>
                         <Grid item>
                             <TextField
+							variant="outlined"
 								error={error["contact"]}
 								helperText={[helperText["contact"]]}
 								id="contact"

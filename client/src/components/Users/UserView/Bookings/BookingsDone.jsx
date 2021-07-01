@@ -43,22 +43,24 @@ export const BookingsDone = ( {handleCancelBooking} ) => {
                         {/* {rows.map((row) => ( */}
                         {
                             takedBookings?.map((booking, i) => {
-                                return (
-                                    <TableRow>
-                                        <TableCell component="th" scope="row">
-                                            {Amenities && Amenities?.map((amenity) => {
-                                                return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
-                                                })
-                                            }
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {moment(booking.start).format('LLL')}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
-                                        </TableCell>
-                                    </TableRow>
-                                )
+                                if(booking.status !== "cancelled"){
+                                    return (
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                {Amenities && Amenities?.map((amenity) => {
+                                                    return (amenity.id === booking.amenityId) ? <p>{amenity.amenity_type}</p> : null
+                                                    })
+                                                }
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {moment(booking.start).format('LLL')}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Button variant="contained" onClick={() => handleCancelBooking(booking.id)}>Cancelar</Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                }
                             })
 
                         }
