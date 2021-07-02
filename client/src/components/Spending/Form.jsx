@@ -426,6 +426,7 @@ const Form = (props) => {
                       variant="contained"
                       color="secondary"
                       type="button"
+                      onClick={back}
                     >
                       Cancelar
                     </Button>
@@ -435,6 +436,7 @@ const Form = (props) => {
                       variant="contained"
                       color="secondary"
                       type="button"
+                      onClick={back}
                     >
                       Ver todos los gastos
                     </Button>

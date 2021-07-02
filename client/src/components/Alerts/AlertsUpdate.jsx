@@ -79,7 +79,8 @@ const AlertsUpdate = (props) => {
     });
 
     const saveHandler = () => {
-        if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date !== null) {
+        let today = new Date()
+        if (input.concept !== "" && input.important !== "" && input.building !== "" && input.date !== null && (input.date > today.setDate(today.getDate() - 1))) {
             setError({
                 date: false,
                 concept: false,
@@ -116,6 +117,7 @@ const AlertsUpdate = (props) => {
             if (input.important === "") setError({ ...error, important: true });
             if (input.concept === "") setError({ ...error, concept: true });
             swal("Debe completar la fecha, concepto, importancia y el edificio", "Por favor revise los datos!", "warning");
+            if(!(input.date > today.setDate(today.getDate() - 1))) swal("La fecha ingresada no puede ser antes que la fecha de hoy", "Por favor revise los datos!", "warning");
         }
     }
 
@@ -215,6 +217,7 @@ const AlertsUpdate = (props) => {
                                 </div>
                             </div>
                         </div>
+                        <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-around', alignItems:'center', width: '80%', marginLeft: -70, marginTop:50}}>
                         <Button
                             id={styles.submit}
                             style={{ fontWeight: 1000 }}
@@ -226,7 +229,7 @@ const AlertsUpdate = (props) => {
                         </Button>
                         <Button
                             id={styles.submit}
-                            style={{ fontWeight: 1000 }}
+                            style={{ fontWeight: 1000, marginLeft: 20 }}
                             color="primary"
                             variant="contained"
                             onClick={deleteHandler}
@@ -235,13 +238,14 @@ const AlertsUpdate = (props) => {
                         </Button>
                         <Button 
                             id={styles.submit}
-                            style={{ fontWeight: 1000, marginTop: 50 }}
+                            style={{ fontWeight: 1000 , marginLeft: 20}}
                             color="secondary"
                             variant="contained"
                             onClick={cancelHandler}
                         >
                             Cancelar
                         </Button>
+                        </div>
                     </form>
                 </div>
             </div>

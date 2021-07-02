@@ -27,9 +27,9 @@ function ServicesTable(props) {
     else stateSpanish = "Aceptado"
     return {
       id: service.id,
-      building: service.building.name,
+      building: service.building?.name,
       date: moment(service.createdAt).format("DD/MM/YYYY"),
-      title: service.title.toUpperCase(),
+      title: service.title?.toUpperCase(),
       state: stateSpanish,
       provider: service.provider,
       enrollment: service.enrollment,

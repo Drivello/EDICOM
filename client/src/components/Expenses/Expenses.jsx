@@ -119,7 +119,8 @@ export default function ExpensesTable() {
       </FormControl>
 
 
-      <FormControl style={{ width: "200px" }}>
+{/*       <div className={styles.filRight}> */}
+      <FormControl id={styles.filRight} style={{ width: "200px" }}>
          <InputLabel id="demo-controlled-open-select-label">
             Departamento
          </InputLabel>
@@ -138,6 +139,7 @@ export default function ExpensesTable() {
             ))}
          </Select>
       </FormControl></div>
+{/*       </div> */}
 
       <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

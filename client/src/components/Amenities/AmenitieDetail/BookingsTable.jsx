@@ -183,7 +183,9 @@ function BookingsTable(props) {
             ]}
                rows={complaints} columns={columns} pageSize={5} />
          </div>
-            <Button onClick={() => history.goBack()} id={styles.buttonBack} variant="contained" color="secondary" >Volver</Button>
+         <Link to={"/amenities"}>
+            <Button id={styles.buttonBack} variant="contained" color="secondary" >Volver</Button>
+         </Link>
       </div>
    );
 }

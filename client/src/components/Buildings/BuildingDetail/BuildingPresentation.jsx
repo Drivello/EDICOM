@@ -7,11 +7,12 @@ import AddIcon from '@material-ui/icons/Add';
 import './BuildingDetail.css';
 
 export default function BuildingPresentation({buildingId}){
-    const building = useSelector(state => state.buildingReducer.detailBuilding);
+    let building = useSelector(state => state.buildingReducer.detailBuilding);
     const dispatch = useDispatch();
     
     useEffect(() => {
         dispatch(getBuildingDetail(buildingId))
+        return (()=> building = null)
     }, [dispatch])
 
     if(building.length > 0) {

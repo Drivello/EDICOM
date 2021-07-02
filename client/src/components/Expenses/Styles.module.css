@@ -7,14 +7,23 @@
     text-decoration: underline ;
 } */
 
-#button{
-    margin-right: 20px;
+#button {
+	margin-right: 20px;
 }
 
-.contSelectsComplaintsTable{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+.contSelectsComplaintsTable {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.filRight {
+	margin-right: 200px;
+}
+
+.filters {
+	display: flex;
+	flex-direction: row;
 }
