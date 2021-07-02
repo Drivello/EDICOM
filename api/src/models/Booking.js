@@ -18,5 +18,5 @@ module.exports = sequelize => {
 			}),
 			defaultValue: 'free',
 		},
-	});
+	},{paranoid: true});
 };

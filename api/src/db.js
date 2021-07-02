@@ -100,8 +100,8 @@ Ratings.belongsTo(User);
 Expenses.hasOne(Payment);
 Payment.belongsTo(Expenses);
 
-Apartment.hasMany(Payment);
-Payment.belongsTo(Apartment);
+// Apartment.hasMany(Payment);
+// Payment.belongsTo(Apartment);
 
 
 
