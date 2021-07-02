@@ -11,6 +11,7 @@ import theme from '../../themeStyle';
 import '../ApartmentAdd/CreateApartment.css';
 import { Domain, Home, MeetingRoom } from '@material-ui/icons';
 import swal from "sweetalert";
+import { numeroPositivo } from "../../../utils/validations"
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -65,6 +66,8 @@ export function EditApartmentForm(props) {
         }
     },[apartmentDetail])
 
+    const [error, setError] = useState(false);
+
     const handleInputChange = function (e) {
         switch (e.target.name) {
             case "cata_apartment":
@@ -75,10 +78,19 @@ export function EditApartmentForm(props) {
                 break;
             case "mt2":
                 //FALTA VALIDAR ACA NUMEROS NEGATIVOS
-                setApartment({
-                    ...apartment,
-                    mt2: e.target.value,
-                })
+                if (e.target.name === "mt2") {
+                    if (numeroPositivo(e.target.value)) {
+                        setApartment({ ...apartment, [e.target.name]: parseInt(e.target.value) });
+                    } else {
+                        setError(true)
+                    }
+                } else {
+                    setApartment({
+                        ...apartment,
+                        mt2: e.target.value,
+                    })
+
+                }
                 break;
             case "number_apartment":
                 setApartment({
