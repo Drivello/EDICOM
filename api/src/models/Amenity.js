@@ -16,5 +16,5 @@ module.exports = sequelize => {
 		amenity_detail: {
 			type: DataTypes.STRING,
 		},
-	});
+	},{paranoid: true});
 };

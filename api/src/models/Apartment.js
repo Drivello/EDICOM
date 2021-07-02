@@ -23,5 +23,5 @@ module.exports = sequelize => {
 		state: {
 			type: DataTypes.INTEGER,
 		},
-	});
+	},{paranoid: true});
 };

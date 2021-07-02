@@ -96,8 +96,8 @@ conn.sync({force: true}).then(() => {
 
 	var user1 = hashedPassword.then(res => {
 		return User.create({
-			name: 'Agustin',
-			email: 'agustin@gmail.com',
+			name: 'Mariano',
+			email: 'marianoguillon@hotmail.com',
 			password: res,
 			contact: '78788678',
 			isDeleted: false,
@@ -114,8 +114,8 @@ conn.sync({force: true}).then(() => {
 	});
 	var user3 = hashedPassword.then(res => {
 		return User.create({
-			name: 'Mariano',
-			email: 'marianoguillon@hotmail.com',
+			name: 'Agustin',
+			email: 'agustin@gmail.com',
 			password: res,
 			contact: '78788678',
 			isDeleted: false,
@@ -160,25 +160,25 @@ conn.sync({force: true}).then(() => {
 	// })
 
 	let booking1 = Booking.create({
-		idAmenity: 1,
+		idAmenity: 5,
 		start: '2021-06-24T10:30:00.000Z',
-		finish: '2021-06-30T10:30:00.000Z',
+		finish: '2021-06-24T11:30:00.000Z',
 		status: 'free',
 		duration: '08:00',
 	});
 
 	let booking2 = Booking.create({
-		idAmenity: 2,
+		idAmenity: 6,
 		start: '2021-06-24T10:30:00.000Z',
-		finish: '2021-06-30T10:30:00.000Z',
+		finish: '2021-06-24T11:30:00.000Z',
 		duration: '08:00',
 		status: 'free',
 	});
 
 	let booking3 = Booking.create({
-		idAmenity: 3,
+		idAmenity: 7,
 		start: '2021-06-24T10:30:00.000Z',
-		finish: '2021-06-30T10:30:00.000Z',
+		finish: '2021-06-24T11:30:00.000Z',
 		status: 'free',
 		duration: '08:00',
 	});
