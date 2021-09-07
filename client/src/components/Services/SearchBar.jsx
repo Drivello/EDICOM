@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -8,7 +8,6 @@ import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import GradeIcon from '@material-ui/icons/Grade';
 import { useDispatch } from "react-redux";
 import { filterServices, sortServices } from '../../redux/services/servicesAction';
-import { makeStyles } from '@material-ui/core/styles';
 import './Services.css';
 
 /* const useStyles = makeStyles((theme) => ({

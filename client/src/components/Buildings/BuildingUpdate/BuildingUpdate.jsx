@@ -7,7 +7,7 @@ import {
     getBuildings
 } from '../../../redux/building/buildingActions';
 import { useParams, useHistory } from 'react-router-dom';
-import { Button, TextField, Grid, IconButton } from '@material-ui/core';
+import { Button, TextField, IconButton } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
@@ -20,7 +20,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
     getLatLng,
 } from 'react-places-autocomplete';
 import PlacesAutocomplete from 'react-places-autocomplete';
@@ -38,16 +37,12 @@ function BuildingUpdate() {
     useEffect(() => {
         //useEffect to get the current bulding info
         dispatch(getBuildingDetail(id))
+        // eslint-disable-next-line
     }, [dispatch]);
 
     useEffect(() => {
         Build.detailBuilding[0] && setCurrentLoc(Build.detailBuilding[0].address)
     }, [Build.detailBuilding]);
-
-
-    const currentDirection = () => {
-        setCurrentLoc(Build.detailBuilding[0].address)
-    }
 
     const [editMode, setEditMode] = useState({
         //Control the read mode or edit mode for every input

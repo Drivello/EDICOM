@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -6,9 +6,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ApartmentIcon from '@material-ui/icons/Apartment';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
@@ -33,18 +32,15 @@ import BuildIcon from '@material-ui/icons/Build';
 
 
 
-export default function Sidebar(props) {
+export default function Sidebar() {
 
 
   const Notifications = useSelector(state => state.complaintsReducer.allComplaints); //Use selector setup
-  const currentUserData = useSelector(state => state.userReducer.userDetail)
   const dispatch = useDispatch();
   const classes = useStyles(theme);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [noti, setNoti] = useState(false);
-
-  const history = useHistory();
 
   const [notiNumb, setNotiNumb] = useState(0);
 
@@ -54,9 +50,11 @@ export default function Sidebar(props) {
 
   useEffect(() => {
     dispatch(getUser(1))
+    // eslint-disable-next-line
 }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line
     setNotiNumb(Notifications?.filter(noti => { if (noti.seen === false) return true }).length)
   }, [Notifications])
 
@@ -74,6 +72,7 @@ export default function Sidebar(props) {
 
   useEffect(() => {
     setCurrentUser(current)
+    // eslint-disable-next-line
   }, [ authData ])
 
 
@@ -98,14 +97,16 @@ export default function Sidebar(props) {
   const handleLogout = () => {
     dispatch(logout({ type: "LOGOUT" }))
     setCurrentUser(null);
-    window.location.href = 'http://localhost:3000/logging'
+    window.location.href = `${process.env.REACT_APP_CLIENT}/logging`
   }
 
 
   const notiHandler = () => {
     setNoti(!noti)
 /*     if(notiNumb !== 0) setNotiNumb(notiNumb - 4); */
+// eslint-disable-next-line
     let notis = Notifications.filter(noti => { if (noti.seen === false) return true });
+    // eslint-disable-next-line
     notis = notis.slice(notis.length - 4).map(noti => dispatch(putSeenComplaint(noti.id)))
     dispatch(getComplaints())
   }

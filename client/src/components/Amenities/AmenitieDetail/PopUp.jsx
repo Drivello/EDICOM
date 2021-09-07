@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { changeStatus, filterExpenses, getExpenses } from "../../redux/expenses/expensesActions";
+import React from 'react'
+import { useDispatch } from 'react-redux';
+import { changeStatus, getExpenses } from "../../redux/expenses/expensesActions";
 import swal from "sweetalert";
 
 
@@ -9,7 +9,6 @@ export const StatusExpenses = ({ expense }) => {
 
     const dispatch = useDispatch();
 
-    const statusChanged = useSelector((state) => state.reducerExpenses.statusChanged);
     // const [state, setState] = useState(expense)
 
     function handleChangeStatus (id) {

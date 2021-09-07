@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GradeIcon from '@material-ui/icons/Grade';
-import { getIdUser } from '../../redux/logging/loggingActions';
 import { addRating, putRating, deleteRating } from '../../redux/ratings/ratingsAction';
 import { getServicesBuilding } from '../../redux/services/servicesAction';
 import { Button } from '@material-ui/core';
@@ -17,7 +16,6 @@ export default function PopUp(props) {
     const [hover, setHover] = useState(null);
     const userDetail = useSelector(state => state.userReducer.userDetail);
     const userInfo = {id: userDetail.id}
-    const current = JSON.parse(localStorage.getItem('profile')).token;
     const Rating = props.service.ratings.find(e => e.userId === userInfo.id)
     const[loading, setLoading] = useState(false)
 

@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import SortIcon from '@material-ui/icons/Sort';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Collapse } from '@material-ui/core';
 import { useState } from 'react';
 import { Link as Scroll } from 'react-scroll';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { loggingIn, handleSendEmail, emailToToken } from '../../redux/logging/loggingActions';
 import { useForm } from '../../utils/useForm';
 import { correoElectronico } from "../../utils/validations"
@@ -18,14 +16,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import logoEdicom from '../../utils/logoEdicom.png';
-import logoEdicom2 from '../../utils/logo-Edicom.png';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -164,7 +157,6 @@ export const Header = () => {
         setChecked(true)
     }, [])
     const dispatch = useDispatch();
-    const history = useHistory();
 
 
     const { state: user, handleChange } = useForm(
@@ -183,28 +175,30 @@ export const Header = () => {
         };
     });
 
-    const { first_logging, name, token } = authData
+    const { first_logging, token } = authData
 
     useEffect(() => {
 
         if (token) {
             if (!first_logging) {
-                window.location.href = 'http://localhost:3000/'
+                window.location.href = `${process.env.REACT_APP_CLIENT}`
             }
             else {
                 dispatch(emailToToken(username))
                 //hacer el dispatch para pedir el tokenToConfirm para este email
             }
         }
+        // eslint-disable-next-line
     }, [authData, dispatch])
 
     useEffect(() => {
         if (first_logging) {
             if (tokenToConfirm?.length > 2) {
                 /*     history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`) */
-                window.location.href = `http://localhost:3000/logging/restaurarcontraseña?${tokenToConfirm}`;
+                window.location.href = `${process.env.REACT_APP_CLIENT}/logging/restaurarcontraseña?${tokenToConfirm}`;
             }
         }
+        // eslint-disable-next-line
     }, [tokenToConfirm])
 
 
@@ -344,7 +338,7 @@ export const Header = () => {
             <div className={classes.root2}>
                 <Collapse in={checked}
                     {...(checked ? { timeout: 1000 } : {})}
-                    collapsedHeight={10}
+                    collapsedSize={10}
                 >
                     <div className={classes.container}>
                         <h2 className={classes.title}>

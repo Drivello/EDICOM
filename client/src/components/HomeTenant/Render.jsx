@@ -5,7 +5,6 @@ import Text from './Text';
 import Title from './Title';
 import places from './Static/card';
 import useWindowPosition from './Hook/useWindowPosition';
-import { Container, CssBaseline } from '@material-ui/core';
 
 
 
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function () {
+export default function Render () {
   const classes = useStyles();
   const checked = useWindowPosition('header');
   return (

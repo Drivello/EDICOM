@@ -16,7 +16,6 @@ import theme from '../themeStyle';
 
 function AlertsTable(props) {
   const filteredComplaints = useSelector(state => state.complaintsReducer.filteredComplaints)
-  const allComplaints = useSelector(state => state.complaintsReducer.allComplaints)
   const dispatch = useDispatch();
 
   
@@ -36,23 +35,6 @@ function AlertsTable(props) {
       edit: `/alertsUpdate/${complaint.id}`
     }
   })
-
-  const currencies = [
-    {
-      value: 'opened',
-      label: 'Abierto',
-    },
-    {
-      value: 'closed',
-      label: 'Cerrado',
-    },
-  ];
-
-  const [currency, setCurrency] = React.useState('opened');
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
 
   const importanceSelect = complaints.map(element => element = element.importance).filter((value, index, self) => self.indexOf(value) === index);
   const buildingSelect = complaints.map(element => element = element.building).filter((value, index, self) => self.indexOf(value) === index);
@@ -110,6 +92,7 @@ function AlertsTable(props) {
 
   useEffect(() => {
     dispatch(filterComplaints(input))
+    // eslint-disable-next-line
   },[input,setInput]);
 
   const useStyles = makeStyles((theme) => ({
@@ -173,7 +156,7 @@ function AlertsTable(props) {
         </FormControl>
       </Grid>
       <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginTop: "13px"}} onClick={handleSelectAll}>
-          <img style={{width: "25px", height:"25px"}} src={filter}></img>
+          <img style={{width: "25px", height:"25px"}} src={filter} alt="bye-warning"></img>
       </Button>
       </div>
       <div style={{ display: 'flex', height: '100%' }}>

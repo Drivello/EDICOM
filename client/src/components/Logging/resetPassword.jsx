@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-   loggingIn,
    handleChangePassword,
-   handleSendEmail,
    tokenToEmail,
 } from "../../redux/logging/loggingActions";
 import { useForm } from "../../utils/useForm";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
 import theme from "../themeStyle";
@@ -37,6 +35,7 @@ const ResetPasword = () => {
    useEffect(() => {
       dispatch(tokenToEmail(token));
       setEmail(recoveryMail);
+      // eslint-disable-next-line
    }, [recoveryMail]);
 
    // ------ Style Material UI ----------
@@ -97,13 +96,13 @@ const ResetPasword = () => {
                   >
                      <TextField
                         /* variant="outlined" */
-                        className={(classes.margin, classes.textField)}
+                        className={(`${classes.margin} ${classes.textField}` )}
                         id="email"
                         name="email"
                         autoComplete="off"
                         value={mail}
                         InputProps={{
-                           readOnly: true,
+                           readOnly: true
                         }}
                      />
                   </Grid>

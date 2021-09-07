@@ -11,7 +11,7 @@ export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const getExpenses = () =>  {
   return function (dispatch) {
     console.log("entró a la action de getExpenses")
-    return axios.get('http://localhost:3001/expenses/allByApartments')
+    return axios.get('/expenses/allByApartments')
       .then(res => {
         console.log("Se resolvió la busqueda de las expensas", new Date());
         dispatch({
@@ -24,7 +24,7 @@ export const getExpenses = () =>  {
 
 export const postExpenses = (idBuilding, month, year) =>  {
   return function (dispatch) {
-    return axios.post(`http://localhost:3001/expenses/add/${month}/${year}`)
+    return axios.post(`/expenses/add/${month}/${year}`)
       .then(res => {
         dispatch({
           type: POST_EXPENSES,
@@ -41,7 +41,7 @@ export const getInvoicedExpenses = () =>  {
   console.log( 'despachando getInvoiceExpenses' )
   return function (dispatch) {
     console.log(" entré a la actionnnnn ")
-    return axios.get(`http://localhost:3001/expenses/invoicedExpenses`)
+    return axios.get(`/expenses/invoicedExpenses`)
       .then(res => {
         console.log("res", res)
         dispatch({
@@ -58,7 +58,7 @@ export function filterExpenses(payload) {
 
 export const getExpensesApartmentNumber = (number_apartment) =>  {
   return function (dispatch) {
-    return axios.get(`http://localhost:3001/expenses/${number_apartment}`)
+    return axios.get(`/expenses/${number_apartment}`)
       .then(res => {
         dispatch({
           type: GET_EXPENSES_APARTMENT_NUMBER,
@@ -71,7 +71,7 @@ export const getExpensesApartmentNumber = (number_apartment) =>  {
 export const changeStatus = (id) =>  {
   return function (dispatch) {
     console.log("Entró al changeStatus", new Date())
-    return axios.put(`http://localhost:3001/expenses/changeStatus/${id}`)
+    return axios.put(`/expenses/changeStatus/${id}`)
       .then(res => {
         console.log("volvió del changeStatus", new Date())
         dispatch({

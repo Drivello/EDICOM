@@ -35,7 +35,7 @@ axios.interceptors.request.use((req)=> {
 export const loggingIn = (user) => {
   return function (dispatch) {
     // dispatch({ type: LOGGING_IN })
-    axios.post('http://localhost:3001/loggings/loggingIn', user)    //loguearse en el back
+    axios.post('/loggings/loggingIn', user)    //loguearse en el back
       .then(res => {
           localStorage.setItem('profile', JSON.stringify(res.data));
           dispatch({
@@ -82,7 +82,7 @@ export const logout = () => async (dispatch) => {
 export function handleChangePassword(data) {
 	return function (dispatch) {
 		return axios
-			.put(' http://localhost:3001/loggings/changepassword ', data)
+			.put(' /loggings/changepassword ', data)
 			.then(res => {
 				dispatch({type: CHANGE_PASSWORD, payload: res.data});
 			});
@@ -94,7 +94,7 @@ export function handleSendEmail(data) {
   var email = {email:data}
 	return function (dispatch) {
 		return axios
-			.post('http://localhost:3001/loggings/sendEmail ', email)
+			.post('/loggings/sendEmail ', email)
       .then(res => {
 				dispatch({type: SEND_EMAIL});
         swal("Revise su Correo","")
@@ -119,7 +119,7 @@ export function tokenToEmail(data) {
   var token = {token:data}
 	return function (dispatch) {
 		return axios
-			.post('http://localhost:3001/loggings/tokenToEmail ', token)
+			.post('/loggings/tokenToEmail ', token)
       .then(res => {
 				dispatch({type: TOKEN_TO_EMAIL, payload: res.data});
 			});
@@ -131,7 +131,7 @@ export function emailToToken(data) {
   var email = {email:data}
 	return function (dispatch) {
 		return axios
-			.post('http://localhost:3001/loggings/emailToToken ', email)
+			.post('/loggings/emailToToken ', email)
       .then(res => {
 				dispatch({type: EMAIL_TO_TOKEN, payload: res.data});
 			});
@@ -141,7 +141,7 @@ export function emailToToken(data) {
 export function getIdUser(token) {
 	return function (dispatch) {
 		return axios
-			.get(`http://localhost:3001/loggings/userId/${token}`)
+			.get(`/loggings/userId/${token}`)
       .then(res => {
 				dispatch({type: GET_USER_ID, payload: res.data});
 			});

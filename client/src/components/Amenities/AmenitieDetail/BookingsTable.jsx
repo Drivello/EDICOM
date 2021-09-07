@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link , useHistory} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
    Button,
-   Grid,
    InputLabel,
    MenuItem,
-   FormControl,
    Select,
 } from "@material-ui/core";
-import { getAmenityById } from "../../../redux/amenities/amenitiesActions";
 import { getBookingByAmenity, filterBookingsByGroup } from "../../../redux/booking/bookingActions";
 import { DataGrid } from "@material-ui/data-grid";
-import {
-   MuiPickersUtilsProvider,
-   KeyboardDatePicker,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { makeStyles } from "@material-ui/core/styles";
 import moment from "moment";
-import filter from "../../../utils/filter-remove.png";
 import PopUp from "./PopUp";
 import styles from "./Styles.module.css";
 
 function BookingsTable(props) {
 
    const dispatch = useDispatch();
-   const history = useHistory();
 
    const allComplaints = useSelector(state => state.bookingReducer.bookingDetail)
    const bookingFilter = useSelector(state => state.bookingReducer.bookingFilter)
@@ -34,6 +23,7 @@ function BookingsTable(props) {
 
    useEffect(() => {
       dispatch(getBookingByAmenity(props.amenitieId))
+      // eslint-disable-next-line
    }, [dispatch])
 
    const [filter, setFilter] = useState(false);
@@ -60,10 +50,10 @@ function BookingsTable(props) {
       console.log(bookingFilter)
 
       for (const groupBooking in bookingFilter) {
-         {
+         
             console.log({...bookingFilter[groupBooking][0], user:"Varios"}, "PUSHEO ESTO")
             complaints.push({...bookingFilter[groupBooking][0], user:"Varios", state:"Cambiar estado"})
-         }
+         
       }
    }
 
@@ -107,7 +97,6 @@ function BookingsTable(props) {
          state: data.state,
          start: data.start,
          date: data.date,
-         state: data.state,
       });
       setDisplayPopUp(true);
    };
@@ -122,17 +111,6 @@ function BookingsTable(props) {
       });
       setDisplayPopUp(true);
    };
-
-   const useStyles = makeStyles((theme) => ({
-      root: {
-         flexGrow: 1,
-      },
-      paper: {
-         padding: theme.spacing(1),
-         textAlign: "center",
-         color: theme.palette.text.secondary,
-      },
-   }));
 
 
    async function handleSelectFilter(e) {

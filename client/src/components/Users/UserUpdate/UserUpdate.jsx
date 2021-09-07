@@ -57,6 +57,7 @@ export function UserUpdate() {
 
 	useEffect(() => {
 		dispatch(getUser(id))
+		// eslint-disable-next-line
 	},[dispatch])
     useEffect(() => {
 

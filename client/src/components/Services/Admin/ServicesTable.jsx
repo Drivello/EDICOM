@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
-import { getServices, putService, deleteService, filterServicesAdmin } from '../../../redux/services/servicesAction';
+import { getServices, filterServicesAdmin } from '../../../redux/services/servicesAction';
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
@@ -96,6 +96,7 @@ function ServicesTable(props) {
 
   useEffect(() => {
     dispatch(filterServicesAdmin(input))
+    // eslint-disable-next-line
   },[input,setInput]);
 
   const useStyles = makeStyles((theme) => ({
@@ -145,7 +146,7 @@ function ServicesTable(props) {
         </FormControl>
       </Grid>
       <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginTop: "13px"}} onClick={handleSelectAll}>
-          <img style={{width: "25px", height:"25px"}} src={filter}></img>
+          <img style={{width: "25px", height:"25px"}} src={filter} alt="bye-warning"></img>
       </Button>
       </div>
       <div style={{ display: 'flex', height: '100%' }}>

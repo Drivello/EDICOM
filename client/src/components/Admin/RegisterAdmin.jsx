@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import RegisterAdminForm from "./RegisterAdminForm";
 import swal from "sweetalert";
 import axios from 'axios';
@@ -14,7 +13,7 @@ const CreateAdmin = () => {
 
     const handleSubmit = async (data) => {
         if (input.email !== "" && input.password !== "") {
-            var create = await axios.post("http://localhost:3001/admin/", input)
+            var create = await axios.post("/admin/", input)
                 .catch((err) => {
                     return swal("No se ha podido crear el usuario", "El email ya se encuentra asociado a una cuenta", "error");;
                 })

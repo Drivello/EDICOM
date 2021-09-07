@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';

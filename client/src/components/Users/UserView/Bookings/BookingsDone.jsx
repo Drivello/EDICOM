@@ -1,5 +1,4 @@
 import React from 'react'
-import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -17,9 +16,7 @@ import moment from 'moment';
 export const BookingsDone = ( {handleCancelBooking} ) => {
     
     const { takedBookings } = useSelector(state => state.bookingReducer)
-    const { allBookings } = useSelector((state) => state.bookingReducer)
     const { Amenities } = useSelector(state => state.amenitiesReducer)
-    const { userDetail } = useSelector(state => state.userReducer)
 
     console.log('takedBookings', takedBookings)
 
@@ -41,7 +38,7 @@ export const BookingsDone = ( {handleCancelBooking} ) => {
                     </TableHead>
                     <TableBody>
                         {/* {rows.map((row) => ( */}
-                        {
+                        {// eslint-disable-next-line
                             takedBookings?.map((booking, i) => {
                                 if(booking.status !== "cancelled"){
                                     return (

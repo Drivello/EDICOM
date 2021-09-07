@@ -12,6 +12,7 @@ export default function BuildingPresentation({buildingId}){
     
     useEffect(() => {
         dispatch(getBuildingDetail(buildingId))
+        // eslint-disable-next-line
         return (()=> building = null)
     }, [dispatch])
 

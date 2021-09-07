@@ -14,14 +14,14 @@ export const GET_TAKED_BOOKING_BY_ID = 'GET_TAKED_BOOKING_BY_ID';
 
 export function createBooking(booking) {
 	return async function (dispatch) {
-		const {data} = await axios.post(`http://localhost:3001/bookings/`, booking);
+		const {data} = await axios.post(`/bookings/`, booking);
 		dispatch({type: CREATE_BOOKING, payload: data});
 	};
 }
 
 export function getAllBookings() {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/bookings/`);
+		const {data} = await axios.get(`/bookings/`);
 		dispatch({type: ALL_BOOKINGS, payload: data});
 	};
 }
@@ -29,7 +29,7 @@ export function getAllBookings() {
 export function getBookingByAmenity(amenityId) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://localhost:3001/bookings/byAmenity/${amenityId}`
+			`/bookings/byAmenity/${amenityId}`
 		);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
 	};
@@ -37,7 +37,7 @@ export function getBookingByAmenity(amenityId) {
 
 export function getBookingById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/bookings/${id}`);
+		const {data} = await axios.get(`/bookings/${id}`);
 		dispatch({type: GET_BOOKING_BY_ID, payload: data});
 	};
 }
@@ -45,7 +45,7 @@ export function getBookingById(id) {
 
 export function getTakedBookings(userId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/bookings/taked/${userId}`);
+		const {data} = await axios.get(`/bookings/taked/${userId}`);
 		dispatch({type: GET_TAKED_BOOKING_BY_ID, payload: data});
 	};
 }
@@ -53,7 +53,7 @@ export function getTakedBookings(userId) {
 export function putBooking(id, body) {
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://localhost:3001/bookings/${id}`,
+			`/bookings/${id}`,
 			body
 		);
 		dispatch({type: PUT_BOOKING, payload: data});
@@ -68,7 +68,7 @@ export function takeBooking(payload) {
 	console.log(payload);
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://localhost:3001/bookings/takeBooking/${payload.bookingId}/${payload.userId}`
+			`/bookings/takeBooking/${payload.bookingId}/${payload.userId}`
 		);
 		dispatch({type: TAKE_BOOKING, payload: data});
 	};
@@ -78,7 +78,7 @@ export function cancelBooking(payload) {
 	console.log(payload);
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://localhost:3001/bookings/cancelBooking/${payload}`
+			`/bookings/cancelBooking/${payload}`
 		);
 		dispatch({type: CANCEL_BOOKING, payload: data});
 	};

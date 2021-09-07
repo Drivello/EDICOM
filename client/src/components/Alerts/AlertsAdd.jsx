@@ -5,7 +5,7 @@ import theme from '../themeStyle';
 import styles from "./AlertsAdd.module.css";
 import { TextField, Button, MenuItem } from '@material-ui/core';
 import swal from "sweetalert";
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -15,7 +15,7 @@ import { getSubscriptionsBuilding } from '../../redux/subscriptions/subscription
 import {
     getBuildings
 } from '../../redux/building/buildingActions';
-import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
+import { getAlerts } from '../../redux/alerts/alertActions';
 
 const AlertsAdd = (props) => {
     const date = new Date();
@@ -133,7 +133,6 @@ const AlertsAdd = (props) => {
                                             name="date"
                                             margin="normal"
                                             color="secondary"
-                                            id="date-picker-dialog"
                                             label="Fecha"
                                             format="dd/MM/yyyy"
                                             value={input.date}
@@ -164,7 +163,6 @@ const AlertsAdd = (props) => {
                                 <div className={styles.box}>
                                     <TextField variant="outlined"
                                         id={styles.important}
-                                        id={styles.input}
                                         label="Importancia"
                                         value={input.important}
                                         error={error.important}
@@ -180,7 +178,6 @@ const AlertsAdd = (props) => {
                                 <div className={styles.box}>
                                     <TextField variant="outlined"
                                         id={styles.building}
-                                        id={styles.input}
                                         label="Seleccione un edificio"
                                         value={input.building}
                                         select

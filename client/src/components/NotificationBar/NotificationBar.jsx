@@ -1,16 +1,15 @@
-import { stripTrailingSlash } from 'history/PathUtils';
-import React, { useState, useEffect } from 'react';
+// import { stripTrailingSlash } from 'history/PathUtils';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from "./NotificationBar.module.css";
 import { Button } from '@material-ui/core';
-import { getComplaints } from "../../redux/complaints/complaintsActions";
-import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 const NotificationBar = (props) => {
-
+    
     let Notifications = props.notifications;
     let quantity = props.quantity;
+    // eslint-disable-next-line
     Notifications = Notifications.filter(noti => { if (noti.seen === false) return true })
     Notifications = Notifications.slice(Notifications.length - 4);
 

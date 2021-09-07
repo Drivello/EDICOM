@@ -16,6 +16,7 @@ function Buildings() {
 
     useEffect(() => {
         dispatch(getBuildings());
+        // eslint-disable-next-line
     }, [])
 
     return (

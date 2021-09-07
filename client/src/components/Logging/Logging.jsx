@@ -46,7 +46,7 @@ const Logging = () => {
         };
     });
     
-    const {first_logging, name, token} = authData
+    const {first_logging, token} = authData
 
     useEffect(() => {
 
@@ -59,6 +59,7 @@ const Logging = () => {
                 //hacer el dispatch para pedir el tokenToConfirm para este email
             }
         }
+        // eslint-disable-next-line
     }, [authData, dispatch])
 
     useEffect(() => {
@@ -67,6 +68,7 @@ const Logging = () => {
                 history.push(`/logging/restaurarcontraseña?${tokenToConfirm}`)
             }
         }
+        // eslint-disable-next-line
     }, [tokenToConfirm])
 
 

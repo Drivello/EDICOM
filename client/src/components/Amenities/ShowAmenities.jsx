@@ -1,8 +1,6 @@
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
-import {getBuildingDetail} from '../../redux/building/buildingActions';
-import {getAllAmenities, allAmenities} from '../../redux/amenities/amenitiesActions';
+import {allAmenities} from '../../redux/amenities/amenitiesActions';
 import {getBuildings} from '../../redux/building/buildingActions';
 import {makeStyles, Grid, Button, Container} from '@material-ui/core';
 import CreateBookings from './CreateBooking/CreateBookings';
@@ -22,8 +20,8 @@ const ShowAmenities = () => {
 	console.log('allBuildings', allBuildings)
 	console.log('Amenities', Amenities)
 	
-	if(allBuildings.length>0){	 
-		Amenities.map(amenity =>{
+	if(allBuildings.length>0){	 // eslint-disable-next-line
+		Amenities.map(amenity =>{ // eslint-disable-next-line
 			allBuildings.map(building => {
 				if(building.id === amenity.buildingId){
 					amenity.nameBuilding = building?.name
@@ -35,8 +33,6 @@ const ShowAmenities = () => {
 
 	const dispatch = useDispatch();
 
-	const {id_building} = useParams();
-
 	const useStyles = makeStyles(theme => ({
 		root: {
 			marginTop: 100,
@@ -47,7 +43,7 @@ const ShowAmenities = () => {
 	}));
 
 	const classes = useStyles();
-
+// eslint-disable-next-line
 	const [building, setBuilding] = useState({});
 	const [showCreateBooking, setShowCreateBooking] = useState(false)
 	const [idAmenity, setIdAmenity] = useState('')

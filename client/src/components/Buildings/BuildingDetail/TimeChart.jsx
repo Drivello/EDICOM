@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { buildingSpendings } from '../../../redux/spending/spendingActions';
 import { Line } from 'react-chartjs-2';
@@ -12,6 +12,7 @@ export default function BSChart({date, buildingId}) {
     
     useEffect(() => {
         dispatch(buildingSpendings(buildingId))
+        // eslint-disable-next-line
     }, [dispatch])
 
     const raw_data = building_spendings && building_spendings.filter(e => new Date(e.date).getFullYear() === new Date().getFullYear())

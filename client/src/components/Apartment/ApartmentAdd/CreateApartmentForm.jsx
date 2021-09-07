@@ -19,7 +19,6 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../../themeStyle";
 import {
    numeroPositivo,
-   numeroPositivoEntero,
 } from "../../../utils/validations";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +48,7 @@ const CreateApartmentForm = ({
    const history = useHistory();
    const classes = useStyles();
    const [open, setOpen] = useState(false);
+   // eslint-disable-next-line
    const [disableButton, setdisableButton] = useState(false);
 
    /* const [error, setError] = useState({//Control the error red border of the inputs
@@ -70,6 +70,7 @@ const CreateApartmentForm = ({
       Validate("cata_apartment");
       Validate("mt2");
       Validate("number_apartment");
+      // eslint-disable-next-line
    }, [error]);
 
    const Validate = (field) => {

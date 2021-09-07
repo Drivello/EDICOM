@@ -9,7 +9,7 @@ export const GET_BUILDING_SPENDINGS = 'GET_BUILDING_SPENDINGS';
 export function postSpending(data) {
 	return function (dispatch) {
 		return axios
-			.post(' http://localhost:3001/spendings/add ', data)
+			.post(' /spendings/add ', data)
 			.then(res => {
 				dispatch({type: POST_SPENDING, payload: res.data});
 			});
@@ -18,7 +18,7 @@ export function postSpending(data) {
 
 export function putSpending(data) {
 	return function (dispatch) {
-		return axios.put(' http://localhost:3001/spendings/add ', data).then(
+		return axios.put(' /spendings/add ', data).then(
 			res => {
 				dispatch({type: PUT_SPENDING, payload: res.data});
 			},
@@ -33,7 +33,7 @@ export function putSpending(data) {
 export function deleteSpending(id) {
 	return function (dispatch) {
 		return axios
-			.delete(` http://localhost:3001/spendings/del/${id} `) // ver
+			.delete(` /spendings/del/${id} `) // ver
 			.then(res => {
 				dispatch({type: DELETE_SPENDING, payload: res.data});
 			});
@@ -43,7 +43,7 @@ export function deleteSpending(id) {
 
 export function totalSpending() {
 	return function (dispatch) {
-		return axios.get('http://localhost:3001/spendings/all').then((res, req) => {
+		return axios.get('/spendings/all').then((res, req) => {
 			dispatch({type: GET_SPENDINGS, payload: res.data});
 		});
 	};
@@ -57,7 +57,7 @@ export function filterSpending(payload) {
 export function buildingSpendings(id) {
 	return function (dispatch) {
 		return axios
-			.get(`http://localhost:3001/spendings/all?buildingId=${id}`)
+			.get(`/spendings/all?buildingId=${id}`)
 			.then(data => {
 				dispatch({
 					type: GET_BUILDING_SPENDINGS,

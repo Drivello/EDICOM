@@ -36,7 +36,6 @@ export default function ExpensesTable() {
    
    // No se si anda
    /*  const apartamentArray = useSelector((state) => state.apartmentsReducer); */
-   const expensesArray = useSelector((state) => state.reducerExpenses.expensesArray);
    const allBuildings = useSelector((state) => state.buildingReducer.allBuildings)
    const filterBuildings = useSelector((state) => state.reducerExpenses.filterArray)
    const statusChanged = useSelector((state) => state.reducerExpenses.statusChanged);
@@ -57,6 +56,7 @@ export default function ExpensesTable() {
   
    useEffect(() => {
       dispatch(filterExpenses(building));
+      // eslint-disable-next-line
    }, [building]);
 
    function handleSelectBuilding (e){

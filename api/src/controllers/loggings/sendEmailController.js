@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
             to: email, // list of receivers
             subject: "Recuperar Contraseña", // Subject line
             text: "Haga click en el link para restablecer su contraseña: ", // plain text body
-            html: `<b>Haga click en el link para restablecer su contraseña: <a href="http://localhost:3000/logging/restaurarcontraseña?${token}"> Link </a> </b>`, // html body
+            html: `<b>Haga click en el link para restablecer su contraseña: <a href="${process.env.FRONTEND}/logging/restaurarcontraseña?${token}"> Link </a> </b>`, // html body
         });
 
         // res.status(201).json({ token });

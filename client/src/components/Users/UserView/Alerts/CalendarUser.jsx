@@ -13,6 +13,7 @@ export default function CalendarUser(props){
 
     useEffect(() => {
         dispatch(getUser(id))
+        // eslint-disable-next-line
     }, [dispatch])
 
     useEffect(() => {

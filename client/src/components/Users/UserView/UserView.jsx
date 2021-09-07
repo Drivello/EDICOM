@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom' 
-import { Button, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import UserHome from "./UserHome/UserHome";
 import UserComplaints from "./UserComplaints/UserComplaints";
 import UserComplaintDetail from './UserComplaints/UserComplaintDetail';
-import { getUser } from '../../../redux/users/userActions';
 import { getApartmentById } from '../../../redux/apartments/apartmentsActions';
 import { getComplaintsByUser } from '../../../redux/complaints/complaintsActions';
-import styles from './UserView.css';
 
-const UserView = (props) => {
+const UserView = () => {
     const currentUser = JSON.parse(localStorage.getItem('profile'));
     const userDetail = useSelector(state => state.userReducer.userDetail);
     const apartmentDetail = useSelector(state => state.apartmentReducer.apartmentDetail);
@@ -22,10 +19,12 @@ const UserView = (props) => {
     
     useEffect(() => {
         if(currentUser && currentUser.id) dispatch(getComplaintsByUser(currentUser.id))
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         if(userDetail && userDetail.apartmentId) dispatch(getApartmentById(userDetail.apartmentId))
+        // eslint-disable-next-line
     }, [userDetail]);
     
     

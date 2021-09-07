@@ -13,7 +13,7 @@ export const DELETE_APARTMENT_BY_ID = 'DELETE_APARTMENT_BY_ID'
 
 export function createApartment(apartment) {
 	return function (dispatch) {
-		return axios.post(`http://localhost:3001/apartments/`,apartment).then(
+		return axios.post(`/apartments/`,apartment).then(
 			res => {
 				console.log('respuesta exitosa', res);
 				dispatch({type: CREATE_APARTMENT, payload: res.data});
@@ -28,20 +28,20 @@ export function createApartment(apartment) {
 
 export function getApartmentById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/apartments/${id}`);
+		const {data} = await axios.get(`/apartments/${id}`);
 		dispatch({type: GET_APARTMENT_BY_ID, payload: data});
 	};
 }
 export function deleteApartmentById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.delete(`http://localhost:3001/apartments/delete/${id}`);
+		const {data} = await axios.delete(`/apartments/delete/${id}`);
 		dispatch({type: DELETE_APARTMENT_BY_ID, payload: data});
 	};
 }
 
 export function getAllApartments(buildingId) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/apartments/all/${buildingId}`);
+		const {data} = await axios.get(`/apartments/all/${buildingId}`);
 		dispatch({type: ALL_APARTMENTS, payload: data});
 	
 	};

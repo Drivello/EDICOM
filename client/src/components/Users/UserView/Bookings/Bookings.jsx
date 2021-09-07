@@ -17,9 +17,6 @@ import {
    cancelBooking,
    getTakedBookings,
 } from "../../../../redux/booking/bookingActions";
-import { getIdUser } from "../../../../redux/logging/loggingActions";
-import { getApartmentById } from "../../../../redux/apartments/apartmentsActions";
-import { getUser } from "../../../../redux/users/userActions";
 import DateFnsUtils from "@date-io/date-fns";
 import {
    MuiPickersUtilsProvider,
@@ -94,7 +91,7 @@ const useStyles = makeStyles({
 
 const Bookings = () => {
    const dispatch = useDispatch();
-   const { allBookings, bookingNoToquesMauriQueSeRompeFilter, takedBookings } =
+   const { bookingNoToquesMauriQueSeRompeFilter } =
       useSelector((state) => state.bookingReducer);
    const { Amenities } = useSelector((state) => state.amenitiesReducer);
    const { userDetail } = useSelector((state) => state.userReducer);
@@ -187,7 +184,7 @@ const Bookings = () => {
                         </TableRow>
                      </TableHead>
                      <TableBody>
-                        {Amenities &&
+                        {Amenities && // eslint-disable-next-line
                            Amenities?.map((amenity, i) => {
                               if (
                                  userDetail?.apartment.buildingId ===
@@ -210,8 +207,8 @@ const Bookings = () => {
                                              <MenuItem value="">
                                                 <em>{amenity.name}</em>
                                              </MenuItem>
-                                             {bookingNoToquesMauriQueSeRompeFilter &&
-                                                bookingNoToquesMauriQueSeRompeFilter?.map(
+                                             {bookingNoToquesMauriQueSeRompeFilter && 
+                                                bookingNoToquesMauriQueSeRompeFilter?.map(// eslint-disable-next-line
                                                    (booking, i) => {
                                                       console.log(
                                                          "DENTRODELMENUITEM"

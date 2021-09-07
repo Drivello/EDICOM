@@ -3,7 +3,7 @@
 
 const redirectLoggin = (req, res, next) => {
     // if(req.session.userId) {
-      res.redirect('http://localhost:3001/unauthorized');
+      res.redirect(`${process.env.BACKEND}/unauthorized`);
     // } else {
     //   next();
     // }

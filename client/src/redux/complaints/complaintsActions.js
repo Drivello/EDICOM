@@ -5,7 +5,6 @@ import {
     PUT_SEEN_COMPLAINT_URL, 
     PUT_STATE_COMPLAINT_URL, 
     GET_COMPLAINTS_BY_USER_URL ,
-    ADD_COMPLAINTS
 } from './utils';
 
 export const GET_ALL_COMPLAINTS = 'GET_ALL_COMPLAINTS';
@@ -99,7 +98,7 @@ export function getComplaintsByUser(id) {
 };
 export function createComplaints(body) {
     return function(dispatch) {
-        return axios.post('http://localhost:3001/complaints/',body)
+        return axios.post('/complaints/',body)
         .then(data => {
             
             dispatch({

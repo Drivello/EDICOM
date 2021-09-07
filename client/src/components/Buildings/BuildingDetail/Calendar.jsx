@@ -16,6 +16,7 @@ export default function Calendar({buildingId, user}) {
     
     useEffect(() => {
         dispatch(findAlertsBuilding(buildingId))
+        // eslint-disable-next-line
     }, [dispatch])
 
     const eventsCalendar = alerts_building.filter(e => e.importance === 'alta' || e.importance === 'media').map(e => e = {title: e.concept, date: e.date, detail: e.details, importance: e.importance, AlertId: e.id });

@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getServices, putService, deleteService } from '../../../redux/services/servicesAction';
 import styles from "./Styles.module.css";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function PopUp(props) {
 
-    const buildings = useSelector(state => state.buildingReducer.allBuildings);
     const dispatch = useDispatch();
     const setPop = props.setPop;
     const[loading, setLoading] = useState(false)

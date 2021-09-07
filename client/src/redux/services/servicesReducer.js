@@ -73,6 +73,7 @@ export default function servicesReducer(state = initialState, action) {
                     return tot + acc.rating
                   },0) / a.ratings.length) ? 1 : 0))
             }
+            break;
         case FILTER_SERVICES_ADMIN:
             return {
                 ...state,

@@ -57,6 +57,7 @@ export default function Subscriptions(props) {
 	
     useEffect(() => {
         dispatch(findSubscription(id))
+        // eslint-disable-next-line
     }, [dispatch])
 
     return (

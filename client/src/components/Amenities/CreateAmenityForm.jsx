@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
    makeStyles,
    Grid,
@@ -10,14 +10,13 @@ import {
    Select,
    MenuItem,
 } from "@material-ui/core";
-import { Domain, Home, MeetingRoom } from "@material-ui/icons";
+import { Domain } from "@material-ui/icons";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "../themeStyle";
 import { getAllApartments } from "../../redux/apartments/apartmentsActions";
 import styles from "./CreateAmenityForm.module.css";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,6 @@ const CreateAmenityForm = ({
 }) => {
    const error = errorIn;
    const helperText = helperTextIn;
-   const { allApartments } = useSelector((state) => state.apartmentReducer);
    const reg = new RegExp("^[0-9]+$"); //just numbers test
 
    const dispatch = useDispatch();
@@ -61,6 +59,7 @@ const CreateAmenityForm = ({
       Validate("quantity");
       Validate("capacity");
       Validate("amenity_detail");
+      // eslint-disable-next-line
    }, [error]);
 
    const Validate = (field) => {

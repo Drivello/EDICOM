@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { ratingsByService } from '../../redux/ratings/ratingsAction';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import GradeIcon from '@material-ui/icons/Grade';
 import PopUp from './PopUp';
 import './Services.css';

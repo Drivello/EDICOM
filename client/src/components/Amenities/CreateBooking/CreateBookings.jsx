@@ -7,9 +7,8 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useState } from 'react';
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import theme from '../../themeStyle'
-import ControlledOpenSelect from '../../Spending/ExpensesGenerator/ControlledOpenedSelect'
+import { makeStyles } from "@material-ui/core/styles";
+
 
 
 const CreateBookings = ({visibility, changeVisibility, idAmenity}) => {

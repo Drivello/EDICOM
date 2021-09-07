@@ -66,6 +66,7 @@ const CreateUserForm = ({
       Validate("email");
       Validate("password");
       Validate("contact");
+      // eslint-disable-next-line
    }, [error]);
 
    const Validate = (field) => {

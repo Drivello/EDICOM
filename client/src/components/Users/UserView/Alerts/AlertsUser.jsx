@@ -32,6 +32,7 @@ export default function AlertsUser(props){
 
     useEffect(() => {
         dispatch(getUser(id))
+        // eslint-disable-next-line
     }, [dispatch])
 
     useEffect(() => {

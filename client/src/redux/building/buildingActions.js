@@ -109,7 +109,7 @@ export function deleteBuilding(id) {
 
 export function getTraerSesion(token) {
     return function(dispatch) {
-        return axios.get(`http://localhost:3001/buildings/getSesion/${token}`)
+        return axios.get(`/buildings/getSesion/${token}`)
         .then(data => {
             dispatch({
                 type: "GET_SESION",

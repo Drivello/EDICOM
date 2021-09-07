@@ -5,11 +5,9 @@ import { FormControl, FormControlLabel, Button, RadioGroup, Radio, TextField, ma
 import {useSelector, useDispatch} from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { Link, useHistory } from 'react-router-dom'
-import BuildingDetail from '../../Buildings/BuildingDetail/BuildingDetail';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 import '../ApartmentAdd/CreateApartment.css';
-import { Domain, Home, MeetingRoom } from '@material-ui/icons';
 import swal from "sweetalert";
 import { numeroPositivo } from "../../../utils/validations"
 
@@ -34,7 +32,7 @@ const useStyles = makeStyles((theme)=>({
 export function EditApartmentForm(props) {
     const history = useHistory();
     const classes = useStyles();
-
+// eslint-disable-next-line
     const { apartmentDetail, apartmentDeleted } = useSelector( state => state.apartmentReducer);
 
     const { id } = useParams();
@@ -65,7 +63,7 @@ export function EditApartmentForm(props) {
             })
         }
     },[apartmentDetail])
-
+// eslint-disable-next-line
     const [error, setError] = useState(false);
 
     const handleInputChange = function (e) {
@@ -112,7 +110,7 @@ export function EditApartmentForm(props) {
 
     const handleSubmit = function(e, id, data){
         axios
-            .put(`http://localhost:3001/apartments/${id}`, data, {
+            .put(`/apartments/${id}`, data, {
                 headers: {'Content-Type': 'application/json'},
             })
             .then(r => {
@@ -186,15 +184,15 @@ export function EditApartmentForm(props) {
                 </Grid>
                 <Link className={classes.last}>
                     <Button
-                            style={{fontWeight: 1000}} variant="contained" color="secondary" 
+                            style={{fontWeight: 1000, marginTop: '20px'}} variant="contained" color="secondary" 
                             onClick={(e) => handleSubmit(e, id, apartment)}
-                            style={{marginTop: '20px'}} >Guardar Cambios</Button>
+                            >Guardar Cambios</Button>
                 </Link> 
                 <Link className={classes.last}>
                     <Button
-                            style={{fontWeight: 1000}} variant="contained" color="secondary" 
+                            style={{fontWeight: 1000, marginTop: '-90px', width:'165px'}} variant="contained" color="secondary" 
                             onClick={(e) => handleDelete(e, id, apartment)}
-                            style={{marginTop: '-90px', width:'165px'}} >Eliminar</Button>
+                            >Eliminar</Button>
                 </Link>
                 <Button
                     style={{ fontWeight: 1000 }}

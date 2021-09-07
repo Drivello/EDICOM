@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
+import { Button} from '@material-ui/core';
 import { getComplaints, filterComplaints } from '../../redux/complaints/complaintsActions';
-import { getExpensesApartmentNumber } from '../../redux/expenses/expensesActions';
 import { DataGrid } from '@material-ui/data-grid';
-import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-import filter from '../../utils/filter-remove.png';
 /* import PopUp from './PopUp'; */
 import styles from "./Styles.module.css";
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -54,22 +49,6 @@ function UserExpensesDetail(props) {
     }
   })
 
-  const currencies = [
-    {
-      value: 'opened',
-      label: 'Abierto',
-    },
-    {
-      value: 'closed',
-      label: 'Cerrado',
-    },
-  ];
-
-  const [currency, setCurrency] = React.useState('opened');
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
   const columns = [
     { field: 'year', headerName: 'Año', flex: 1},
     { field: 'createdAt', headerName: 'createdAt', flex: 1, hide: true},
@@ -98,8 +77,6 @@ function UserExpensesDetail(props) {
     importance: 'All',
     status: 'All'
   })
-  const [displayPopUp, setDisplayPopUp] = useState(false);
-  const [alertProps, setAlertProps] = useState({});
 
   const handleEventClick = (title, amount) => {
     
@@ -108,22 +85,13 @@ function UserExpensesDetail(props) {
     dispatch(addPayment(title, amount));
   }
 
-
-  function handleSelect(e) {
-    setInput({ ...input, [e.target.name]: e.target.value })
-  };
-
-  function handleSelectAll(e) {
-    setInput({ building: 'All', importance: 'All', status: 'All'})
-    dispatch(filterComplaints({ building: 'All', importance: 'All', status: 'All'}))
-}
-
   useEffect(() => {
     dispatch(getComplaints())
   },[dispatch])
 
   useEffect(() => {
     dispatch(filterComplaints(input))
+    // eslint-disable-next-line
   },[input,setInput]);
 
   useEffect(() => {
@@ -135,20 +103,8 @@ function UserExpensesDetail(props) {
         dispatch(resetUrlPayment())
       }
     )
+    // eslint-disable-next-line
   }, [urlPayment])
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(1),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
-
-  const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>

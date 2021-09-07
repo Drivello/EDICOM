@@ -12,6 +12,7 @@ export default function BSChart({date, buildingId}) {
     
     useEffect(() => {
         dispatch(buildingSpendings(buildingId))
+        // eslint-disable-next-line
     }, [dispatch])
 
     const raw_data = date === "All" ? building_spendings : building_spendings && building_spendings.filter(e => new Date(e.date).getMonth() === parseInt(date))

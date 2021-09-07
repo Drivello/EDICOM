@@ -281,7 +281,7 @@ const ApartmentBoard = (props) => {
                         </Grid>
                      </MuiPickersUtilsProvider>
                      <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
-                        <img style={{width: "25px", height:"25px"}} src={filter}></img>
+                        <img style={{width: "25px", height:"25px"}} src={filter} alt="solved-warning-xd"></img>
                      </Button>
                   </div>
                   {

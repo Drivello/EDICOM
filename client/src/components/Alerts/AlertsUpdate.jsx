@@ -5,7 +5,7 @@ import theme from '../themeStyle';
 import styles from "./AlertsUpdate.module.css";
 import { TextField, Button, MenuItem } from '@material-ui/core';
 import swal from "sweetalert";
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -16,10 +16,10 @@ import {
     getBuildings
 } from '../../redux/building/buildingActions';
 import { findAlert, deleteAlert } from "../../redux/alerts/alertActions"
-import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
+import { getAlerts} from '../../redux/alerts/alertActions';
 
 const AlertsUpdate = (props) => {
-    const date = new Date;
+    const date = new Date();
     const history = useHistory();
     const { id } = useParams();
     const dispatch = useDispatch(); //dispatch setup
@@ -55,6 +55,7 @@ const AlertsUpdate = (props) => {
     useEffect(() => {
         dispatch(getBuildings())
         dispatch(findAlert(id))
+        // eslint-disable-next-line
     }, [dispatch]);
 
     useEffect(() => {
@@ -67,6 +68,7 @@ const AlertsUpdate = (props) => {
                 building: alert.findAlert[0].buildingId,
                 detail: alert.findAlert[0].details || ""
             })
+            // eslint-disable-next-line
     }, [alert.findAlert]);
 
 
@@ -157,7 +159,6 @@ const AlertsUpdate = (props) => {
                                             name="date"
                                             margin="normal"
                                             color="secondary"
-                                            id="date-picker-dialog"
                                             label="Fecha"
                                             format="MM/dd/yyyy"
                                             value={input.date}

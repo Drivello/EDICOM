@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBuildings } from '../../redux/building/buildingActions';
 import { getAlerts } from '../../redux/alerts/alertActions';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
 import Carousel from 'react-material-ui-carousel';
 import BuildingsList from './BuildingsList';
-import Alerts from './Alerts';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import './Home.css';
@@ -18,10 +17,7 @@ const Home = (props) => {
 
 
 	const buildings = useSelector(state => state.buildingReducer.allBuildings);
-	const alerts = useSelector(state => state.alertsReducer.allAlerts);
-	const spends = useSelector(state => state.reducerSpending.totalSpending); //prueba marian
 	const dispatch = useDispatch();
-	const today = new Date();
 
 
 	useEffect(() => {

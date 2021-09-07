@@ -1,10 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import { DataGrid, GridRowParams } from '@material-ui/data-grid';
-import { Button, Box } from '@material-ui/core';
-import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../../themeStyle';
-import styles from './UserComplaintDetail.css';
 
 function UserComplaintDetail(props) {
     const [complaint, setComplaint] = useState([{
@@ -24,6 +20,7 @@ function UserComplaintDetail(props) {
             const currentComplaint = complaints.filter(complaint => complaint.id === Number(complaintId))
             setComplaint(currentComplaint)
         }
+        // eslint-disable-next-line
     }, [])
     
     function getImageAvailability(complaintImage) {

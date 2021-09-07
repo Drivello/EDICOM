@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Button, Menu, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import OutdoorGrillIcon from '@material-ui/icons/OutdoorGrill';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import HomeIcon from '@material-ui/icons/Home';
@@ -15,24 +15,17 @@ import useStyles from './useStyles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, getIdUser } from '../../redux/logging/loggingActions';
-import { getUser } from '../../redux/users/userActions';
+import { logout } from '../../redux/logging/loggingActions';
 import BuildIcon from '@material-ui/icons/Build';
 import ApartmentIcon from '@material-ui/icons/Apartment';
 
 export default function Sidebar(props) {
 
     const currentUserData = useSelector(state => state.userReducer.userDetail);
-    const userInfo = useSelector(state => state.loggingReducer.userId);
     const dispatch = useDispatch();
     const classes = useStyles(theme);
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const history = useHistory();
-    const [notiNumb, setNotiNumb] = useState(0);
-    const [userToken, setUserToken] = useState('');
-    const [userId, setUserId] = useState('');
-
     const { authData } = useSelector(state => {
         return {
             authData: state.loggingReducer.authData,
@@ -45,6 +38,7 @@ export default function Sidebar(props) {
 
     useEffect(() => {
         setCurrentUser(current)
+        // eslint-disable-next-line
     }, [authData])
 
     const handleDrawerOpen = () => {
@@ -66,7 +60,7 @@ export default function Sidebar(props) {
     const handleLogout = () => {
         dispatch(logout({ type: "LOGOUT" }))
         setCurrentUser(null);
-        window.location.href = 'http://localhost:3000/logging'
+        window.location.href = `${process.env.REACT_APP_CLIENT}/logging`
     }
 
     

@@ -12,7 +12,7 @@ export const ERR_CREATE_USER = 'ERR_CREATE_USER';
 export function getUserByApartment(id_apartment) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://localhost:3001/users/all/${id_apartment}`
+			`/users/all/${id_apartment}`
 		);
 		dispatch({type: GET_ALL_USERS, payload: data});
 	};
@@ -20,28 +20,28 @@ export function getUserByApartment(id_apartment) {
 export function getUsersByBuilding(id_building) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://localhost:3001/users/allByBuilding/${id_building}`
+			`/users/allByBuilding/${id_building}`
 		);
 		dispatch({type: GET_ALL_USERS_BY_BUILDING, payload: data});
 	};
 }
 export function getAllUsersForList() {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/users/getall`);
+		const {data} = await axios.get(`/users/getall`);
 		dispatch({type: GET_ALL_USERS_FOR_LIST, payload: data});
 	};
 }
 
 // export function createUser(user) {
 // 	return async function (dispatch) {
-// 		const {data} = await axios.post(`http://localhost:3001/users/`, user);
+// 		const {data} = await axios.post(`/users/`, user);
 // 		dispatch({type: CREATE_USER, payload: data});
 // 	};
 // }
 
 export function createUser(user) {
 	return function (dispatch) {
-		return axios.post(`http://localhost:3001/users/`, user).then(
+		return axios.post(`/users/`, user).then(
 			res => {
 				console.log('respuesta exitosa', res);
 				dispatch({type: CREATE_USER, payload: res.data});
@@ -55,7 +55,7 @@ export function createUser(user) {
 
 export function getUser(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/users/${id}`);
+		const {data} = await axios.get(`/users/${id}`);
 		dispatch({type: GET_USER, payload: data});
 	};
 }
@@ -64,7 +64,7 @@ export function updateUser(user) {
 	console.log('ESTO LLEGA EN EL USER DE ACTION', user);
 	return async function (dispatch) {
 		const {status} = await axios.put(
-			`http://localhost:3001/users/${user.id}`,
+			`/users/${user.id}`,
 			user
 		);
 		dispatch({type: UPDATE_USER, payload: status});
@@ -74,7 +74,7 @@ export function updateUser(user) {
 export function deleteUser(id) {
 	return async function (dispatch) {
 		const {data} = await axios.delete(
-			`http://localhost:3001/users/delete/${id}`
+			`/users/delete/${id}`
 		);
 		dispatch({type: DELETE_USER, payload: data});
 	};

@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createAmenity} from '../../redux/amenities/amenitiesActions';
-import {getAllAmenities, allAmenities} from '../../redux/amenities/amenitiesActions';
 
 import {getBuildings} from '../../redux/building/buildingActions';
 import swal from 'sweetalert';

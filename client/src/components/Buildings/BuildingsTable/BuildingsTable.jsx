@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Box } from '@material-ui/core';
-import { DataGrid, GridRowParams } from '@material-ui/data-grid';
-import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
-import { borders } from '@material-ui/system';
+import { DataGrid } from '@material-ui/data-grid';
+import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../themeStyle';
 
 function BuildingsTable(props) {

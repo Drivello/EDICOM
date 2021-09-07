@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button, Grid, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import { getAlerts, filterAlerts } from '../../redux/alerts/alertActions';
 import { DataGrid } from '@material-ui/data-grid';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import './Alerts.css';
@@ -16,7 +16,6 @@ import filter from '../../utils/filter-remove.png';
 function AlertsTable(props) {
 
     const filteredAlerts = useSelector(state => state.alertsReducer.filteredAlerts)
-    const allAlerts = useSelector(state => state.alertsReducer.allAlerts)
     const dispatch = useDispatch();
 
     const alerts = filteredAlerts.map(alert => {
@@ -58,7 +57,7 @@ function AlertsTable(props) {
     ]
     
     const date1 = new Date('2021-01-01T00:00:00')
-    const date2 = new Date(new Date)
+    const date2 = new Date(new Date())
 
     const [input, setInput] = useState({
         since: date1,
@@ -92,6 +91,7 @@ function AlertsTable(props) {
 
     useEffect(() => {
         dispatch(filterAlerts(input))
+        // eslint-disable-next-line
     }, [input,setInput]);
 
     const useStyles = makeStyles((theme) => ({
@@ -168,7 +168,7 @@ function AlertsTable(props) {
                 </Grid>
               </MuiPickersUtilsProvider>
               <Button variant="contained" color="secondary" style={{maxWidth: '35px', maxHeight: '35px', minWidth: '35px', minHeight: '35px', marginLeft: "-100px", marginTop: "20px"}} onClick={handleSelectAll}>
-                  <img style={{width: "25px", height:"25px"}} src={filter}></img>
+                  <img style={{width: "25px", height:"25px"}} src={filter} alt="bye-warning"></img>
               </Button>
             </div>
             <div style={{display: 'flex', height: '100%'}}>

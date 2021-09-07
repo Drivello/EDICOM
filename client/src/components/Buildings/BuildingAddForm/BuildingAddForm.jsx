@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postBuilding, getBuildings } from '../../../redux/building/buildingActions';
-import { TextField, Grid, Button, IconButton } from '@material-ui/core';
+import { TextField, Button, IconButton } from '@material-ui/core';
 import {
     Domain,
-    Room,
-    Image,
     Receipt,
     ListAlt,
     MeetingRoom,
@@ -19,7 +17,6 @@ import theme from '../../themeStyle';
 import swal from "sweetalert";
 import {
     geocodeByAddress,
-    geocodeByPlaceId,
     getLatLng,
 } from 'react-places-autocomplete';
 import PlacesAutocomplete from 'react-places-autocomplete';
@@ -62,11 +59,12 @@ function BuildingAddForm() {
     const dispatch = useDispatch();
 
     function handleChange(e, change) {
+        var text;
         if (typeof change === "undefined"){
-            var change = e.target.name;
-            var text = e.target.value;        }
+            change = e.target.name;
+            text = e.target.value;        }
         else{
-            var text = e;
+            text = e;
         }
         if (
             (change === 'floor' || change === 'cant_apartments') &&

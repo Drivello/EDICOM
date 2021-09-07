@@ -1,43 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextField, makeStyles, Grid, } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import styles from './UpdateAmenity.module.css'
-import { Person, Home } from '@material-ui/icons';
 import { getAmenityById, updateAmenity, deleteAmenity } from '../../redux/amenities/amenitiesActions'
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { Domain } from '@material-ui/icons';
 import swal from "sweetalert";
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-
-const useStyles = makeStyles((theme) => ({
-	root: {
-		marginTop: 100,
-		marginBottom: 30,
-	},
-	formControl: {
-		margin: theme.spacing(1),
-		minWidth: 120,
-		width: 500,
-		justifyContent: 'center',
-	},
-	title: {
-		fontSize: 30,
-	},
-	last: {
-		padding: 30,
-	}
-}));
 
 export function UpdateAmenity() {
 	const { amenityDetail } = useSelector(state => state.amenitiesReducer);
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const classes = useStyles();
 	const history = useHistory();
 	const reg = new RegExp('^[0-9]+$'); //just numbers test
 
@@ -62,6 +40,7 @@ export function UpdateAmenity() {
 
 	useEffect(() => {
 		dispatch(getAmenityById(id))
+		// eslint-disable-next-line
 	}, [dispatch])
 
 	useEffect(() => {

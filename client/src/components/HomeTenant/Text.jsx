@@ -1,11 +1,9 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core';
-import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import SortIcon from '@material-ui/icons/Sort';
+import { IconButton, Toolbar } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { Collapse } from '@material-ui/core';
-import { useState } from 'react';
 import { Link as Scroll } from 'react-scroll';
 
 const useStyles = makeStyles((theme) => ({

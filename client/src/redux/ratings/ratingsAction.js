@@ -6,11 +6,11 @@ export const GET_RATINGS = 'GET_RATINGS';
 export const DELETE_RATINGS = 'DELETE_RATINGS';
 export const RATINGS_BY_SERVICE = 'RATINGS_BY_SERVICE';
 
-//http://localhost:3001/ratings
+///ratings
 
 export const addRating = (body) =>  {
     return function (dispatch) {
-        return axios.post('http://localhost:3001/ratings', body)
+        return axios.post('/ratings', body)
         .then(res => {
             dispatch({
                 type: ADD_RATINGS,
@@ -25,7 +25,7 @@ export const addRating = (body) =>  {
 
 export function putRating(body) {
     return function(dispatch) {
-        return axios.put(`http://localhost:3001/ratings`, body)
+        return axios.put(`/ratings`, body)
         .then(data => {
             dispatch({
                 type: PUT_RATINGS,
@@ -40,7 +40,7 @@ export function putRating(body) {
 
 export function allRatings() {
     return function(dispatch) {
-        return axios.put(`http://localhost:3001/ratings/all`)
+        return axios.put(`/ratings/all`)
         .then(data => {
             dispatch({
                 type: GET_RATINGS,
@@ -55,7 +55,7 @@ export function allRatings() {
 
 export function deleteRating(id) {
     return function(dispatch) {
-        return axios.delete(`http://localhost:3001/ratings/${id}`)
+        return axios.delete(`/ratings/${id}`)
         .then(data => {
             dispatch({
                 type: DELETE_RATINGS,
@@ -70,7 +70,7 @@ export function deleteRating(id) {
 export function ratingsByService(idService) {
     console.log('entre en accion')
     return function(dispatch) {
-        return axios.get(`http://localhost:3001/ratings/all/${idService}`)
+        return axios.get(`/ratings/all/${idService}`)
         .then(data => {
             dispatch({
                 type: RATINGS_BY_SERVICE,

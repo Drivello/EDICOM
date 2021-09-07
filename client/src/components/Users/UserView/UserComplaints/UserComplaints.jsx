@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getComplaintsByUser } from '../../../../redux/complaints/complaintsActions';
-import { DataGrid, GridRowParams } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { Button, Box } from '@material-ui/core';
-import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../../themeStyle';
 import AddIcon from '@material-ui/icons/Add';
 

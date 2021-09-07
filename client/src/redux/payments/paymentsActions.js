@@ -10,7 +10,7 @@ export const addPayment = (title, price, quantity = 1) =>  {
 
     console.log('title y price', title, price)
     return function (dispatch) {
-        return axios.post(`http://localhost:3001/payment/add/${title}/${price}/${quantity}`)
+        return axios.post(`/payment/add/${title}/${price}/${quantity}`)
         .then(res => {
             dispatch({
                 type: POST_PAYMENT,

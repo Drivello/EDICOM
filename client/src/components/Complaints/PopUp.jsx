@@ -1,15 +1,13 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../themeStyle';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { putStateComplaint , getComplaints} from '../../redux/complaints/complaintsActions';
 import styles from "./Styles.module.css";
 
 export default function PopUp(props) {
 
-    const buildings = useSelector(state => state.buildingReducer.allBuildings);
     const dispatch = useDispatch();
     const setPop = props.setPop
 

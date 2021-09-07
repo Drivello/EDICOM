@@ -10,7 +10,7 @@ export const GET_AMENITIES = 'GET_AMENITIES';
 export function getAllAmenities(id_building) {
 	return async function (dispatch) {
 		const {data} = await axios.get(
-			`http://localhost:3001/amenities/all/${id_building}`
+			`/amenities/all/${id_building}`
 		);
 		dispatch({type: GET_ALL_AMENITIES, payload: data});
 	};
@@ -20,7 +20,7 @@ export function createAmenity(amenity) {
 	console.log("1. el amenity que entra a la action", amenity)
 	return async function (dispatch) {
 		const {data} = await axios.post(
-			`http://localhost:3001/amenities/`,
+			`/amenities/`,
 			amenity
 		);
 		console.log('4. la data que vuelve del endPoint', data)
@@ -30,14 +30,14 @@ export function createAmenity(amenity) {
 
 export function allAmenities() {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/amenities/`);
+		const {data} = await axios.get(`/amenities/`);
 		dispatch({type: GET_AMENITIES, payload: data});
 	};
 }
 
 export function getAmenityById(id) {
 	return async function (dispatch) {
-		const {data} = await axios.get(`http://localhost:3001/amenities/?=id${id}`);
+		const {data} = await axios.get(`/amenities/?=id${id}`);
 		dispatch({type: GET_AMENITY_BY_ID, payload: data});
 	};
 }
@@ -46,7 +46,7 @@ export function updateAmenity(amenity) {
 	console.log("update amenity", amenity);
 	return async function (dispatch) {
 		const {data} = await axios.put(
-			`http://localhost:3001/amenities/${amenity.id}`,
+			`/amenities/${amenity.id}`,
 			amenity
 		);
 		dispatch({type: UPDATE_AMENITY, payload: data});
@@ -55,7 +55,7 @@ export function updateAmenity(amenity) {
 
 export function deleteAmenity(id) {
 	return async function (dispatch) {
-		const {data} = await axios.delete(`http://localhost:3001/amenities/${id}`);
+		const {data} = await axios.delete(`/amenities/${id}`);
 		dispatch({type: DELETE_AMENITY, payload: data});
 	};
 }

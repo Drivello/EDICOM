@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, MenuItem, Grid, Button, IconButton } from '@material-ui/core';
+import { TextField, Button, IconButton } from '@material-ui/core';
 import DateFnsUtils from "@date-io/date-fns";
 import {
     Domain,
-    Room,
-    Image,
     Receipt,
-    ListAlt,
-    MeetingRoom,
     PhotoCamera,
 } from '@material-ui/icons';
 import {
@@ -22,7 +18,6 @@ import { createComplaints } from '../../../../redux/complaints/complaintsActions
 import { getBuildings } from '../../../../redux/building/buildingActions';
 import { getAllUsersForList } from '../../../../redux/users/userActions';
 import { getAllApartments } from '../../../../redux/apartments/apartmentsActions';
-import moment from "moment";
 import { makeStyles } from '@material-ui/core';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import SubjectIcon from '@material-ui/icons/Subject';
@@ -112,10 +107,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTextIn}) => {
-
-    const error = errorIn;
-    const helperText = helperTextIn;
+    
+    const history = useHistory();
+    const dispatch = useDispatch();
     const classes = useStyles();
+    // eslint-disable-next-line
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
 
@@ -148,12 +144,6 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
         };
     });
     const [loading, setLoading] = useState(true)
-   
-    function fetchData() {
-        dispatch(getAllUsersForList())
-        dispatch(getBuildings())
-        dispatch(getAllApartments())
-    }
 
 
     //traigo los datos
@@ -164,11 +154,6 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
         dispatch(getAllApartments(1));
     }
         , [dispatch]);
-
-    function getNames() {
-        setComplaints({ ...complaints, id_Buildings: buildingArray?.filter(a => a.id === parseInt(id))[0].name })
-        return (complaints.id_Buildings)
-    }
 
     const { id } = useParams()
     currentUser.id = id
@@ -189,8 +174,6 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
 
     if (loading && buildingArray && buildingArray?.length > 0 && usersArray && usersArray?.length > 0 && allApartments && allApartments?.length > 0) {
 
-        console.log('userArray', usersArray)
-
         let idApartment = usersArray?.filter(a => a.id === parseInt(id))[0].apartmentId
 
         setComplaints({
@@ -203,12 +186,9 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
         setLoading(false)
     }
 
-   
-    const history = useHistory();
-    const dispatch = useDispatch();
 
     const handleValidationDate = (e) => {
-
+        // eslint-disable-next-line
         const date = {
             "month": [e.getMonth()],
             "year": e.getFullYear()
@@ -410,7 +390,7 @@ const UserAddComplaints = ({props,  errorIn, setError, setHelperText,  helperTex
                                     Confirmar
                                 </Button>
                                
-						    <Button style={{ fontWeight: 1000 }} color="black" variant="contained" onClick={cancelHandle} style={{ fontWeight: 1000, background:'#00ff7f', marginLeft:'10px'}} >Cancelar</Button>
+						    <Button color="black" variant="contained" onClick={cancelHandle} style={{ fontWeight: 1000, background:'#00ff7f', marginLeft:'10px'}} >Cancelar</Button>
                             </div>
                         </div>
                     </form>
