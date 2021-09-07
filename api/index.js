@@ -16,12 +16,12 @@ const {
 	Services,
 } = require('./src/db.js');
 
-const buildingsData = require('../buildingsDataMock.json'); // import json with fake buildings
-const apartmentData = require('../apartmentDataMock.json');
-const amenityData = require('../amenityDataMock.json');
-const alertsData = require('../alertsDataMock.json');
-const complaintsData = require('../complaintsDataMock.json');
-const servicesData = require('../servicesDataMock.json');
+const buildingsData = require('./src/utils/MockUps/buildingsDataMock.json'); // import json with fake buildings
+const apartmentData = require('./src/utils/MockUps/apartmentDataMock.json');
+const amenityData = require('./src/utils/MockUps/amenityDataMock.json');
+const alertsData = require('./src/utils/MockUps/alertsDataMock.json');
+const complaintsData = require('./src/utils/MockUps/complaintsDataMock.json');
+const servicesData = require('./src/utils/MockUps/servicesDataMock.json');
 const bcrypt = require('bcryptjs');
 
 // Syncing all the models at once.
